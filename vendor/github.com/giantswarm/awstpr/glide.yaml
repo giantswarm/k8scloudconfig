@@ -1,0 +1,9 @@
+package: github.com/giantswarm/awstpr
+import:
+- package: k8s.io/client-go
+  version: ^2.0.0-alpha.1
+  subpackages:
+  - pkg/api/unversioned
+  - pkg/api/v1
+- package: github.com/giantswarm/clustertpr
+  version: 72a14807175be92f91b5fceaa405f74a42fa5a5f
