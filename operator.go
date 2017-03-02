@@ -35,13 +35,8 @@ type OperatorExtension interface {
 	Units() ([]UnitAsset, error)
 }
 
-func RenderAssetContent(assetPath string, params interface{}) ([]string, error) {
-	rawContent, err := Asset(assetPath)
-	if err != nil {
-		return nil, err
-	}
-
-	tmpl, err := template.New(assetPath).Parse(string(rawContent[:]))
+func RenderAssetContent(rawAssetContent []byte, params interface{}) ([]string, error) {
+	tmpl, err := template.New("").Parse(string(rawAssetContent[:]))
 	if err != nil {
 		return nil, err
 	}

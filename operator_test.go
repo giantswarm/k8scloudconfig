@@ -24,7 +24,12 @@ func TestRenderAssetContent(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		content, err := RenderAssetContent(tc.assetPath, tc.params)
+		rawAssetContent, err := Asset(tc.assetPath)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		content, err := RenderAssetContent(rawAssetContent, tc.params)
 		if err != nil {
 			t.Fatal(err)
 		}
