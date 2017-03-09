@@ -1,4 +1,6 @@
 machine:
+    services:
+        - docker
     environment:
         CGO_ENABLED: "0"
         GOOS: "linux"
