@@ -177,7 +177,7 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/setup-network-env:{{.Cluster.Operator.NetworkSetupVersion}}
+      Environment="IMAGE={{.Cluster.Operator.NetworkSetup.Docker.Image}}
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d/
@@ -275,7 +275,7 @@ coreos:
       TimeoutStopSec=10
       StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/hyperkube:{{.Cluster.Kubernetes.Hyperkube.Version}}
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -341,7 +341,7 @@ coreos:
       TimeoutStopSec=10
       StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/hyperkube:{{.Cluster.Kubernetes.Hyperkube.Version}}"
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE

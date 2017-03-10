@@ -150,7 +150,7 @@ write_files:
     spec:
       selector:
         k8s-app: kube-dns
-      clusterIP: {{.Cluster.Kubernetes.DNS}}
+      clusterIP: {{.Cluster.Kubernetes.DNS.IP}}
       ports:
       - name: dns
         port: 53
@@ -496,7 +496,7 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/setup-network-env:{{.Cluster.Operator.NetworkSetupVersion}}
+      Environment="IMAGE={{.Cluster.Operator.NetworkSetup.Docker.Image}}
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
@@ -526,7 +526,7 @@ coreos:
       StartLimitIntervalSec=0
       LimitNOFILE=40000
       EnvironmentFile=/etc/network-environment
-      ExecStartPre=/usr/bin/etcdctl --endpoint=http://{{.Cluster.Etcd.IP}}:2379 set /k8s/master/{{.Cluster.Etcd.Prefix}} '${DEFAULT_IPV4}'
+      ExecStartPre=/usr/bin/etcdctl --endpoint=http://{{.Node.Hostname}}:2379 set /k8s/master/{{.Cluster.Etcd.Prefix}} '${DEFAULT_IPV4}'
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
@@ -667,7 +667,7 @@ coreos:
       TimeoutStopSec=10
       StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/hyperkube:{{.Cluster.Kubernetes.Hyperkube.Version}}"
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
@@ -744,7 +744,7 @@ coreos:
       TimeoutStopSec=10
       StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/hyperkube:{{.Cluster.Kubernetes.Hyperkube.Version}}"
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -806,7 +806,7 @@ coreos:
       TimeoutStopSec=10
       StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/hyperkube:{{.Cluster.Kubernetes.Hyperkube.Version}}"
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
