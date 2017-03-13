@@ -6,7 +6,7 @@ write_files:
   owner: root
   content: |
     127.0.0.1 localhost
-    127.0.0.1 {{.Node.Hostname}}
+    127.0.0.1 {{.Node.Node.Hostname}}
     127.0.0.1 etcd.giantswarm
 - path: /etc/resolv.conf
   permissions: 0644
@@ -64,9 +64,9 @@ write_files:
             args:
             # command = "/kube-dns
             - --dns-port=10053
-            - --domain={{.Cluster.Kubernetes.Domain}}
+            - --domain={{.Spec.Kubernetes.Domain}}
             - --kubecfg-file=/etc/kubernetes/config/kubelet-kubeconfig.yml
-            - --kube-master-url=https://{{.Cluster.Kubernetes.API.Domain}}
+            - --kube-master-url=https://{{.Spec.Kubernetes.API.Domain}}
             ports:
             - containerPort: 10053
               name: dns-local
@@ -108,6 +108,32 @@ write_files:
               requests:
                 cpu: 150m
                 memory: 10Mi
+            #### Commented cause we need Prometheus integrated in Kubernetes ####
+            #env:
+            #- name: PROMETHEUS_PORT
+            #  value: "10055"
+          #### Commented cause we need Prometheus integrated in Kubernetes ####
+          #- name: dnsmasq-metrics
+          #  image: gcr.io/google_containers/dnsmasq-metrics-amd64:1.0
+          #  livenessProbe:
+          #    httpGet:
+          #      path: /metrics
+          #      port: 10054
+          #      scheme: HTTP
+          #    initialDelaySeconds: 60
+          #    timeoutSeconds: 5
+          #    successThreshold: 1
+          #    failureThreshold: 5
+          #  args:
+          #  - --v=2
+          #  - --logtostderr
+          #  ports:
+          #  - containerPort: 10054
+          #    name: metrics
+          #    protocol: TCP
+          #  resources:
+          #    requests:
+          #      memory: 10Mi
           - name: healthz
             image: gcr.io/google_containers/exechealthz-amd64:1.2
             resources:
@@ -118,7 +144,7 @@ write_files:
                 cpu: 10m
                 memory: 50Mi
             args:
-            - -cmd=nslookup kubernetes.default.svc.{{.Cluster.Kubernetes.Domain}} 127.0.0.1 >/dev/null && nslookup kubernetes.default.svc.{{.Cluster.Kubernetes.Domain}} 127.0.0.1:10053 >/dev/null
+            - -cmd=nslookup kubernetes.default.svc.{{.Spec.Kubernetes.Domain}} 127.0.0.1 >/dev/null && nslookup kubernetes.default.svc.{{.Spec.Kubernetes.Domain}} 127.0.0.1:10053 >/dev/null
             - -port=8080
             - -quiet
             ports:
@@ -148,7 +174,7 @@ write_files:
     spec:
       selector:
         k8s-app: kube-dns
-      clusterIP: {{.Cluster.Kubernetes.DNS.IP}}
+      clusterIP: {{.Spec.Kubernetes.DNS}}
       ports:
       - name: dns
         port: 53
@@ -177,198 +203,31 @@ write_files:
       "metadata": {
         "name": "network-policy.net.alpha.kubernetes.io"
       },
-      "description": "fication for a network isolation policy",
+      "description": "Specification for a network isolation policy",
       "versions": [
         {
           "name": "v1alpha1"
         }
       ]
     }
-- path: /srv/fallback-server-dep.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    metadata:
-      name: fallback-server
-      namespace: kube-system
-      labels:
-        app: fallback-server
-    spec:
-      replicas: 2
-      template:
-        metadata:
-          labels:
-            app: fallback-server
-        spec:
-          containers:
-          - name: fallback-server
-            image: gcr.io/google_containers/defaultbackend:1.2
-            args:
-            - --port=8000
-            readinessProbe:
-              httpGet:
-                path: /healthz
-                port: 8000
-                scheme: HTTP
-            livenessProbe:
-              httpGet:
-                path: /healthz
-                port: 8000
-                scheme: HTTP
-              initialDelaySeconds: 10
-              timeoutSeconds: 1
-- path: /srv/fallback-server-svc.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: fallback-server
-      namespace: kube-system
-      labels:
-        app: fallback-server
-    spec:
-      type: NodePort
-      ports:
-      - port: 8000
-      selector:
-        app: fallback-server
-- path: /srv/ingress-controller-dep.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: extensions/v1beta1
-    kind: Deployment
-    metadata:
-      name: ingress-controller
-      namespace: kube-system
-      labels:
-        app: ingress-controller
-    spec:
-      replicas: 3
-      strategy:
-        type: RollingUpdate
-        rollingUpdate:
-          maxUnavailable: 2
-      template:
-        metadata:
-          labels:
-            app: ingress-controller
-          annotations:
-            scheduler.alpha.kubernetes.io/affinity: >
-              {
-                "podAntiAffinity": {
-                  "preferredDuringSchedulingIgnoredDuringExecution": [
-                    {
-                      "labelSelector": {
-                        "matchExpressions": [
-                          {
-                            "key": "app",
-                            "operator": "In",
-                            "values": ["ingress-controller"]
-                          }
-                        ]
-                      },
-                      "topologyKey": "kubernetes.io/hostname",
-                      "weight": 100
-                    }
-                  ]
-                }
-              }
-        spec:
-          containers:
-          - name: ingress-controller
-            image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
-            args:
-            - /nginx-ingress-controller
-            - --default-backend-service=kube-system/fallback-server
-            env:
-              - name: POD_NAME
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.name
-              - name: POD_NAMESPACE
-                valueFrom:
-                  fieldRef:
-                    fieldPath: metadata.namespace
-            readinessProbe:
-              httpGet:
-                path: /healthz
-                port: 80
-              initialDelaySeconds: 30
-              timeoutSeconds: 1
-            livenessProbe:
-              httpGet:
-                path: /healthz
-                port: 80
-              initialDelaySeconds: 30
-              timeoutSeconds: 1
-- path: /srv/ingress-controller-svc.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: v1
-    kind: Service
-    metadata:
-      name: ingress-controller
-      namespace: kube-system
-      labels:
-        app: ingress-controller
-    spec:
-      type: NodePort
-      ports:
-      - name: http
-        port: 80
-        nodePort: 30010
-      - name: https
-        port: 443
-        nodePort: 30011
-      selector:
-        app: ingress-controller
 - path: /opt/k8s-addons
   permissions: 0544
   content: |
       #!/bin/bash
-      while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem "https://{{.Cluster.Kubernetes.API.Domain}}:443"; do sleep 1 && echo 'Waiting for master'; done
+      while ! curl --output /dev/null --silent --head --fail "http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}}"; do sleep 1 && echo 'Waiting for master'; done
 
       echo "K8S: DNS addons"
       curl -H "Content-Type: application/yaml" \
         -XPOST -d"$(cat /srv/kubedns-dep.yaml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
+        "http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}}/apis/extensions/v1beta1/namespaces/kube-system/deployments"
       curl -H "Content-Type: application/yaml" \
         -XPOST -d"$(cat /srv/kubedns-svc.yaml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
+        "http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}}/api/v1/namespaces/kube-system/services"
 
       echo "K8S: Calico Policy"
       curl -H "Content-Type: application/json" \
         -XPOST -d"$(cat /srv/calico-system.json)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/"
-
-      echo "K8S: Fallback Server"
-      curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-dep.yml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://%%K8S_MASTER_DOMAIN_NAME%%:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
-      curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-svc.yml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://%%K8S_MASTER_DOMAIN_NAME%%:443/api/v1/namespaces/kube-system/services"
-
-      echo "K8S: Ingress Controller"
-      curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/ingress-controller-dep.yml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://%%K8S_MASTER_DOMAIN_NAME%%:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
-      curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/ingress-controller-svc.yml)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://%%K8S_MASTER_DOMAIN_NAME%%:443/api/v1/namespaces/kube-system/services"
+        "http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}}/api/v1/namespaces/"
 
       echo "Addons successfully installed"
 - path: /etc/kubernetes/config/controller-manager-kubeconfig.yml
@@ -413,52 +272,91 @@ write_files:
         user: scheduler
       name: service-account-context
     current-context: service-account-context
+- path: /opt/bin/decrypt-tls-assets
+  owner: root:root
+  permissions: 0700
+  content: |
+    #!/bin/bash -e
 
-- path: /etc/kubernetes/ssl/apiserver-crt.pem.enc
+    rkt run \
+      --volume=ssl,kind=host,source=/etc/kubernetes/ssl,readOnly=false \
+      --mount=volume=ssl,target=/etc/kubernetes/ssl \
+      --uuid-file-save=/var/run/coreos/decrypt-tls-assets.uuid \
+      --volume=dns,kind=host,source=/etc/resolv.conf,readOnly=true --mount volume=dns,target=/etc/resolv.conf \
+      --net=host \
+      --trust-keys-from-https \
+      quay.io/coreos/awscli:latest --exec=/bin/bash -- \
+        -ec \
+        'echo decrypting tls assets
+         shopt -s nullglob
+         for encKey in $(find /etc/kubernetes/ssl -name "*.pem.enc"); do
+           echo decrypting $encKey
+           f=$(mktemp $encKey.XXXXXXXX)
+           /usr/bin/aws \
+             --region {{.Spec.Aws.Region}} kms decrypt \
+             --ciphertext-blob fileb://$encKey \
+             --output text \
+             --query Plaintext \
+           | base64 -d > $f
+           mv -f $f ${encKey%.enc}
+         done;
+         echo done.'
+
+    rkt rm --uuid-file=/var/run/coreos/decrypt-tls-assets.uuid || :
+
+- path: /etc/kubernetes/ssl/apiserver.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCrt}}
+  content: {{.TLSAssets.APIServerCert}}
 
 - path: /etc/kubernetes/ssl/apiserver-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCACrt}}
+  content: {{.TLSAssets.APIServerCACert}}
 
 - path: /etc/kubernetes/ssl/apiserver-key.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.APIServerKey}}
 
-- path: /etc/kubernetes/ssl/calico/client-crt.pem.enc
+- path: /etc/kubernetes/ssl/calico/client.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCrt}}
+  content: {{.TLSAssets.CalicoClientCert}}
 
 - path: /etc/kubernetes/ssl/calico/client-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCACrt}}
+  content: {{.TLSAssets.CalicoClientCACert}}
 
 - path: /etc/kubernetes/ssl/calico/client-key.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.CalicoClientKey}}
 
-- path: /etc/kubernetes/ssl/etcd/server-crt.pem.enc
+- path: /etc/kubernetes/ssl/etcd/server.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCrt}}
+  content: {{.TLSAssets.EtcdServerCert}}
 
 - path: /etc/kubernetes/ssl/etcd/server-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCACrt}}
+  content: {{.TLSAssets.EtcdServerCACert}}
 
 - path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerKey}}
 
-{{range .Files}}- path: {{.Metadata.Path}}
-  owner: {{.Metadata.Owner}}
-  permissions: {{printf "%#o" .Metadata.Permissions}}
-  content: |
-    {{range .Content}}{{.}}
-    {{end}}{{end}}
-
 coreos:
   units:
+  - name: add-route-bridge.service
+    enable: false
+    command: start
+    content: |
+      [Unit]
+      Description=Add route to reach local network
+      Requires=network-online.target
+      After=network-online.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/usr/bin/ip route add ${HOST_PUBLIC_IP} dev eth0 via ${BRIDGE_IP}
+
+      [Install]
+      WantedBy=multi-user.target
   - name: set-ownership-etcd-data-dir.service
     enable: true
     command: start
@@ -472,6 +370,7 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
+      ExecStart=/usr/bin/mkdir -p /etc/kubernetes/data/etcd
       ExecStart=/usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd
   - name: docker.service
     enable: true
@@ -480,7 +379,7 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=systemd {{.Cluster.Docker.Daemon.ExtraArgs}}
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=systemd {{.Spec.Docker.Daemon.ExtraArgs}}
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -494,7 +393,7 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{.Cluster.Operator.NetworkSetup.Docker.Image}}
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/setup-network-env:{{.Spec.Operator.NetworkSetupVersion}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
@@ -510,10 +409,12 @@ coreos:
     content: |
       [Unit]
       Description=etcd2
-      Requires=k8s-setup-network-env.service
-      After=k8s-setup-network-env.service
+      # TODO can we move this to a Wants in the decrypt-tls-certs.service ?
+      Requires=k8s-setup-network-env.service decrypt-tls-certs.service
+      After=k8s-setup-network-env.service decrypt-tls-certs.service
       Conflicts=etcd.service
       Wants=calico-node.service
+      StartLimitIntervalSec=0
 
       [Service]
       User=etcd
@@ -521,20 +422,13 @@ coreos:
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       LimitNOFILE=40000
       EnvironmentFile=/etc/network-environment
-      ExecStartPre=/usr/bin/etcdctl --endpoint=http://{{.Node.Hostname}}:2379 set /k8s/master/{{.Cluster.Etcd.Prefix}} '${DEFAULT_IPV4}'
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
-      ExecStart=/usr/bin/etcd2 --advertise-client-urls=https://{{.Cluster.Etcd.Domain}}:443,http://127.0.0.1:2383 \
-                               --data-dir=/etc/kubernetes/data/etcd/ \
-                               --initial-advertise-peer-urls=https://{{.Cluster.Etcd.Domain}}:443 \
-                               --listen-client-urls=https://0.0.0.0:2379,http://127.0.0.1:2383 \
-                               --listen-peer-urls=https://${DEFAULT_IPV4}:2380 \
+      ExecStart=/usr/bin/etcd2 --data-dir=/etc/kubernetes/data/etcd/ \
                                --initial-cluster-token k8s-etcd-cluster \
-                               --initial-cluster etcd0=https://{{.Cluster.Etcd.Domain}}:443 \
                                --initial-cluster-state new \
                                --ca-file=/etc/kubernetes/ssl/etcd/server-ca.pem \
                                --cert-file=/etc/kubernetes/ssl/etcd/server.pem \
@@ -543,7 +437,6 @@ coreos:
                                --peer-cert-file=/etc/kubernetes/ssl/etcd/server.pem \
                                --peer-key-file=/etc/kubernetes/ssl/etcd/server-key.pem \
                                --peer-client-cert-auth=true \
-                               --name etcd0
 
       [Install]
       WantedBy=multi-user.target
@@ -574,39 +467,35 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
-  # Or at least use anything which doesn't download binaries in systemd unit...
   - name: calico-node.service
     runtime: true
     command: start
     content: |
       [Unit]
       Description=Calico per-host agent
-      Requires=etcd2.service
-      After=etcd2.service
+      Requires=etcd2.service decrypt-tls-certs.service
+      After=etcd2.service decrypt-tls-certs.service
       Wants=k8s-api-server.service k8s-controller-manager.service k8s-scheduler.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="ETCD_AUTHORITY=127.0.0.1:2383"
+      Environment="ETCD_AUTHORITY=127.0.0.1:2379"
       ExecStartPre=/usr/bin/wget -O /opt/bin/calicoctl https://s3-eu-west-1.amazonaws.com/downloads.giantswarm.io/calicoctl/v0.22.0/calicoctl
       ExecStartPre=/usr/bin/chmod +x /opt/bin/calicoctl
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-key.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while ! curl --output /dev/null --silent --fail --cacert /etc/kubernetes/ssl/calico/client-ca.pem --cert /etc/kubernetes/ssl/calico/client.pem --key /etc/kubernetes/ssl/calico/client-key.pem https://{{.Cluster.Etcd.Domain}}/version; do sleep 1 && echo 'Waiting for etcd master to be responsive'; done"
-      ExecStartPre=/opt/bin/calicoctl pool add {{.Cluster.Calico.Subnet}}/{{.Cluster.Calico.CIDR}} --ipip --nat-outgoing
+      ExecStartPre=/bin/bash -c "while ! curl --output /dev/null --silent --fail --cacert /etc/kubernetes/ssl/calico/client-ca.pem --cert /etc/kubernetes/ssl/calico/client.pem --key /etc/kubernetes/ssl/calico/client-key.pem http://{{.Spec.Etcd.Domain}}:2380/version; do sleep 1 && echo 'Waiting for etcd master to be responsive'; done"
+      ExecStartPre=/opt/bin/calicoctl pool add {{.Spec.Calico.Subnet}} --ipip --nat-outgoing
       ExecStart=/opt/bin/calicoctl node --ip=${DEFAULT_IPV4}  --detach=false --node-image=giantswarm/node:v0.22.0
-      ExecStartPost=/bin/bash -c "/opt/bin/calicoctl bgp peer add $(echo ${BRIDGE_IP} | cut -d'.' -f1-3).0 as $(/opt/bin/calicoctl bgp default-node-as)"
-      ExecStartPost=/bin/bash -c "/usr/bin/etcdctl --endpoints=http://127.0.0.1:2383 set /calico/v1/host/{{.Node.Hostname}}-flannel/bird_ip $(echo ${BRIDGE_IP} | cut -d'.' -f1-3).0"
+      ExecStartPost=/bin/bash -c "/usr/bin/etcdctl --endpoints=http://127.0.0.1:2379 set /calico/v1/host/{{.Node.Node.Hostname}}-flannel/bird_ip $(echo ${BRIDGE_IP} | cut -d'.' -f1-3).0"
       ExecStop=/opt/bin/calicoctl node stop --force
       ExecStopPost=/bin/bash -c "find /tmp/ -name '_MEI*' | xargs -I {} rm -rf {}"
-      ExecStopPost=/bin/bash -c "/opt/bin/calicoctl bgp peer remove $(echo ${BRIDGE_IP} | cut -d'.' -f1-3).0"
-      ExecStopPost=/usr/bin/etcdctl --endpoints=http://127.0.0.1:2383 rm /calico/v1/host/{{.Node.Hostname}}-flannel/bird_ip
+      ExecStopPost=/usr/bin/etcdctl --endpoints=http://127.0.0.1:2379 rm /calico/v1/host/{{.Node.Node.Hostname}}-flannel/bird_ip
 
       [Install]
       WantedBy=multi-user.target
@@ -656,16 +545,16 @@ coreos:
     content: |
       [Unit]
       Description=k8s-api-server
-      Requires=calico-node.service
-      After=calico-node.service
+      Requires=calico-node.service k8s-key-generator.service
+      After=calico-node.service k8s-key-generator.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/hyperkube:{{.Spec.Kubernetes.Hyperkube.Version}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
@@ -677,21 +566,20 @@ coreos:
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       $IMAGE \
       /hyperkube apiserver \
-      --allow_privileged=true \
-      --runtime_config=api/v1 \
-      --insecure_bind_address=0.0.0.0 \
-      --insecure_port={{.Cluster.Kubernetes.API.InsecurePort}} \
-      --kubelet_https=true \
-      --secure_port={{.Cluster.Kubernetes.API.SecurePort}} \
-      --bind-address=${DEFAULT_IPV4} \
-      --etcd-prefix={{.Cluster.Etcd.Prefix}} \
+      --allow-privileged=true \
+      --runtime-config=api/v1 \
+      --insecure-bind_address=0.0.0.0 \
+      --insecure-port={{.Spec.Kubernetes.API.InsecurePort}} \
+      --kubelet-https=true \
+      --secure-port={{.Spec.Kubernetes.API.SecurePort}} \
+      --etcd-prefix={{.Spec.Etcd.Prefix}} \
       --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota \
-      --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}} \
-      --etcd_servers=https://{{.Cluster.Etcd.Domain}}:443 \
+      --service-cluster-ip-range={{.Spec.Kubernetes.API.ClusterIPRange}} \
+      --etcd-servers=http://{{.Spec.Etcd.Domain}}:2379 \
       --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem \
       --etcd-certfile=/etc/kubernetes/ssl/etcd/server.pem \
       --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem \
-      --advertise-address=${DEFAULT_IPV4} \
+      --advertise-address=35.158.16.27 \
       --runtime-config=extensions/v1beta1/deployments=true,extensions/v1beta1/daemonsets=true,extensions/v1beta1=true,extensions/v1beta1/thirdpartyresources=true,extensions/v1beta1/networkpolicies=true,batch/v2alpha1 \
       --logtostderr=true \
       --tls-cert-file=/etc/kubernetes/ssl/apiserver.pem \
@@ -727,22 +615,36 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+  - name: k8s-key-generator.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=k8s-key-generator Service
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/secrets
+      ExecStart=/usr/bin/openssl genrsa -out /etc/kubernetes/secrets/token_sign_key.pem 2048
+
+      [Install]
+      WantedBy=multi-user.target
   - name: k8s-controller-manager.service
     enable: true
     command: start
     content: |
       [Unit]
       Description=k8s-controller-manager Service
-      Requires=calico-node.service
-      After=calico-node.service
+      Requires=calico-node.service k8s-key-generator.service
+      After=calico-node.service k8s-key-generator.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/hyperkube:{{.Spec.Kubernetes.Hyperkube.Version}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -754,10 +656,12 @@ coreos:
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       $IMAGE \
       /hyperkube controller-manager \
-      --master=https://{{.Cluster.Kubernetes.API.Domain}}:443 \
+      --master=http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}} \
       --logtostderr=true \
       --v=2 \
       --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml \
+      --cluster-signing-cert-file=/etc/kubernetes/ssl/apiserver-ca.pem \
+      --cluster-signing-key-file=/etc/kubernetes/ssl/apiserver-key.pem \
       --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem \
       --service-account-private-key-file=/etc/kubernetes/secrets/token_sign_key.pem
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
@@ -797,14 +701,14 @@ coreos:
       Description=k8s-scheduler Service
       Requires=calico-node.service
       After=calico-node.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/hyperkube:{{.Spec.Kubernetes.Hyperkube.Version}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -815,7 +719,7 @@ coreos:
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
       $IMAGE \
       /hyperkube scheduler \
-      --master=https://{{.Cluster.Kubernetes.API.Domain}}:443 \
+      --master=http://{{.Spec.Kubernetes.API.Domain}}:{{.Spec.Kubernetes.API.InsecurePort}} \
       --logtostderr=true \
       --v=2 \
       --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
@@ -875,7 +779,7 @@ coreos:
       [Service]
       Restart=always
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/k8s-policy-controller:v0.2.0"
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/k8s-policy-controller:v0.2.0"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -883,8 +787,8 @@ coreos:
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --net=host \
       --name $NAME \
-      -e ETCD_ENDPOINTS=http://127.0.0.1:2383 \
-      -e K8S_API=http://localhost:{{.Cluster.Kubernetes.API.InsecurePort}} \
+      -e ETCD_ENDPOINTS=http://127.0.0.1:2379 \
+      -e K8S_API=http://localhost:{{.Spec.Kubernetes.API.InsecurePort}} \
       -e LEADER_ELECTION=true \
       $IMAGE
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
@@ -901,7 +805,7 @@ coreos:
       [Service]
       Restart=always
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/leader-elector:v0.1.0"
+      Environment="IMAGE={{.Spec.Docker.ImageNamespace}}/leader-elector:v0.1.0"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -942,11 +846,17 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  {{range .Units}}- name: {{.Metadata.Name}}
-    enable: {{.Metadata.Enable}}
-    command: {{.Metadata.Command}}
+  - name: decrypt-tls-certs.service
+    enable: true
+    command: start
     content: |
-      {{range .Content}}{{.}}
-      {{end}}{{end}}
+      [Unit]
+      Description=Decrypt TLS certificates
+
+      [Service]
+      ExecStart=/opt/bin/decrypt-tls-assets
+      ExecStartPost=/usr/bin/chown -R etcd:etcd /etc/kubernetes/ssl/etcd
+      # TODO this is a hack - which user needs to read this? etcd already has read
+      ExecStartPost=/usr/bin/chmod go+r /etc/kubernetes/ssl/etcd
   update:
     reboot-strategy: off
