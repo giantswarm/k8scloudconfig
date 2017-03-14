@@ -184,6 +184,151 @@ write_files:
         }
       ]
     }
+
+- path: /srv/fallback-server-dep.yml
+    owner: root
+    permissions: 0644
+    content: |
+      apiVersion: extensions/v1beta1
+      kind: Deployment
+      metadata:
+        name: fallback-server
+        namespace: kube-system
+        labels:
+          app: fallback-server
+      spec:
+        replicas: 2
+        template:
+          metadata:
+            labels:
+              app: fallback-server
+          spec:
+            containers:
+            - name: fallback-server
+              image: gcr.io/google_containers/defaultbackend:1.2
+              args:
+              - --port=8000
+              readinessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 8000
+                  scheme: HTTP
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 8000
+                  scheme: HTTP
+                initialDelaySeconds: 10
+                timeoutSeconds: 1
+  - path: /srv/fallback-server-svc.yml
+    owner: root
+    permissions: 0644
+    content: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: fallback-server
+        namespace: kube-system
+        labels:
+          app: fallback-server
+      spec:
+        type: NodePort
+        ports:
+        - port: 8000
+        selector:
+          app: fallback-server
+  - path: /srv/ingress-controller-dep.yml
+    owner: root
+    permissions: 0644
+    content: |
+      apiVersion: extensions/v1beta1
+      kind: Deployment
+      metadata:
+        name: ingress-controller
+        namespace: kube-system
+        labels:
+          app: ingress-controller
+      spec:
+        replicas: 3
+        strategy:
+          type: RollingUpdate
+          rollingUpdate:
+            maxUnavailable: 2
+        template:
+          metadata:
+            labels:
+              app: ingress-controller
+            annotations:
+              scheduler.alpha.kubernetes.io/affinity: >
+                {
+                  "podAntiAffinity": {
+                    "preferredDuringSchedulingIgnoredDuringExecution": [
+                      {
+                        "labelSelector": {
+                          "matchExpressions": [
+                            {
+                              "key": "app",
+                              "operator": "In",
+                              "values": ["ingress-controller"]
+                            }
+                          ]
+                        },
+                        "topologyKey": "kubernetes.io/hostname",
+                        "weight": 100
+                      }
+                    ]
+                  }
+                }
+          spec:
+            containers:
+            - name: ingress-controller
+              image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
+              args:
+              - /nginx-ingress-controller
+              - --default-backend-service=kube-system/fallback-server
+              env:
+                - name: POD_NAME
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.name
+                - name: POD_NAMESPACE
+                  valueFrom:
+                    fieldRef:
+                      fieldPath: metadata.namespace
+              readinessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 80
+                initialDelaySeconds: 30
+                timeoutSeconds: 1
+              livenessProbe:
+                httpGet:
+                  path: /healthz
+                  port: 80
+                initialDelaySeconds: 30
+                timeoutSeconds: 1
+  - path: /srv/ingress-controller-svc.yml
+    owner: root
+    permissions: 0644
+    content: |
+      apiVersion: v1
+      kind: Service
+      metadata:
+        name: ingress-controller
+        namespace: kube-system
+        labels:
+          app: ingress-controller
+      spec:
+        type: NodePort
+        ports:
+        - name: http
+          port: 80
+          nodePort: 30010
+        - name: https
+          port: 443
+          nodePort: 30011
+        selector:
+          app: ingress-controller
 - path: /opt/k8s-addons
   permissions: 0544
   content: |
@@ -246,37 +391,6 @@ write_files:
         user: scheduler
       name: service-account-context
     current-context: service-account-context
-- path: /opt/bin/decrypt-tls-assets
-  owner: root:root
-  permissions: 0700
-  content: |
-    #!/bin/bash -e
-
-    rkt run \
-      --volume=ssl,kind=host,source=/etc/kubernetes/ssl,readOnly=false \
-      --mount=volume=ssl,target=/etc/kubernetes/ssl \
-      --uuid-file-save=/var/run/coreos/decrypt-tls-assets.uuid \
-      --volume=dns,kind=host,source=/etc/resolv.conf,readOnly=true --mount volume=dns,target=/etc/resolv.conf \
-      --net=host \
-      --trust-keys-from-https \
-      quay.io/coreos/awscli:latest --exec=/bin/bash -- \
-        -ec \
-        'echo decrypting tls assets
-         shopt -s nullglob
-         for encKey in $(find /etc/kubernetes/ssl -name "*.pem.enc"); do
-           echo decrypting $encKey
-           f=$(mktemp $encKey.XXXXXXXX)
-           /usr/bin/aws \
-             --region {{.Cluster.Aws.Region}} kms decrypt \
-             --ciphertext-blob fileb://$encKey \
-             --output text \
-             --query Plaintext \
-           | base64 -d > $f
-           mv -f $f ${encKey%.enc}
-         done;
-         echo done.'
-
-    rkt rm --uuid-file=/var/run/coreos/decrypt-tls-assets.uuid || :
 
 - path: /etc/kubernetes/ssl/apiserver.pem.enc
   encoding: gzip+base64
