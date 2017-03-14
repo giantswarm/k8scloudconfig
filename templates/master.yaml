@@ -148,7 +148,7 @@ write_files:
     spec:
       selector:
         k8s-app: kube-dns
-      clusterIP: {{.Cluster.Kubernetes.DNS}}
+      clusterIP: {{.Cluster.Kubernetes.DNS.IP}}
       ports:
       - name: dns
         port: 53
