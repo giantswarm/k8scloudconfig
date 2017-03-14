@@ -564,6 +564,8 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+  # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
+  # Or at least use anything which doesn't download binaries in systemd unit...
   - name: calico-node.service
     runtime: true
     command: start
