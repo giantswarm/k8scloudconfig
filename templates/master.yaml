@@ -184,151 +184,150 @@ write_files:
         }
       ]
     }
-
 - path: /srv/fallback-server-dep.yml
-    owner: root
-    permissions: 0644
-    content: |
-      apiVersion: extensions/v1beta1
-      kind: Deployment
-      metadata:
-        name: fallback-server
-        namespace: kube-system
-        labels:
-          app: fallback-server
-      spec:
-        replicas: 2
-        template:
-          metadata:
-            labels:
-              app: fallback-server
-          spec:
-            containers:
-            - name: fallback-server
-              image: gcr.io/google_containers/defaultbackend:1.2
-              args:
-              - --port=8000
-              readinessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 8000
-                  scheme: HTTP
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 8000
-                  scheme: HTTP
-                initialDelaySeconds: 10
-                timeoutSeconds: 1
-  - path: /srv/fallback-server-svc.yml
-    owner: root
-    permissions: 0644
-    content: |
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: fallback-server
-        namespace: kube-system
-        labels:
-          app: fallback-server
-      spec:
-        type: NodePort
-        ports:
-        - port: 8000
-        selector:
-          app: fallback-server
-  - path: /srv/ingress-controller-dep.yml
-    owner: root
-    permissions: 0644
-    content: |
-      apiVersion: extensions/v1beta1
-      kind: Deployment
-      metadata:
-        name: ingress-controller
-        namespace: kube-system
-        labels:
-          app: ingress-controller
-      spec:
-        replicas: 3
-        strategy:
-          type: RollingUpdate
-          rollingUpdate:
-            maxUnavailable: 2
-        template:
-          metadata:
-            labels:
-              app: ingress-controller
-            annotations:
-              scheduler.alpha.kubernetes.io/affinity: >
-                {
-                  "podAntiAffinity": {
-                    "preferredDuringSchedulingIgnoredDuringExecution": [
-                      {
-                        "labelSelector": {
-                          "matchExpressions": [
-                            {
-                              "key": "app",
-                              "operator": "In",
-                              "values": ["ingress-controller"]
-                            }
-                          ]
-                        },
-                        "topologyKey": "kubernetes.io/hostname",
-                        "weight": 100
-                      }
-                    ]
-                  }
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: fallback-server
+      namespace: kube-system
+      labels:
+        app: fallback-server
+    spec:
+      replicas: 2
+      template:
+        metadata:
+          labels:
+            app: fallback-server
+        spec:
+          containers:
+          - name: fallback-server
+            image: gcr.io/google_containers/defaultbackend:1.2
+            args:
+            - --port=8000
+            readinessProbe:
+              httpGet:
+                path: /healthz
+                port: 8000
+                scheme: HTTP
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: 8000
+                scheme: HTTP
+              initialDelaySeconds: 10
+              timeoutSeconds: 1
+- path: /srv/fallback-server-svc.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: fallback-server
+      namespace: kube-system
+      labels:
+        app: fallback-server
+    spec:
+      type: NodePort
+      ports:
+      - port: 8000
+      selector:
+        app: fallback-server
+- path: /srv/ingress-controller-dep.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: ingress-controller
+      namespace: kube-system
+      labels:
+        app: ingress-controller
+    spec:
+      replicas: 3
+      strategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 2
+      template:
+        metadata:
+          labels:
+            app: ingress-controller
+          annotations:
+            scheduler.alpha.kubernetes.io/affinity: >
+              {
+                "podAntiAffinity": {
+                  "preferredDuringSchedulingIgnoredDuringExecution": [
+                    {
+                      "labelSelector": {
+                        "matchExpressions": [
+                          {
+                            "key": "app",
+                            "operator": "In",
+                            "values": ["ingress-controller"]
+                          }
+                        ]
+                      },
+                      "topologyKey": "kubernetes.io/hostname",
+                      "weight": 100
+                    }
+                  ]
                 }
-          spec:
-            containers:
-            - name: ingress-controller
-              image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
-              args:
-              - /nginx-ingress-controller
-              - --default-backend-service=kube-system/fallback-server
-              env:
-                - name: POD_NAME
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.name
-                - name: POD_NAMESPACE
-                  valueFrom:
-                    fieldRef:
-                      fieldPath: metadata.namespace
-              readinessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 80
-                initialDelaySeconds: 30
-                timeoutSeconds: 1
-              livenessProbe:
-                httpGet:
-                  path: /healthz
-                  port: 80
-                initialDelaySeconds: 30
-                timeoutSeconds: 1
-  - path: /srv/ingress-controller-svc.yml
-    owner: root
-    permissions: 0644
-    content: |
-      apiVersion: v1
-      kind: Service
-      metadata:
-        name: ingress-controller
-        namespace: kube-system
-        labels:
-          app: ingress-controller
-      spec:
-        type: NodePort
-        ports:
-        - name: http
-          port: 80
-          nodePort: 30010
-        - name: https
-          port: 443
-          nodePort: 30011
-        selector:
-          app: ingress-controller
+              }
+        spec:
+          containers:
+          - name: ingress-controller
+            image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
+            args:
+            - /nginx-ingress-controller
+            - --default-backend-service=kube-system/fallback-server
+            env:
+              - name: POD_NAME
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.name
+              - name: POD_NAMESPACE
+                valueFrom:
+                  fieldRef:
+                    fieldPath: metadata.namespace
+            readinessProbe:
+              httpGet:
+                path: /healthz
+                port: 80
+              initialDelaySeconds: 30
+              timeoutSeconds: 1
+            livenessProbe:
+              httpGet:
+                path: /healthz
+                port: 80
+              initialDelaySeconds: 30
+              timeoutSeconds: 1
+- path: /srv/ingress-controller-svc.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: ingress-controller
+      namespace: kube-system
+      labels:
+        app: ingress-controller
+    spec:
+      type: NodePort
+      ports:
+      - name: http
+        port: 80
+        nodePort: 30010
+      - name: https
+        port: 443
+        nodePort: 30011
+      selector:
+        app: ingress-controller
 - path: /opt/k8s-addons
   permissions: 0544
   content: |
