@@ -446,6 +446,12 @@ write_files:
 - path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerKey}}
+{{range .Files}}- path: {{.Metadata.Path}}
+  owner: {{.Metadata.Owner}}
+  permissions: {{printf "%#o" .Metadata.Permissions}}
+  content: |
+    {{range .Content}}{{.}}
+    {{end}}{{end}}
 
 coreos:
   units:
