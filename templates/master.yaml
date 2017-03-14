@@ -1,7 +1,5 @@
 #cloud-config
 hostname: {{.Node.Hostname}}
-ssh_authorized_keys:
-  - "ssh-rsa FILLME user"
 write_files:
 - path: /etc/hosts
   permissions: 0644
