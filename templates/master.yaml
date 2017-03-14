@@ -943,5 +943,12 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+
+  {{range .Units}}- name: {{.Metadata.Name}}
+    enable: {{.Metadata.Enable}}
+    command: {{.Metadata.Command}}
+    content: |
+      {{range .Content}}{{.}}
+      {{end}}{{end}}
   update:
     reboot-strategy: off
