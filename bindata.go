@@ -85,7 +85,7 @@ func templatesMasterYaml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/master.yaml", size: 33506, mode: os.FileMode(420), modTime: time.Unix(1489655583, 0)}
+	info := bindataFileInfo{name: "templates/master.yaml", size: 33506, mode: os.FileMode(420), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -105,7 +105,7 @@ func templatesTestTest_templateYml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/test/test_template.yml", size: 13, mode: os.FileMode(420), modTime: time.Unix(1489655583, 0)}
+	info := bindataFileInfo{name: "templates/test/test_template.yml", size: 13, mode: os.FileMode(420), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
@@ -125,7 +125,7 @@ func templatesWorkerYaml() (*asset, error) {
 		return nil, err
 	}
 
-	info := bindataFileInfo{name: "templates/worker.yaml", size: 17247, mode: os.FileMode(420), modTime: time.Unix(1489655583, 0)}
+	info := bindataFileInfo{name: "templates/worker.yaml", size: 17247, mode: os.FileMode(420), modTime: time.Unix(1, 0)}
 	a := &asset{bytes: bytes, info: info}
 	return a, nil
 }
