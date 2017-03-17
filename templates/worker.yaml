@@ -116,7 +116,7 @@ write_files:
 
 {{range .Files}}- path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
-  permissions: {{.Metadata.Permissions}}
+  permissions: {{printf "%#o" .Metadata.Permissions}}
   content: |
     {{range .Content}}{{.}}
     {{end}}{{end}}
