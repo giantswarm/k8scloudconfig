@@ -10,4 +10,7 @@ type CompactTLSAssets struct {
 	EtcdServerCACrt   string
 	EtcdServerKey     string
 	EtcdServerCrt     string
+	WorkerCACrt       string
+	WorkerKey         string
+	WorkerCrt         string
 }

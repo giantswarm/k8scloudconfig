@@ -1036,17 +1036,17 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
-- path: /etc/kubernetes/ssl/apiserver-crt.pem.enc
+- path: /etc/kubernetes/ssl/worker-crt.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCrt}}
+  content: {{.TLSAssets.WorkerCrt}}
 
-- path: /etc/kubernetes/ssl/apiserver-ca.pem.enc
+- path: /etc/kubernetes/ssl/worker-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCACrt}}
+  content: {{.TLSAssets.WorkerCACrt}}
 
-- path: /etc/kubernetes/ssl/apiserver-key.pem.enc
+- path: /etc/kubernetes/ssl/worker-key.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerKey}}
+  content: {{.TLSAssets.WorkerKey}}
 
 - path: /etc/kubernetes/ssl/calico/client-crt.pem.enc
   encoding: gzip+base64
