@@ -1155,12 +1155,12 @@ coreos:
       Requires=k8s-setup-network-env.service
       After=k8s-setup-network-env.service
       Wants=k8s-proxy.service k8s-kubelet.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
       Environment="ETCD_AUTHORITY={{.Cluster.Etcd.Domain}}:443"
       Environment="ETCD_SCHEME=https"
@@ -1224,12 +1224,12 @@ coreos:
       Description=k8s-proxy
       Requires=calico-node.service
       After=calico-node.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
       Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
@@ -1290,12 +1290,12 @@ coreos:
       Description=k8s-kubelet
       Requires=calico-node.service
       After=calico-node.service
+      StartLimitIntervalSec=0
 
       [Service]
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
-      StartLimitIntervalSec=0
       EnvironmentFile=/etc/network-environment
       Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
       Environment="NAME=%p.service"
