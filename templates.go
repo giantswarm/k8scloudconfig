@@ -423,7 +423,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/apiserver-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCACrt}}
+  content: {{.TLSAssets.APIServerCA}}
 
 - path: /etc/kubernetes/ssl/apiserver-key.pem.enc
   encoding: gzip+base64
@@ -435,7 +435,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/calico/client-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCACrt}}
+  content: {{.TLSAssets.CalicoClientCA}}
 
 - path: /etc/kubernetes/ssl/calico/client-key.pem.enc
   encoding: gzip+base64
@@ -447,7 +447,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/etcd/server-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCACrt}}
+  content: {{.TLSAssets.EtcdServerCA}}
 
 - path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
   encoding: gzip+base64
@@ -1054,7 +1054,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/calico/client-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCACrt}}
+  content: {{.TLSAssets.CalicoClientCA}}
 
 - path: /etc/kubernetes/ssl/calico/client-key.pem.enc
   encoding: gzip+base64
@@ -1066,7 +1066,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/etcd/server-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCACrt}}
+  content: {{.TLSAssets.EtcdServerCA}}
 
 - path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
   encoding: gzip+base64
