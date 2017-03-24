@@ -1042,7 +1042,7 @@ write_files:
 
 - path: /etc/kubernetes/ssl/worker-ca.pem.enc
   encoding: gzip+base64
-  content: {{.TLSAssets.WorkerCACrt}}
+  content: {{.TLSAssets.WorkerCA}}
 
 - path: /etc/kubernetes/ssl/worker-key.pem.enc
   encoding: gzip+base64
