@@ -1089,8 +1089,9 @@ coreos:
     command: stop
     mask: true
   - name: etcd2.service
-    enable: true
-    command: start
+    enable: false
+    command: stop
+    mask: true
   - name: fleet.service
     command: stop
     mask: true
