@@ -4,13 +4,6 @@ const (
 	MasterTemplate = `#cloud-config
 hostname: {{.Node.Hostname}}
 write_files:
-- path: /etc/hosts
-  permissions: 0644
-  owner: root
-  content: |
-    127.0.0.1 localhost
-    127.0.0.1 {{.Node.Hostname}}
-    127.0.0.1 etcd.giantswarm
 - path: /etc/resolv.conf
   permissions: 0644
   owner: root
@@ -958,13 +951,6 @@ coreos:
 	WorkerTemplate = `#cloud-config
 hostname: {{.Node.Hostname}}
 write_files:
-- path: /etc/hosts
-  permissions: 0644
-  owner: root
-  content: |
-    127.0.0.1 localhost
-    127.0.0.1 {{.Node.Hostname}}
-    127.0.0.1 etcd.giantswarm
 - path: /srv/10-calico.conf
   owner: root
   permissions: 0755
