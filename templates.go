@@ -1384,6 +1384,9 @@ coreos:
 
       [Service]
       ExecStart=/opt/bin/decrypt-tls-assets
+
+      [Install]
+      WantedBy=multi-user.target
   {{range .Units}}- name: {{.Metadata.Name}}
     enable: {{.Metadata.Enable}}
     command: {{.Metadata.Command}}
