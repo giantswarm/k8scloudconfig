@@ -1375,15 +1375,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  - name: decrypt-tls-certs.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Decrypt TLS certificates
-
-      [Service]
-      ExecStart=/opt/bin/decrypt-tls-assets
   {{range .Units}}- name: {{.Metadata.Name}}
     enable: {{.Metadata.Enable}}
     command: {{.Metadata.Command}}
