@@ -2,7 +2,7 @@ package cloudconfig
 
 const (
 	MasterTemplate = `#cloud-config
-hostname: {{.Node.Hostname}}
+hostname: "{{.Node.Hostname}}"
 write_files:
 - path: /etc/resolv.conf
   permissions: 0644
@@ -952,7 +952,7 @@ coreos:
 `
 
 	WorkerTemplate = `#cloud-config
-hostname: {{.Node.Hostname}}
+hostname: "{{.Node.Hostname}}"
 write_files:
 - path: /srv/10-calico.conf
   owner: root
