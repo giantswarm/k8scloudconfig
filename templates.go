@@ -468,7 +468,6 @@ coreos:
       [Unit]
       Description=Set ownership to etcd2 data dir
       Wants=network-online.target
-      After=etc-kubernetes-data-etcd.mount
 
       [Service]
       Type=oneshot
