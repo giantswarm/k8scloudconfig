@@ -455,6 +455,12 @@ write_files:
 
 coreos:
   units:
+  {{range .Units}}- name: {{.Metadata.Name}}
+    enable: {{.Metadata.Enable}}
+    command: {{.Metadata.Command}}
+    content: |
+      {{range .Content}}{{.}}
+      {{end}}{{end}}
   - name: set-ownership-etcd-data-dir.service
     enable: true
     command: start
@@ -942,12 +948,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  {{range .Units}}- name: {{.Metadata.Name}}
-    enable: {{.Metadata.Enable}}
-    command: {{.Metadata.Command}}
-    content: |
-      {{range .Content}}{{.}}
-      {{end}}{{end}}
   update:
     reboot-strategy: off
 `
@@ -1070,6 +1070,12 @@ write_files:
 
 coreos:
   units:
+  {{range .Units}}- name: {{.Metadata.Name}}
+    enable: {{.Metadata.Enable}}
+    command: {{.Metadata.Command}}
+    content: |
+      {{range .Content}}{{.}}
+      {{end}}{{end}}
   - name: update-engine.service
     enable: false
     command: stop
@@ -1379,12 +1385,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  {{range .Units}}- name: {{.Metadata.Name}}
-    enable: {{.Metadata.Enable}}
-    command: {{.Metadata.Command}}
-    content: |
-      {{range .Content}}{{.}}
-      {{end}}{{end}}
   update:
     reboot-strategy: off
 `
