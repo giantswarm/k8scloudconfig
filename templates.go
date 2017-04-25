@@ -860,8 +860,8 @@ coreos:
     content: |
       [Unit]
       Description=Kubernetes Addons
-      Wants=k8s-scheduler.service
-      After=k8s-scheduler.service
+      Wants=k8s-api-server.service
+      After=k8s-api-server.service
       [Service]
       Type=oneshot
       EnvironmentFile=/etc/network-environment
