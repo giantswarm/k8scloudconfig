@@ -529,9 +529,9 @@ coreos:
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-crt.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
-      ExecStart=/usr/bin/etcd2 --advertise-client-urls=https://0.0.0.0:2379 \
+      ExecStart=/usr/bin/etcd2 --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:2379 \
                                --data-dir=/etc/kubernetes/data/etcd/ \
-                               --initial-advertise-peer-urls=https://0.0.0.0:2380 \
+                               --initial-advertise-peer-urls=https://127.0.0.1:2380 \
                                --listen-client-urls=https://0.0.0.0:2379 \
                                --listen-peer-urls=https://${DEFAULT_IPV4}:2380 \
                                --initial-cluster-token k8s-etcd-cluster \
