@@ -4,12 +4,6 @@ const (
 	MasterTemplate = `#cloud-config
 hostname: "{{.Node.Hostname}}"
 write_files:
-- path: /etc/resolv.conf
-  permissions: 0644
-  owner: root
-  content: |
-    nameserver 8.8.8.8
-    nameserver 8.8.4.4
 - path: /srv/kubedns-dep.yaml
   owner: root
   permissions: 0644
@@ -975,12 +969,6 @@ write_files:
             "k8s_certificate_authority": "/etc/kubernetes/ssl/calico/client-ca.pem"
         }
     }
-- path: /etc/resolv.conf
-  permissions: 0644
-  owner: root
-  content: |
-    nameserver 8.8.8.8
-    nameserver 8.8.4.4
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644
