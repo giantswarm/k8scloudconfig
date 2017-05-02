@@ -453,7 +453,8 @@ write_files:
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerKey}}
 
-{{range .Files}}- path: {{.Metadata.Path}}
+{{range .Files}}
+- path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
   permissions: {{printf "%#o" .Metadata.Permissions}}
   content: |
@@ -1088,7 +1089,8 @@ write_files:
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerKey}}
 
-{{range .Files}}- path: {{.Metadata.Path}}
+{{range .Files}}
+- path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
   permissions: {{printf "%#o" .Metadata.Permissions}}
   content: |
