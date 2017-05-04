@@ -429,6 +429,18 @@ write_files:
   encoding: gzip+base64
   content: {{.TLSAssets.APIServerKey}}
 
+- path: /etc/kubernetes/ssl/service-account-crt.pem.enc
+  encoding: gzip+base64
+  content: {{.TLSAssets.ServiceAccountCrt}}
+
+- path: /etc/kubernetes/ssl/service-account-ca.pem.enc
+  encoding: gzip+base64
+  content: {{.TLSAssets.ServiceAccountCA}}
+
+- path: /etc/kubernetes/ssl/service-account-key.pem.enc
+  encoding: gzip+base64
+  content: {{.TLSAssets.ServiceAccountKey}}
+
 - path: /etc/kubernetes/ssl/calico/client-crt.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.CalicoClientCrt}}
