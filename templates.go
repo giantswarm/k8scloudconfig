@@ -1090,15 +1090,15 @@ write_files:
   encoding: gzip+base64
   content: {{.TLSAssets.CalicoClientKey}}
 
-- path: /etc/kubernetes/ssl/etcd/server-crt.pem.enc
+- path: /etc/kubernetes/ssl/etcd/client-crt.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerCrt}}
 
-- path: /etc/kubernetes/ssl/etcd/server-ca.pem.enc
+- path: /etc/kubernetes/ssl/etcd/client-ca.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerCA}}
 
-- path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
+- path: /etc/kubernetes/ssl/etcd/client-key.pem.enc
   encoding: gzip+base64
   content: {{.TLSAssets.EtcdServerKey}}
 
