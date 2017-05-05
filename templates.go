@@ -799,7 +799,7 @@ coreos:
       --v=2 \
       --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml \
       --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem \
-      --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
+      --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
   - name: k8s-controller-manager-restart.service
