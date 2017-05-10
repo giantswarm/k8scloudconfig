@@ -11,11 +11,11 @@ import (
 )
 
 type CloudConfigTemplateParams struct {
-	Cluster   clustertpr.Cluster
-	Node      node.Node
-	TLSAssets CompactTLSAssets
-	Files     []FileAsset
-	Units     []UnitAsset
+	Cluster     clustertpr.Cluster
+	Node        node.Node
+	MasterFiles []FileAsset
+	WorkerFiles []FileAsset
+	Units       []UnitAsset
 }
 
 type CloudConfig struct {
@@ -26,7 +26,12 @@ type CloudConfig struct {
 }
 
 func NewCloudConfig(template string, params CloudConfigTemplateParams, extension OperatorExtension) (*CloudConfig, error) {
-	files, err := extension.Files()
+	masterFiles, err := extension.MasterFiles()
+	if err != nil {
+		return nil, err
+	}
+
+	workerFiles, err := extension.WorkerFiles()
 	if err != nil {
 		return nil, err
 	}
@@ -36,7 +41,8 @@ func NewCloudConfig(template string, params CloudConfigTemplateParams, extension
 		return nil, err
 	}
 
-	params.Files = files
+	params.MasterFiles = masterFiles
+	params.WorkerFiles = workerFiles
 	params.Units = units
 
 	return &CloudConfig{
