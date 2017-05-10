@@ -31,7 +31,8 @@ type UnitAsset struct {
 }
 
 type OperatorExtension interface {
-	Files() ([]FileAsset, error)
+	MasterFiles() ([]FileAsset, error)
+	WorkerFiles() ([]FileAsset, error)
 	Units() ([]UnitAsset, error)
 }
 
