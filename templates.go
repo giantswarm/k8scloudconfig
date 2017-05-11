@@ -417,54 +417,6 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
-- path: /etc/kubernetes/ssl/apiserver-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCrt}}
-
-- path: /etc/kubernetes/ssl/apiserver-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.APIServerCA}}
-
-- path: /etc/kubernetes/ssl/apiserver-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.APIServerKey}}
-
-- path: /etc/kubernetes/ssl/service-account-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.ServiceAccountCrt}}
-
-- path: /etc/kubernetes/ssl/service-account-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.ServiceAccountCA}}
-
-- path: /etc/kubernetes/ssl/service-account-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.ServiceAccountKey}}
-
-- path: /etc/kubernetes/ssl/calico/client-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCrt}}
-
-- path: /etc/kubernetes/ssl/calico/client-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCA}}
-
-- path: /etc/kubernetes/ssl/calico/client-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientKey}}
-
-- path: /etc/kubernetes/ssl/etcd/server-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCrt}}
-
-- path: /etc/kubernetes/ssl/etcd/server-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCA}}
-
-- path: /etc/kubernetes/ssl/etcd/server-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerKey}}
-
 {{range .Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
@@ -1069,42 +1021,6 @@ write_files:
           echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
           sleep 5
       done
-
-- path: /etc/kubernetes/ssl/worker-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.WorkerCrt}}
-
-- path: /etc/kubernetes/ssl/worker-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.WorkerCA}}
-
-- path: /etc/kubernetes/ssl/worker-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.WorkerKey}}
-
-- path: /etc/kubernetes/ssl/calico/client-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCrt}}
-
-- path: /etc/kubernetes/ssl/calico/client-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientCA}}
-
-- path: /etc/kubernetes/ssl/calico/client-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.CalicoClientKey}}
-
-- path: /etc/kubernetes/ssl/etcd/client-crt.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCrt}}
-
-- path: /etc/kubernetes/ssl/etcd/client-ca.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerCA}}
-
-- path: /etc/kubernetes/ssl/etcd/client-key.pem.enc
-  encoding: gzip+base64
-  content: {{.TLSAssets.EtcdServerKey}}
 
 {{range .Files}}
 - path: {{.Metadata.Path}}
