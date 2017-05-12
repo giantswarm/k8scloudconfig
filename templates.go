@@ -417,6 +417,13 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
+- path: /etc/ssh/sshd_config
+  owner: root
+  permissions: 0600
+    ClientAliveCountMax 2
+    MaxAuthTries 3
+    PermitRootLogin no
+
 {{range .Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
