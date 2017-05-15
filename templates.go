@@ -421,6 +421,15 @@ write_files:
   owner: root
   permissions: 0600
   content: |
+    # Use most defaults for sshd configuration.
+    UsePrivilegeSeparation sandbox
+    Subsystem sftp internal-sftp
+    ClientAliveInterval 180
+    UseDNS no
+    UsePAM yes
+    PrintLastLog no # handled by PAM
+    PrintMotd no # handled by PAM
+    # Non defaults (#100)
     ClientAliveCountMax 2
     MaxAuthTries 3
     PermitRootLogin no
@@ -1034,6 +1043,15 @@ write_files:
   owner: root
   permissions: 0600
   content: |
+    # Use most defaults for sshd configuration.
+    UsePrivilegeSeparation sandbox
+    Subsystem sftp internal-sftp
+    ClientAliveInterval 180
+    UseDNS no
+    UsePAM yes
+    PrintLastLog no # handled by PAM
+    PrintMotd no # handled by PAM
+    # Non defaults (#100)
     ClientAliveCountMax 2
     MaxAuthTries 3
     PermitRootLogin no
