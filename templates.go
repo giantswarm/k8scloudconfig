@@ -499,8 +499,8 @@ coreos:
     content: |
       [Unit]
       Description=etcd2
-      Requires=wait-for-domains.service k8s-setup-network-env.service
-      After=wait-for-domains.service k8s-setup-network-env.service
+      Requires=k8s-setup-network-env.service
+      After=k8s-setup-network-env.service
       Conflicts=etcd.service
       Wants=calico-node.service
       StartLimitIntervalSec=0
