@@ -322,14 +322,15 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      until nslookup {{.Cluster.Etcd.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Etcd.Domain}} to be available"
-          sleep 5
-      done
+      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
 
-      until nslookup {{.Cluster.Kubernetes.API.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
-          sleep 5
+      for domain in $domains; do
+        until nslookup $domain; do
+            echo "Waiting for domain $domain to be available"
+            sleep 5
+        done
+
+        echo "Successfully resolved domain $domain"
       done
 - path: /opt/k8s-addons
   permissions: 0544
@@ -1012,14 +1013,15 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      until nslookup {{.Cluster.Etcd.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Etcd.Domain}} to be available"
-          sleep 5
-      done
+      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
 
-      until nslookup {{.Cluster.Kubernetes.API.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
-          sleep 5
+      for domain in $domains; do
+        until nslookup $domain; do
+            echo "Waiting for domain $domain to be available"
+            sleep 5
+        done
+
+        echo "Successfully resolved domain $domain"
       done
 
 {{range .Files}}
