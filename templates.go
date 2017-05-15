@@ -420,6 +420,7 @@ write_files:
 - path: /etc/ssh/sshd_config
   owner: root
   permissions: 0600
+  content: |
     ClientAliveCountMax 2
     MaxAuthTries 3
     PermitRootLogin no
@@ -1028,6 +1029,14 @@ write_files:
           echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
           sleep 5
       done
+
+- path: /etc/ssh/sshd_config
+  owner: root
+  permissions: 0600
+  content: |
+    ClientAliveCountMax 2
+    MaxAuthTries 3
+    PermitRootLogin no
 
 {{range .Files}}
 - path: {{.Metadata.Path}}
