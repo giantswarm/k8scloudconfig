@@ -431,8 +431,7 @@ write_files:
     PrintMotd no # handled by PAM
     # Non defaults (#100)
     ClientAliveCountMax 2
-    MaxAuthTries 3
-    PermitRootLogin no
+    PasswordAuthentication no
 
 {{range .Files}}
 - path: {{.Metadata.Path}}
@@ -1053,8 +1052,7 @@ write_files:
     PrintMotd no # handled by PAM
     # Non defaults (#100)
     ClientAliveCountMax 2
-    MaxAuthTries 3
-    PermitRootLogin no
+    PasswordAuthentication no
 
 {{range .Files}}
 - path: {{.Metadata.Path}}
