@@ -570,8 +570,8 @@ coreos:
     content: |
       [Unit]
       Description=Calico per-host agent
-      Requires=etcd2.service
-      After=etcd2.service
+      Requires=etcd2.service wait-for-domains.service
+      After=etcd2.service wait-for-domains.service
       Wants=k8s-api-server.service k8s-controller-manager.service k8s-scheduler.service
       StartLimitIntervalSec=0
 
