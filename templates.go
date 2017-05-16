@@ -418,6 +418,22 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
+- path: /etc/ssh/sshd_config
+  owner: root
+  permissions: 0600
+  content: |
+    # Use most defaults for sshd configuration.
+    UsePrivilegeSeparation sandbox
+    Subsystem sftp internal-sftp
+    ClientAliveInterval 180
+    UseDNS no
+    UsePAM yes
+    PrintLastLog no # handled by PAM
+    PrintMotd no # handled by PAM
+    # Non defaults (#100)
+    ClientAliveCountMax 2
+    PasswordAuthentication no
+
 {{range .Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
@@ -1024,6 +1040,22 @@ write_files:
 
         echo "Successfully resolved domain $domain"
       done
+
+- path: /etc/ssh/sshd_config
+  owner: root
+  permissions: 0600
+  content: |
+    # Use most defaults for sshd configuration.
+    UsePrivilegeSeparation sandbox
+    Subsystem sftp internal-sftp
+    ClientAliveInterval 180
+    UseDNS no
+    UsePAM yes
+    PrintLastLog no # handled by PAM
+    PrintMotd no # handled by PAM
+    # Non defaults (#100)
+    ClientAliveCountMax 2
+    PasswordAuthentication no
 
 {{range .Files}}
 - path: {{.Metadata.Path}}
