@@ -322,14 +322,15 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      until nslookup {{.Cluster.Etcd.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Etcd.Domain}} to be available"
-          sleep 5
-      done
+      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
 
-      until nslookup {{.Cluster.Kubernetes.API.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
-          sleep 5
+      for domain in $domains; do
+        until nslookup $domain; do
+            echo "Waiting for domain $domain to be available"
+            sleep 5
+        done
+
+        echo "Successfully resolved domain $domain"
       done
 - path: /opt/k8s-addons
   permissions: 0544
@@ -436,6 +437,7 @@ write_files:
 {{range .Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
+  encoding: {{.Metadata.Encoding}}
   permissions: {{printf "%#o" .Metadata.Permissions}}
   content: |
     {{range .Content}}{{.}}
@@ -514,8 +516,8 @@ coreos:
     content: |
       [Unit]
       Description=etcd2
-      Requires=wait-for-domains.service k8s-setup-network-env.service
-      After=wait-for-domains.service k8s-setup-network-env.service
+      Requires=k8s-setup-network-env.service
+      After=k8s-setup-network-env.service
       Conflicts=etcd.service
       Wants=calico-node.service
       StartLimitIntervalSec=0
@@ -585,8 +587,8 @@ coreos:
     content: |
       [Unit]
       Description=Calico per-host agent
-      Requires=etcd2.service
-      After=etcd2.service
+      Requires=etcd2.service wait-for-domains.service
+      After=etcd2.service wait-for-domains.service
       Wants=k8s-api-server.service k8s-controller-manager.service k8s-scheduler.service
       StartLimitIntervalSec=0
 
@@ -1028,14 +1030,15 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      until nslookup {{.Cluster.Etcd.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Etcd.Domain}} to be available"
-          sleep 5
-      done
+      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
 
-      until nslookup {{.Cluster.Kubernetes.API.Domain}}; do
-          echo "Waiting for domain {{.Cluster.Kubernetes.API.Domain}} to be available"
-          sleep 5
+      for domain in $domains; do
+        until nslookup $domain; do
+            echo "Waiting for domain $domain to be available"
+            sleep 5
+        done
+
+        echo "Successfully resolved domain $domain"
       done
 
 - path: /etc/ssh/sshd_config
@@ -1057,6 +1060,7 @@ write_files:
 {{range .Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
+  encoding: {{.Metadata.Encoding}}
   permissions: {{printf "%#o" .Metadata.Permissions}}
   content: |
     {{range .Content}}{{.}}
