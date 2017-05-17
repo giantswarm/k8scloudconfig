@@ -1200,10 +1200,8 @@ coreos:
       ExecStartPre=/bin/bash -c "while ! curl --output /dev/null --silent --fail --cacert /etc/kubernetes/ssl/calico/client-ca.pem --cert /etc/kubernetes/ssl/calico/client-crt.pem --key /etc/kubernetes/ssl/calico/client-key.pem https://{{ .Cluster.Etcd.Domain }}:2379/version; do sleep 1 && echo 'Waiting for etcd master to be responsive'; done"
       ExecStartPre=/opt/bin/calicoctl pool add {{.Cluster.Calico.Subnet}}/{{.Cluster.Calico.CIDR}} --ipip --nat-outgoing
       ExecStart=/opt/bin/calicoctl node --ip=${DEFAULT_IPV4} --detach=false --node-image=giantswarm/node:v0.22.0
-      ExecStartPost=/bin/bash -c "/usr/bin/etcdctl --endpoints=https://{{ .Cluster.Etcd.Domain }}:2379 --ca-file=/etc/kubernetes/ssl/calico/client-ca.pem --cert-file=/etc/kubernetes/ssl/calico/client-crt.pem --key-file=/etc/kubernetes/ssl/calico/client-key.pem set /calico/v1/host/{{.Node.Hostname}}-flannel/bird_ip $BRIDGE_IP"
       ExecStop=/opt/bin/calicoctl node stop --force
       ExecStopPost=/bin/bash -c "find /tmp/ -name '_MEI*' | xargs -I {} rm -rf {}"
-      ExecStopPost=/usr/bin/etcdctl --endpoints=https://{{ .Cluster.Etcd.Domain }}:2379 --ca-file=/etc/kubernetes/ssl/calico/client-ca.pem --cert-file=/etc/kubernetes/ssl/calico/client-crt.pem --key-file=/etc/kubernetes/ssl/calico/client-key.pem rm /calico/v1/host/{{.Node.Hostname}}-flannel/bird_ip
 
       [Install]
       WantedBy=multi-user.target
