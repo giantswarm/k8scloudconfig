@@ -226,6 +226,19 @@ write_files:
       - port: 8000
       selector:
         app: fallback-server
+- path: /srv/ingress-controller-cm.yml
+  owner: root
+  permissions: 0644
+  content: |
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: ingress-nginx
+      labels:
+      k8s-addon: ingress-nginx.addons.k8s.io
+    data:
+      server-name-hash-bucket-size: "1024"
+      server-name-hash-max-size: "1024"
 - path: /srv/ingress-controller-dep.yml
   owner: root
   permissions: 0644
@@ -271,10 +284,11 @@ write_files:
         spec:
           containers:
           - name: ingress-controller
-            image: gcr.io/google_containers/nginx-ingress-controller:0.8.3
+            image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.5
             args:
             - /nginx-ingress-controller
             - --default-backend-service=kube-system/fallback-server
+	    - --configmap=$(POD_NAMESPACE)/ingress-nginx
             env:
               - name: POD_NAME
                 valueFrom:
@@ -365,6 +379,10 @@ write_files:
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
 
       echo "K8S: Ingress Controller"
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/ingress-controller-cm.yml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/configmaps"
       curl -H "Content-Type: application/yaml" \
         -XPOST -d"$(cat /srv/ingress-controller-dep.yml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
