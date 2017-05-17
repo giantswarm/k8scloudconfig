@@ -330,9 +330,13 @@ write_files:
       - name: http
         port: 80
         nodePort: 30010
+	protocol: TCP
+	targetPort: 80
       - name: https
-        port: 443
+        port: 442
         nodePort: 30011
+	protocol: TCP
+	targetPort: 442
       selector:
         app: ingress-controller
 - path: /opt/wait-for-domains
