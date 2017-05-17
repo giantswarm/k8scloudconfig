@@ -291,7 +291,7 @@ write_files:
             args:
             - /nginx-ingress-controller
             - --default-backend-service=kube-system/fallback-server
-	    - --configmap=$(POD_NAMESPACE)/ingress-nginx
+            - --configmap=$(POD_NAMESPACE)/ingress-nginx
             env:
               - name: POD_NAME
                 valueFrom:
@@ -330,13 +330,13 @@ write_files:
       - name: http
         port: 80
         nodePort: 30010
-	protocol: TCP
-	targetPort: 80
+  protocol: TCP
+  targetPort: 80
       - name: https
         port: 442
         nodePort: 30011
-	protocol: TCP
-	targetPort: 442
+  protocol: TCP
+  targetPort: 442
       selector:
         app: ingress-controller
 - path: /opt/wait-for-domains
