@@ -250,6 +250,9 @@ write_files:
       namespace: kube-system
       labels:
         app: ingress-controller
+      annotations:
+        prometheus.io/port: '10254'
+        prometheus.io/scrape: 'true'
     spec:
       replicas: 3
       strategy:
