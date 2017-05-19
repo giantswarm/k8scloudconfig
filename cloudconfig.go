@@ -70,3 +70,7 @@ func (c *CloudConfig) Base64() string {
 
 	return base64.StdEncoding.EncodeToString(b.Bytes())
 }
+
+func (c *CloudConfig) String() string {
+	return c.config
+}
