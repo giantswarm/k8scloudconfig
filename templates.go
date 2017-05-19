@@ -2,7 +2,6 @@ package cloudconfig
 
 const (
 	MasterTemplate = `#cloud-config
-hostname: "{{.Node.Hostname}}"
 write_files:
 - path: /srv/kubedns-dep.yaml
   owner: root
@@ -984,7 +983,6 @@ coreos:
 `
 
 	WorkerTemplate = `#cloud-config
-hostname: "{{.Node.Hostname}}"
 write_files:
 - path: /srv/10-calico.conf
   owner: root
@@ -1359,7 +1357,7 @@ coreos:
       --register-node=true \
       --allow-privileged=true \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
-      --node-labels="kubernetes.io/hostname={{.Node.Hostname}},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+      --node-labels="kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
