@@ -8,18 +8,18 @@ import (
 func TestCloudConfig(t *testing.T) {
 	tests := []struct {
 		template  string
-		params    CloudConfigTemplateParams
-		extension OperatorExtension
+		params    Params
+		extension Extension
 	}{
 		{
 			template:  MasterTemplate,
-			params:    CloudConfigTemplateParams{},
-			extension: &FakeOperatorExtension{},
+			params:    Params{},
+			extension: &FakeExtension{},
 		},
 		{
 			template:  WorkerTemplate,
-			params:    CloudConfigTemplateParams{},
-			extension: &FakeOperatorExtension{},
+			params:    Params{},
+			extension: &FakeExtension{},
 		},
 	}
 

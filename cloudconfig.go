@@ -10,7 +10,7 @@ import (
 	"github.com/giantswarm/clustertpr/node"
 )
 
-type CloudConfigTemplateParams struct {
+type Params struct {
 	Cluster clustertpr.Cluster
 	Node    node.Node
 	Files   []FileAsset
@@ -19,12 +19,12 @@ type CloudConfigTemplateParams struct {
 
 type CloudConfig struct {
 	config    string
-	extension OperatorExtension
-	params    CloudConfigTemplateParams
+	extension Extension
+	params    Params
 	template  string
 }
 
-func NewCloudConfig(template string, params CloudConfigTemplateParams, extension OperatorExtension) (*CloudConfig, error) {
+func NewCloudConfig(template string, params Params, extension Extension) (*CloudConfig, error) {
 	files, err := extension.Files()
 	if err != nil {
 		return nil, err
@@ -69,4 +69,8 @@ func (c *CloudConfig) Base64() string {
 	w.Close()
 
 	return base64.StdEncoding.EncodeToString(b.Bytes())
+}
+
+func (c *CloudConfig) String() string {
+	return c.config
 }
