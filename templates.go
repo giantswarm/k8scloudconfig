@@ -710,7 +710,6 @@ coreos:
       $IMAGE \
       /hyperkube apiserver \
       --allow_privileged=true \
-      --runtime_config=api/v1 \
       --insecure_bind_address=0.0.0.0 \
       --insecure_port={{.Cluster.Kubernetes.API.InsecurePort}} \
       --kubelet_https=true \
@@ -724,7 +723,7 @@ coreos:
       --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem \
       --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem \
       --advertise-address=${DEFAULT_IPV4} \
-      --runtime-config=extensions/v1beta1/deployments=true,extensions/v1beta1/daemonsets=true,extensions/v1beta1=true,extensions/v1beta1/thirdpartyresources=true,extensions/v1beta1/networkpolicies=true,batch/v2alpha1 \
+      --runtime-config=api/all=true \
       --logtostderr=true \
       --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem \
       --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem \
