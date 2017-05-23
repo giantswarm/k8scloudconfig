@@ -3,6 +3,27 @@ package cloudconfig
 const (
 	MasterTemplate = `#cloud-config
 write_files:
+- path: /srv/10-calico.conf
+  owner: root
+  permissions: 0755
+  content: |
+    {
+        "name": "calico-k8s-network",
+        "type": "calico",
+        "etcd_endpoints": "https://{{ .Cluster.Etcd.Domain }}:2379",
+        "log_level": "info",
+        "ipam": {
+            "type": "calico-ipam"
+        },
+        "mtu": {{.Cluster.Calico.MTU}},
+        "policy": {
+            "type": "k8s",
+            "k8s_api_root": "https://{{.Cluster.Kubernetes.API.Domain}}/api/v1/",
+            "k8s_client_certificate": "/etc/kubernetes/ssl/calico/client-crt.pem",
+            "k8s_client_key": "/etc/kubernetes/ssl/calico/client-key.pem",
+            "k8s_certificate_authority": "/etc/kubernetes/ssl/calico/client-ca.pem"
+        }
+    }
 - path: /srv/kubedns-dep.yaml
   owner: root
   permissions: 0644
@@ -668,7 +689,7 @@ coreos:
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStartPre=/bin/sh -c "while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/worker-ca.pem --cert /etc/kubernetes/ssl/worker-crt.pem --key /etc/kubernetes/ssl/worker-key.pem https://{{.Cluster.Kubernetes.API.Domain}}; do sleep 1 && echo 'Waiting for master'; done"
+      ExecStartPre=/bin/sh -c "while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem https://{{.Cluster.Kubernetes.API.Domain}}; do sleep 1 && echo 'Waiting for master'; done"
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --net=host --privileged=true \
       --name $NAME \
       -v /usr/share/ca-certificates:/etc/ssl/certs \
@@ -731,6 +752,12 @@ coreos:
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
+      ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d/ /opt/cni/bin/
+      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico https://github.com/projectcalico/cni-plugin/releases/download/v1.8.3/calico
+      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico
+      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico-ipam https://github.com/projectcalico/cni-plugin/releases/download/v1.8.3/calico-ipam
+      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico-ipam
+      ExecStartPre=-/usr/bin/cp /srv/10-calico.conf /etc/kubernetes/cni/net.d/10-calico.conf
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
       -v /:/rootfs:ro \
       -v /sys:/sys:ro \
