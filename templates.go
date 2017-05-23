@@ -605,6 +605,165 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+  - name: k8s-proxy.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=k8s-proxy
+      Requires=calico-node.service
+      After=calico-node.service
+      StartLimitIntervalSec=0
+
+      [Service]
+      Restart=always
+      RestartSec=0
+      TimeoutStopSec=10
+      EnvironmentFile=/etc/network-environment
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
+      Environment="NAME=%p.service"
+      Environment="NETWORK_CONFIG_CONTAINER="
+      ExecStartPre=/usr/bin/docker pull $IMAGE
+      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
+      ExecStartPre=-/usr/bin/docker rm -f $NAME
+      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/worker-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/worker-ca.pem to be written' && sleep 1; done"
+      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/worker-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/worker-crt.pem to be written' && sleep 1; done"
+      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/worker-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/worker-key.pem to be written' && sleep 1; done"
+      ExecStartPre=/bin/sh -c "while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/worker-ca.pem --cert /etc/kubernetes/ssl/worker-crt.pem --key /etc/kubernetes/ssl/worker-key.pem https://{{.Cluster.Kubernetes.API.Domain}}; do sleep 1 && echo 'Waiting for master'; done"
+      ExecStart=/bin/sh -c "/usr/bin/docker run --rm --net=host --privileged=true \
+      --name $NAME \
+      -v /usr/share/ca-certificates:/etc/ssl/certs \
+      -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
+      -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
+      $IMAGE \
+      /hyperkube proxy \
+      --master=https://{{.Cluster.Kubernetes.API.Domain}} \
+      --proxy-mode=iptables \
+      --logtostderr=true \
+      --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml \
+      --v=2"
+      ExecStop=-/usr/bin/docker stop -t 10 $NAME
+      ExecStopPost=-/usr/bin/docker rm -f $NAME
+  - name: k8s-proxy-restart.service
+    enable: true
+    content: |
+      [Unit]
+      Description=k8s-proxy-restart
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=/usr/bin/systemctl stop k8s-proxy.service
+      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-proxy.service; do sleep 1 && echo waiting for k8s-proxy to stop; done'
+      ExecStart=/usr/bin/systemctl start k8s-proxy.service
+
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-proxy-restart.timer
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=Timer
+
+      [Timer]
+      OnCalendar=15:00
+      Unit=k8s-proxy-restart.service
+
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-kubelet.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=k8s-kubelet
+      Requires=calico-node.service
+      After=calico-node.service
+      StartLimitIntervalSec=0
+
+      [Service]
+      Restart=always
+      RestartSec=0
+      TimeoutStopSec=10
+      EnvironmentFile=/etc/network-environment
+      Environment="IMAGE={{.Cluster.Kubernetes.Hyperkube.Docker.Image}}"
+      Environment="NAME=%p.service"
+      Environment="NETWORK_CONFIG_CONTAINER="
+      ExecStartPre=/usr/bin/docker pull $IMAGE
+      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
+      ExecStartPre=-/usr/bin/docker rm -f $NAME
+      ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
+      -v /:/rootfs:ro \
+      -v /sys:/sys:ro \
+      -v /run/calico/:/run/calico/:rw \
+      -v /run/docker/:/run/docker/:rw \
+      -v /run/docker.sock:/run/docker.sock:rw \
+      -v /usr/lib/os-release:/etc/os-release \
+      -v /usr/share/ca-certificates/:/etc/ssl/certs \
+      -v /var/lib/docker/:/var/lib/docker:rw \
+      -v /var/lib/kubelet/:/var/lib/kubelet:rw,rslave \
+      -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
+      -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
+      -v /etc/kubernetes/cni/:/etc/kubernetes/cni/ \
+      -v /opt/cni/bin/calico:/opt/cni/bin/calico \
+      -v /opt/cni/bin/calico-ipam:/opt/cni/bin/calico-ipam \
+      -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem \
+      -e ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/client-crt.pem \
+      -e ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/client-key.pem \
+      --name $NAME \
+      $IMAGE \
+      /hyperkube kubelet \
+      --address=${DEFAULT_IPV4} \
+      --port={{.Cluster.Kubernetes.Kubelet.Port}} \
+      --hostname-override=${DEFAULT_IPV4} \
+      --node-ip=${DEFAULT_IPV4} \
+      --api-servers=https://{{.Cluster.Kubernetes.API.Domain}} \
+      --containerized \
+      --enable-server \
+      --logtostderr=true \
+      --machine-id-file=/rootfs/etc/machine-id \
+      --cadvisor-port=4194 \
+      --healthz-bind-address=${DEFAULT_IPV4} \
+      --healthz-port=10248 \
+      --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
+      --cluster-domain={{.Cluster.Kubernetes.Domain}} \
+      --network-plugin-dir=/etc/kubernetes/cni/net.d \
+      --network-plugin=cni \
+      --register-node=true \
+      --register-schedulable=false \
+      --allow-privileged=true \
+      --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
+      --node-labels="role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+      --v=2"
+      ExecStop=-/usr/bin/docker stop -t 10 $NAME
+      ExecStopPost=-/usr/bin/docker rm -f $NAME
+  - name: k8s-kubelet-restart.service
+    enable: true
+    content: |
+      [Unit]
+      Description=k8s-kubelet-restart
+
+      [Service]
+      Type=oneshot
+      ExecStartPre=/usr/bin/systemctl stop k8s-kubelet.service
+      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-kubelet.service; do sleep 1 && echo waiting for k8s-kubelet to stop; done'
+      ExecStart=/usr/bin/systemctl start k8s-kubelet.service
+
+      [Install]
+      WantedBy=multi-user.target
+  - name: kubelet-restart.timer
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=Timer
+
+      [Timer]
+      OnCalendar=15:00
+      Unit=k8s-kubelet-restart.service
+
+      [Install]
+      WantedBy=multi-user.target
   # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
   # Or at least use anything which doesn't download binaries in systemd unit...
   - name: calico-node.service
