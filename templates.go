@@ -3,27 +3,6 @@ package cloudconfig
 const (
 	MasterTemplate = `#cloud-config
 write_files:
-- path: /srv/10-calico.conf
-  owner: root
-  permissions: 0755
-  content: |
-    {
-        "name": "calico-k8s-network",
-        "type": "calico",
-        "etcd_endpoints": "https://{{ .Cluster.Etcd.Domain }}:2379",
-        "log_level": "info",
-        "ipam": {
-            "type": "calico-ipam"
-        },
-        "mtu": {{.Cluster.Calico.MTU}},
-        "policy": {
-            "type": "k8s",
-            "k8s_api_root": "https://{{.Cluster.Kubernetes.API.Domain}}/api/v1/",
-            "k8s_client_certificate": "/etc/kubernetes/ssl/calico/client-crt.pem",
-            "k8s_client_key": "/etc/kubernetes/ssl/calico/client-key.pem",
-            "k8s_certificate_authority": "/etc/kubernetes/ssl/calico/client-ca.pem"
-        }
-    }
 - path: /srv/kubedns-dep.yaml
   owner: root
   permissions: 0644
@@ -166,17 +145,6 @@ write_files:
       - name: dns-tcp
         port: 53
         protocol: TCP
-- path: /srv/calico-system.json
-  owner: root
-  permissions: 0644
-  content: |
-    {
-      "apiVersion": "v1",
-      "kind": "Namespace",
-      "metadata": {
-        "name": "calico-system"
-      }
-    }
 - path: /srv/network-policy.json
   owner: root
   permissions: 0644
@@ -378,6 +346,32 @@ write_files:
   content: |
       #!/bin/bash
       while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem "https://{{.Cluster.Kubernetes.API.Domain}}:443"; do sleep 1 && echo 'Waiting for master'; done
+
+      echo "K8S: Calico node config map"
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/calico-configmap.yaml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/configmaps"
+      echo "K8S: Calico node ServiceAccount"
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/calico-node-sa.yaml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/serviceaccounts"
+      echo "K8S: Calico policy controller ServiceAccount"
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/calico-policy-controller-sa.yaml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/serviceaccounts"
+      echo "K8S: Calico node ds"
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/calico-ds.yaml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/daemonsets"
+      echo "K8S: Calico policy "
+      curl -H "Content-Type: application/json" \
+        -XPOST -d"$(cat /srv/calico-system.json)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/"
 
       echo "K8S: DNS addons"
       curl -H "Content-Type: application/yaml" \
@@ -608,7 +602,6 @@ coreos:
       Requires=k8s-setup-network-env.service
       After=k8s-setup-network-env.service
       Conflicts=etcd.service
-      Wants=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -674,8 +667,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-proxy
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -737,8 +728,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-kubelet
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -752,12 +741,6 @@ coreos:
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d/ /opt/cni/bin/
-      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico https://github.com/projectcalico/cni-plugin/releases/download/v1.8.3/calico
-      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico
-      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico-ipam https://github.com/projectcalico/cni-plugin/releases/download/v1.8.3/calico-ipam
-      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico-ipam
-      ExecStartPre=-/usr/bin/cp /srv/10-calico.conf /etc/kubernetes/cni/net.d/10-calico.conf
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
       -v /:/rootfs:ro \
       -v /sys:/sys:ro \
@@ -770,7 +753,7 @@ coreos:
       -v /var/lib/kubelet/:/var/lib/kubelet:rw,rslave \
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
-      -v /etc/kubernetes/cni/:/etc/kubernetes/cni/ \
+      -v /etc/cni/net.d/:/etc/cni/net.d/ \
       -v /opt/cni/bin/calico:/opt/cni/bin/calico \
       -v /opt/cni/bin/calico-ipam:/opt/cni/bin/calico-ipam \
       -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/server-ca.pem \
@@ -793,7 +776,6 @@ coreos:
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
       --cluster-domain={{.Cluster.Kubernetes.Domain}} \
-      --network-plugin-dir=/etc/kubernetes/cni/net.d \
       --network-plugin=cni \
       --register-node=true \
       --register-schedulable=false \
@@ -830,69 +812,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
-  # Or at least use anything which doesn't download binaries in systemd unit...
-  - name: calico-node.service
-    runtime: true
-    command: start
-    content: |
-      [Unit]
-      Description=Calico per-host agent
-      Requires=etcd2.service wait-for-domains.service
-      After=etcd2.service wait-for-domains.service
-      Wants=k8s-api-server.service k8s-controller-manager.service k8s-scheduler.service
-      StartLimitIntervalSec=0
-
-      [Service]
-      Restart=always
-      RestartSec=0
-      TimeoutStopSec=10
-      EnvironmentFile=/etc/network-environment
-      Environment="ETCD_AUTHORITY={{ .Cluster.Etcd.Domain }}:2379"
-      Environment="ETCD_SCHEME=https"
-      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/client-ca.pem"
-      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/client-crt.pem"
-      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/client-key.pem"
-      ExecStartPre=/usr/bin/wget -O /opt/bin/calicoctl https://s3-eu-west-1.amazonaws.com/downloads.giantswarm.io/calicoctl/v0.22.0/calicoctl
-      ExecStartPre=/usr/bin/chmod +x /opt/bin/calicoctl
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-ca.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-crt.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-key.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while ! curl --output /dev/null --silent --fail --cacert /etc/kubernetes/ssl/calico/client-ca.pem --cert /etc/kubernetes/ssl/calico/client-crt.pem --key /etc/kubernetes/ssl/calico/client-key.pem https://{{ .Cluster.Etcd.Domain }}:2379/version; do sleep 1 && echo 'Waiting for etcd master to be responsive'; done"
-      ExecStartPre=/opt/bin/calicoctl pool add {{.Cluster.Calico.Subnet}}/{{.Cluster.Calico.CIDR}} --ipip --nat-outgoing
-      ExecStart=/opt/bin/calicoctl node --ip=${DEFAULT_IPV4}  --detach=false --node-image=giantswarm/node:v0.22.0
-      ExecStop=/opt/bin/calicoctl node stop --force
-      ExecStopPost=/bin/bash -c "find /tmp/ -name '_MEI*' | xargs -I {} rm -rf {}"
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: calico-node-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=calico-node-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop calico-node.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet calico-node.service; do sleep 1 && echo waiting for calico-node to stop; done'
-      ExecStart=/usr/bin/systemctl start calico-node.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: calico-node-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=*-01,04,07,10-01 14:00:00
-      Unit=calico-node-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: update-engine.service
     enable: false
     command: stop
@@ -912,8 +831,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-api-server
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -988,8 +905,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-controller-manager Service
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -1050,8 +965,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-scheduler Service
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -1117,63 +1030,6 @@ coreos:
       ExecStart=/opt/k8s-addons
       [Install]
       WantedBy=multi-user.target
-  - name: k8s-policy-controller.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=k8s-policy-controller Service
-      Wants=k8s-api-server.service
-      Requires=k8s-addons.service
-      After=k8s-addons.service
-
-      [Service]
-      Restart=always
-      EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/k8s-policy-controller:v0.2.0"
-      Environment="NAME=%p.service"
-      Environment="NETWORK_CONFIG_CONTAINER="
-      ExecStartPre=/usr/bin/docker pull $IMAGE
-      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
-      ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStart=/usr/bin/docker run --rm --net=host \
-      --name $NAME \
-      -v /etc/kubernetes/ssl/calico/:/etc/kubernetes/ssl/calico/ \
-      -e ETCD_ENDPOINTS=https://{{ .Cluster.Etcd.Domain }}:2379 \
-      -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/client-ca.pem \
-      -e ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/client-crt.pem \
-      -e ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/client-key.pem \
-      -e K8S_API=http://localhost:{{.Cluster.Kubernetes.API.InsecurePort}} \
-      -e LEADER_ELECTION=true \
-      $IMAGE
-      ExecStop=-/usr/bin/docker stop -t 10 $NAME
-      ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: leader-elector.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=leader-elector Service
-      Requires=k8s-policy-controller.service
-      After=k8s-policy-controller.service
-
-      [Service]
-      Restart=always
-      EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{.Cluster.Docker.ImageNamespace}}/leader-elector:v0.1.0"
-      Environment="NAME=%p.service"
-      Environment="NETWORK_CONFIG_CONTAINER="
-      ExecStartPre=/usr/bin/docker pull $IMAGE
-      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
-      ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStart=/usr/bin/docker run --rm --net=host \
-      --name $NAME \
-      $IMAGE \
-      --election=calico-policy-election \
-      --election-namespace=calico-system \
-      --http=127.0.0.1:4040
-      ExecStop=-/usr/bin/docker stop -t 10 $NAME
-      ExecStopPost=-/usr/bin/docker rm -f $NAME
   - name: node-exporter.service
     enable: true
     command: start
@@ -1207,27 +1063,6 @@ coreos:
 
 	WorkerTemplate = `#cloud-config
 write_files:
-- path: /srv/10-calico.conf
-  owner: root
-  permissions: 0755
-  content: |
-    {
-        "name": "calico-k8s-network",
-        "type": "calico",
-        "etcd_endpoints": "https://{{ .Cluster.Etcd.Domain }}:2379",
-        "log_level": "info",
-        "ipam": {
-            "type": "calico-ipam"
-        },
-        "mtu": {{.Cluster.Calico.MTU}},
-        "policy": {
-            "type": "k8s",
-            "k8s_api_root": "https://{{.Cluster.Kubernetes.API.Domain}}/api/v1/",
-            "k8s_client_certificate": "/etc/kubernetes/ssl/calico/client-crt.pem",
-            "k8s_client_key": "/etc/kubernetes/ssl/calico/client-key.pem",
-            "k8s_certificate_authority": "/etc/kubernetes/ssl/calico/client-ca.pem"
-        }
-    }
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1375,91 +1210,18 @@ coreos:
       Environment="IMAGE={{.Cluster.Kubernetes.NetworkSetup.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
-      ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/cni/net.d/
-      ExecStartPre=-/usr/bin/cp /srv/10-calico.conf /etc/kubernetes/cni/net.d/10-calico.conf
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --net=host -v /etc:/etc --name $NAME $IMAGE
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
-  # Or at least use anything which doesn't download binaries in systemd unit...
-  - name: calico-node.service
-    runtime: true
-    command: start
-    content: |
-      [Unit]
-      Description=calicoctl node
-      Requires=k8s-setup-network-env.service
-      After=wait-for-domains.service k8s-setup-network-env.service
-      Wants=wait-for-domains.service k8s-proxy.service k8s-kubelet.service
-      StartLimitIntervalSec=0
-
-      [Service]
-      Restart=always
-      RestartSec=0
-      TimeoutStopSec=10
-      EnvironmentFile=/etc/network-environment
-      Environment="ETCD_AUTHORITY={{ .Cluster.Etcd.Domain }}:2379"
-      Environment="ETCD_SCHEME=https"
-      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/client-ca.pem"
-      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/client-crt.pem"
-      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/client-key.pem"
-      ExecStartPre=/usr/bin/mkdir -p /opt/cni/bin
-      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico https://s3-eu-west-1.amazonaws.com/downloads.giantswarm.io/calico-cni/v1.4.2/calico
-      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico
-      ExecStartPre=/usr/bin/wget -O /opt/cni/bin/calico-ipam https://s3-eu-west-1.amazonaws.com/downloads.giantswarm.io/calico-cni/v1.4.2/calico-ipam
-      ExecStartPre=/usr/bin/chmod +x /opt/cni/bin/calico-ipam
-      ExecStartPre=/usr/bin/mkdir -p /opt/bin/
-      ExecStartPre=/usr/bin/wget -O /opt/bin/calicoctl https://s3-eu-west-1.amazonaws.com/downloads.giantswarm.io/calicoctl/v0.22.0/calicoctl
-      ExecStartPre=/usr/bin/chmod +x /opt/bin/calicoctl
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-ca.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-crt.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/calico/client-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/calico/client-key.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while ! curl --output /dev/null --silent --fail --cacert /etc/kubernetes/ssl/calico/client-ca.pem --cert /etc/kubernetes/ssl/calico/client-crt.pem --key /etc/kubernetes/ssl/calico/client-key.pem https://{{ .Cluster.Etcd.Domain }}:2379/version; do sleep 1 && echo 'Waiting for etcd master to be responsive'; done"
-      ExecStartPre=/opt/bin/calicoctl pool add {{.Cluster.Calico.Subnet}}/{{.Cluster.Calico.CIDR}} --ipip --nat-outgoing
-      ExecStart=/opt/bin/calicoctl node --ip=${DEFAULT_IPV4} --detach=false --node-image=giantswarm/node:v0.22.0
-      ExecStop=/opt/bin/calicoctl node stop --force
-      ExecStopPost=/bin/bash -c "find /tmp/ -name '_MEI*' | xargs -I {} rm -rf {}"
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: calico-node-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=calico-node-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop calico-node.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet calico-node.service; do sleep 1 && echo waiting for calico-node to stop; done'
-      ExecStart=/usr/bin/systemctl start calico-node.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: calico-node-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=*-01,04,07,10-01 14:00:00
-      Unit=calico-node-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-proxy.service
     enable: true
     command: start
     content: |
       [Unit]
       Description=k8s-proxy
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -1524,8 +1286,6 @@ coreos:
     content: |
       [Unit]
       Description=k8s-kubelet
-      Requires=calico-node.service
-      After=calico-node.service
       StartLimitIntervalSec=0
 
       [Service]
@@ -1551,7 +1311,7 @@ coreos:
       -v /var/lib/kubelet/:/var/lib/kubelet:rw,rslave \
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
-      -v /etc/kubernetes/cni/:/etc/kubernetes/cni/ \
+      -v /etc/cni/net.d/:/etc/cni/net.d/ \
       -v /opt/cni/bin/calico:/opt/cni/bin/calico \
       -v /opt/cni/bin/calico-ipam:/opt/cni/bin/calico-ipam \
       -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem \
@@ -1574,7 +1334,6 @@ coreos:
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
       --cluster-domain={{.Cluster.Kubernetes.Domain}} \
-      --network-plugin-dir=/etc/kubernetes/cni/net.d \
       --network-plugin=cni \
       --register-node=true \
       --allow-privileged=true \
