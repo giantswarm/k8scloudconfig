@@ -704,33 +704,6 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-proxy-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-proxy-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-proxy.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-proxy.service; do sleep 1 && echo waiting for k8s-proxy to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-proxy.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: k8s-proxy-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-proxy-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-kubelet.service
     enable: true
     command: start
@@ -803,33 +776,6 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-kubelet-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-kubelet-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-kubelet.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-kubelet.service; do sleep 1 && echo waiting for k8s-kubelet to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-kubelet.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: kubelet-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-kubelet-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   # TODO(nhlfr): Set up Calico on Kubernetes, in example by http://docs.projectcalico.org/v2.0/getting-started/kubernetes/installation/hosted/kubeadm/calico.yaml.
   # Or at least use anything which doesn't download binaries in systemd unit...
   - name: calico-node.service
@@ -955,33 +901,6 @@ coreos:
       --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-api-server-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-api-server-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-api-server.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-api-server.service; do sleep 1 && echo waiting for k8s-api-server to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-api-server.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: k8s-api-server-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-api-server-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-controller-manager.service
     enable: true
     command: start
@@ -1017,33 +936,6 @@ coreos:
       --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-controller-manager-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-controller-manager-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-controller-manager.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-controller-manager.service; do sleep 1 && echo waiting for k8s-controller-manager to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-controller-manager.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: k8s-controller-manager-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-controller-manager-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-scheduler.service
     enable: true
     command: start
@@ -1076,33 +968,6 @@ coreos:
       --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-scheduler-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-scheduler-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-scheduler.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-scheduler.service; do sleep 1 && echo waiting for k8s-scheduler to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-scheduler.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: k8s-scheduler-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-scheduler-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-addons.service
     enable: true
     command: start
@@ -1491,33 +1356,6 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-proxy-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-proxy-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-proxy.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-proxy.service; do sleep 1 && echo waiting for k8s-proxy to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-proxy.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: k8s-proxy-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-proxy-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-kubelet.service
     enable: true
     command: start
@@ -1583,33 +1421,6 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: k8s-kubelet-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=k8s-kubelet-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop k8s-kubelet.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet k8s-kubelet.service; do sleep 1 && echo waiting for k8s-kubelet to stop; done'
-      ExecStart=/usr/bin/systemctl start k8s-kubelet.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: kubelet-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=15:00
-      Unit=k8s-kubelet-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: node-exporter.service
     enable: true
     command: start
