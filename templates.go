@@ -656,33 +656,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  - name: etcd3-restart.service
-    enable: true
-    content: |
-      [Unit]
-      Description=etcd3-restart
-
-      [Service]
-      Type=oneshot
-      ExecStartPre=/usr/bin/systemctl stop etcd3.service
-      ExecStartPre=/usr/bin/bash -c 'while systemctl is-active --quiet etcd3.service; do sleep 1 && echo waiting for etcd3 to stop; done'
-      ExecStart=/usr/bin/systemctl start etcd3.service
-
-      [Install]
-      WantedBy=multi-user.target
-  - name: etcd3-restart.timer
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Timer
-
-      [Timer]
-      OnCalendar=13:00
-      Unit=etcd3-restart.service
-
-      [Install]
-      WantedBy=multi-user.target
   - name: k8s-proxy.service
     enable: true
     command: start
