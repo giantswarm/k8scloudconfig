@@ -664,7 +664,6 @@ write_files:
       chmod +x /opt/bin/kubectl
       while [ "$(/opt/bin/kubectl get cs | grep Healthy | wc -l)" -ne "3" ];do sleep 1 && echo 'Waiting for healthy k8s'; done
 
-
       echo "K8S: Calico node config map"
       curl -H "Content-Type: application/yaml" \
         -XPOST -d"$(cat /srv/calico-configmap.yaml)" \
