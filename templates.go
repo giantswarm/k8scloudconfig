@@ -71,9 +71,9 @@ write_files:
             }
         }
     
-      etcd_ca: "/etc/kubernetes/etcd/etcd-ca.pem"
-      etcd_cert: "/etc/kubernetes/etcd/etcd.pem"
-      etcd_key: "/etc/kubernetes/etcd/etcd-key.pem"
+      etcd_ca: "/etc/kubernetes/ssl/etcd/etcd-ca.pem"
+      etcd_cert: "/etc/kubernetes/ssl/etcd/etcd.pem"
+      etcd_key: "/etc/kubernetes/ssl/etcd/etcd-key.pem"
     
 - path: /srv/calico-ds.yaml
   owner: root
