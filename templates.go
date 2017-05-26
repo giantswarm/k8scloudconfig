@@ -689,10 +689,6 @@ write_files:
         -XPOST -d"$(cat /srv/calico-policy-controller.yaml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
-      curl -H "Content-Type: application/json" \
-        -XPOST -d"$(cat /srv/calico-system.json)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/"
 
       echo "K8S: DNS addons"
       curl -H "Content-Type: application/yaml" \
@@ -703,12 +699,6 @@ write_files:
         -XPOST -d"$(cat /srv/kubedns-svc.yaml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
-
-      echo "K8S: Calico Policy"
-      curl -H "Content-Type: application/json" \
-        -XPOST -d"$(cat /srv/calico-system.json)" \
-        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
-        "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/"
 
       echo "K8S: Fallback Server"
       curl -H "Content-Type: application/yaml" \
