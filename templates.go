@@ -682,6 +682,10 @@ write_files:
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/daemonsets"
       echo "K8S: Calico policy "
+      curl -H "Content-Type: application/yaml" \
+        -XPOST -d"$(cat /srv/calico-policy-controller.yaml)" \
+        --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
+        "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
       curl -H "Content-Type: application/json" \
         -XPOST -d"$(cat /srv/calico-system.json)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
@@ -1029,8 +1033,7 @@ coreos:
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
       -v /etc/cni/net.d/:/etc/cni/net.d/ \
-      -v /opt/cni/bin/calico:/opt/cni/bin/calico \
-      -v /opt/cni/bin/calico-ipam:/opt/cni/bin/calico-ipam \
+      -v /opt/cni/bin/:/opt/cni/bin/ \
       -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/server-ca.pem \
       -e ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem \
       -e ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem \
@@ -1452,8 +1455,7 @@ coreos:
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
       -v /etc/cni/net.d/:/etc/cni/net.d/ \
-      -v /opt/cni/bin/calico:/opt/cni/bin/calico \
-      -v /opt/cni/bin/calico-ipam:/opt/cni/bin/calico-ipam \
+      -v /opt/cni/bin/:/opt/cni/bin/ \
       -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem \
       -e ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/client-crt.pem \
       -e ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/client-key.pem \
