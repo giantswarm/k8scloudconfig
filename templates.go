@@ -660,6 +660,10 @@ write_files:
   content: |
       #!/bin/bash
       while ! curl --output /dev/null --silent --head --fail --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem "https://{{.Cluster.Kubernetes.API.Domain}}:443"; do sleep 1 && echo 'Waiting for master'; done
+      curl -o /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.6.1/bin/linux/amd64/kubectl 
+      chmod +x /opt/bin/kubectl
+      while [ "$(/opt/bin/kubectl get cs | grep Healthy | wc -l)" -ne "3" ];do sleep 1 && echo 'Waiting for healthy k8s'; done
+
 
       echo "K8S: Calico node config map"
       curl -H "Content-Type: application/yaml" \
