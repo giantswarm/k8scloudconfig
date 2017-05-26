@@ -363,7 +363,7 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
+      domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
 
       for domain in $domains; do
         until nslookup $domain; do
@@ -1274,7 +1274,7 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      domains=( {{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} )
+      domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
 
       for domain in $domains; do
         until nslookup $domain; do
