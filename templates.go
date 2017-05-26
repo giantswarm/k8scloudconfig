@@ -310,7 +310,7 @@ write_files:
                   value: "true"
               volumeMounts:
                 # Mount in the etcd TLS secrets.
-                - mountPath: /etc/kubernetes/etcd
+                - mountPath: /etc/kubernetes/ssl/etcd
                   name: etcd-certs
           volumes:
             # Mount in the etcd TLS secrets.
