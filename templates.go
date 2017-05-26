@@ -125,7 +125,7 @@ write_files:
                     configMapKeyRef:
                       name: calico-config
                       key: calico_backend
-                # Disable file logging so `kubectl logs` works.
+                # Disable file logging so kubectl logs works.
                 - name: CALICO_DISABLE_FILE_LOGGING
                   value: "true"
                 # Set Felix endpoint to host default action to ACCEPT.
