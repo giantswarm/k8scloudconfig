@@ -47,7 +47,7 @@ write_files:
 
       # Configure the Calico backend to use.
       calico_backend: "bird"
-    
+
       # The CNI network configuration to install on each node.
       # TODO: Do we still need to set MTU manually?
       cni_network_config: |-
@@ -73,16 +73,16 @@ write_files:
                 "kubeconfig": "__KUBECONFIG_FILEPATH__"
             }
         }
-    
+
       etcd_ca: "/etc/kubernetes/ssl/etcd/client-ca.pem"
       etcd_cert: "/etc/kubernetes/ssl/etcd/client-crt.pem"
       etcd_key: "/etc/kubernetes/ssl/etcd/client-key.pem"
-    
+
 - path: /srv/calico-ds.yaml
   owner: root
   permissions: 644
   content: |
-    
+
     # This manifest installs the calico/node container, as well
     # as the Calico CNI plugins and network config on
     # each master and worker node in a Kubernetes cluster.
@@ -907,7 +907,7 @@ coreos:
       Requires=k8s-setup-network-env.service
       After=k8s-setup-network-env.service
       Conflicts=etcd.service etcd2.service
-      
+
       [Service]
       StartLimitIntervalSec=0
       Restart=always
