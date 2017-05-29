@@ -689,7 +689,8 @@ write_files:
       done
 
       # wait for healthy calico - we check for pods - desired vs ready
-      while 
+      while
+          # result of this is 'eval [ "$DESIRED_POD_COUNT" -eq "$READY_POD_COUNT" ]'
           eval $(/opt/bin/kubectl --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml -n kube-system get ds calico-node | tail -1 | awk '{print "[ \"" $2"\" -eq \""$3"\" ] "}')
           [ "$?" -ne "0" ]
       do
@@ -705,7 +706,7 @@ write_files:
           while
               /opt/bin/kubectl --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml apply -f /srv/$manifest
               [ "$?" -ne "0" ]
-          sdo
+          do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
               sleep 5s
           done
