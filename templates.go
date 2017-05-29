@@ -699,13 +699,13 @@ write_files:
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
 
-      echo "K8S: Fallback Server"
+      echo "K8S: Default Backend"
       curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-dep.yml)" \
+        -XPOST -d"$(cat /srv/default-backend-dep.yml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
       curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-svc.yml)" \
+        -XPOST -d"$(cat /srv/default-backend-svc.yml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
 
