@@ -476,58 +476,52 @@ write_files:
         }
       ]
     }
-- path: /srv/fallback-server-dep.yml
+- path: /srv/default-backend-dep.yml
   owner: root
   permissions: 0644
   content: |
     apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
-      name: fallback-server
+      name: default-http-backend
       namespace: kube-system
       labels:
-        app: fallback-server
+        k8s-app: default-http-backend
     spec:
       replicas: 2
       template:
         metadata:
           labels:
-            app: fallback-server
+            k8s-app: default-http-backend
         spec:
           containers:
-          - name: fallback-server
-            image: gcr.io/google_containers/defaultbackend:1.2
-            args:
-            - --port=8000
-            readinessProbe:
-              httpGet:
-                path: /healthz
-                port: 8000
-                scheme: HTTP
+          - name: default-http-backend
+            image: gcr.io/google_containers/defaultbackend:1.0
             livenessProbe:
               httpGet:
                 path: /healthz
-                port: 8000
+                port: 8080
                 scheme: HTTP
-              initialDelaySeconds: 10
-              timeoutSeconds: 1
-- path: /srv/fallback-server-svc.yml
+              initialDelaySeconds: 30
+              timeoutSeconds: 5
+- path: /srv/default-backend-svc.yml
   owner: root
   permissions: 0644
   content: |
     apiVersion: v1
     kind: Service
     metadata:
-      name: fallback-server
+      name: default-http-backend
       namespace: kube-system
       labels:
-        app: fallback-server
+        k8s-app: default-http-backend
     spec:
       type: NodePort
       ports:
-      - port: 8000
+      - port: 80
+        targetPort: 8080
       selector:
-        app: fallback-server
+        k8s-app: default-http-backend
 - path: /srv/ingress-controller-cm.yml
   owner: root
   permissions: 0644
@@ -548,10 +542,10 @@ write_files:
     apiVersion: extensions/v1beta1
     kind: Deployment
     metadata:
-      name: ingress-controller
+      name: nginx-ingress-controller
       namespace: kube-system
       labels:
-        app: ingress-controller
+        k8s-app: nginx-ingress-controller
       annotations:
         prometheus.io/port: '10254'
         prometheus.io/scrape: 'true'
@@ -564,7 +558,7 @@ write_files:
       template:
         metadata:
           labels:
-            app: ingress-controller
+            k8s-app: nginx-ingress-controller
           annotations:
             scheduler.alpha.kubernetes.io/affinity: >
               {
@@ -574,9 +568,9 @@ write_files:
                       "labelSelector": {
                         "matchExpressions": [
                           {
-                            "key": "app",
+                            "key": "k8s-app",
                             "operator": "In",
-                            "values": ["ingress-controller"]
+                            "values": ["nginx-ingress-controller"]
                           }
                         ]
                       },
@@ -588,11 +582,11 @@ write_files:
               }
         spec:
           containers:
-          - name: ingress-controller
-            image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.5
+          - name: nginx-ingress-controller
+            image: gcr.io/google_containers/nginx-ingress-controller:0.9.0-beta.7
             args:
             - /nginx-ingress-controller
-            - --default-backend-service=kube-system/fallback-server
+            - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
             - --configmap=$(POD_NAMESPACE)/ingress-nginx
             env:
               - name: POD_NAME
@@ -607,14 +601,19 @@ write_files:
               httpGet:
                 path: /healthz
                 port: 10254
-              initialDelaySeconds: 30
-              timeoutSeconds: 1
+                scheme: HTTP
             livenessProbe:
               httpGet:
                 path: /healthz
                 port: 10254
-              initialDelaySeconds: 30
+                scheme: HTTP
+              initialDelaySeconds: 10
               timeoutSeconds: 1
+            ports:
+            - containerPort: 80
+              hostPort: 80
+            - containerPort: 443
+              hostPort: 443
 - path: /srv/ingress-controller-svc.yml
   owner: root
   permissions: 0644
@@ -622,10 +621,10 @@ write_files:
     apiVersion: v1
     kind: Service
     metadata:
-      name: ingress-controller
+      name: nginx-ingress-controller
       namespace: kube-system
       labels:
-        app: ingress-controller
+        k8s-app: nginx-ingress-controller
     spec:
       type: NodePort
       ports:
@@ -635,12 +634,12 @@ write_files:
         protocol: TCP
         targetPort: 80
       - name: https
-        port: 442
+        port: 443
         nodePort: 30011
         protocol: TCP
-        targetPort: 442
+        targetPort: 443
       selector:
-        app: ingress-controller
+        k8s-app: nginx-ingress-controller
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -700,13 +699,13 @@ write_files:
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
 
-      echo "K8S: Fallback Server"
+      echo "K8S: Default Backend"
       curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-dep.yml)" \
+        -XPOST -d"$(cat /srv/default-backend-dep.yml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/apis/extensions/v1beta1/namespaces/kube-system/deployments"
       curl -H "Content-Type: application/yaml" \
-        -XPOST -d"$(cat /srv/fallback-server-svc.yml)" \
+        -XPOST -d"$(cat /srv/default-backend-svc.yml)" \
         --cacert /etc/kubernetes/ssl/apiserver-ca.pem --cert /etc/kubernetes/ssl/apiserver-crt.pem --key /etc/kubernetes/ssl/apiserver-key.pem \
         "https://{{.Cluster.Kubernetes.API.Domain}}:443/api/v1/namespaces/kube-system/services"
 
