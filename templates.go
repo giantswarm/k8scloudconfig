@@ -670,15 +670,14 @@ write_files:
 
       for manifest in $MANIFESTS
       do
-      		while
-         		/opt/bin/kubectl --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml apply -f /srv/$manifest
-         		[ "$?" -ne "0" ]
-        	do
-                	echo "failed to apply /src/$manifest, retrying in 5 sec"
-                	sleep 5s
-        	done
+          while
+              /opt/bin/kubectl --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml apply -f /srv/$manifest
+              [ "$?" -ne "0" ]
+          do
+              echo "failed to apply /src/$manifest, retrying in 5 sec"
+              sleep 5s
+          done
       done
-
       echo "Addons successfully installed"
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
