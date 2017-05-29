@@ -2,6 +2,9 @@ package cloudconfig
 
 const (
 	MasterTemplate = `#cloud-config
+ssh_authorized_keys:
+{{range .Cluster.Kubernetes.SSH.PublicKeys}}
+- '{{.}}'{{end}}
 write_files:
 - path: /srv/calico-policy-controller-sa.yaml
   owner: root
@@ -1212,6 +1215,9 @@ coreos:
 `
 
 	WorkerTemplate = `#cloud-config
+ssh_authorized_keys:
+{{range .Cluster.Kubernetes.SSH.PublicKeys}}
+- '{{.}}'{{end}}
 write_files:
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
