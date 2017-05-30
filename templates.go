@@ -740,7 +740,7 @@ write_files:
   content: |
       #!/bin/bash
       # get kubectl
-      curl -o /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.6.1/bin/linux/amd64/kubectl
+      curl -o /opt/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/v1.6.4/bin/linux/amd64/kubectl
       chmod +x /opt/bin/kubectl
 
       # wait for healthy master
