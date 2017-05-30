@@ -774,7 +774,7 @@ write_files:
       done
 
       # apply k8s addons
-      MANIFESTS="kubedns-dep.yaml kubedns-svc.yaml default-backend-dep.yml default-backend-svc.yml ingress-controller-cm.yml ingress-controller-dep.yml ingress-controller-svc.yml"
+      MANIFESTS="kubedns-cm.yaml kubedns-sa.yaml kubedns-dep.yaml kubedns-svc.yaml default-backend-dep.yml default-backend-svc.yml ingress-controller-cm.yml ingress-controller-dep.yml ingress-controller-svc.yml"
 
       for manifest in $MANIFESTS
       do
