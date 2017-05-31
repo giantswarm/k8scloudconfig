@@ -741,14 +741,11 @@ write_files:
   content: |
       #!/bin/bash
       IMAGE={{.Cluster.Kubernetes.Kubectl.Docker.Image}}
-      CONFIG=/etc/kubernetes/config/kubelet-kubeconfig.yml
 
       /usr/bin/docker pull $IMAGE
 
       # wait for healthy master
-      while [ "$(/usr/bin/docker --net=host --rm -v /etc/kubernetes:/etc/kubernetes run $IMAGE --kubeconfig=$CONFIG get cs | grep Healthy | wc -l)" -ne "3" ]; \
-        do sleep 1 && echo 'Waiting for healthy k8s'; \
-      done
+      while [ "$(/usr/bin/docker run --net=host --rm $IMAGE get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
       # apply calico CNI
       CALICO_FILES="calico-configmap.yaml calico-node-sa.yaml calico-policy-controller-sa.yaml calico-ds.yaml calico-policy-controller.yaml"
@@ -756,7 +753,7 @@ write_files:
       for manifest in $CALICO_FILES
       do
           while
-              /usr/bin/docker run --net=host --rm -v /etc/kubernetes:/etc/kubernetes $IMAGE --kubeconfig=$CONFIG apply -f /srv/$manifest
+              /usr/bin/docker run --net=host --rm $IMAGE apply -f /srv/$manifest
               [ "$?" -ne "0" ]
           do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
@@ -767,9 +764,9 @@ write_files:
       # wait for healthy calico - we check for pods - desired vs ready
       while
           # result of this is 'eval [ "$DESIRED_POD_COUNT" -eq "$READY_POD_COUNT" ]'
-          /usr/bin/docker run --net=host --rm -v /etc/kubernetes:/etc/kubernetes $IMAGE --kubeconfig=$CONFIG -n kube-system  get ds calico-node 2>/dev/null >/dev/null
+          /usr/bin/docker run --net=host --rm -v /etc/kubernetes:/etc/kubernetes $IMAGE -n kube-system  get ds calico-node 2>/dev/null >/dev/null
           RET_CODE_1=$?
-          eval $(/usr/bin/docker run --net=host --rm -v /etc/kubernetes:/etc/kubernetes $IMAGE --kubeconfig=$CONFIG -n kube-system get ds calico-node | tail -1 | awk '{print "[ \"" $2"\" -eq \""$4"\" ] "}')
+          eval $(/usr/bin/docker run --net=host --rm $IMAGE -n kube-system get ds calico-node | tail -1 | awk '{print "[ \"" $2"\" -eq \""$4"\" ] "}')
           RET_CODE_2=$?
           [ "$RET_CODE_1" -ne "0" ] || [ "$RET_CODE_2" -ne "0" ]
       do
@@ -783,7 +780,7 @@ write_files:
       for manifest in $MANIFESTS
       do
           while
-              /usr/bin/docker run --net=host --rm -v /etc/kubernetes:/etc/kubernetes $IMAGE --kubeconfig=$CONFIG apply -f /srv/$manifest
+              /usr/bin/docker run --net=host --rm $IMAGE apply -f /srv/$manifest
               [ "$?" -ne "0" ]
           do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
