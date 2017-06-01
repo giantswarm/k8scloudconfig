@@ -753,7 +753,7 @@ write_files:
       for manifest in $CALICO_FILES
       do
           while
-              /usr/bin/docker run --net=host --rm $IMAGE apply -f /srv/$manifest
+              /usr/bin/docker run --net=host --rm -v /srv:/srv $IMAGE apply -f /srv/$manifest
               [ "$?" -ne "0" ]
           do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
@@ -780,7 +780,7 @@ write_files:
       for manifest in $MANIFESTS
       do
           while
-              /usr/bin/docker run --net=host --rm $IMAGE apply -f /srv/$manifest
+              /usr/bin/docker run --net=host --rm -v /srv:/srv $IMAGE apply -f /srv/$manifest
               [ "$?" -ne "0" ]
           do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
