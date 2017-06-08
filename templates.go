@@ -5,6 +5,14 @@ const (
 ssh_authorized_keys:
 {{range .Cluster.Kubernetes.SSH.PublicKeys}}
 - '{{.}}'{{end}}
+storage:
+  filesystems:
+    - name: ephemeral1
+      mount:
+        device: /dev/xvdb
+        format: ext4
+        create:
+          force: true
 write_files:
 - path: /srv/calico-policy-controller-sa.yaml
   owner: root
@@ -910,6 +918,21 @@ coreos:
     content: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  - name: var-lib-docker.mount
+      enable: true
+      content: |
+        [Unit]
+        Description=Mount ephemeral to /var/lib/docker
+        Requires=format-ephemeral.service
+        After=format-ephemeral.service
+
+        [Mount]
+        What=/dev/xvdb
+        Where=/var/lib/docker
+        Type=ext4
+
+        [Install]
+        WantedBy=multi-user.target
   - name: wait-for-domains.service
     enable: true
     command: start
@@ -941,6 +964,11 @@ coreos:
     enable: true
     command: start
     drop-ins:
+    - name: 01-wait-docker.conf
+      content: |
+        [Unit]
+        After=var-lib-docker.mount
+        Requires=var-lib-docker.mount
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
@@ -1292,6 +1320,14 @@ coreos:
 ssh_authorized_keys:
 {{range .Cluster.Kubernetes.SSH.PublicKeys}}
 - '{{.}}'{{end}}
+storage:
+  filesystems:
+    - name: ephemeral1
+      mount:
+        device: /dev/xvdb
+        format: ext4
+        create:
+          force: true
 write_files:
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
@@ -1386,6 +1422,21 @@ coreos:
     content: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  - name: var-lib-docker.mount
+      enable: true
+      content: |
+        [Unit]
+        Description=Mount ephemeral to /var/lib/docker
+        Requires=format-ephemeral.service
+        After=format-ephemeral.service
+
+        [Mount]
+        What=/dev/xvdb
+        Where=/var/lib/docker
+        Type=ext4
+
+        [Install]
+        WantedBy=multi-user.target
   - name: wait-for-domains.service
     enable: true
     command: start
@@ -1420,6 +1471,11 @@ coreos:
     enable: true
     command: start
     drop-ins:
+    - name: 01-wait-docker.conf
+          content: |
+            [Unit]
+            After=var-lib-docker.mount
+            Requires=var-lib-docker.mount
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
