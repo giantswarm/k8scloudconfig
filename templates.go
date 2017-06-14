@@ -671,6 +671,7 @@ write_files:
             - /nginx-ingress-controller
             - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
             - --configmap=$(POD_NAMESPACE)/ingress-nginx
+            - --tcp-services-configmap=$(POD_NAMESPACE)/ingress-nginx-tcp-services
             env:
               - name: POD_NAME
                 valueFrom:
@@ -723,6 +724,21 @@ write_files:
         targetPort: 443
       selector:
         k8s-app: nginx-ingress-controller
+- path: /srv/ingress-controller-tcp-services-cm.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: v1
+    kind: ConfigMap
+    metadata:
+      name: ingress-nginx-tcp-services
+      namespace: kube-system
+    data:
+      # The actuall data is filled by ingress-operator.
+      # It has following format:
+      #
+      #"31000": 2sclh/worker:30010
+      #"31001": 2sclh/worker:30011
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
