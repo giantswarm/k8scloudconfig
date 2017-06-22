@@ -775,6 +775,19 @@ write_files:
           sleep 3s
       done
 
+      # apply default storage class
+      if [ -f /srv/default-storage-class.yaml]; then
+          while
+              /usr/bin/docker run --net=host --rm -v /srv:/srv $KUBECTL apply -f /srv/default-storage-class.yaml
+              [ "$?" -ne "0" ]
+          do
+              echo "failed to apply /srv/default-storage-class.yaml, retrying in 5 sec"
+              sleep 5s
+          done
+      else
+          echo "no default storage class to apply"
+      fi
+
       # apply k8s addons
       MANIFESTS="kubedns-cm.yaml kubedns-sa.yaml kubedns-dep.yaml kubedns-svc.yaml default-backend-dep.yml default-backend-svc.yml ingress-controller-cm.yml ingress-controller-dep.yml ingress-controller-svc.yml"
 
@@ -784,7 +797,7 @@ write_files:
               /usr/bin/docker run --net=host --rm -v /srv:/srv $KUBECTL apply -f /srv/$manifest
               [ "$?" -ne "0" ]
           do
-              echo "failed to apply /src/$manifest, retrying in 5 sec"
+              echo "failed to apply /srv/$manifest, retrying in 5 sec"
               sleep 5s
           done
       done
