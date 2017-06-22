@@ -1165,7 +1165,7 @@ coreos:
       --secure_port={{.Cluster.Kubernetes.API.SecurePort}} \
       --bind-address=${DEFAULT_IPV4} \
       --etcd-prefix={{.Cluster.Etcd.Prefix}} \
-      --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota \
+      --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass \
       --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}} \
       --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:443 \
       --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem \
