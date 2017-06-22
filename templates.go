@@ -1107,6 +1107,7 @@ coreos:
       --logtostderr=true \
       --machine-id-file=/rootfs/etc/machine-id \
       --cadvisor-port=4194 \
+      --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --healthz-bind-address=${DEFAULT_IPV4} \
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
@@ -1166,6 +1167,7 @@ coreos:
       --bind-address=${DEFAULT_IPV4} \
       --etcd-prefix={{.Cluster.Etcd.Prefix}} \
       --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass \
+      --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}} \
       --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:443 \
       --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem \
@@ -1208,6 +1210,7 @@ coreos:
       --master=https://{{.Cluster.Kubernetes.API.Domain}}:443 \
       --logtostderr=true \
       --v=2 \
+      --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml \
       --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem \
       --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
@@ -1536,6 +1539,7 @@ coreos:
       --logtostderr=true \
       --machine-id-file=/rootfs/etc/machine-id \
       --cadvisor-port=4194 \
+      --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --healthz-bind-address=${DEFAULT_IPV4} \
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
