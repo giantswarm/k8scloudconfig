@@ -1,0 +1,15 @@
+package: github.com/giantswarm/kubeadm-token-operator
+import:
+- package: github.com/giantswarm/microkit
+  subpackages:
+  - flag
+- package: github.com/giantswarm/operatorkit
+  version: e9652668e01e02d4dd9ab114f5bcbd91cc595f7c
+- package: github.com/giantswarm/ingresstpr
+  version: master
+- package: github.com/golang/protobuf
+  version: 8ee79997227bf9b34611aee7946ae64735e6fd93
+- package: google.golang.org/grpc
+  version: b5071124392bfd416c713e6595ac149b387f7186
+- package: k8s.io/client-go
+  version: ~2.0.0
