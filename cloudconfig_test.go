@@ -3,32 +3,24 @@ package cloudconfig
 import (
 	"encoding/base64"
 	"testing"
-
-	"github.com/giantswarm/clustertpr"
-	"github.com/giantswarm/clustertpr/cluster"
 )
 
 func TestCloudConfig(t *testing.T) {
-	params := Params{
-		Cluster: clustertpr.Cluster{
-			Cluster: cluster.Cluster{
-				ID: "example-cluster",
-			},
-		},
-		Extension: &FakeExtension{},
-	}
-
 	tests := []struct {
 		template string
 		params   Params
 	}{
 		{
 			template: MasterTemplate,
-			params:   params,
+			params: Params{
+				Extension: &FakeExtension{},
+			},
 		},
 		{
 			template: WorkerTemplate,
-			params:   params,
+			params: Params{
+				Extension: &FakeExtension{},
+			},
 		},
 	}
 
