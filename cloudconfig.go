@@ -7,7 +7,7 @@ import (
 	"text/template"
 
 	"github.com/giantswarm/clustertpr"
-	"github.com/giantswarm/clustertpr/node"
+	"github.com/giantswarm/clustertpr/spec"
 	microerror "github.com/giantswarm/microkit/error"
 )
 
@@ -15,7 +15,7 @@ import (
 type Params struct {
 	Cluster      clustertpr.Cluster
 	Extension    Extension
-	Node         node.Node
+	Node         spec.Node
 	KubeadmToken string
 }
 
