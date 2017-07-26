@@ -13,7 +13,7 @@ import (
 
 // Params are the parameters which can be defined by the concrete operator which is using that library.
 type Params struct {
-	Cluster      clustertpr.Cluster
+	Cluster      clustertpr.Spec
 	Extension    Extension
 	Node         spec.Node
 	KubeadmToken string

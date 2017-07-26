@@ -5,13 +5,13 @@ import (
 	"testing"
 
 	"github.com/giantswarm/clustertpr"
-	"github.com/giantswarm/clustertpr/cluster"
+	"github.com/giantswarm/clustertpr/spec"
 )
 
 func TestCloudConfig(t *testing.T) {
 	params := Params{
-		Cluster: clustertpr.Cluster{
-			Cluster: cluster.Cluster{
+		Cluster: clustertpr.Spec{
+			Cluster: spec.Cluster{
 				ID: "example-cluster",
 			},
 		},
