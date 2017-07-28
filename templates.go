@@ -164,6 +164,16 @@ storage:
           {{range .Content}}{{.}}
 	  {{end}}{{end}}
     - filesystem: root
+      path: /etc/kubeadm/kubeadm.yml
+      mode: 0664
+      contents:
+        inline: |
+          apiVersion: kubeadm.k8s.io/v1alpha1
+          authorizationMode: AlwaysAllow
+          apiServerExtraArgs:
+          controllerManagerExtraArgs:
+          schedulerExtraArgs:
+    - filesystem: root
       path: /etc/kubernetes/config/kubelet-kubeconfig.yml
       mode: 0664
       contents:
@@ -494,6 +504,16 @@ storage:
         inline: |
           {{range .Content}}{{.}}
           {{end}}{{end}}
+    - filesystem: root
+      path: /etc/kubeadm/kubeadm.yml
+      mode: 0664
+      contents:
+        inline: |
+          apiVersion: kubeadm.k8s.io/v1alpha1
+          authorizationMode: AlwaysAllow
+          apiServerExtraArgs:
+          controllerManagerExtraArgs:
+          schedulerExtraArgs:
     - filesystem: root
       path: /etc/kubernetes/config/kubelet-kubeconfig.yml
       mode: 0664
