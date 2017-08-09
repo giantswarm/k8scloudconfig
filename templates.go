@@ -633,7 +633,7 @@ write_files:
         prometheus.io/port: '10254'
         prometheus.io/scrape: 'true'
     spec:
-      replicas: {{len .Params.Cluster.Workers}}
+      replicas: {{len .Cluster.Workers}}
       strategy:
         type: RollingUpdate
         rollingUpdate:
