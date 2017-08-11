@@ -1013,6 +1013,7 @@ coreos:
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
+          --client-cert-auth=true \
           --peer-trusted-ca-file /etc/etcd/server-ca.pem \
           --peer-cert-file /etc/etcd/server-crt.pem \
           --peer-key-file /etc/etcd/server-key.pem \
