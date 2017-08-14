@@ -949,6 +949,7 @@ coreos:
       content: |
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1438,6 +1439,7 @@ coreos:
       content: |
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
