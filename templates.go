@@ -949,6 +949,7 @@ coreos:
       content: |
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1013,6 +1014,7 @@ coreos:
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
+          --client-cert-auth=true \
           --peer-trusted-ca-file /etc/etcd/server-ca.pem \
           --peer-cert-file /etc/etcd/server-crt.pem \
           --peer-key-file /etc/etcd/server-key.pem \
@@ -1437,6 +1439,7 @@ coreos:
       content: |
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
