@@ -739,6 +739,20 @@ write_files:
       # wait for healthy master
       while [ "$(/usr/bin/docker run --net=host --rm $KUBECTL get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
+      # apply RBAC bootstrap
+      RBAC_FILES="rbac_bindings.yaml rbac_roles.yaml"
+
+      for manifest in $RBAC_FILES
+      do
+          while
+              /usr/bin/docker run --net=host --rm -v /srv:/srv $KUBECTL apply -f /srv/$manifest
+              [ "$?" -ne "0" ]
+          do
+              echo "failed to apply /src/$manifest, retrying in 5 sec"
+              sleep 5s
+          done
+      done
+
       # apply calico CNI
       CALICO_FILES="calico-configmap.yaml calico-node-sa.yaml calico-policy-controller-sa.yaml calico-ds.yaml calico-policy-controller.yaml"
 
@@ -1177,6 +1191,7 @@ coreos:
       --profiling=false \
       --repair-malformed-updates=false \
       --service-account-lookup=true \
+      --authorization-mode=RBAC \
       --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}} \
