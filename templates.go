@@ -655,6 +655,7 @@ write_files:
                         values:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
+          serviceAccountName: nginx-ingress-controller
           containers:
           - name: nginx-ingress-controller
             image: {{.Cluster.Kubernetes.IngressController.Docker.Image}}
