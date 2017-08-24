@@ -726,7 +726,7 @@ write_files:
       name: giantswarm-admin
     subjects:
     - kind: User
-      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      name: {{.Cluster.Kubernetes.API.Domain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
@@ -740,7 +740,7 @@ write_files:
       name: kubelet
     subjects:
     - kind: User
-      name: worker.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      name: {{.Cluster.Kubernetes.Kubelet.Domain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
@@ -753,7 +753,7 @@ write_files:
       name: proxy
     subjects:
     - kind: User
-      name: worker.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      name: {{.Cluster.Kubernetes.Kubelet.Domain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
@@ -767,7 +767,7 @@ write_files:
       name: kube-controller-manager
     subjects:
     - kind: User
-      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net"
+      name: {{.Cluster.Kubernetes.API.Domain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
@@ -780,7 +780,7 @@ write_files:
       name: kube-scheduler
     subjects:
     - kind: User
-      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net"
+      name: {{.Cluster.Kubernetes.API.Domain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
