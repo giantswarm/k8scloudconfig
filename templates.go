@@ -715,6 +715,283 @@ write_files:
         targetPort: 443
       selector:
         k8s-app: nginx-ingress-controller
+- path: /srv/rbac_bindings.yaml
+  owner: root
+  permissions: 0644
+  content: |
+    ## User
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: giantswarm-admin
+    subjects:
+    - kind: User
+      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: cluster-admin
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    ## Worker
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: kubelet
+    subjects:
+    - kind: User
+      name: worker.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: system:node
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: proxy
+    subjects:
+    - kind: User
+      name: worker.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: system:node-proxier
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    ## Master
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: kube-controller-manager
+    subjects:
+    - kind: User
+      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net"
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: system:kube-controller-manager
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: kube-scheduler
+    subjects:
+    - kind: User
+      name: api.5xchu.k8s.asgard.dub.aws.k8s.3stripes.net"
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: system:kube-scheduler
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    ## Calico
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-policy-controller
+    subjects:
+    - kind: ServiceAccount
+      name: calico-policy-controller
+      namespace: kube-system
+    roleRef:
+      kind: ClusterRole
+      name: calico-policy-controller
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-node
+    subjects:
+    - kind: ServiceAccount
+      name: calico-node
+      namespace: kube-system
+    roleRef:
+      kind: ClusterRole
+      name: calico-node
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    ## DNS
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: kube-dns
+    subjects:
+    - kind: ServiceAccount
+      name: kube-dns
+      namespace: kube-system
+    roleRef:
+      kind: ClusterRole
+      name: system:kube-dns
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    ## IC
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: nginx-ingress-controller
+    subjects:
+    - kind: ServiceAccount
+      name: nginx-ingress-controller
+      namespace: kube-system
+    roleRef:
+      kind: ClusterRole
+      name: nginx-ingress-controller
+      apiGroup: rbac.authorization.k8s.io
+    ---
+    kind: RoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: nginx-ingress-controller
+      namespace: kube-system
+    subjects:
+    - kind: ServiceAccount
+      name: nginx-ingress-controller
+      namespace: kube-system
+    roleRef:
+      kind: Role
+      name: nginx-ingress-role
+      apiGroup: rbac.authorization.k8s.io
+- path: /srv/rbac_roles.yaml
+  owner: root
+  permissions: 0644
+  content: |
+    ## Calico
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-policy-controller
+      namespace: kube-system
+    rules:
+      - apiGroups:
+        - ""
+        - extensions
+        resources:
+          - pods
+          - namespaces
+          - networkpolicies
+        verbs:
+          - watch
+          - list
+    ---
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-node
+      namespace: kube-system
+    rules:
+      - apiGroups: [""]
+        resources:
+          - pods
+          - nodes
+        verbs:
+          - get
+    ---
+    ## IC
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: nginx-ingress-controller
+      namespace: kube-system
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRole
+    metadata:
+      name: nginx-ingress-controller
+      namespace: kube-system
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+          - endpoints
+          - nodes
+          - pods
+          - secrets
+        verbs:
+          - list
+          - watch
+      - apiGroups:
+          - ""
+        resources:
+          - nodes
+        verbs:
+          - get
+      - apiGroups:
+          - ""
+        resources:
+          - services
+        verbs:
+          - get
+          - list
+          - watch
+      - apiGroups:
+          - "extensions"
+        resources:
+          - ingresses
+        verbs:
+          - get
+          - list
+          - watch
+      - apiGroups:
+          - ""
+        resources:
+            - events
+        verbs:
+            - create
+            - patch
+      - apiGroups:
+          - "extensions"
+        resources:
+          - ingresses/status
+        verbs:
+          - update
+    ---
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: Role
+    metadata:
+      name: nginx-ingress-role
+      namespace: kube-system
+    rules:
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+          - pods
+          - secrets
+          - namespaces
+        verbs:
+          - get
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+        resourceNames:
+          # Defaults to "<election-id>-<ingress-class>"
+          # Here: "<ingress-controller-leader>-<nginx>"
+          # This has to be adapted if you change either parameter
+          # when launching the nginx-ingress-controller.
+          - "ingress-controller-leader-nginx"
+        verbs:
+          - get
+          - update
+      - apiGroups:
+          - ""
+        resources:
+          - configmaps
+        verbs:
+          - create
+      - apiGroups:
+          - ""
+        resources:
+          - endpoints
+        verbs:
+          - get
+          - create
+          - update
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
