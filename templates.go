@@ -1034,6 +1034,59 @@ write_files:
       - 'configMap'
       - 'persistentVolumeClaim'
       - 'projected'
+- path: /srv/psp_roles.yaml
+  owner: root
+  permissions: 0644
+  content: |
+    # restrictedPSP grants access to use
+    # the restricted PSP.
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRole
+    metadata:
+      name: restricted-psp-user
+    rules: 
+    - apiGroups:
+      - extensions
+      resources:
+      - podsecuritypolicies
+      resourceNames:
+      - restricted
+      verbs:
+      - use
+    ---
+    # privilegedPSP grants access to use the privileged
+    # PSP.
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRole
+    metadata:
+      name: privileged-psp-user
+    rules: 
+    - apiGroups:
+      - extensions
+      resources:
+      - podsecuritypolicies
+      resourceNames:
+      - privileged
+      verbs:
+      - use
+- path: /srv/psp_binding.yaml
+  owner: root
+  permissions: 0644
+  content: |
+    # grants the restricted PSP role to
+    # the all authenticated users.
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRoleBinding
+    metadata:
+        name: restricted-psp-users
+    subjects:
+    - kind: Group
+      apiGroup: rbac.authorization.k8s.io
+      name: system:authenticated
+    roleRef:
+       apiGroup: rbac.authorization.k8s.io
+       kind: ClusterRole
+       name: restricted-psp-user
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1060,7 +1113,7 @@ write_files:
       while [ "$(/usr/bin/docker run --net=host --rm $KUBECTL get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
       # apply Security bootstrap (RBAC and PSP)
-      SECURITY_FILES="rbac_bindings.yaml rbac_roles.yaml psp_policies.yaml"
+      SECURITY_FILES="rbac_bindings.yaml rbac_roles.yaml psp_policies.yaml psp_roles.yaml psp_binding.yaml"
 
       for manifest in $SECURITY_FILES
       do
