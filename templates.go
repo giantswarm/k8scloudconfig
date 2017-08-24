@@ -992,6 +992,48 @@ write_files:
           - get
           - create
           - update
+- path: /srv/psp_policies.yaml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: extensions/v1beta1
+    kind: PodSecurityPolicy
+    metadata:
+      name: privileged
+    spec:
+      fsGroup:
+        rule: RunAsAny
+      privileged: true
+      runAsUser:
+        rule: RunAsAny
+      seLinux:
+        rule: RunAsAny
+      supplementalGroups:
+        rule: RunAsAny
+      volumes:
+      - '*'
+    ---
+    apiVersion: extensions/v1beta1
+    kind: PodSecurityPolicy
+    metadata:
+      name: restricted
+    spec:
+      privileged: false
+      fsGroup:
+        rule: RunAsAny
+      runAsUser:
+        rule: MustRunAsNonRoot
+      seLinux:
+        rule: RunAsAny
+      supplementalGroups:
+        rule: RunAsAny
+      volumes:
+      - 'emptyDir'
+      - 'secret'
+      - 'downwardAPI'
+      - 'configMap'
+      - 'persistentVolumeClaim'
+      - 'projected'
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1017,10 +1059,10 @@ write_files:
       # wait for healthy master
       while [ "$(/usr/bin/docker run --net=host --rm $KUBECTL get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
-      # apply RBAC bootstrap
-      RBAC_FILES="rbac_bindings.yaml rbac_roles.yaml"
+      # apply Security bootstrap (RBAC and PSP)
+      SECURITY_FILES="rbac_bindings.yaml rbac_roles.yaml psp_policies.yaml"
 
-      for manifest in $RBAC_FILES
+      for manifest in $SECURITY_FILES
       do
           while
               /usr/bin/docker run --net=host --rm -v /srv:/srv $KUBECTL apply -f /srv/$manifest
@@ -1470,7 +1512,7 @@ coreos:
       --repair-malformed-updates=false \
       --service-account-lookup=true \
       --authorization-mode=RBAC \
-      --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass \
+      --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}} \
       --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:443 \
