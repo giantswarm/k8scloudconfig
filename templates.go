@@ -899,6 +899,11 @@ write_files:
   permissions: 644
   content: |
     -w /usr/bin/docker -k docker
+    -w /var/lib/docker -k docker
+    -w /etc/docker -k docker
+    -w docker.service.d/10-giantswarm-extra-args.conf -k docker
+    -w docker.service.d/01-wait-docker.conf -k docker
+                
 
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
@@ -1401,7 +1406,11 @@ write_files:
   owner: root
   permissions: 644
   content: |
-    -w /usr/bin/docker -k docker
+  -w /usr/bin/docker -k docker
+  -w /var/lib/docker -k docker
+  -w /etc/docker -k docker
+  -w docker.service.d/10-giantswarm-extra-args.conf -k docker
+  -w docker.service.d/01-wait-docker.conf -k docker
   
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
