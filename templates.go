@@ -894,6 +894,12 @@ write_files:
     ClientAliveCountMax 2
     PasswordAuthentication no
 
+- path: /etc/audit/rules.d/10-docker.rules
+  owner: root
+  permissions: 644
+  content: |
+    -w /usr/bin/docker -k docker
+
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
@@ -1302,6 +1308,9 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+    - name: audit-rules.service
+      enable: true
+      command: start
   update:
     reboot-strategy: off
 
@@ -1388,6 +1397,12 @@ write_files:
     ClientAliveCountMax 2
     PasswordAuthentication no
 
+- path: /etc/audit/rules.d/10-docker.rules
+  owner: root
+  permissions: 644
+  content: |
+    -w /usr/bin/docker -k docker
+  
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
@@ -1599,6 +1614,9 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+    - name: audit-rules.service
+      enable: true
+      command: start
   update:
     reboot-strategy: off
 
