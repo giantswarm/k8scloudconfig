@@ -897,6 +897,12 @@ write_files:
       name: nginx-ingress-controller
       namespace: kube-system
     ---
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: default-backend
+      namespace: kube-system
+    ---
     apiVersion: rbac.authorization.k8s.io/v1beta1
     kind: ClusterRole
     metadata:
@@ -1089,6 +1095,18 @@ write_files:
     subjects:
     - kind: ServiceAccount
       name: calico-node
+      namespace: kube-system
+    - kind: ServiceAccount
+      name: calico-policy-controller
+      namespace: kube-system
+    - kind: ServiceAccount
+      name: kube-dns
+      namespace: kube-system
+    - kind: ServiceAccount
+      name: nginx-ingress-controller
+      namespace: kube-system
+    - kind: ServiceAccount
+      name: default-backend
       namespace: kube-system
     roleRef:
        apiGroup: rbac.authorization.k8s.io
