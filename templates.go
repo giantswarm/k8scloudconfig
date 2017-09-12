@@ -929,10 +929,6 @@ coreos:
       {{end}}{{end}}
   - name: sshd.service
     enable: true
-  - name: sshd.socket
-    enable: false
-    mask: true
-    command: stop
   - name: wait-for-domains.service
     enable: true
     command: start
