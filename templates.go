@@ -926,6 +926,12 @@ coreos:
     content: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  - name: sshd.service
+    enable: true
+  - name: sshd.socket
+    enable: false
+    mask: true
+    command: stop
   - name: wait-for-domains.service
     enable: true
     command: start
@@ -1146,9 +1152,15 @@ coreos:
     command: stop
     mask: true
   - name: locksmithd.service
+    enable: false
     command: stop
     mask: true
   - name: fleet.service
+    enable: false
+    mask: true
+    command: stop
+  - name: fleet.socket
+    enable: false
     mask: true
     command: stop
   - name: systemd-networkd-wait-online.service
