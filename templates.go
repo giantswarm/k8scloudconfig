@@ -931,12 +931,12 @@ write_files:
     -w /usr/lib/systemd/system/docker.service -k docker
     -w /usr/lib/systemd/system/docker.socket -k docker
 
-- path: /etc/systemd/system/audit-rules.service.d/10-After.conf
+- path: /etc/systemd/system/audit-rules.service.d/10-Wait-For-Docker.conf
   owner: root
   permissions: 644
   content: |
-    [Unit]
-    After=local-fs.target systemd-tmpfiles-setup.service docker.service  
+    [Service]
+    ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
 
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
@@ -1456,13 +1456,13 @@ write_files:
     -w /usr/lib/systemd/system/docker.service -k docker
     -w /usr/lib/systemd/system/docker.socket -k docker
 
-- path: /etc/systemd/system/audit-rules.service.d/10-After.conf
+- path: /etc/systemd/system/audit-rules.service.d/10-Wait-For-Docker.conf
   owner: root
   permissions: 644
   content: |
-    [Unit]
-    After=local-fs.target systemd-tmpfiles-setup.service docker.service    
-  
+    [Service]
+    ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
+
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
