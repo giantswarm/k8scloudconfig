@@ -930,7 +930,13 @@ write_files:
     -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
     -w /usr/lib/systemd/system/docker.service -k docker
     -w /usr/lib/systemd/system/docker.socket -k docker
-    -w /usr/lib/systemd/system/docker.socket -k docker
+
+- path: /etc/systemd/system/audit-rules.service.d/10-After.conf
+  owner: root
+  permissions: 644
+  content: |
+    [Unit]
+    After=local-fs.target systemd-tmpfiles-setup.service docker.service  
 
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
@@ -1346,27 +1352,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-
-  - name: audit-rules.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Load Security Auditing Rules
-      DefaultDependencies=no
-      After=local-fs.target systemd-tmpfiles-setup.service docker.service
-      Conflicts=shutdown.target
-      Before=sysinit.target shutdown.target
-      ConditionSecurity=audit
-      
-      [Service]
-      Type=oneshot
-      RemainAfterExit=yes
-      ExecStart=/sbin/augenrules --load
-      ExecStop=-/sbin/auditctl -D
-      
-      [Install]
-      WantedBy=multi-user.target
     
   update:
     reboot-strategy: off
@@ -1470,7 +1455,13 @@ write_files:
     -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
     -w /usr/lib/systemd/system/docker.service -k docker
     -w /usr/lib/systemd/system/docker.socket -k docker
-  
+
+- path: /etc/systemd/system/audit-rules.service.d/10-After.conf
+  owner: root
+  permissions: 644
+  content: |
+    [Unit]
+    After=local-fs.target systemd-tmpfiles-setup.service docker.service    
   
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
@@ -1684,27 +1675,6 @@ coreos:
       [Install]
       WantedBy=multi-user.target
 
-  - name: audit-rules.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Load Security Auditing Rules
-      DefaultDependencies=no
-      After=local-fs.target systemd-tmpfiles-setup.service docker.service
-      Conflicts=shutdown.target
-      Before=sysinit.target shutdown.target
-      ConditionSecurity=audit
-      
-      [Service]
-      Type=oneshot
-      RemainAfterExit=yes
-      ExecStart=/sbin/augenrules --load
-      ExecStop=-/sbin/auditctl -D
-      
-      [Install]
-      WantedBy=multi-user.target
-    
   update:
     reboot-strategy: off
 
