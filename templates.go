@@ -930,6 +930,7 @@ write_files:
     -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
     -w /usr/lib/systemd/system/docker.service -k docker
     -w /usr/lib/systemd/system/docker.socket -k docker
+    -w /usr/lib/systemd/system/docker.socket -k docker
 
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
