@@ -1114,6 +1114,7 @@ coreos:
       --proxy-mode=iptables \
       --logtostderr=true \
       --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml \
+      --conntrack-max-per-core 131072 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
@@ -1595,6 +1596,7 @@ coreos:
       --proxy-mode=iptables \
       --logtostderr=true \
       --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml \
+      --conntrack-max-per-core 131072 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
