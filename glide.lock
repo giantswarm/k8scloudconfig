@@ -1,5 +1,5 @@
 hash: 7376746e7885ea00032b53692824ac0d34d97e9efdf64bd756768c2298bef31e
-updated: 2017-09-14T14:52:50.279889874+02:00
+updated: 2017-09-19T13:59:02.567006819+02:00
 imports:
 - name: github.com/giantswarm/clustertpr
   version: 204c6262c75db8eddf6974c9373a42191db88a56
@@ -19,10 +19,10 @@ testImports:
   subpackages:
   - spew
 - name: github.com/pmezard/go-difflib
-  version: 792786c7400a136282c1664665ae0a8db921c6c2
+  version: d8ed2627bdf02c080bf22230dbb337003b7aba2d
   subpackages:
   - difflib
 - name: github.com/stretchr/testify
-  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  version: 890a5c3458b43e6104ff5da8dfa139d013d77544
   subpackages:
   - assert
