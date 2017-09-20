@@ -1020,8 +1020,9 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --disable-legacy-registry=true {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+        Environment="DOCKER_OPTS=--userland-proxy=false --disable-legacy-registry=true"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1577,8 +1578,9 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --disable-legacy-registry=true {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+        Environment="DOCKER_OPTS=--userland-proxy=false --disable-legacy-registry=true"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
