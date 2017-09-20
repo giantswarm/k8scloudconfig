@@ -932,6 +932,25 @@ write_files:
     net.ipv6.conf.all.accept_redirects = 0
     net.ipv6.conf.default.accept_redirects = 0
 
+- path: /etc/audit/rules.d/10-docker.rules
+  owner: root
+  permissions: 644
+  content: |
+    -w /usr/bin/docker -k docker
+    -w /var/lib/docker -k docker
+    -w /etc/docker -k docker
+    -w /etc/systemd/system/docker.service.d/10-giantswarm-extra-args.conf -k docker
+    -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
+    -w /usr/lib/systemd/system/docker.service -k docker
+    -w /usr/lib/systemd/system/docker.socket -k docker
+
+- path: /etc/systemd/system/audit-rules.service.d/10-Wait-For-Docker.conf
+  owner: root
+  permissions: 644
+  content: |
+    [Service]
+    ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
+
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
@@ -1362,6 +1381,7 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+    
   update:
     reboot-strategy: off
 
@@ -1465,6 +1485,25 @@ write_files:
     net.ipv4.tcp_timestamps = 0
     net.ipv6.conf.all.accept_redirects = 0
     net.ipv6.conf.default.accept_redirects = 0
+
+- path: /etc/audit/rules.d/10-docker.rules
+  owner: root
+  permissions: 644
+  content: |
+    -w /usr/bin/docker -k docker
+    -w /var/lib/docker -k docker
+    -w /etc/docker -k docker
+    -w /etc/systemd/system/docker.service.d/10-giantswarm-extra-args.conf -k docker
+    -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
+    -w /usr/lib/systemd/system/docker.service -k docker
+    -w /usr/lib/systemd/system/docker.socket -k docker
+
+- path: /etc/systemd/system/audit-rules.service.d/10-Wait-For-Docker.conf
+  owner: root
+  permissions: 644
+  content: |
+    [Service]
+    ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
 
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
@@ -1693,6 +1732,7 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+
   update:
     reboot-strategy: off
 
