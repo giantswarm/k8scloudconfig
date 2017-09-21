@@ -6,15 +6,15 @@ import (
 
 func Test_Template(t *testing.T) {
 	testCases := []struct {
-		Version      string
+		Version      version
 		ErrorMatcher func(err error) bool
 	}{
 		{
-			Version:      "v_0_1_0",
+			Version:      V_0_1_0,
 			ErrorMatcher: nil,
 		},
 		{
-			Version:      "foo",
+			Version:      version("foo"),
 			ErrorMatcher: IsNotFound,
 		},
 	}
