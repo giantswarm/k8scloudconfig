@@ -10,7 +10,7 @@ func Test_Template(t *testing.T) {
 		ErrorMatcher func(err error) bool
 	}{
 		{
-			Version:      "v_0_1_0_3500632",
+			Version:      "v_0_1_0",
 			ErrorMatcher: nil,
 		},
 		{
