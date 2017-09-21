@@ -1020,8 +1020,9 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --icc=false {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true "
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1133,6 +1134,7 @@ coreos:
       --proxy-mode=iptables \
       --logtostderr=true \
       --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml \
+      --conntrack-max-per-core 131072 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
@@ -1576,8 +1578,10 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --icc=false {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true "
+
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1634,6 +1638,7 @@ coreos:
       --proxy-mode=iptables \
       --logtostderr=true \
       --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml \
+      --conntrack-max-per-core 131072 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
