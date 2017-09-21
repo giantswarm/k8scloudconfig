@@ -17,6 +17,11 @@ type Template struct {
 	Worker string
 }
 
+// NewTemplate returns a template structure containing cloud config templates
+// versioned as provided.
+//
+// NOTE that version is a private type to this package to prevent users from
+// accidentially providing wrong versions.
 func NewTemplate(v version) (Template, error) {
 	var template Template
 
