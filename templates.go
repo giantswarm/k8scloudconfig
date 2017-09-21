@@ -1219,6 +1219,10 @@ coreos:
     enable: false
     mask: true
     command: stop
+  - name: flanneld.service
+    enable: false
+    command: stop
+    mask: true
   - name: systemd-networkd-wait-online.service
     enable: true
     command: start
@@ -1566,6 +1570,15 @@ coreos:
     command: stop
     mask: true
   - name: fleet.service
+    enable: false
+    command: stop
+    mask: true
+  - name: fleet.socket
+    enable: false
+    command: stop
+    mask: true
+  - name: flanneld.service
+    enable: false
     command: stop
     mask: true
   - name: systemd-networkd-wait-online.service
