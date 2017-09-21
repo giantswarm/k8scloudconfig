@@ -1,5 +1,5 @@
 hash: 7376746e7885ea00032b53692824ac0d34d97e9efdf64bd756768c2298bef31e
-updated: 2017-09-14T14:52:50.279889874+02:00
+updated: 2017-09-21T12:20:50.709216358+02:00
 imports:
 - name: github.com/giantswarm/clustertpr
   version: 204c6262c75db8eddf6974c9373a42191db88a56
@@ -13,6 +13,10 @@ imports:
   - spec/kubernetes/kubectl
   - spec/kubernetes/networksetup
   - spec/kubernetes/ssh
+- name: github.com/giantswarm/microerror
+  version: 5ade94eb4ee35ef72eb9382228470caeddb29989
+- name: github.com/juju/errgo
+  version: 08cceb5d0b5331634b9826762a8fd53b29b86ad8
 testImports:
 - name: github.com/davecgh/go-spew
   version: 5215b55f46b2b919f50a1df0eaa5886afe4e3b3d
@@ -23,6 +27,6 @@ testImports:
   subpackages:
   - difflib
 - name: github.com/stretchr/testify
-  version: 69483b4bd14f5845b5a1e55bca19e954e827f1d0
+  version: 890a5c3458b43e6104ff5da8dfa139d013d77544
   subpackages:
   - assert
