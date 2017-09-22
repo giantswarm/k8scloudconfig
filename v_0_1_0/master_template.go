@@ -1101,6 +1101,7 @@ coreos:
           --data-dir=/var/lib/etcd \
           --auto-compaction-retention=1 \
           --enable-v2
+
       [Install]
       WantedBy=multi-user.target
   - name: k8s-proxy.service
