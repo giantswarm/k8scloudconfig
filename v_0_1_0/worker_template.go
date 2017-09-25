@@ -179,7 +179,7 @@ coreos:
     enable: false
     command: stop
     mask: true
-  - name: fleet.socker
+  - name: fleet.socket
     enable: false
     command: stop
     mask: true
