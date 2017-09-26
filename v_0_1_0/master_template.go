@@ -1069,7 +1069,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       LimitNOFILE=40000
-      Environment=IMAGE=quay.io/coreos/etcd:v3.1.8
+      Environment=IMAGE=quay.io/coreos/etcd:v3.2.7
       Environment=NAME=%p.service
       EnvironmentFile=/etc/network-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
@@ -1102,7 +1102,9 @@ coreos:
           --initial-cluster-token k8s-etcd-cluster \
           --initial-cluster etcd0=https://127.0.0.1:2380 \
           --initial-cluster-state new \
-          --data-dir=/var/lib/etcd
+          --data-dir=/var/lib/etcd \
+          --auto-compaction-retention=1 \
+          --enable-v2
 
       [Install]
       WantedBy=multi-user.target
