@@ -1103,7 +1103,6 @@ coreos:
           --initial-cluster etcd0=https://127.0.0.1:2380 \
           --initial-cluster-state new \
           --data-dir=/var/lib/etcd \
-          --auto-compaction-retention=1 \
           --enable-v2
 
       [Install]
