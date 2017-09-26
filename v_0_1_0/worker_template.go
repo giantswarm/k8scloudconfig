@@ -168,6 +168,7 @@ coreos:
     command: stop
     mask: true
   - name: locksmithd.service
+    enable: false
     command: stop
     mask: true
   - name: etcd2.service
@@ -175,6 +176,15 @@ coreos:
     command: stop
     mask: true
   - name: fleet.service
+    enable: false
+    command: stop
+    mask: true
+  - name: fleet.socket
+    enable: false
+    command: stop
+    mask: true
+  - name: flanneld.service
+    enable: false
     command: stop
     mask: true
   - name: systemd-networkd-wait-online.service
