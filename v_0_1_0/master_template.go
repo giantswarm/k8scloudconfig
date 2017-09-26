@@ -107,10 +107,14 @@ write_files:
             k8s-app: calico-node
           annotations:
             scheduler.alpha.kubernetes.io/critical-pod: ''
-            scheduler.alpha.kubernetes.io/tolerations: |
-              [{"key": "dedicated", "value": "master", "effect": "NoSchedule" },
-               {"key":"CriticalAddonsOnly", "operator":"Exists"}]
         spec:
+          # Tolerations part was taken from calico manifest for kubeadm as we are using same taint for master.
+          tolerations:
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+          - key: CriticalAddonsOnly
+            operator: Exists
           hostNetwork: true
           serviceAccountName: calico-node
           containers:
@@ -1196,10 +1200,10 @@ coreos:
       --cluster-domain={{.Cluster.Kubernetes.Domain}} \
       --network-plugin=cni \
       --register-node=true \
-      --register-schedulable=false \
+      --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
       --allow-privileged=true \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
-      --node-labels="role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+      --node-labels="node-role.kubernetes.io/master,role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
@@ -1219,6 +1223,10 @@ coreos:
     enable: false
     mask: true
     command: stop
+  - name: flanneld.service
+    enable: false
+    command: stop
+    mask: true
   - name: systemd-networkd-wait-online.service
     enable: true
     command: start
