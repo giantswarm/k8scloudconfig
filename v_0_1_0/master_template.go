@@ -1145,7 +1145,7 @@ coreos:
     command: start
     content: |
       [Unit]
-      Description=Execute etcd-backup every day at 3AM UTC
+      Description=Execute etcd3-defragmentation every day at 3.30AM UTC
 
       [Timer]
       OnCalendar=*-*-* 03:30:00 UTC
