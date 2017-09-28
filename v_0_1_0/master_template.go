@@ -1279,7 +1279,8 @@ coreos:
       --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem \
       --client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem \
       --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem \
-	  --audit-log-path=/var/log/apiserver/audit.log
+      --audit-log-path=/var/log/apiserver/audit.log \
+      --audit-log-maxage=30
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
   - name: k8s-controller-manager.service
