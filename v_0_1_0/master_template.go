@@ -1025,7 +1025,7 @@ coreos:
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
-        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true"
+        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true --userland-proxy=false"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1185,7 +1185,6 @@ coreos:
       /hyperkube kubelet \
       --address=${DEFAULT_IPV4} \
       --port={{.Cluster.Kubernetes.Kubelet.Port}} \
-      --hostname-override=${DEFAULT_IPV4} \
       --node-ip=${DEFAULT_IPV4} \
       --api-servers=https://{{.Cluster.Kubernetes.API.Domain}} \
       --containerized \
