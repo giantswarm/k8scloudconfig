@@ -199,7 +199,7 @@ coreos:
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --disable-legacy-registry=true {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
-        Environment="DOCKER_OPTS=--live-restore"
+        Environment="DOCKER_OPTS=--live-restore --userland-proxy=false"
 
   - name: k8s-setup-network-env.service
     enable: true
