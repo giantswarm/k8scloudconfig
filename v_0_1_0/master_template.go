@@ -1185,7 +1185,6 @@ coreos:
       /hyperkube kubelet \
       --address=${DEFAULT_IPV4} \
       --port={{.Cluster.Kubernetes.Kubelet.Port}} \
-      --hostname-override=${DEFAULT_IPV4} \
       --node-ip=${DEFAULT_IPV4} \
       --api-servers=https://{{.Cluster.Kubernetes.API.Domain}} \
       --containerized \
