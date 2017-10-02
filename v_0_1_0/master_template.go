@@ -1114,7 +1114,7 @@ coreos:
       [Unit]
       Description=etcd defragmentation job
       After=docker.service etcd3.service
-      Wants=docker.service etcd3.service
+      Require=docker.service etcd3.service
 
       [Service]
       Type=oneshot
@@ -1125,7 +1125,6 @@ coreos:
       ExecStartPre=-/usr/bin/docker rm  $NAME
       ExecStartPre=-/usr/bin/docker pull $IMAGE
       ExecStart=/usr/bin/docker run \
-        -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
         -v /etc/giantswarm/g8s/ssl/etcd/:/etc/etcd \
         --net=host  \
         -e ETCDCTL_API=3 \
