@@ -101,6 +101,10 @@ write_files:
       selector:
         matchLabels:
           k8s-app: calico-node
+      updateStrategy:
+        type: RollingUpdate
+        rollingUpdate:
+          maxUnavailable: 1
       template:
         metadata:
           labels:
@@ -1023,9 +1027,9 @@ coreos:
     - name: 10-giantswarm-extra-args.conf
       content: |
         [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --disable-legacy-registry=true {{.Cluster.Docker.Daemon.ExtraArgs}}"
+        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
-        Environment="DOCKER_OPTS=--live-restore --userland-proxy=false"
+        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true --userland-proxy=false"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -1229,7 +1233,6 @@ coreos:
       /hyperkube kubelet \
       --address=${DEFAULT_IPV4} \
       --port={{.Cluster.Kubernetes.Kubelet.Port}} \
-      --hostname-override=${DEFAULT_IPV4} \
       --node-ip=${DEFAULT_IPV4} \
       --api-servers=https://{{.Cluster.Kubernetes.API.Domain}} \
       --containerized \
@@ -1322,7 +1325,11 @@ coreos:
       --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem \
       --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem \
       --client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem \
-      --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
+      --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem \
+      --audit-log-path=/var/log/apiserver/audit.log \
+      --audit-log-maxage=30 \
+      --audit-log-maxbackup=10 \
+      --audit-log-maxsize=100
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
   - name: k8s-controller-manager.service
