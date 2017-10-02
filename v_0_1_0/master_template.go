@@ -1111,6 +1111,50 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
+  - name: etcd3-defragmentation.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=etcd defragmentation job
+      After=docker.service etcd3.service
+      Require=docker.service etcd3.service
+
+      [Service]
+      Type=oneshot
+      EnvironmentFile=/etc/network-environment
+      Environment=IMAGE=quay.io/coreos/etcd:v3.2.7
+      Environment=NAME=%p.service
+      ExecStartPre=-/usr/bin/docker stop  $NAME
+      ExecStartPre=-/usr/bin/docker rm  $NAME
+      ExecStartPre=-/usr/bin/docker pull $IMAGE
+      ExecStart=/usr/bin/docker run \
+        -v /etc/giantswarm/g8s/ssl/etcd/:/etc/etcd \
+        --net=host  \
+        -e ETCDCTL_API=3 \
+        --name $NAME \
+        $IMAGE \
+        etcdctl \
+        --endpoints https://{{ .Cluster.Etcd.Domain }}:443 \
+        --cacert /etc/etcd/etcd-ca.pem \
+        --cert /etc/etcd/etcd.pem \
+        --key /etc/etcd/etcd-key.pem \
+        defrag
+
+      [Install]
+      WantedBy=multi-user.target
+  - name: etcd3-defragmentation.timer
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=Execute etcd3-defragmentation every day at 3.30AM UTC
+
+      [Timer]
+      OnCalendar=*-*-* 03:30:00 UTC
+
+      [Install]
+      WantedBy=multi-user.target
   - name: k8s-proxy.service
     enable: true
     command: start
