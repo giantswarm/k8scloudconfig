@@ -1118,7 +1118,7 @@ coreos:
       [Unit]
       Description=etcd defragmentation job
       After=docker.service etcd3.service
-      Require=docker.service etcd3.service
+      Requires=docker.service etcd3.service
 
       [Service]
       Type=oneshot
