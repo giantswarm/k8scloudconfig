@@ -1136,9 +1136,9 @@ coreos:
         $IMAGE \
         etcdctl \
         --endpoints https://{{ .Cluster.Etcd.Domain }}:443 \
-        --cacert /etc/etcd/etcd-ca.pem \
-        --cert /etc/etcd/etcd.pem \
-        --key /etc/etcd/etcd-key.pem \
+        --cacert /etc/etcd/server-ca.pem \
+        --cert /etc/etcd/server-crt.pem \
+        --key /etc/etcd/server-key.pem \
         defrag
 
       [Install]
