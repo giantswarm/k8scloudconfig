@@ -1129,7 +1129,7 @@ coreos:
       ExecStartPre=-/usr/bin/docker rm  $NAME
       ExecStartPre=-/usr/bin/docker pull $IMAGE
       ExecStart=/usr/bin/docker run \
-        -v /etc/giantswarm/g8s/ssl/etcd/:/etc/etcd \
+        -v /etc/kubernetes/ssl/etcd/:/etc/etcd \
         --net=host  \
         -e ETCDCTL_API=3 \
         --name $NAME \
