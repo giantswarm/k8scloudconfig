@@ -1172,7 +1172,8 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      KUBECTL={{.Cluster.Kubernetes.Kubectl.Docker.Image}}
+      # kubectl 1.8.1
+      KUBECTL=quay.io/giantswarm/docker-kubectl:1dc536ec6dc4597ba46769b3d5d6ce53a7e62038
 
       /usr/bin/docker pull $KUBECTL
 
