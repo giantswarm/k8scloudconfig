@@ -288,12 +288,6 @@ write_files:
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
-      tolerations:
-      - key: node-role.kubernetes.io/master
-        operator: Exists
-        effect: NoSchedule
-      - key: CriticalAddonsOnly
-        operator: Exists
       # The policy controller can only have a single active instance.
       replicas: 1
       strategy:
@@ -305,6 +299,12 @@ write_files:
           labels:
             k8s-app: calico-kube-controllers
         spec:
+          tolerations:
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+          - key: CriticalAddonsOnly
+            operator: Exists
           # The controllers must run in the host network namespace so that
           # it isn't governed by policy that would prevent it from working.
           hostNetwork: true
