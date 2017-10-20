@@ -10,6 +10,79 @@ users:
        - "{{ $user.PublicKey }}"
 {{end}}
 write_files:
+- path: /srv/calico-node-controller-sa.yaml
+  owner: root
+  permissions: 644
+  content: |
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: calico-node-controller
+      namespace: kube-system
+- path: /srv/calico-node-controller.yaml
+  owner: root
+  permissions: 644
+  content: |
+    apiVersion: extensions/v1beta1
+    kind: Deployment
+    metadata:
+      name: calico-node-controller
+      namespace: kube-system
+      labels:
+        k8s-app: calico-node-controller
+    spec:
+      replicas: 1
+      strategy:
+        type: Recreate
+      template:
+        metadata:
+          name: calico-node-controller
+          namespace: kube-system
+          labels:
+            k8s-app: calico-node-controller
+        spec:
+          serviceAccountName: calico-node-controller
+          containers:
+            - name: calico-node-controller
+              image: quay.io/giantswarm/calico-node-controller
+              env:
+                # The location of the Calico etcd cluster.
+                - name: ETCD_ENDPOINTS
+                  valueFrom:
+                    configMapKeyRef:
+                      name: calico-config
+                      key: etcd_endpoints
+                # Location of the CA certificate for etcd.
+                - name: ETCD_CA_CERT_FILE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: calico-config
+                      key: etcd_ca
+                # Location of the client key for etcd.
+                - name: ETCD_KEY_FILE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: calico-config
+                      key: etcd_key
+                # Location of the client certificate for etcd.
+                - name: ETCD_CERT_FILE
+                  valueFrom:
+                    configMapKeyRef:
+                      name: calico-config
+                      key: etcd_cert
+                # The location of the Kubernetes API.  Use the default Kubernetes
+                # service for API access.
+                - name: K8S_API
+                  value: "https://kubernetes.default:443"
+              volumeMounts:
+                # Mount in the etcd TLS secrets.
+                - mountPath: /etc/kubernetes/ssl/etcd
+                  name: etcd-certs
+          volumes:
+            # Mount in the etcd TLS secrets.
+            - name: etcd-certs
+              hostPath:
+                path: /etc/kubernetes/ssl/etcd
 - path: /srv/calico-kube-controllers-sa.yaml
   owner: root
   permissions: 644
@@ -849,6 +922,19 @@ write_files:
       name: calico-node
       apiGroup: rbac.authorization.k8s.io
     ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-node-controller
+    subjects:
+    - kind: ServiceAccount
+      name: calico-node-controller
+      namespace: kube-system
+    roleRef:
+      kind: ClusterRole
+      name: calico-node-controller
+      apiGroup: rbac.authorization.k8s.io
+    ---
     ## DNS
     kind: ClusterRoleBinding
     apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -924,6 +1010,21 @@ write_files:
           - nodes
         verbs:
           - get
+    ---
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-node-controller
+      namespace: kube-system
+    rules:
+      - apiGroups:
+        - ""
+        - extensions
+        resources:
+          - nodes
+        verbs:
+          - watch
+          - list
     ---
     ## IC
     apiVersion: v1
@@ -1130,6 +1231,9 @@ write_files:
       name: calico-kube-controllers
       namespace: kube-system
     - kind: ServiceAccount
+      name: calico-node-controller
+      namespace: kube-system
+    - kind: ServiceAccount
       name: kube-dns
       namespace: kube-system
     - kind: ServiceAccount
@@ -1195,7 +1299,13 @@ write_files:
       done
 
       # apply calico CNI
-      CALICO_FILES="calico-configmap.yaml calico-node-sa.yaml calico-kube-controllers-sa.yaml calico-ds.yaml calico-kube-controllers.yaml"
+      CALICO_FILES="calico-configmap.yaml\
+       calico-node-sa.yaml\
+       calico-kube-controllers-sa.yaml\
+       calico-ds.yaml\
+       calico-kube-controllers.yaml\
+       calico-node-controller-sa.yaml\
+       calico-node-controller.yaml"
 
       for manifest in $CALICO_FILES
       do
