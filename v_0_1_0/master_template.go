@@ -1276,6 +1276,8 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
+
+      export KUBECONFIG=/etc/kubernetes/config/addons-kubeconfig.yml
       # kubectl 1.8.1
       KUBECTL=quay.io/giantswarm/docker-kubectl:1dc536ec6dc4597ba46769b3d5d6ce53a7e62038
 
@@ -1358,6 +1360,29 @@ write_files:
           done
       done
       echo "Addons successfully installed"
+  - path: /etc/kubernetes/config/addons-kubeconfig.yml
+    owner: root
+    permissions: 0644
+    content: |
+      apiVersion: v1
+      kind: Config
+      users:
+      - name: proxy
+        user:
+          client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
+          client-key: /etc/kubernetes/ssl/apiserver-key.pem
+      clusters:
+      - name: local
+        cluster:
+          certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
+          server: https://{{.Cluster.Kubernetes.API.Domain}}
+      contexts:
+      - context:
+          cluster: local
+          user: proxy
+        name: service-account-context
+      current-context: service-account-context
+
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644
