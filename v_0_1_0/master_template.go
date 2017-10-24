@@ -1865,7 +1865,8 @@ coreos:
       /hyperkube apiserver \
       --allow_privileged=true \
       --insecure_bind_address=0.0.0.0 \
-      --insecure_port={{.Cluster.Kubernetes.API.InsecurePort}} \
+      --anonymous-auth=false \
+      --insecure_port=0 \
       --kubelet_https=true \
       --kubelet-preferred-address-types=InternalIP \
       --secure_port={{.Cluster.Kubernetes.API.SecurePort}} \
