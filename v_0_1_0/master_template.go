@@ -726,6 +726,7 @@ write_files:
     data:
       server-name-hash-bucket-size: "1024"
       server-name-hash-max-size: "1024"
+      use-proxy-protocol: "true"
 - path: /srv/ingress-controller-dep.yml
   owner: root
   permissions: 0644
@@ -1190,7 +1191,7 @@ write_files:
     kind: ClusterRole
     metadata:
       name: restricted-psp-user
-    rules: 
+    rules:
     - apiGroups:
       - extensions
       resources:
@@ -1206,7 +1207,7 @@ write_files:
     kind: ClusterRole
     metadata:
       name: privileged-psp-user
-    rules: 
+    rules:
     - apiGroups:
       - extensions
       resources:
