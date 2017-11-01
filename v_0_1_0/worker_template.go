@@ -165,10 +165,6 @@ coreos:
 
       [Install]
       WantedBy=multi-user.target
-  - name: iscsid.service
-    enable: true
-  - name: multipathd.service
-    enable: true
   - name: update-engine.service
     enable: false
     command: stop
