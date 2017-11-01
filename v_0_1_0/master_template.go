@@ -1796,10 +1796,6 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-  - name: iscsid.service
-    enable: true
-  - name: multipathd.service
-    enable: true
   - name: update-engine.service
     enable: false
     command: stop
