@@ -117,7 +117,18 @@ write_files:
           namespace: kube-system
           labels:
             k8s-app: calico-node-controller
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
+          tolerations:
+          - key: node-role.kubernetes.io/master
+            operator: Exists
+            effect: NoSchedule
+          - key: CriticalAddonsOnly
+            operator: Exists
+          nodeSelector:
+            role: master
+          hostNetwork: true
           serviceAccountName: calico-node-controller
           containers:
             - name: calico-node-controller
