@@ -900,7 +900,7 @@ write_files:
         targetPort: 443
       selector:
         k8s-app: nginx-ingress-controller
-- path: /src/kube-proxy-sa.yaml
+- path: /srv/kube-proxy-sa.yaml
   owner: root
   permissions: 0644
   content: |
@@ -909,7 +909,7 @@ write_files:
     metadata:
       name: kube-proxy
       namespace: kube-system
-- path: /src/kube-proxy-ds.yaml
+- path: /srv/kube-proxy-ds.yaml
   owner: root
   permissions: 0644
   content: |
