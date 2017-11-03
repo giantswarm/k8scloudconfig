@@ -1766,7 +1766,7 @@ coreos:
         --name $NAME \
         $IMAGE \
         etcdctl \
-        --endpoints https://{{ .Cluster.Etcd.Domain }}:443 \
+        --endpoints https://127.0.0.1:2379 \
         --cacert /etc/etcd/server-ca.pem \
         --cert /etc/etcd/server-crt.pem \
         --key /etc/etcd/server-key.pem \
