@@ -127,7 +127,7 @@ write_files:
           - key: CriticalAddonsOnly
             operator: Exists
           nodeSelector:
-            role: master
+            node-role.kubernetes.io/master: ""
           hostNetwork: true
           serviceAccountName: calico-node-controller
           containers:
