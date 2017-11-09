@@ -833,7 +833,8 @@ write_files:
       strategy:
         type: RollingUpdate
         rollingUpdate:
-          maxUnavailable: 1
+          maxSurge: 1
+          maxUnavailable: 0
       template:
         metadata:
           labels:
@@ -881,6 +882,12 @@ write_files:
                 scheme: HTTP
               initialDelaySeconds: 10
               timeoutSeconds: 1
+            lifecycle:
+              preStop:
+                exec:
+                  command:
+                  - sleep
+                  - "15"
             ports:
             - containerPort: 80
               hostPort: 80
