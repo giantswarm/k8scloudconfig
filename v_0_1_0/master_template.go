@@ -854,11 +854,12 @@ write_files:
           serviceAccountName: nginx-ingress-controller
           containers:
           - name: nginx-ingress-controller
-            image: {{.Cluster.Kubernetes.IngressController.Docker.Image}}
+            image: quay.io/kubernetes-ingress-controller/nginx-ingress-controller:0.9.0-beta.16
             args:
             - /nginx-ingress-controller
             - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
             - --configmap=$(POD_NAMESPACE)/ingress-nginx
+            - --enable-ssl-passthrough
             env:
               - name: POD_NAME
                 valueFrom:
