@@ -1552,7 +1552,7 @@ write_files:
 
       # apply k8s addons
       MANIFESTS="kube-proxy-sa.yaml\
-     kube-proxy-ds.yaml\
+                 kube-proxy-ds.yaml\
                  kubedns-cm.yaml\
                  kubedns-sa.yaml\
                  kubedns-dep.yaml\
