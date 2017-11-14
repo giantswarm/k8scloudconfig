@@ -507,6 +507,10 @@ write_files:
                 # kubernetes.default to the correct service clusterIP.
                 - name: CONFIGURE_ETC_HOSTS
                   value: "true"
+              resources:
+                requests:
+                  cpu: 30m
+                  memory: 90Mi
               volumeMounts:
                 # Mount in the etcd TLS secrets.
                 - mountPath: /etc/kubernetes/ssl/etcd
@@ -875,6 +879,10 @@ write_files:
                 path: /healthz
                 port: 10254
                 scheme: HTTP
+            resources:
+              requests:
+                memory: "350Mi"
+                cpu: "500m"
             livenessProbe:
               httpGet:
                 path: /healthz
@@ -983,6 +991,10 @@ write_files:
                   port: 10256
                 initialDelaySeconds: 10
                 periodSeconds: 3
+              resources:
+                requests:
+                  memory: "125Mi"
+                  cpu: "75m"
               securityContext:
                 privileged: true
               volumeMounts:
@@ -1986,6 +1998,8 @@ coreos:
       --allow-privileged=true \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+      --kube-reserved="cpu=150m,memory=250Mi" \
+      --system-reserved="cpu=150m,memory=250Mi" \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
