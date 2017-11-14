@@ -993,7 +993,7 @@ write_files:
                 periodSeconds: 3
               resources:
                 requests:
-                  memory: "125Mi"
+                  memory: "80Mi"
                   cpu: "75m"
               securityContext:
                 privileged: true
