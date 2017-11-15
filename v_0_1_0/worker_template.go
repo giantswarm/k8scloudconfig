@@ -337,8 +337,10 @@ coreos:
       After=k8s-kubelet.service
       
       [Service]
+      Type=oneshot
       ExecStartPre=/bin/sh -c "sleep 2m"
       ExecStart=/bin/sh -c "proxyCount=$(docker ps | grep 'kube-proxy' | wc -l);if [ "$proxyCount" == "0" ]; then sudo systemctl start k8s-proxy; fi;"
+      RemainAfterExit=yes
 
   - name: node-exporter.service
     enable: true
