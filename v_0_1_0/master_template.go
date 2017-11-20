@@ -832,7 +832,6 @@ write_files:
       annotations:
         prometheus.io/port: '10254'
         prometheus.io/scrape: 'true'
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       replicas: {{len .Cluster.Workers}}
       strategy:
@@ -844,6 +843,8 @@ write_files:
         metadata:
           labels:
             k8s-app: nginx-ingress-controller
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           affinity:
             podAntiAffinity:
