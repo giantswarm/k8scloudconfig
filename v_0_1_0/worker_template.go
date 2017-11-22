@@ -295,6 +295,7 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
+
   update:
     reboot-strategy: off
 
