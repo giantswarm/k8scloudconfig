@@ -1795,9 +1795,9 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStart=/usr/bin/mkdir -p /etc/kubernetes/data/etcd
-      ExecStart=/usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd
-      ExecStart=/usr/bin/chmod -R 700 /etc/kubernetes/data/etcd
+      ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/data/etcd
+      ExecStartPre=/bin/bash -c "until [ -d '/etc/kubernetes/data/etcd' ]; do echo Waiting for etcd data directory; sleep 1s;done;"
+      ExecStart=/bin/bash -c "/usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd; /usr/bin/chmod -R 700 /etc/kubernetes/data/etcd"
   - name: docker.service
     enable: true
     command: start
