@@ -338,7 +338,10 @@ coreos:
       After=k8s-kubelet.service
       
       [Service]
+      Environment="KUBECONFIG=/etc/kubernetes/config/kubelet-kubeconfig.yml"
+      Environment="KUBECTL=quay.io/giantswarm/docker-kubectl:1dc536ec6dc4597ba46769b3d5d6ce53a7e62038"
       Type=oneshot
+      ExecStartPre=/bin/sh -c "while ! /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get no 2>/dev/null 1>/dev/null; do sleep 1 && echo 'Waiting for healthy k8s'; done"
       ExecStartPre=/bin/sh -c "sleep 2m"
       ExecStart=/bin/sh -c "proxyCount=$(docker ps | grep 'kube-proxy' | wc -l);if [ "$proxyCount" == "0" ]; then sudo systemctl start k8s-proxy; fi;"
       RemainAfterExit=yes
