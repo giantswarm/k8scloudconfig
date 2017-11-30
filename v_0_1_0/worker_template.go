@@ -345,37 +345,6 @@ coreos:
       ExecStartPre=/bin/sh -c "sleep 2m"
       ExecStart=/bin/sh -c "proxyCount=$(docker ps | grep 'kube-proxy' | wc -l);if [ "$proxyCount" == "0" ]; then sudo systemctl start k8s-proxy; fi;"
       RemainAfterExit=yes
-
-  - name: node-exporter.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Prometheus Node Exporter Service
-      Requires=docker.service
-      After=docker.service
-
-      [Service]
-      Restart=always
-      RestartSec=0
-      TimeoutStopSec=10
-      Environment="IMAGE=prom/node-exporter:0.12.0"
-      Environment="NAME=%p.service"
-      ExecStartPre=/usr/bin/docker pull $IMAGE
-      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
-      ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStart=/usr/bin/docker run --rm \
-        -p 91:91 \
-        --net=host \
-        --name $NAME \
-        $IMAGE \
-        --web.listen-address=:91
-      ExecStop=-/usr/bin/docker stop -t 10 $NAME
-      ExecStopPost=-/usr/bin/docker rm -f $NAME
-
-      [Install]
-      WantedBy=multi-user.target
-
   update:
     reboot-strategy: off
 

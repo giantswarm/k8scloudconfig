@@ -832,7 +832,6 @@ write_files:
       annotations:
         prometheus.io/port: '10254'
         prometheus.io/scrape: 'true'
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       replicas: {{len .Cluster.Workers}}
       strategy:
@@ -844,6 +843,8 @@ write_files:
         metadata:
           labels:
             k8s-app: nginx-ingress-controller
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           affinity:
             podAntiAffinity:
@@ -1794,8 +1795,7 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStart=/usr/bin/mkdir -p /etc/kubernetes/data/etcd
-      ExecStart=/usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd
+      ExecStartPre=/bin/bash -c "/usr/bin/mkdir -p /etc/kubernetes/data/etcd; /usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd"
       ExecStart=/usr/bin/chmod -R 700 /etc/kubernetes/data/etcd
   - name: docker.service
     enable: true
@@ -2056,7 +2056,7 @@ coreos:
       --allow_privileged=true \
       --insecure_bind_address=0.0.0.0 \
       --anonymous-auth=false \
-      --insecure_port=0 \
+      --insecure-port=0 \
       --kubelet_https=true \
       --kubelet-preferred-address-types=InternalIP \
       --secure_port={{.Cluster.Kubernetes.API.SecurePort}} \
@@ -2165,33 +2165,6 @@ coreos:
       Type=oneshot
       EnvironmentFile=/etc/network-environment
       ExecStart=/opt/k8s-addons
-      [Install]
-      WantedBy=multi-user.target
-  - name: node-exporter.service
-    enable: true
-    command: start
-    content: |
-      [Unit]
-      Description=Prometheus Node Exporter Service
-      Requires=docker.service
-      After=docker.service
-
-      [Service]
-      Restart=always
-      Environment="IMAGE=prom/node-exporter:0.12.0"
-      Environment="NAME=%p.service"
-      ExecStartPre=/usr/bin/docker pull $IMAGE
-      ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
-      ExecStartPre=-/usr/bin/docker rm -f $NAME
-      ExecStart=/usr/bin/docker run --rm \
-        -p 91:91 \
-        --net=host \
-        --name $NAME \
-        $IMAGE \
-        --web.listen-address=:91
-      ExecStop=-/usr/bin/docker stop -t 10 $NAME
-      ExecStopPost=-/usr/bin/docker rm -f $NAME
-
       [Install]
       WantedBy=multi-user.target
 
