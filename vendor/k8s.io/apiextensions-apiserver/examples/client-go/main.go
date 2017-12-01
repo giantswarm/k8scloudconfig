@@ -22,10 +22,11 @@ import (
 	"flag"
 	"fmt"
 
-	apiv1 "k8s.io/api/core/v1"
 	apiextensionsclient "k8s.io/apiextensions-apiserver/pkg/client/clientset/clientset"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+	apiv1 "k8s.io/client-go/pkg/api/v1"
+	"k8s.io/client-go/rest"
 	"k8s.io/client-go/tools/clientcmd"
 
 	// Uncomment the following line to load the gcp plugin (only required to authenticate against GKE clusters).
@@ -37,12 +38,11 @@ import (
 )
 
 func main() {
-	masterURL := flag.String("master", "", "The address of the Kubernetes API server. Overrides any value in kubeconfig. Only required if out-of-cluster.")
 	kubeconfig := flag.String("kubeconfig", "", "Path to a kube config. Only required if out-of-cluster.")
 	flag.Parse()
 
-	// Create the client config. Use masterURL and kubeconfig if given, otherwise assume in-cluster.
-	config, err := clientcmd.BuildConfigFromFlags(*masterURL, *kubeconfig)
+	// Create the client config. Use kubeconfig if given, otherwise assume in-cluster.
+	config, err := buildConfig(*kubeconfig)
 	if err != nil {
 		panic(err)
 	}
@@ -57,10 +57,7 @@ func main() {
 	if err != nil && !apierrors.IsAlreadyExists(err) {
 		panic(err)
 	}
-
-	if crd != nil {
-		defer apiextensionsclientset.ApiextensionsV1beta1().CustomResourceDefinitions().Delete(crd.Name, nil)
-	}
+	defer apiextensionsclientset.ApiextensionsV1beta1().CustomResourceDefinitions().Delete(crd.Name, nil)
 
 	// make a new config for our extension's API group, using the first config as a baseline
 	exampleClient, exampleScheme, err := exampleclient.NewClient(config)
@@ -113,11 +110,18 @@ func main() {
 	}
 	fmt.Print("PROCESSED\n")
 
-	// Fetch a list of our CRs
+	// Fetch a list of our TPRs
 	exampleList := crv1.ExampleList{}
 	err = exampleClient.Get().Resource(crv1.ExampleResourcePlural).Do().Into(&exampleList)
 	if err != nil {
 		panic(err)
 	}
 	fmt.Printf("LIST: %#v\n", exampleList)
+}
+
+func buildConfig(kubeconfig string) (*rest.Config, error) {
+	if kubeconfig != "" {
+		return clientcmd.BuildConfigFromFlags("", kubeconfig)
+	}
+	return rest.InClusterConfig()
 }

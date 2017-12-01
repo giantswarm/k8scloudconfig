@@ -1,5 +1,7 @@
 package(default_visibility = ["//visibility:public"])
 
+licenses(["notice"])
+
 load(
     "@io_bazel_rules_go//go:def.bzl",
     "go_library",
@@ -13,8 +15,8 @@ go_test(
         "roundtripper_test.go",
         "upgrade_test.go",
     ],
-    importpath = "k8s.io/apimachinery/pkg/util/httpstream/spdy",
     library = ":go_default_library",
+    tags = ["automanaged"],
     deps = [
         "//vendor/github.com/elazarl/goproxy:go_default_library",
         "//vendor/k8s.io/apimachinery/pkg/util/httpstream:go_default_library",
@@ -28,7 +30,7 @@ go_library(
         "roundtripper.go",
         "upgrade.go",
     ],
-    importpath = "k8s.io/apimachinery/pkg/util/httpstream/spdy",
+    tags = ["automanaged"],
     deps = [
         "//vendor/github.com/docker/spdystream:go_default_library",
         "//vendor/github.com/golang/glog:go_default_library",
@@ -41,17 +43,4 @@ go_library(
         "//vendor/k8s.io/apimachinery/pkg/util/runtime:go_default_library",
         "//vendor/k8s.io/apimachinery/third_party/forked/golang/netutil:go_default_library",
     ],
-)
-
-filegroup(
-    name = "package-srcs",
-    srcs = glob(["**"]),
-    tags = ["automanaged"],
-    visibility = ["//visibility:private"],
-)
-
-filegroup(
-    name = "all-srcs",
-    srcs = [":package-srcs"],
-    tags = ["automanaged"],
 )
