@@ -1482,7 +1482,7 @@ write_files:
 
       export KUBECONFIG=/etc/kubernetes/config/addons-kubeconfig.yml
       # kubectl 1.8.4
-      KUBECTL=quay.io/giantswarm/docker-kubectl:f188d4108f6e6e9b108547ecbea4ee866a56b00704b7293b6cabd52337423bc6
+      KUBECTL=quay.io/giantswarm/docker-kubectl:8cabd75bacbcdad7ac5d85efc3ca90c2fabf023b
 
       /usr/bin/docker pull $KUBECTL
 
