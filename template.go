@@ -12,7 +12,7 @@ type version string
 const (
 	V_0_1_0 version = "v_0_1_0"
 	// V1 is only used for KVM and has the experimental encryption feature
-	// disabled.
+	// disabled. See also https://github.com/giantswarm/k8scloudconfig/pull/257.
 	V1 version = "v1"
 )
 
