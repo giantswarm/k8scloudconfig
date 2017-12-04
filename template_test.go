@@ -14,6 +14,10 @@ func Test_Template(t *testing.T) {
 			ErrorMatcher: nil,
 		},
 		{
+			Version:      V1,
+			ErrorMatcher: nil,
+		},
+		{
 			Version:      version("foo"),
 			ErrorMatcher: IsNotFound,
 		},

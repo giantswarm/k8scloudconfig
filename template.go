@@ -3,6 +3,7 @@ package cloudconfig
 import (
 	"github.com/giantswarm/microerror"
 
+	"github.com/giantswarm/k8scloudconfig/v1"
 	"github.com/giantswarm/k8scloudconfig/v_0_1_0"
 )
 
@@ -10,6 +11,9 @@ type version string
 
 const (
 	V_0_1_0 version = "v_0_1_0"
+	// V1 is only used for KVM and has the experimental encraption feature
+	// disabled.
+	V1 version = "v1"
 )
 
 type Template struct {
@@ -29,6 +33,9 @@ func NewTemplate(v version) (Template, error) {
 	case V_0_1_0:
 		template.Master = v_0_1_0.MasterTemplate
 		template.Worker = v_0_1_0.WorkerTemplate
+	case V1:
+		template.Master = v1.MasterTemplate
+		template.Worker = v1.WorkerTemplate
 	default:
 		return Template{}, microerror.Maskf(notFoundError, "template version '%s'", v)
 	}
