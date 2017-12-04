@@ -11,7 +11,7 @@ type version string
 
 const (
 	V_0_1_0 version = "v_0_1_0"
-	// V1 is only used for KVM and has the experimental encraption feature
+	// V1 is only used for KVM and has the experimental encryption feature
 	// disabled.
 	V1 version = "v1"
 )
