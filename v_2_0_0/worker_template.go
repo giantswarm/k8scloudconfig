@@ -1,4 +1,4 @@
-package v1
+package v_2_0_0
 
 const WorkerTemplate = `#cloud-config
 users:
