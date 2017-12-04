@@ -3,6 +3,7 @@ package cloudconfig
 import (
 	"github.com/giantswarm/microerror"
 
+	"github.com/giantswarm/k8scloudconfig/v1_1"
 	"github.com/giantswarm/k8scloudconfig/v2"
 	"github.com/giantswarm/k8scloudconfig/v_0_1_0"
 )
@@ -11,7 +12,12 @@ type version string
 
 const (
 	V_0_1_0 version = "v_0_1_0"
-	V2      version = "v2"
+	// V1_1 uses generated client types for templating but does not have the
+	// experimental encryption feature enabled. We use it e.g. for KVM only since
+	// the TPR migration. See also
+	// https://github.com/giantswarm/k8scloudconfig/pull/TODO.
+	V1_0 version = "v1_1"
+	V2   version = "v2"
 )
 
 type Template struct {
@@ -31,6 +37,9 @@ func NewTemplate(v version) (Template, error) {
 	case V_0_1_0:
 		template.Master = v_0_1_0.MasterTemplate
 		template.Worker = v_0_1_0.WorkerTemplate
+	case V1_1:
+		template.Master = v1_1.MasterTemplate
+		template.Worker = v1_1.WorkerTemplate
 	case V2:
 		template.Master = v2.MasterTemplate
 		template.Worker = v2.WorkerTemplate
