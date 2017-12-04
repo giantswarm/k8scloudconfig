@@ -14,6 +14,10 @@ func Test_Template(t *testing.T) {
 			ErrorMatcher: nil,
 		},
 		{
+			Version:      V1_1,
+			ErrorMatcher: nil,
+		},
+		{
 			Version:      V2,
 			ErrorMatcher: nil,
 		},
