@@ -15,7 +15,7 @@ const (
 	// V1_1 uses generated client types for templating but does not have the
 	// experimental encryption feature enabled. We use it e.g. for KVM only since
 	// the TPR migration. See also
-	// https://github.com/giantswarm/k8scloudconfig/pull/TODO.
+	// https://github.com/giantswarm/k8scloudconfig/pull/259.
 	V1_0 version = "v1_1"
 	V2   version = "v2"
 )
