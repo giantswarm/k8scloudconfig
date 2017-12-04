@@ -16,7 +16,7 @@ const (
 	// experimental encryption feature enabled. We use it e.g. for KVM only since
 	// the TPR migration. See also
 	// https://github.com/giantswarm/k8scloudconfig/pull/259.
-	V1_0 version = "v1_1"
+	V1_1 version = "v1_1"
 	V2   version = "v2"
 )
 
