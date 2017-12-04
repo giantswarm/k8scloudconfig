@@ -1,4 +1,4 @@
-package v2
+package v_1_1_0
 
 type FakeExtension struct{}
 

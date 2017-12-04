@@ -1,4 +1,4 @@
-package v2
+package v_1_0_0
 
 import (
 	"bytes"
@@ -6,13 +6,14 @@ import (
 	"encoding/base64"
 	"text/template"
 
-	"github.com/giantswarm/apiextensions/pkg/apis/cluster/v1alpha1"
+	"github.com/giantswarm/clustertpr"
+	"github.com/giantswarm/clustertpr/spec"
 )
 
 type Params struct {
-	Cluster   v1alpha1.Cluster
+	Cluster   clustertpr.Spec
 	Extension Extension
-	Node      v1alpha1.ClusterNode
+	Node      spec.Node
 }
 
 type CloudConfig struct {

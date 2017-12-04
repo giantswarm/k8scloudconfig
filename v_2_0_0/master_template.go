@@ -1,4 +1,4 @@
-package v1
+package v_2_0_0
 
 const MasterTemplate = `#cloud-config
 users:
@@ -2083,7 +2083,8 @@ coreos:
       --audit-log-path=/var/log/apiserver/audit.log \
       --audit-log-maxage=30 \
       --audit-log-maxbackup=10 \
-      --audit-log-maxsize=100
+      --audit-log-maxsize=100 \
+      --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
   - name: k8s-controller-manager.service
