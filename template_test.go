@@ -18,6 +18,10 @@ func Test_Template(t *testing.T) {
 			ErrorMatcher: nil,
 		},
 		{
+			Version:      V2,
+			ErrorMatcher: nil,
+		},
+		{
 			Version:      version("foo"),
 			ErrorMatcher: IsNotFound,
 		},
@@ -27,15 +31,15 @@ func Test_Template(t *testing.T) {
 		template, err := NewTemplate(tc.Version)
 		if err != nil {
 			if tc.ErrorMatcher != nil && !tc.ErrorMatcher(err) {
-				t.Fatalf("test %d expected %#v got %#v", i+1, true, false)
+				t.Fatalf("test %d expected %#v got %#v", i, true, false)
 			}
 		} else {
 			if template.Master == "" {
-				t.Fatalf("test %d expected %#v got %#v", i+1, "valid master template", "empty string")
+				t.Fatalf("test %d expected %#v got %#v", i, "valid master template", "empty string")
 			}
 
 			if template.Worker == "" {
-				t.Fatalf("test %d expected %#v got %#v", i+1, "valid worker template", "empty string")
+				t.Fatalf("test %d expected %#v got %#v", i, "valid worker template", "empty string")
 			}
 		}
 	}

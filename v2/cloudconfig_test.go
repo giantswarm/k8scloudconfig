@@ -1,12 +1,11 @@
-package v_0_1_0
+package v2
 
 import (
 	"encoding/base64"
 	"strings"
 	"testing"
 
-	"github.com/giantswarm/clustertpr"
-	"github.com/giantswarm/clustertpr/spec"
+	"github.com/giantswarm/apiextensions/pkg/apis/cluster/v1alpha1"
 )
 
 func TestCloudConfig(t *testing.T) {
@@ -56,8 +55,8 @@ func TestCloudConfigTemplating(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				Cluster: clustertpr.Spec{
-					Calico: spec.Calico{
+				Cluster: v1alpha1.Cluster{
+					Calico: v1alpha1.ClusterCalico{
 						Subnet: "127.0.0.1",
 						CIDR:   16,
 					},
@@ -75,8 +74,8 @@ func TestCloudConfigTemplating(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				Cluster: clustertpr.Spec{
-					Calico: spec.Calico{
+				Cluster: v1alpha1.Cluster{
+					Calico: v1alpha1.ClusterCalico{
 						Subnet: "192.168.0.0",
 						CIDR:   24,
 					},
