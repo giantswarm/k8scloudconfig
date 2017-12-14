@@ -4,15 +4,22 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/base64"
+	"reflect"
 	"text/template"
 
-	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
-type Params struct {
-	Cluster   v1alpha1.Cluster
-	Extension Extension
-	Node      v1alpha1.ClusterNode
+type Config struct {
+	Params   Params
+	Template string
+}
+
+func DefaultConfig() Config {
+	return Config{
+		Params:   Params{},
+		Template: "",
+	}
 }
 
 type CloudConfig struct {
@@ -21,14 +28,21 @@ type CloudConfig struct {
 	template string
 }
 
-func NewCloudConfig(template string, params Params) (*CloudConfig, error) {
-	newCloudConfig := &CloudConfig{
-		config:   "",
-		params:   params,
-		template: template,
+func New(config Config) (*CloudConfig, error) {
+	if reflect.DeepEqual(config.Params, Params{}) {
+		return nil, microerror.Maskf(invalidConfigError, "config.Params must not be empty")
+	}
+	if config.Template == "" {
+		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
 
-	return newCloudConfig, nil
+	c := &CloudConfig{
+		config:   "",
+		params:   config.Params,
+		template: config.Template,
+	}
+
+	return c, nil
 }
 
 func (c *CloudConfig) ExecuteTemplate() error {
