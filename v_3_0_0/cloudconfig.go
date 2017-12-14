@@ -36,6 +36,14 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
 
+	// Set default params.
+	if config.Params.MasterAPIDomain == "" {
+		config.Params.MasterAPIDomain = config.Params.Cluster.Kubernetes.API.Domain
+	}
+	if config.Params.Apiserver.BindAddress == "" {
+		config.Params.Apiserver.BindAddress = defaultHyperkubeApiserverBindAddress
+	}
+
 	c := &CloudConfig{
 		config:   "",
 		params:   config.Params,
