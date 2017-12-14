@@ -10,13 +10,13 @@ import (
 	"github.com/giantswarm/microerror"
 )
 
-type Config struct {
+type CloudConfigConfig struct {
 	Params   Params
 	Template string
 }
 
-func DefaultConfig() Config {
-	return Config{
+func DefaultCloudConfigConfig() CloudConfigConfig {
+	return CloudConfigConfig{
 		Params:   Params{},
 		Template: "",
 	}
@@ -28,7 +28,7 @@ type CloudConfig struct {
 	template string
 }
 
-func New(config Config) (*CloudConfig, error) {
+func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if reflect.DeepEqual(config.Params, Params{}) {
 		return nil, microerror.Maskf(invalidConfigError, "config.Params must not be empty")
 	}
