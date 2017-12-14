@@ -244,6 +244,9 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
+      {{ range .Hyperkube.Kubelet.RunExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       -v /:/rootfs:ro,shared \
       -v /sys:/sys:ro \
       -v /dev:/dev:rw \
@@ -272,6 +275,9 @@ coreos:
       --name $NAME \
       $IMAGE \
       /hyperkube kubelet \
+      {{ range .Hyperkube.Kubelet.CommandExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       --address=${DEFAULT_IPV4} \
       --port={{.Cluster.Kubernetes.Kubelet.Port}} \
       --node-ip=${DEFAULT_IPV4} \

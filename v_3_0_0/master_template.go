@@ -1952,6 +1952,9 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
+      {{ range .Hyperkube.Kubelet.RunExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       -v /:/rootfs:ro,shared \
       -v /sys:/sys:ro \
       -v /dev:/dev:rw \
@@ -1980,6 +1983,9 @@ coreos:
       --name $NAME \
       $IMAGE \
       /hyperkube kubelet \
+      {{ range .Hyperkube.Kubelet.CommandExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       --address=${DEFAULT_IPV4} \
       --port={{.Cluster.Kubernetes.Kubelet.Port}} \
       --node-ip=${DEFAULT_IPV4} \
@@ -2048,11 +2054,17 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --name $NAME --net=host \
+      {{ range .Hyperkube.Apiserver.RunExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       -v /etc/kubernetes/encryption/:/etc/kubernetes/encryption \
       $IMAGE \
       /hyperkube apiserver \
+      {{ range .Hyperkube.Apiserver.CommandExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       --allow_privileged=true \
       --insecure_bind_address=0.0.0.0 \
       --anonymous-auth=false \
@@ -2107,11 +2119,17 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --net=host --name $NAME \
+      {{ range .Hyperkube.ControllerManager.RunExtraArgs -}}
+      {{ . }} \
+      {{ end -}}
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       $IMAGE \
       /hyperkube controller-manager \
+      {{ range .Hyperkube.ControllerManager.CommandExtraArgs -}}
+      {{ . }}  \
+      {{ end -}}
       --logtostderr=true \
       --v=2 \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
