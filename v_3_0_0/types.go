@@ -3,9 +3,24 @@ package v_3_0_0
 import "github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
 
 type Params struct {
-	Cluster   v1alpha1.Cluster
+	Cluster v1alpha1.Cluster
+	// Hyperkube allows to pass extra `docker run` and `command` arguments
+	// to hyperkube image commands. This allows to e.g. add cloud provider
+	// extensions.
+	Hyperkube Hyperkube
 	Extension Extension
 	Node      v1alpha1.ClusterNode
+}
+
+type Hyperkube struct {
+	Apiserver         HyperkubeDocker
+	ControllerManager HyperkubeDocker
+	Kubelet           HyperkubeDocker
+}
+
+type HyperkubeDocker struct {
+	RunExtraArgs     []string
+	CommandExtraArgs []string
 }
 
 type FileMetadata struct {
