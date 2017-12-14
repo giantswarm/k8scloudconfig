@@ -7,6 +7,12 @@ const (
 )
 
 type Params struct {
+	Cluster v1alpha1.Cluster
+	// Hyperkube allows to pass extra `docker run` and `command` arguments
+	// to hyperkube image commands. This allows to e.g. add cloud provider
+	// extensions.
+	Hyperkube Hyperkube
+	Extension Extension
 	// MasterAPIDomain is a value of domain passed to various Kubernetes
 	// services. When MasterAPIDomain is empty value of
 	// Cluster.Kubernetes.API.Domain is passed.
@@ -16,13 +22,7 @@ type Params struct {
 	//
 	// azure-operator sets that to 127.0.0.1. Other operators leave it empty.
 	MasterAPIDomain string
-	Cluster         v1alpha1.Cluster
-	// Hyperkube allows to pass extra `docker run` and `command` arguments
-	// to hyperkube image commands. This allows to e.g. add cloud provider
-	// extensions.
-	Hyperkube Hyperkube
-	Extension Extension
-	Node      v1alpha1.ClusterNode
+	Node            v1alpha1.ClusterNode
 }
 
 type Hyperkube struct {

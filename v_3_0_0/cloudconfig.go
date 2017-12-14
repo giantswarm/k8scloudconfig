@@ -40,8 +40,8 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Params.MasterAPIDomain == "" {
 		config.Params.MasterAPIDomain = config.Params.Cluster.Kubernetes.API.Domain
 	}
-	if config.Params.Apiserver.BindAddress == "" {
-		config.Params.Apiserver.BindAddress = defaultHyperkubeApiserverBindAddress
+	if config.Params.Hyperkube.Apiserver.BindAddress == "" {
+		config.Params.Hyperkube.Apiserver.BindAddress = defaultHyperkubeApiserverBindAddress
 	}
 
 	c := &CloudConfig{
