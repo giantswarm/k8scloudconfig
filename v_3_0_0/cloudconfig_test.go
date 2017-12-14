@@ -28,7 +28,12 @@ func TestCloudConfig(t *testing.T) {
 	}
 
 	for _, tc := range tests {
-		cloudConfig, err := NewCloudConfig(tc.template, tc.params)
+		c := DefaultCloudConfigConfig()
+
+		c.Params = tc.params
+		c.Template = tc.template
+
+		cloudConfig, err := NewCloudConfig(c)
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -91,7 +96,12 @@ func TestCloudConfigTemplating(t *testing.T) {
 	}
 
 	for index, test := range tests {
-		cloudConfig, err := NewCloudConfig(test.template, test.params)
+		c := DefaultCloudConfigConfig()
+
+		c.Params = test.params
+		c.Template = test.template
+
+		cloudConfig, err := NewCloudConfig(c)
 		if err != nil {
 			t.Fatalf("%v: unexpected error creating cloud config: %v", index, err)
 		}

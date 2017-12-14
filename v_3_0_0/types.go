@@ -1,14 +1,12 @@
 package v_3_0_0
 
-import (
-	"bytes"
-	"strings"
-	"text/template"
-)
+import "github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
 
-const (
-	GzipBase64 string = "gzip+base64"
-)
+type Params struct {
+	Cluster   v1alpha1.Cluster
+	Extension Extension
+	Node      v1alpha1.ClusterNode
+}
 
 type FileMetadata struct {
 	AssetContent string
@@ -46,20 +44,4 @@ type Extension interface {
 	Files() ([]FileAsset, error)
 	Units() ([]UnitAsset, error)
 	VerbatimSections() []VerbatimSection
-}
-
-func RenderAssetContent(assetContent string, params interface{}) ([]string, error) {
-	tmpl, err := template.New("").Parse(assetContent)
-	if err != nil {
-		return nil, err
-	}
-
-	buf := new(bytes.Buffer)
-
-	if err := tmpl.Execute(buf, params); err != nil {
-		return nil, err
-	}
-
-	content := strings.Split(buf.String(), "\n")
-	return content, nil
 }
