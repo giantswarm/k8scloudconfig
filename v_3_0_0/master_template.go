@@ -1490,7 +1490,12 @@ write_files:
       while [ "$(/usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
       # apply Security bootstrap (RBAC and PSP)
-      SECURITY_FILES="rbac_bindings.yaml rbac_roles.yaml psp_policies.yaml psp_roles.yaml psp_binding.yaml"
+      SECURITY_FILES=""
+      SECURITY_FILES="${SECURITY_FILES} rbac_bindings.yaml"
+      SECURITY_FILES="${SECURITY_FILES} rbac_roles.yaml"
+      SECURITY_FILES="${SECURITY_FILES} psp_policies.yaml"
+      SECURITY_FILES="${SECURITY_FILES} psp_roles.yaml"
+      SECURITY_FILES="${SECURITY_FILES} psp_binding.yaml"
 
       for manifest in $SECURITY_FILES
       do
@@ -1504,15 +1509,16 @@ write_files:
       done
 
       # apply calico CNI
-      CALICO_FILES="calico-configmap.yaml\
-       calico-node-sa.yaml\
-       calico-kube-controllers-sa.yaml\
-       calico-ds.yaml\
-       calico-kube-controllers.yaml\
-       calico-node-controller-sa.yaml\
-       calico-node-controller.yaml\
-       calico-ipip-pinger-sa.yaml\
-       calico-ipip-pinger.yaml"
+      CALICO_FILES=""
+      CALICO_FILES="${CALICO_FILES} calico-configmap.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-node-sa.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-kube-controllers-sa.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-ds.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-kube-controllers.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-node-controller-sa.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-node-controller.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-ipip-pinger-sa.yaml"
+      CALICO_FILES="${CALICO_FILES} calico-ipip-pinger.yaml"
 
       for manifest in $CALICO_FILES
       do
@@ -1552,17 +1558,21 @@ write_files:
       fi
 
       # apply k8s addons
-      MANIFESTS="kube-proxy-sa.yaml\
-                 kube-proxy-ds.yaml\
-                 kubedns-cm.yaml\
-                 kubedns-sa.yaml\
-                 kubedns-dep.yaml\
-                 kubedns-svc.yaml\
-                 default-backend-dep.yml\
-                 default-backend-svc.yml\
-                 ingress-controller-cm.yml\
-                 ingress-controller-dep.yml\
-                 ingress-controller-svc.yml"
+      MANIFESTS=""
+      {{ range .ExtraManifests -}}
+      MANIFESTS="${MANIFESTS} {{ . }}"
+      {{ end -}}
+      MANIFESTS="${MANIFESTS} kube-proxy-sa.yaml"
+      MANIFESTS="${MANIFESTS} kube-proxy-ds.yaml"
+      MANIFESTS="${MANIFESTS} kubedns-cm.yaml"
+      MANIFESTS="${MANIFESTS} kubedns-sa.yaml"
+      MANIFESTS="${MANIFESTS} kubedns-dep.yaml"
+      MANIFESTS="${MANIFESTS} kubedns-svc.yaml"
+      MANIFESTS="${MANIFESTS} default-backend-dep.yml"
+      MANIFESTS="${MANIFESTS} default-backend-svc.yml"
+      MANIFESTS="${MANIFESTS} ingress-controller-cm.yml"
+      MANIFESTS="${MANIFESTS} ingress-controller-dep.yml"
+      MANIFESTS="${MANIFESTS} ingress-controller-svc.yml"
 
       for manifest in $MANIFESTS
       do
