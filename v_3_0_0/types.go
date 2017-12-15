@@ -13,6 +13,13 @@ type Params struct {
 	// extensions.
 	Hyperkube Hyperkube
 	Extension Extension
+	// ExtraManifests allows to specify extra Kubernetes manifests in
+	// /opt/k8s-addons script. The manifests are applied after calico is
+	// ready.
+	//
+	// The general use-case is to create a manifest file with Extension and
+	// then apply the manifest by adding it to ExtraManifests.
+	ExtraManifests []string
 	// MasterAPIDomain is a value of domain passed to various Kubernetes
 	// services. When MasterAPIDomain is empty value of
 	// Cluster.Kubernetes.API.Domain is passed.
