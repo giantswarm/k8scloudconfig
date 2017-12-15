@@ -1590,7 +1590,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
+        server: https://{{.MasterAPIDomain}}
     contexts:
     - context:
         cluster: local
@@ -1613,7 +1613,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
+        server: https://{{.MasterAPIDomain}}
     contexts:
     - context:
         cluster: local
@@ -1635,7 +1635,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
+        server: https://{{.MasterAPIDomain}}
     contexts:
     - context:
         cluster: local
@@ -1657,7 +1657,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
+        server: https://{{.MasterAPIDomain}}
     contexts:
     - context:
         cluster: local
@@ -1679,7 +1679,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
+        server: https://{{.MasterAPIDomain}}
     contexts:
     - context:
         cluster: local
@@ -1995,7 +1995,7 @@ coreos:
       --machine-id-file=/rootfs/etc/machine-id \
       --cadvisor-port=4194 \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
-      --healthz-bind-address=${DEFAULT_IPV4} \
+      --healthz-bind-address={{.Hyperkube.Apiserver.BindAddress}} \
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
       --cluster-domain={{.Cluster.Kubernetes.Domain}} \
@@ -2072,7 +2072,7 @@ coreos:
       --kubelet_https=true \
       --kubelet-preferred-address-types=InternalIP \
       --secure_port={{.Cluster.Kubernetes.API.SecurePort}} \
-      --bind-address=${DEFAULT_IPV4} \
+      --bind-address={{.Hyperkube.Apiserver.BindAddress}} \
       --etcd-prefix={{.Cluster.Etcd.Prefix}} \
       --profiling=false \
       --repair-malformed-updates=false \

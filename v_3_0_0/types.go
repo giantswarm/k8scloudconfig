@@ -2,6 +2,10 @@ package v_3_0_0
 
 import "github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
 
+const (
+	defaultHyperkubeApiserverBindAddress = "${DEFAULT_IPV4}"
+)
+
 type Params struct {
 	Cluster v1alpha1.Cluster
 	// Hyperkube allows to pass extra `docker run` and `command` arguments
@@ -9,13 +13,36 @@ type Params struct {
 	// extensions.
 	Hyperkube Hyperkube
 	Extension Extension
-	Node      v1alpha1.ClusterNode
+	// MasterAPIDomain is a value of domain passed to various Kubernetes
+	// services. When MasterAPIDomain is empty value of
+	// Cluster.Kubernetes.API.Domain is passed.
+	//
+	// NOTE This is a work around limitation of Azure load balancers.
+	// Hopefully Load Balancer Standard SKU will allow to get rid of that.
+	//
+	// azure-operator sets that to 127.0.0.1. Other operators leave it empty.
+	MasterAPIDomain string
+	Node            v1alpha1.ClusterNode
 }
 
 type Hyperkube struct {
-	Apiserver         HyperkubeDocker
+	Apiserver         HyperkubeApiserver
 	ControllerManager HyperkubeDocker
 	Kubelet           HyperkubeDocker
+}
+
+type HyperkubeApiserver struct {
+	HyperkubeDocker
+
+	// BindAddress is a value of the --bind-address flag passed to the
+	// hyperkube apiserver. When BindAddress is empty value of
+	// `${DEFAULT_IPV4}` will be passed.
+	//
+	// NOTE This is a work around limitation of Azure load balancers.
+	// Hopefully Load Balancer Standard SKU will allow to get rid of that.
+	//
+	// azure-operator sets that to 0.0.0.0. Other operators leave it empty.
+	BindAddress string
 }
 
 type HyperkubeDocker struct {
