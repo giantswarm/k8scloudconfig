@@ -8,6 +8,9 @@ const (
 
 type Params struct {
 	Cluster v1alpha1.Cluster
+	// DisableCalico flag when set removes all calico related Kubernetes
+	// manifests from the cloud config together with their initialization.
+	DisableCalico bool
 	// Hyperkube allows to pass extra `docker run` and `command` arguments
 	// to hyperkube image commands. This allows to e.g. add cloud provider
 	// extensions.

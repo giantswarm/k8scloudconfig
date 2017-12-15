@@ -10,6 +10,7 @@ users:
        - "{{ $user.PublicKey }}"
 {{end}}
 write_files:
+{{ if not .DisableCalico -}}
 - path: /srv/calico-ipip-pinger-sa.yaml
   owner: root
   permissions: 644
@@ -520,6 +521,7 @@ write_files:
             - name: etcd-certs
               hostPath:
                 path: /etc/kubernetes/ssl/etcd
+{{ end -}}
 - path: /srv/kubedns-cm.yaml
   owner: root
   permissions: 0644
@@ -1508,6 +1510,8 @@ write_files:
           done
       done
 
+      {{ if not .DisableCalico -}}
+
       # apply calico CNI
       CALICO_FILES=""
       CALICO_FILES="${CALICO_FILES} calico-configmap.yaml"
@@ -1543,6 +1547,8 @@ write_files:
           echo "Waiting for calico to be ready . . "
           sleep 3s
       done
+
+      {{ end -}}
 
       # apply default storage class
       if [ -f /srv/default-storage-class.yaml ]; then
