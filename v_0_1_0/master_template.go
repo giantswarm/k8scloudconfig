@@ -1461,6 +1461,153 @@ write_files:
        apiGroup: rbac.authorization.k8s.io
        kind: ClusterRole
        name: restricted-psp-user
+- path: /srv/kube-state-metrics-cm.yml
+  owner: root
+  permissions: 0644
+  content: |
+    kind: ConfigMap
+    apiVersion: v1
+    metadata:
+      name: kube-state-metrics-nginx-configmap
+      namespace: kube-system
+      labels:
+        app: kube-state-metrics
+    data:
+      nginx.conf: |
+        error_log stderr warn;
+        worker_processes 1;
+        events {
+          worker_connections 100;
+        }
+
+        http {
+          keepalive_timeout 5s;
+
+          gzip on;
+          gzip_proxied any;
+          gzip_types text/plain text/xml text/css
+                     text/comma-separated-values
+                     text/javascript application/javascript
+                     application/atom+xml application/json
+                     image/svg+xml;
+
+          log_format  custom  '"$request" '
+              '$status $body_bytes_sent $request_time '
+              '"$http_x_forwarded_for" '
+              '"$http_user_agent" "$http_referer"';
+
+          server {
+            listen 8000 ssl;
+
+            ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+            ssl_prefer_server_ciphers on;
+            ssl_ciphers EECDH+ECDSA+AESGCM:EECDH+aRSA+AESGCM:EECDH+ECDSA+SHA512:EECDH+ECDSA+SHA384:EECDH+ECDSA+SHA256:ECDH+AESGCM:ECDH+AES256:DH+AESGCM:DH+AES256:RSA+AESGCM:!aNULL:!eNULL:!LOW:!RC4:!3DES:!MD5:!EXP:!PSK:!SRP:!DSS;
+
+            ssl_certificate /certs/crt.pem;
+            ssl_certificate_key /certs/key.pem;
+
+            add_header Strict-Transport-Security "max-age=31536000; includeSubDomains" always;
+            access_log /dev/stdout custom;
+            client_max_body_size 0;
+            chunked_transfer_encoding on;
+
+            server_name           ~kube-state-metrics;
+              location / {
+                proxy_pass          http://127.0.0.1:8080;
+                proxy_set_header    Host $host;
+              }
+          }
+        }
+- path: /srv/kube-state-metrics-dep.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: apps/v1beta2
+    kind: Deployment
+    metadata:
+      name: kube-state-metrics
+      namespace: kube-system
+    spec:
+      selector:
+        matchLabels:
+          app: kube-state-metrics
+      replicas: 2
+      template:
+        metadata:
+          labels:
+            app: kube-state-metrics
+        spec:
+          containers:
+          - name: kube-state-metrics
+            image: quay.io/giantswarm/kube-state-metrics:v1.1.0
+            readinessProbe:
+              httpGet:
+                path: /healthz
+                port: 8080
+            resources:
+              requests:
+                memory: 200Mi
+                cpu: 100m
+              limits:
+                memory: 1000Mi
+                cpu: 100m
+          - name: nginx
+            image: quay.io/giantswarm/nginx:1.12.2
+            readinessProbe:
+              httpGet:
+                path: /
+                port: 8000
+                scheme: HTTPS
+            volumeMounts:
+            - name: nginx-config
+              mountPath: /etc/nginx/
+              readOnly: true
+            - name: certs
+              mountPath: /certs/
+              readOnly: true
+            resources:
+              requests:
+                cpu: 50m
+                memory: 75Mi
+              limits:
+                cpu: 50m
+          volumes:
+          - name: nginx-config
+            configMap:
+              name: kube-state-metrics-nginx-configmap
+          - name: certs
+            hostPath:
+              path: /etc/kubernetes/ssl/kube-state-metrics/
+          serviceAccountName: kube-state-metrics
+- path: /srv/kube-state-metrics-sa.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: v1
+    kind: ServiceAccount
+    metadata:
+      name: kube-state-metrics
+      namespace: kube-system
+- path: /srv/kube-state-metrics-svc.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: v1
+    kind: Service
+    metadata:
+      name: kube-state-metrics
+      namespace: kube-system
+      labels:
+        app: kube-state-metrics
+    spec:
+      type: NodePort
+      ports:
+      - port: 8000
+        targetPort: 8000
+        protocol: TCP
+        nodePort: 30101
+      selector:
+        app: kube-state-metrics
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1562,7 +1709,11 @@ write_files:
                  default-backend-svc.yml\
                  ingress-controller-cm.yml\
                  ingress-controller-dep.yml\
-                 ingress-controller-svc.yml"
+                 ingress-controller-svc.yml\
+                 kube-state-metrics-cm.yml\
+                 kube-state-metrics-dep.yml\
+                 kube-state-metrics-sa.yml\
+                 kube-state-metrics-svc.yml"
 
       for manifest in $MANIFESTS
       do
