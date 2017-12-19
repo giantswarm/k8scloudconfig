@@ -1751,6 +1751,22 @@ write_files:
     [Service]
     ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
 
+- path: /etc/kubernetes/encryption/k8s-encryption-config.yaml
+  owner: root
+  permissions: 600
+  content: |
+    kind: EncryptionConfig
+    apiVersion: v1
+    resources:
+      - resources:
+        - secrets
+        providers:
+        - aescbc:
+            keys:
+            - name: key1
+              secret: {{.Extension.Keys.APIServerEncryptionKey | printf "%s" }}
+        - identity: {}
+	
 {{range .Extension.Files}}
 - path: {{.Metadata.Path}}
   owner: {{.Metadata.Owner}}
