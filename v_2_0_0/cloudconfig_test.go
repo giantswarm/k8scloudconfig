@@ -80,7 +80,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   24,
 					},
 				},
-				Extension: &FakeExtension{Keys: FakeKeys{APIServerEncryptionKey: []byte("test")}},
+				Extension: &FakeExtension{},
 			},
 
 			expectedString: `

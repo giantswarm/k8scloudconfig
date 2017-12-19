@@ -1,6 +1,11 @@
 package v_3_0_0
 
-type FakeExtension struct{}
+type FakeKeys struct {
+	APIServerEncryptionKey []byte
+}
+type FakeExtension struct {
+	Keys FakeKeys
+}
 
 func (f *FakeExtension) Files() ([]FileAsset, error) {
 	return nil, nil
