@@ -1748,7 +1748,7 @@ write_files:
         - aescbc:
             keys:
             - name: key1
-              secret: {{.Extension.Keys.APIServerEncryptionKey }}
+              secret: {{.Extension.Keys.APIServerEncryptionKey | printf "%s" }}
         - identity: {}
 
 {{range .Extension.Files}}

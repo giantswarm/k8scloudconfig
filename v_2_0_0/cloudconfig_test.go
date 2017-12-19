@@ -80,7 +80,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   24,
 					},
 				},
-				Extension: &FakeExtension{},
+				Extension: &FakeExtension{Keys: FakeKeys{APIServerEncryptionKey: []byte("test")}},
 			},
 
 			expectedString: `
@@ -99,7 +99,6 @@ func TestCloudConfigTemplating(t *testing.T) {
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatalf("%v: unexpected error templating cloud config: %v", index, err)
 		}
-
 		if !strings.Contains(cloudConfig.String(), test.expectedString) {
 			t.Fatalf("%v: expected string not found in cloud config: %v", index, test.expectedString)
 		}
