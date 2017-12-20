@@ -1021,7 +1021,7 @@ write_files:
           - hostPath:
               path: /usr/share/ca-certificates
             name: ssl-certs-host
-- path: /srv/node-exporter-svc.yml
+- path: /srv/node-exporter-svc.yaml
   owner: root
   permissions: 0644
   content: |
