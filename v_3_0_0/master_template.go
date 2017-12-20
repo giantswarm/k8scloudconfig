@@ -1080,6 +1080,7 @@ write_files:
           - image: quay.io/giantswarm/node-exporter:v0.15.1
             name: node-exporter
             args:
+              - '--log.level=debug'
               - '--web.listen-address=:10300'
               - '--collector.arp'
               - '--collector.bcache'
@@ -1109,6 +1110,18 @@ write_files:
               - '--no-collector.wifi'       # we don't use wifi.
               - '--collector.xfs'
               - '--no-collector.zfs'        # we don't use zfs.
+            livenessProbe:
+              httpGet:
+                path: /metrics
+                port: 10300
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
+            readinessProbe:
+              httpGet:
+                path: /metrics
+                port: 10300
+              initialDelaySeconds: 5
+              timeoutSeconds: 5
             resources:
               requests:
                 cpu: 55m
