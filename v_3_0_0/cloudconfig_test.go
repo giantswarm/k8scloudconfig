@@ -16,13 +16,13 @@ func TestCloudConfig(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 		},
 	}
@@ -66,7 +66,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   16,
 					},
 				},
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 
 			expectedString: `
@@ -85,7 +85,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   24,
 					},
 				},
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 
 			expectedString: `
