@@ -31,6 +31,7 @@ func TestCloudConfig(t *testing.T) {
 		{
 			template: WorkerTemplate,
 			params: Params{
+				EtcdPort:  2379,
 				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 2379,
