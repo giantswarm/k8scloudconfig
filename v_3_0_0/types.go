@@ -37,8 +37,8 @@ type Params struct {
 
 type Hyperkube struct {
 	Apiserver         HyperkubeApiserver
-	ControllerManager HyperkubeDocker
-	Kubelet           HyperkubeDocker
+	ControllerManager HyperkubeControllerManager
+	Kubelet           HyperkubeKubelet
 }
 
 type HyperkubeApiserver struct {
