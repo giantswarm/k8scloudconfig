@@ -10,20 +10,31 @@ import (
 
 func TestCloudConfig(t *testing.T) {
 	tests := []struct {
-		template string
-		params   Params
+		template         string
+		params           Params
+		expectedEtcdPort int
 	}{
 		{
 			template: MasterTemplate,
 			params: Params{
 				Extension: nopExtension{},
 			},
+			expectedEtcdPort: 443,
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
 				Extension: nopExtension{},
 			},
+			expectedEtcdPort: 443,
+		},
+		{
+			template: WorkerTemplate,
+			params: Params{
+				EtcdPort:  2379,
+				Extension: nopExtension{},
+			},
+			expectedEtcdPort: 2379,
 		},
 	}
 
@@ -36,6 +47,10 @@ func TestCloudConfig(t *testing.T) {
 		cloudConfig, err := NewCloudConfig(c)
 		if err != nil {
 			t.Fatal(err)
+		}
+
+		if cloudConfig.params.EtcdPort != tc.expectedEtcdPort {
+			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.EtcdPort)
 		}
 
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
