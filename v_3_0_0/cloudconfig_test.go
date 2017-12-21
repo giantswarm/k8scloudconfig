@@ -17,22 +17,21 @@ func TestCloudConfig(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 443,
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 443,
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
-				EtcdPort:  2379,
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 2379,
 		},
@@ -81,7 +80,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   16,
 					},
 				},
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 
 			expectedString: `
@@ -100,7 +99,7 @@ func TestCloudConfigTemplating(t *testing.T) {
 						CIDR:   24,
 					},
 				},
-				Extension: &FakeExtension{},
+				Extension: nopExtension{},
 			},
 
 			expectedString: `

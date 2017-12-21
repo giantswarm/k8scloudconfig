@@ -1968,7 +1968,7 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/bin/sh -c "/usr/bin/docker run --rm --pid=host --net=host --privileged=true \
-      {{ range .Hyperkube.Kubelet.RunExtraArgs -}}
+      {{ range .Hyperkube.Kubelet.Docker.RunExtraArgs -}}
       {{ . }} \
       {{ end -}}
       -v /:/rootfs:ro,shared \
@@ -1999,7 +1999,7 @@ coreos:
       --name $NAME \
       $IMAGE \
       /hyperkube kubelet \
-      {{ range .Hyperkube.Kubelet.CommandExtraArgs -}}
+      {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
       --address=${DEFAULT_IPV4} \
@@ -2070,7 +2070,7 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --name $NAME --net=host \
-      {{ range .Hyperkube.Apiserver.RunExtraArgs -}}
+      {{ range .Hyperkube.Apiserver.Docker.RunExtraArgs -}}
       {{ . }} \
       {{ end -}}
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
@@ -2078,7 +2078,7 @@ coreos:
       -v /etc/kubernetes/encryption/:/etc/kubernetes/encryption \
       $IMAGE \
       /hyperkube apiserver \
-      {{ range .Hyperkube.Apiserver.CommandExtraArgs -}}
+      {{ range .Hyperkube.Apiserver.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
       --allow_privileged=true \
@@ -2135,7 +2135,7 @@ coreos:
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --net=host --name $NAME \
-      {{ range .Hyperkube.ControllerManager.RunExtraArgs -}}
+      {{ range .Hyperkube.ControllerManager.Docker.RunExtraArgs -}}
       {{ . }} \
       {{ end -}}
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
@@ -2143,7 +2143,7 @@ coreos:
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       $IMAGE \
       /hyperkube controller-manager \
-      {{ range .Hyperkube.ControllerManager.CommandExtraArgs -}}
+      {{ range .Hyperkube.ControllerManager.Docker.CommandExtraArgs -}}
       {{ . }}  \
       {{ end -}}
       --logtostderr=true \
