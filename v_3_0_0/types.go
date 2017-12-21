@@ -42,8 +42,6 @@ type Hyperkube struct {
 }
 
 type HyperkubeApiserver struct {
-	HyperkubeDocker
-
 	// BindAddress is a value of the --bind-address flag passed to the
 	// hyperkube apiserver. When BindAddress is empty value of
 	// `${DEFAULT_IPV4}` will be passed.
@@ -53,6 +51,15 @@ type HyperkubeApiserver struct {
 	//
 	// azure-operator sets that to 0.0.0.0. Other operators leave it empty.
 	BindAddress string
+	Docker      HyperkubeDocker
+}
+
+type HyperkubeControllerManager struct {
+	Docker HyperkubeDocker
+}
+
+type HyperkubeKubelet struct {
+	Docker HyperkubeDocker
 }
 
 type HyperkubeDocker struct {
