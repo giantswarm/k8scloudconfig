@@ -17,7 +17,10 @@ type CloudConfigConfig struct {
 
 func DefaultCloudConfigConfig() CloudConfigConfig {
 	return CloudConfigConfig{
-		Params:   Params{},
+		Params: Params{
+			// Default EtcdPort to 443 for non AWS providers.
+			EtcdPort: 443,
+		},
 		Template: "",
 	}
 }

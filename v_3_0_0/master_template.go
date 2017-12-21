@@ -209,7 +209,7 @@ write_files:
       namespace: kube-system
     data:
       # Configure this with the location of your etcd cluster.
-      etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:443"
+      etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }}"
 
       # Configure the Calico backend to use.
       calico_backend: "bird"
@@ -1892,7 +1892,7 @@ coreos:
           --peer-cert-file /etc/etcd/server-crt.pem \
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
-          --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:443 \
+          --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }} \
           --initial-advertise-peer-urls=https://127.0.0.1:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://${DEFAULT_IPV4}:2380 \

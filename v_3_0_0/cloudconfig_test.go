@@ -10,8 +10,9 @@ import (
 
 func TestCloudConfig(t *testing.T) {
 	tests := []struct {
-		template string
-		params   Params
+		template         string
+		params           Params
+		expectedEtcdPort int
 	}{
 		{
 			template: MasterTemplate,
