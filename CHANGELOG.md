@@ -25,6 +25,7 @@ version directory, and then changes are introduced.
 - Unify CloudConfig struct construction.
 - Update calico to 3.0.1.
 - Update hyperkube to v1.9.0.
+- Use vanilla (previously coreos) hyperkube image.
 
 ## [v2.0.0]
 
