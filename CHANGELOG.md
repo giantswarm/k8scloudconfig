@@ -12,6 +12,8 @@ version directory, and then changes are introduced.
 ## [v3.0.0] WIP
 
 ### Added
+- Add encruyption config template for API etcd data encryption exeprimental
+  feature.
 - Add tests for template evaluations.
 - Allow adding extra manifests.
 - Allow extract Hyperkube options.
