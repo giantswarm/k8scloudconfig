@@ -1703,6 +1703,22 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
+- path: /etc/kubernetes/encryption/k8s-encryption-config.yaml
+  owner: root
+  permissions: 600
+  content: |
+    kind: EncryptionConfig
+    apiVersion: v1
+    resources:
+      - resources:
+        - secrets
+        providers:
+        - aescbc:
+            keys:
+            - name: key1
+              secret: {{ .ApiserverEncryptionKey }}
+        - identity: {}
+
 - path: /etc/ssh/sshd_config
   owner: root
   permissions: 0600
