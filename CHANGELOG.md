@@ -12,13 +12,12 @@ version directory, and then changes are introduced.
 ## [v3.0.0] WIP
 
 ### Added
-- Add encruyption config template for API etcd data encryption exeprimental
+- Add encryption config template for API etcd data encryption experimental
   feature.
 - Add tests for template evaluations.
 - Allow adding extra manifests.
 - Allow extract Hyperkube options.
 - Allow setting custom K8s API address for master nodes.
-- Allow setting etcd port.
 - Allow setting etcd port.
 
 ### Changed
@@ -27,10 +26,14 @@ version directory, and then changes are introduced.
 - Update hyperkube to v1.9.0.
 - Use vanilla (previously coreos) hyperkube image.
 
+### Removed
+- Remove calico-ipip-pinger.
+- Remove calico-node-controller.
+
 ## [v2.0.0]
 
 ### Added
-- Disable API etcd data encryption exeprimental feature.
+- Disable API etcd data encryption experimental feature.
 
 ## [v1.1.0]
 
@@ -40,7 +43,7 @@ version directory, and then changes are introduced.
 ## [v1.0.0]
 
 ### Removed
-- Disable API etcd data encryption exeprimental feature.
+- Disable API etcd data encryption experimental feature.
 
 ## [v0.1.0]
 
