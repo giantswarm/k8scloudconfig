@@ -1394,7 +1394,7 @@ write_files:
 
       # Dirty hack here. Workaround for bug https://github.com/projectcalico/kube-controllers/issues/204
       # We want old node-contoller to clean up old master, so wait when it will be running.
-      if ${KUBECTL} get pod -l k8s-app=calico-node-controller -n kube-system &>/dev/null; then
+      if ${KUBECTL} get deploy/calico-node-controller -n kube-system &>/dev/null; then
         until ${KUBECTL} get pod -l k8s-app=calico-node-controller -n kube-system | grep -q Running ; do sleep 1 && echo 'Waiting for old calico-node-controller'; done
 
         # Give a time to clean up old master.
