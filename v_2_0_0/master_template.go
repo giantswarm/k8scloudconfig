@@ -1004,6 +1004,7 @@ write_files:
           - pods
           - namespaces
           - networkpolicies
+          - nodes
         verbs:
           - watch
           - list
