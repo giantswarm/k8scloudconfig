@@ -35,6 +35,13 @@ version directory, and then changes are introduced.
 ### Added
 - Disable API etcd data encryption experimental feature.
 
+### Changed
+- Updated calico to 2.6.5.
+
+### Removed
+- Removed calico-ipip-pinger.
+- Removed calico-node-controller.
+
 ## [v1.1.0]
 
 ### Added
