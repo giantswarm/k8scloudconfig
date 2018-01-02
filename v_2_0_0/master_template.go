@@ -1363,6 +1363,35 @@ write_files:
           done
       done
       echo "Addons successfully installed"
+# Make sure to update this script depending on migration steps needed, if any.
+- path: /opt/migrate-to-new-k8scc-version
+  permissions: 0544
+  content: |
+      #!/bin/bash
+
+      KUBECONFIG=/etc/kubernetes/config/addons-kubeconfig.yml
+      # kubectl 1.8.4
+      KUBECTL_IMAGE=quay.io/giantswarm/docker-kubectl:8cabd75bacbcdad7ac5d85efc3ca90c2fabf023b
+      KUBECTL="/usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes ${KUBECTL_IMAGE}"
+
+      /usr/bin/docker pull ${KUBECTL_IMAGE}
+
+      # Wait for healthy master.
+      while [ "$(${KUBECTL} get cs | grep Healthy | wc -l)" -ne "3" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
+
+      ### Migration steps ###
+
+      # Uncomment following line if no migration steps are needed.
+      # echo "No migration steps needed."
+
+      # Migration to cloudconfig v2.0.0. Calico upgrade to 2.6.5.
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete ds/calico-ipip-pinger -n kube-system
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete sa/calico-ipip-pinger -n kube-system
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete deploy/calico-node-controller -n kube-system
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete sa/calico-node-controller -n kube-system
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRoleBinding/calico-node-controller
+      ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRole/calico-node-controller
+
 - path: /etc/kubernetes/config/addons-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1953,6 +1982,20 @@ coreos:
       Type=oneshot
       EnvironmentFile=/etc/network-environment
       ExecStart=/opt/k8s-addons
+      [Install]
+      WantedBy=multi-user.target
+  - name: migrate-to-new-k8scc-version.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=Migrate to new k8scloudconfig version
+      Wants=k8s-api-server.service
+      After=k8s-api-server.service
+      [Service]
+      Type=oneshot
+      EnvironmentFile=/etc/network-environment
+      ExecStart=/opt/migrate-to-new-k8scc-version
       [Install]
       WantedBy=multi-user.target
 
