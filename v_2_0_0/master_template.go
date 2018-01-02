@@ -1388,10 +1388,21 @@ write_files:
       # Migration to cloudconfig v2.0.0. Calico upgrade to 2.6.5.
       ${KUBECTL} --ignore-not-found=true -n kube-system delete ds/calico-ipip-pinger -n kube-system
       ${KUBECTL} --ignore-not-found=true -n kube-system delete sa/calico-ipip-pinger -n kube-system
-      ${KUBECTL} --ignore-not-found=true -n kube-system delete deploy/calico-node-controller -n kube-system
-      ${KUBECTL} --ignore-not-found=true -n kube-system delete sa/calico-node-controller -n kube-system
-      ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRoleBinding/calico-node-controller
-      ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRole/calico-node-controller
+
+      # Dirty hack here. Workaround for bug https://github.com/projectcalico/kube-controllers/issues/204
+      # We want old node-contoller to clean up old master, so wait when it will be running.
+      if ${KUBECTL} get pod -l k8s-app=calico-node-controller -n kube-system &>/dev/null; then
+        until ${KUBECTL} get pod -l k8s-app=calico-node-controller -n kube-system | grep -q Running ; do sleep 1 && echo 'Waiting for old calico-node-controller'; done
+
+        # Give a time to clean up old master.
+        sleep 10
+
+        # Finally delete old node-controller
+        ${KUBECTL} --ignore-not-found=true -n kube-system delete deploy/calico-node-controller -n kube-system
+        ${KUBECTL} --ignore-not-found=true -n kube-system delete sa/calico-node-controller -n kube-system
+        ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRoleBinding/calico-node-controller
+        ${KUBECTL} --ignore-not-found=true -n kube-system delete ClusterRole/calico-node-controller
+      fi
 
 - path: /etc/kubernetes/config/addons-kubeconfig.yml
   owner: root
