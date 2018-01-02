@@ -1227,6 +1227,9 @@ write_files:
       name: calico-kube-controllers
       namespace: kube-system
     - kind: ServiceAccount
+      name: calico-node-controller
+      namespace: kube-system
+    - kind: ServiceAccount
       name: kube-dns
       namespace: kube-system
     - kind: ServiceAccount
