@@ -1432,6 +1432,20 @@ write_files:
             - name: key1
               secret: {{ .ApiserverEncryptionKey }}
         - identity: {}
+- path: /etc/kubernetes/manifests/audit-policy.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: audit.k8s.io/v1beta1
+    kind: Policy
+    rules:
+      # TODO: Filter safe system requests.
+      # A catch-all rule to log all requests at the Metadata level.
+      - level: Metadata
+        # Long-running requests like watches that fall under this rule will not
+        # generate an audit event in RequestReceived.
+        omitStages:
+          - "RequestReceived"
 
 - path: /etc/ssh/sshd_config
   owner: root
@@ -1806,6 +1820,8 @@ coreos:
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       -v /etc/kubernetes/encryption/:/etc/kubernetes/encryption \
+      -v /etc/kubernetes/manifests:/etc/kubernetes/manifests \
+      -v /var/log:/var/log \
       $IMAGE \
       /hyperkube apiserver \
       {{ range .Hyperkube.Apiserver.Docker.CommandExtraArgs -}}
@@ -1840,8 +1856,9 @@ coreos:
       --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem \
       --audit-log-path=/var/log/apiserver/audit.log \
       --audit-log-maxage=30 \
-      --audit-log-maxbackup=10 \
+      --audit-log-maxbackup=30 \
       --audit-log-maxsize=100 \
+      --audit-policy-file=/etc/kubernetes/manifests/audit-policy.yml \
       --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
