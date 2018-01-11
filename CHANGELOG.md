@@ -26,6 +26,7 @@ version directory, and then changes are introduced.
 - Update hyperkube to v1.9.0.
 - Use vanilla (previously coreos) hyperkube image.
 - kube-dns replaced with CoreDNS 1.0.1.
+- Fix Kubernetes API audit log.
 
 ### Removed
 - Remove calico-ipip-pinger.
