@@ -1883,6 +1883,7 @@ coreos:
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/secrets/token_sign_key.pem:/etc/kubernetes/secrets/token_sign_key.pem \
       -v /etc/kubernetes/encryption/:/etc/kubernetes/encryption \
+      -v /var/log:/var/log \
       $IMAGE \
       /hyperkube apiserver \
       --allow_privileged=true \
@@ -1914,8 +1915,9 @@ coreos:
       --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem \
       --audit-log-path=/var/log/apiserver/audit.log \
       --audit-log-maxage=30 \
-      --audit-log-maxbackup=10 \
+      --audit-log-maxbackup=30 \
       --audit-log-maxsize=100 \
+      --feature-gates=AdvancedAuditing=false \
       --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME

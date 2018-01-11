@@ -31,6 +31,11 @@ version directory, and then changes are introduced.
 - Remove calico-ipip-pinger.
 - Remove calico-node-controller.
 
+## [v2.0.1]
+
+### Changed
+- Fix audit logging.
+
 ## [v2.0.0]
 
 ### Added
