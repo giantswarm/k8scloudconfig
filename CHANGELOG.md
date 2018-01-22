@@ -44,6 +44,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Updated calico to 2.6.5.
+- Fix kubernetes audit logging
 
 ### Removed
 - Removed calico-ipip-pinger.
