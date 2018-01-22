@@ -1112,13 +1112,13 @@ write_files:
               - '--no-collector.zfs'        # we don't use zfs.
             livenessProbe:
               httpGet:
-                path: /metrics
+                path: /
                 port: 10300
               initialDelaySeconds: 5
               timeoutSeconds: 5
             readinessProbe:
               httpGet:
-                path: /metrics
+                path: /
                 port: 10300
               initialDelaySeconds: 5
               timeoutSeconds: 5
