@@ -1440,9 +1440,9 @@ write_files:
       MANIFESTS="${MANIFESTS} ingress-controller-cm.yml"
       MANIFESTS="${MANIFESTS} ingress-controller-dep.yml"
       MANIFESTS="${MANIFESTS} ingress-controller-svc.yml"
-      MANIFESTS="${MANIFESTS} node-exporter-svc.yml"
-      MANIFESTS="${MANIFESTS} node-exporter-sa.yml"
-      MANIFESTS="${MANIFESTS} node-exporter-ds.yml"
+      MANIFESTS="${MANIFESTS} node-exporter-svc.yaml"
+      MANIFESTS="${MANIFESTS} node-exporter-sa.yaml"
+      MANIFESTS="${MANIFESTS} node-exporter-ds.yaml"
 
       for manifest in $MANIFESTS
       do
