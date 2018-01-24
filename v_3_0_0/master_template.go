@@ -454,7 +454,7 @@ write_files:
               operator: "Exists"
           containers:
           - name: coredns
-            image: coredns/coredns:1.0.1
+            image: quay.io/giantswarm/coredns:1.0.4
             imagePullPolicy: IfNotPresent
             args: [ "-conf", "/etc/coredns/Corefile" ]
             volumeMounts:
