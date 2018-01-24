@@ -751,7 +751,7 @@ write_files:
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
-              image: quay.io/giantswarm/hyperkube:v1.9.0
+              image: quay.io/giantswarm/hyperkube:v1.9.2
               command:
               - /hyperkube
               - proxy
@@ -1855,7 +1855,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.0"
+      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.2"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -1956,7 +1956,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.0"
+      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.2"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /etc/kubernetes/manifests
@@ -2025,7 +2025,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.0"
+      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.2"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -2067,7 +2067,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.0"
+      Environment="IMAGE=quay.io/giantswarm/hyperkube:v1.9.2"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
