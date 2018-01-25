@@ -454,14 +454,16 @@ write_files:
               operator: "Exists"
           affinity:
             podAntiAffinity:
-              requiredDuringSchedulingIgnoredDuringExecution:
-              - labelSelector:
-                  matchExpressions:
-                  - key: k8s-app
-                    operator: In
-                    values:
-                    - coredns
-                topologyKey: kubernetes.io/hostname
+              preferredDuringSchedulingIgnoredDuringExecution:
+              - weight: 100
+                podAffinityTerm:
+                  labelSelector:
+                    matchExpressions:
+                      - key: k8s-app
+                        operator: In
+                        values:
+                        - coredns
+                  topologyKey: kubernetes.io/hostname
           containers:
           - name: coredns
             image: quay.io/giantswarm/coredns:1.0.4
