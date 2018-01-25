@@ -646,7 +646,7 @@ write_files:
           serviceAccountName: nginx-ingress-controller
           containers:
           - name: nginx-ingress-controller
-            image: quay.io/giantswarm/nginx-ingress-controller-0.10.0
+            image: quay.io/giantswarm/nginx-ingress-controller-0.10.1
             args:
             - /nginx-ingress-controller
             - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
