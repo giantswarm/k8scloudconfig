@@ -644,6 +644,16 @@ write_files:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
           serviceAccountName: nginx-ingress-controller
+          initContainers:
+          - command:
+            - sh
+            - -c
+            - sysctl -w net.core.somaxconn=32768; sysctl -w net.ipv4.ip_local_port_range="1024 65535"
+            image: alpine:3.6
+            imagePullPolicy: IfNotPresent
+            name: sysctl
+            securityContext:
+              privileged: true
           containers:
           - name: nginx-ingress-controller
             image: quay.io/giantswarm/nginx-ingress-controller-0.10.1
@@ -652,6 +662,7 @@ write_files:
             - --default-backend-service=$(POD_NAMESPACE)/default-http-backend
             - --configmap=$(POD_NAMESPACE)/ingress-nginx
             - --enable-ssl-passthrough
+            - --annotations-prefix=nginx.ingress.kubernetes.io
             env:
               - name: POD_NAME
                 valueFrom:
