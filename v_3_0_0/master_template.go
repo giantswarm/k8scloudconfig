@@ -466,7 +466,7 @@ write_files:
                   topologyKey: kubernetes.io/hostname
           containers:
           - name: coredns
-            image: quay.io/giantswarm/coredns:1.0.4
+            image: quay.io/giantswarm/coredns:1.0.5
             imagePullPolicy: IfNotPresent
             args: [ "-conf", "/etc/coredns/Corefile" ]
             volumeMounts:
