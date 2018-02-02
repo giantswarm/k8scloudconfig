@@ -500,7 +500,7 @@ write_files:
     apiVersion: v1
     kind: Service
     metadata:
-      name: kube-dns
+      name: coredns
       namespace: kube-system
       labels:
         k8s-app: coredns
