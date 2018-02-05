@@ -1880,6 +1880,7 @@ write_files:
       name: k8s-controller-manager
       namespace: kube-system
     spec:
+      hostNetwork: true
       containers:
       - name: k8s-controller-manager
         image: quay.io/giantswarm/hyperkube:v1.9.2
