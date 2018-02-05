@@ -1785,6 +1785,9 @@ write_files:
         command:
         - /hyperkube
         - apiserver
+        {{ range .Hyperkube.Apiserver.Docker.CommandExtraArgs -}}
+        - {{ . }}
+        {{ end -}}
         - --allow_privileged=true
         - --insecure_bind_address=0.0.0.0
         - --anonymous-auth=false
