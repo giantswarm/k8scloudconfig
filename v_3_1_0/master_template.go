@@ -1782,6 +1782,11 @@ write_files:
       containers:
       - name: k8s-api-server
         image: quay.io/giantswarm/hyperkube:v1.9.2
+        env:
+        - name: HOST_IP
+          valueFrom:
+            fieldRef:
+              fieldPath: status.podIP
         command:
         - /hyperkube
         - apiserver
@@ -1795,7 +1800,7 @@ write_files:
         - --kubelet_https=true
         - --kubelet-preferred-address-types=InternalIP
         - --secure_port={{.Cluster.Kubernetes.API.SecurePort}}
-        - --bind-address={{.Hyperkube.Apiserver.BindAddress}}
+        - --bind-address=$(HOST_IP)
         - --etcd-prefix={{.Cluster.Etcd.Prefix}}
         - --profiling=false
         - --repair-malformed-updates=false
@@ -1808,7 +1813,7 @@ write_files:
         - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
         - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
-        - --advertise-address={{.Hyperkube.Apiserver.BindAddress}}
+        - --advertise-address=$(HOST_IP)
         - --runtime-config=api/all=true
         - --logtostderr=true
         - --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
@@ -1825,9 +1830,8 @@ write_files:
           requests:
             cpu: 300m
         livenessProbe:
-          httpGet:
+          tcpSocket:
             port: {{.Cluster.Kubernetes.API.SecurePort}}
-            path: /healthz
           initialDelaySeconds: 15
           timeoutSeconds: 15
         ports:
@@ -1837,8 +1841,7 @@ write_files:
         volumeMounts:
         - mountPath: /var/log/apiserver/
           name: apiserver-log
-        - mountPath: /etc/kubernetes/encryption/k8s-encryption-config.yaml
-          subPath: k8s-encryption-config.yaml
+        - mountPath: /etc/kubernetes/encryption/
           name: k8s-encryption
           readOnly: true
         - mountPath: /etc/kubernetes/manifests
@@ -1863,7 +1866,7 @@ write_files:
       - hostPath:
           path: /etc/kubernetes/secrets
         name: k8s-secrets
-        - hostPath:
+      - hostPath:
           path: /etc/kubernetes/ssl
         name: ssl-certs-kubernetes
 
