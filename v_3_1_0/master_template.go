@@ -805,6 +805,9 @@ write_files:
               - mountPath: /etc/kubernetes/ssl
                 name: ssl-certs-kubernetes
                 readOnly: true
+              - mountPath: /lib/modules
+                name: lib-modules
+                readOnly: true
           volumes:
           - hostPath:
               path: /etc/kubernetes/config/
@@ -815,6 +818,9 @@ write_files:
           - hostPath:
               path: /usr/share/ca-certificates
             name: ssl-certs-host
+          - hostPath:                            
+              path: /lib/modules
+            name: lib-modules
 - path: /srv/node-exporter-svc.yaml
   owner: root
   permissions: 0644
@@ -1826,6 +1832,16 @@ write_files:
   content: |
     {{range .Content}}{{.}}
     {{end}}{{end}}
+
+- path: /etc/modules-load.d/ip_vs.conf
+  owner: root
+  permissions: 644
+  content: |
+    ip_vs
+    ip_vs_rr
+    ip_vs_wrr
+    ip_vs_sh
+    nf_conntrack_ipv4
 
 coreos:
   units:
