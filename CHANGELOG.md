@@ -11,7 +11,8 @@ version directory, and then changes are introduced.
 
 ## [v3.1.1] WIP
 
-TBD
+### Changed
+- Change etcd data path to /var/lib/etcd.
 
 ## [v3.1.0]
 
