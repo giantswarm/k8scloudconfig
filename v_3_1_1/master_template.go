@@ -1796,7 +1796,7 @@ write_files:
         command:
         - /hyperkube
         - apiserver
-        {{ range .Hyperkube.Apiserver.Docker.CommandExtraArgs -}}
+        {{ range .Hyperkube.Apiserver.Pod.CommandExtraArgs -}}
         - {{ . }}
         {{ end -}}
         - --allow_privileged=true
@@ -1845,6 +1845,11 @@ write_files:
           hostPort: {{.Cluster.Kubernetes.API.SecurePort}}
           name: https
         volumeMounts:
+        {{ range .Hyperkube.Apiserver.Pod.HostExtraMounts -}}
+        - mountPath: {{ .Path }}
+          name: {{ .Name }}
+          readOnly: {{ .ReadOnly }}
+        {{ end -}}
         - mountPath: /var/log/apiserver/
           name: apiserver-log
         - mountPath: /etc/kubernetes/encryption/
@@ -1860,6 +1865,11 @@ write_files:
           name: ssl-certs-kubernetes
           readOnly: true
       volumes:
+      {{ range .Hyperkube.Apiserver.Pod.HostExtraMounts -}}
+      - hostPath: 
+          path: {{ .Path }}
+        name: {{ .Name }}
+      {{ end -}}
       - hostPath:
           path: /var/log/apiserver/
         name: apiserver-log
@@ -1913,6 +1923,11 @@ write_files:
           initialDelaySeconds: 15
           timeoutSeconds: 15
         volumeMounts:
+        {{ range .Hyperkube.ControllerManager.Pod.HostExtraMounts -}}
+        - mountPath: {{ .Path }}
+          name: {{ .Name }}
+          readOnly: {{ .ReadOnly }}
+        {{ end -}}
         - mountPath: /etc/kubernetes/config/
           name: k8s-config
           readOnly: true
@@ -1923,6 +1938,11 @@ write_files:
           name: ssl-certs-kubernetes
           readOnly: true
       volumes:
+      {{ range .Hyperkube.ControllerManager.Pod.HostExtraMounts -}}
+      - hostPath: 
+          path: {{ .Path }}
+        name: {{ .Name }}
+      {{ end -}}
       - hostPath:
           path: /etc/kubernetes/config
         name: k8s-config
