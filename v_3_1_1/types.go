@@ -5,7 +5,7 @@ import (
 )
 
 const (
-	defaultHyperkubeApiserverBindAddress = "${DEFAULT_IPV4}"
+	defaultHyperkubeApiserverBindAddress = "$(HOST_IP)"
 )
 
 type Params struct {
