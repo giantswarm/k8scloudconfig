@@ -818,7 +818,7 @@ write_files:
           - hostPath:
               path: /usr/share/ca-certificates
             name: ssl-certs-host
-          - hostPath:                            
+          - hostPath:
               path: /lib/modules
             name: lib-modules
 - path: /srv/node-exporter-svc.yaml
@@ -2097,8 +2097,8 @@ coreos:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStartPre=/bin/bash -c "/usr/bin/mkdir -p /etc/kubernetes/data/etcd; /usr/bin/chown etcd:etcd /etc/kubernetes/data/etcd"
-      ExecStart=/usr/bin/chmod -R 700 /etc/kubernetes/data/etcd
+      ExecStartPre=/bin/bash -c "/usr/bin/mkdir -p /var/lib/etcd; /usr/bin/chown etcd:etcd /var/lib/etcd"
+      ExecStart=/usr/bin/chmod -R 700 /var/lib/etcd
   - name: docker.service
     enable: true
     command: start
@@ -2145,9 +2145,9 @@ coreos:
       Requires=k8s-setup-network-env.service
       After=k8s-setup-network-env.service
       Conflicts=etcd.service etcd2.service
+      StartLimitIntervalSec=0
 
       [Service]
-      StartLimitIntervalSec=0
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
@@ -2164,7 +2164,7 @@ coreos:
       ExecStart=/usr/bin/docker run \
           -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
           -v /etc/kubernetes/ssl/etcd/:/etc/etcd \
-          -v /etc/kubernetes/data/etcd/:/var/lib/etcd  \
+          -v /var/lib/etcd/:/var/lib/etcd  \
           --net=host  \
           --name $NAME \
           $IMAGE \
