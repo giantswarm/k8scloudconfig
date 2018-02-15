@@ -2145,9 +2145,9 @@ coreos:
       Requires=k8s-setup-network-env.service
       After=k8s-setup-network-env.service
       Conflicts=etcd.service etcd2.service
+      StartLimitIntervalSec=0
 
       [Service]
-      StartLimitIntervalSec=0
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
