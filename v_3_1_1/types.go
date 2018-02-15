@@ -5,6 +5,8 @@ import (
 )
 
 const (
+	// Default value references environment variable,
+	// defined inside api-server pod definition.
 	defaultHyperkubeApiserverBindAddress = "$(HOST_IP)"
 )
 
