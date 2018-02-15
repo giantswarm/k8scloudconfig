@@ -1806,7 +1806,7 @@ write_files:
         - --kubelet_https=true
         - --kubelet-preferred-address-types=InternalIP
         - --secure_port={{.Cluster.Kubernetes.API.SecurePort}}
-        - --bind-address=$(HOST_IP)
+        - --bind-address={{.Hyperkube.Apiserver.BindAddress}}
         - --etcd-prefix={{.Cluster.Etcd.Prefix}}
         - --profiling=false
         - --repair-malformed-updates=false
@@ -1819,7 +1819,7 @@ write_files:
         - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
         - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
-        - --advertise-address=$(HOST_IP)
+        - --advertise-address={{.Hyperkube.Apiserver.BindAddress}}
         - --runtime-config=api/all=true
         - --logtostderr=true
         - --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
