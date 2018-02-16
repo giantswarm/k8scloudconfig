@@ -33,10 +33,10 @@ write_files:
   owner: root
   permissions: 644
   content: |
-    # Calico Version v3.0.1
-    # https://docs.projectcalico.org/v3.0/releases#v3.0.1
+    # Calico Version v3.0.2
+    # https://docs.projectcalico.org/v3.0/releases#v3.0.2
     # This manifest includes the following component versions:
-    #   calico/node:v3.0.1
+    #   calico/node:v3.0.2
     #   calico/cni:v2.0.0
     #   calico/kube-controllers:v2.0.0
 
@@ -139,7 +139,7 @@ write_files:
             # container programs network policy and routes on each
             # host.
             - name: calico-node
-              image: quay.io/calico/node:v3.0.1
+              image: quay.io/calico/node:v3.0.2
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
