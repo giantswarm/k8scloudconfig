@@ -1903,6 +1903,9 @@ write_files:
         command:
         - /hyperkube
         - controller-manager
+        {{ range .Hyperkube.ControllerManager.Pod.CommandExtraArgs -}}
+        - {{ . }}
+        {{ end -}}
         - --logtostderr=true
         - --v=2
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
