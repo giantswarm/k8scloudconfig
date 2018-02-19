@@ -42,7 +42,7 @@ type Hyperkube struct {
 }
 
 type HyperkubeApiserver struct {
-	Docker HyperkubeDocker
+	Pod HyperkubePod
 }
 
 type HyperkubeControllerManager struct {
