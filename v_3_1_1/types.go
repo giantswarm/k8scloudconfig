@@ -83,11 +83,11 @@ type HyperkubeDocker struct {
 }
 
 type HyperkubePod struct {
-	HostExtraMounts  []HostMount
+	PodExtraMounts   []PodMount
 	CommandExtraArgs []string
 }
 
-type HostMount struct {
+type PodMount struct {
 	Name     string
 	Path     string
 	ReadOnly bool
