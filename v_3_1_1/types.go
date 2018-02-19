@@ -42,11 +42,11 @@ type Hyperkube struct {
 }
 
 type HyperkubeApiserver struct {
-	Docker HyperkubeDocker
+	Pod HyperkubePod
 }
 
 type HyperkubeControllerManager struct {
-	Docker HyperkubeDocker
+	Pod HyperkubePod
 }
 
 type HyperkubeKubelet struct {
@@ -56,6 +56,17 @@ type HyperkubeKubelet struct {
 type HyperkubeDocker struct {
 	RunExtraArgs     []string
 	CommandExtraArgs []string
+}
+
+type HyperkubePod struct {
+	HyperkubePodHostExtraMounts []HyperkubePodHostMount
+	CommandExtraArgs            []string
+}
+
+type HyperkubePodHostMount struct {
+	Name     string
+	Path     string
+	ReadOnly bool
 }
 
 type FileMetadata struct {
