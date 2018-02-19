@@ -1509,7 +1509,7 @@ write_files:
   permissions: 0544
   content: |
       #!/bin/bash
-      domains="{{.Cluster.Etcd.Domain}} {{.MasterAPIDomain}}"
+      domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
 
       for domain in $domains; do
         until nslookup $domain; do
@@ -1647,7 +1647,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.MasterAPIDomain}}
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1670,7 +1670,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.MasterAPIDomain}}
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1692,7 +1692,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.MasterAPIDomain}}
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1714,7 +1714,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.MasterAPIDomain}}
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1736,7 +1736,7 @@ write_files:
     - name: local
       cluster:
         certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-        server: https://{{.MasterAPIDomain}}
+        server: https://{{.Cluster.Kubernetes.API.Domain}}
     contexts:
     - context:
         cluster: local
@@ -1806,7 +1806,7 @@ write_files:
         - --kubelet_https=true
         - --kubelet-preferred-address-types=InternalIP
         - --secure_port={{.Cluster.Kubernetes.API.SecurePort}}
-        - --bind-address={{.Hyperkube.Apiserver.BindAddress}}
+        - --bind-address=$(HOST_IP)
         - --etcd-prefix={{.Cluster.Etcd.Prefix}}
         - --profiling=false
         - --repair-malformed-updates=false
@@ -1819,7 +1819,7 @@ write_files:
         - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
         - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
-        - --advertise-address={{.Hyperkube.Apiserver.BindAddress}}
+        - --advertise-address=$(HOST_IP)
         - --runtime-config=api/all=true
         - --logtostderr=true
         - --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
@@ -2298,7 +2298,7 @@ coreos:
       --machine-id-file=/rootfs/etc/machine-id \
       --cadvisor-port=4194 \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
-      --healthz-bind-address={{.Hyperkube.Apiserver.BindAddress}} \
+      --healthz-bind-address=${DEFAULT_IPV4} \
       --healthz-port=10248 \
       --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
       --cluster-domain={{.Cluster.Kubernetes.Domain}} \
