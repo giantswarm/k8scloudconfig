@@ -1845,7 +1845,7 @@ write_files:
           hostPort: {{.Cluster.Kubernetes.API.SecurePort}}
           name: https
         volumeMounts:
-        {{ range .Hyperkube.Apiserver.Pod.PodExtraMounts -}}
+        {{ range .Hyperkube.Apiserver.Pod.HyperkubePodHostExtraMounts -}}
         - mountPath: {{ .Path }}
           name: {{ .Name }}
           readOnly: {{ .ReadOnly }}
@@ -1865,7 +1865,7 @@ write_files:
           name: ssl-certs-kubernetes
           readOnly: true
       volumes:
-      {{ range .Hyperkube.Apiserver.Pod.PodExtraMounts -}}
+      {{ range .Hyperkube.Apiserver.Pod.HyperkubePodHostExtraMounts -}}
       - hostPath: 
           path: {{ .Path }}
         name: {{ .Name }}
@@ -1923,7 +1923,7 @@ write_files:
           initialDelaySeconds: 15
           timeoutSeconds: 15
         volumeMounts:
-        {{ range .Hyperkube.ControllerManager.Pod.PodExtraMounts -}}
+        {{ range .Hyperkube.ControllerManager.Pod.HyperkubePodHostExtraMounts -}}
         - mountPath: {{ .Path }}
           name: {{ .Name }}
           readOnly: {{ .ReadOnly }}
@@ -1938,7 +1938,7 @@ write_files:
           name: ssl-certs-kubernetes
           readOnly: true
       volumes:
-      {{ range .Hyperkube.ControllerManager.Pod.PodExtraMounts -}}
+      {{ range .Hyperkube.ControllerManager.Pod.HyperkubePodHostExtraMounts -}}
       - hostPath: 
           path: {{ .Path }}
         name: {{ .Name }}
