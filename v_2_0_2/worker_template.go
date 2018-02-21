@@ -295,7 +295,7 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
-      - name: k8s-proxy.service
+    - name: k8s-proxy.service
       enable: false
       command: stop
       content: |
