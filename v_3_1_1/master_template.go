@@ -1812,6 +1812,7 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
+        - --feature-gates=ExpandPersistentVolumes=true
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
