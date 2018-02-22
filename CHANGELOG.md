@@ -16,6 +16,7 @@ version directory, and then changes are introduced.
 - Fix `StartLimitIntervalSec` parameter location in `etcd3` systemd unit.
 - Updated calico to 3.0.2.
 - Updated etcd to 3.3.1.
+- Updated nginx-ingress-controller to 0.11.0.
 
 ## [v3.1.0]
 
