@@ -1905,6 +1905,10 @@ write_files:
         resources:
           requests:
             cpu: 300m
+	    memory: 300Mi
+	  limits:
+	    cpu: 300m
+	    memory: 300Mi
         livenessProbe:
           tcpSocket:
             port: {{.Cluster.Kubernetes.API.SecurePort}}
@@ -1988,6 +1992,10 @@ write_files:
         resources:
           requests:
             cpu: 200m
+	    memory: 200Mi
+	  limits:
+	    cpu: 200m
+	    memory: 200Mi
         livenessProbe:
           httpGet:
             host: 127.0.0.1
@@ -2050,7 +2058,11 @@ write_files:
         resources:
           requests:
             cpu: 100m
-        livenessProbe:
+	    memory: 100Mi
+          limits:
+            cpu: 100m
+	    memory: 100Mi
+	livenessProbe:
           httpGet:
             host: 127.0.0.1
             path: /healthz
