@@ -861,6 +861,9 @@ write_files:
                 requests:
                   memory: "80Mi"
                   cpu: "75m"
+		limits:
+		  memory: "80Mi"
+		  cpu: "75m"
               securityContext:
                 privileged: true
               volumeMounts:
