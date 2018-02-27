@@ -277,6 +277,10 @@ write_files:
               resources:
                 requests:
                   cpu: 250m
+		  memory: 100Mi
+		limits:
+		  cpu: 250m
+		  memory: 100Mi
               livenessProbe:
                 httpGet:
                   path: /liveness
@@ -418,6 +422,9 @@ write_files:
                 requests:
                   cpu: 30m
                   memory: 90Mi
+		limits:
+		  cpu: 30m
+		  memory: 90Mi
               volumeMounts:
                 # Mount in the etcd TLS secrets.
                 - mountPath: /etc/kubernetes/ssl/etcd
