@@ -1573,7 +1573,7 @@ write_files:
        apiGroup: rbac.authorization.k8s.io
        kind: ClusterRole
        name: restricted-psp-user
-- path: /srv/priority_classes.ayml
+- path: /srv/priority_classes.yaml
   permissions: 0544
   content:
     apiVersion: scheduling.k8s.io/v1alpha1
@@ -1651,6 +1651,18 @@ write_files:
               [ "$?" -ne "0" ]
           do
               echo "failed to apply /src/$manifest, retrying in 5 sec"
+              sleep 5s
+          done
+      done
+
+      PRIORITY_CLASSES="priority_classes.yaml"
+      # create priority classes
+      do
+          while
+              /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/$PRIORITY_CLASSES
+             [ "$?" -ne "0" ]
+          do
+              echo "failed to apply /src/$PRIORITY_CLASSES, retrying in 5 sec"
               sleep 5s
           done
       done
