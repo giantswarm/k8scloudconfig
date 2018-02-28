@@ -33,7 +33,7 @@ write_files:
             app: calico-ipip-pinger
         spec:
           serviceAccountName: calico-node
-	  priorityClassName: critical-pods
+          priorityClassName: critical-pods
           containers:
           - name: calico-ipip-pinger
             image: quay.io/giantswarm/calico-ipip-pinger:c2d40fb9bd4dcd78fd28b897f43b2d9a744ab374
@@ -195,7 +195,7 @@ write_files:
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-	  priorityClassName: critical-pods
+          priorityClassName: critical-pods
           serviceAccountName: calico-node
           # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
           # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
@@ -380,7 +380,7 @@ write_files:
           # The controllers must run in the host network namespace so that
           # it isn't governed by policy that would prevent it from working.
           hostNetwork: true
-	  priorityClassName: critical-pods
+          priorityClassName: critical-pods
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
@@ -517,7 +517,7 @@ write_files:
             k8s-app: coredns
         spec:
           serviceAccountName: coredns
-	  priorityClassName: important-pods
+          priorityClassName: important-pods
           tolerations:
             - key: node-role.kubernetes.io/master
               effect: NoSchedule
@@ -711,7 +711,7 @@ write_files:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
           serviceAccountName: nginx-ingress-controller
-	  priorityClassName: important-pods
+          priorityClassName: important-pods
           initContainers:
           - command:
             - sh
@@ -835,7 +835,7 @@ write_files:
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-	  priorityClassName: critical-pods
+          priorityClassName: critical-pods
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
