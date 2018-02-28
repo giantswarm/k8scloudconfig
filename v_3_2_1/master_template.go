@@ -275,10 +275,10 @@ write_files:
               resources:
                 requests:
                   cpu: 250m
-		  memory: 100Mi
-		limits:
-		  cpu: 250m
-		  memory: 100Mi
+                  memory: 100Mi
+                limits:
+                  cpu: 250m
+                  memory: 100Mi
               livenessProbe:
                 httpGet:
                   path: /liveness
@@ -417,9 +417,9 @@ write_files:
                 requests:
                   cpu: 30m
                   memory: 90Mi
-		limits:
-		  cpu: 30m
-		  memory: 90Mi
+                limits:
+                  cpu: 30m
+                  memory: 90Mi
               volumeMounts:
                 # Mount in the etcd TLS secrets.
                 - mountPath: /etc/kubernetes/ssl/etcd
@@ -858,9 +858,9 @@ write_files:
                 requests:
                   memory: "80Mi"
                   cpu: "75m"
-		limits:
-		  memory: "80Mi"
-		  cpu: "75m"
+                limits:
+                  memory: "80Mi"
+                  cpu: "75m"
               securityContext:
                 privileged: true
               volumeMounts:
@@ -1926,7 +1926,9 @@ write_files:
         - --service-account-lookup=true
         - --authorization-mode=RBAC
         - --feature-gates=ExpandPersistentVolumes=true
-        - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy
+        - --feature-gates=PodPriority=true
+        - --runtime-config=scheduling.k8s.io/v1alpha1=true
+        - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
         - --etcd-servers=https://127.0.0.1:2379
@@ -1949,10 +1951,10 @@ write_files:
         resources:
           requests:
             cpu: 300m
-	    memory: 300Mi
-	  limits:
-	    cpu: 300m
-	    memory: 300Mi
+            memory: 300Mi
+          limits:
+            cpu: 300m
+            memory: 300Mi
         livenessProbe:
           tcpSocket:
             port: {{.Cluster.Kubernetes.API.SecurePort}}
@@ -2037,10 +2039,10 @@ write_files:
         resources:
           requests:
             cpu: 200m
-	    memory: 200Mi
-	  limits:
-	    cpu: 200m
-	    memory: 200Mi
+            memory: 200Mi
+          limits:
+            cpu: 200m
+            memory: 200Mi
         livenessProbe:
           httpGet:
             host: 127.0.0.1
@@ -2100,15 +2102,16 @@ write_files:
         - --logtostderr=true
         - --v=2
         - --profiling=false
+        - --feature-gates=PodPriority=true
         - --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
         resources:
           requests:
             cpu: 100m
-	    memory: 100Mi
+            memory: 100Mi
           limits:
             cpu: 100m
-	    memory: 100Mi
-	livenessProbe:
+            memory: 100Mi
+        livenessProbe:
           httpGet:
             host: 127.0.0.1
             path: /healthz
@@ -2457,6 +2460,7 @@ coreos:
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
       --allow-privileged=true \
+      --feature-gates=PodPriority=true \
       --pod-manifest-path=/etc/kubernetes/manifests \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
