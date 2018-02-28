@@ -1655,16 +1655,12 @@ write_files:
           done
       done
 
-      PRIORITY_CLASSES="priority_classes.yaml"
-      # create priority classes
+      while
+          /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/priority_classes.yaml
+          [ "$?" -ne "0" ]
       do
-          while
-              /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/$PRIORITY_CLASSES
-             [ "$?" -ne "0" ]
-          do
-              echo "failed to apply /src/$PRIORITY_CLASSES, retrying in 5 sec"
-              sleep 5s
-          done
+          echo "failed to apply /src/priority_classes.yaml, retrying in 5 sec"
+          sleep 5s
       done
 
       {{ if not .DisableCalico -}}
