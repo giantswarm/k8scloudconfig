@@ -33,6 +33,7 @@ write_files:
             app: calico-ipip-pinger
         spec:
           serviceAccountName: calico-node
+	  priorityClassName: critical-pods
           containers:
           - name: calico-ipip-pinger
             image: quay.io/giantswarm/calico-ipip-pinger:c2d40fb9bd4dcd78fd28b897f43b2d9a744ab374
@@ -187,17 +188,14 @@ write_files:
         metadata:
           labels:
             k8s-app: calico-node
-          annotations:
-            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           # Tolerations part was taken from calico manifest for kubeadm as we are using same taint for master.
           tolerations:
           - key: node-role.kubernetes.io/master
             operator: Exists
             effect: NoSchedule
-          - key: CriticalAddonsOnly
-            operator: Exists
           hostNetwork: true
+	  priorityClassName: critical-pods
           serviceAccountName: calico-node
           # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
           # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
@@ -362,8 +360,6 @@ write_files:
       namespace: kube-system
       labels:
         k8s-app: calico-kube-controllers
-      annotations:
-        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       # The controllers can only have a single active instance.
       replicas: 1
@@ -381,11 +377,10 @@ write_files:
           - key: node-role.kubernetes.io/master
             operator: Exists
             effect: NoSchedule
-          - key: CriticalAddonsOnly
-            operator: Exists
           # The controllers must run in the host network namespace so that
           # it isn't governed by policy that would prevent it from working.
           hostNetwork: true
+	  priorityClassName: critical-pods
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
@@ -522,11 +517,10 @@ write_files:
             k8s-app: coredns
         spec:
           serviceAccountName: coredns
+	  priorityClassName: important-pods
           tolerations:
             - key: node-role.kubernetes.io/master
               effect: NoSchedule
-            - key: "CriticalAddonsOnly"
-              operator: "Exists"
           affinity:
             podAntiAffinity:
               preferredDuringSchedulingIgnoredDuringExecution:
@@ -703,8 +697,6 @@ write_files:
         metadata:
           labels:
             k8s-app: nginx-ingress-controller
-          annotations:
-            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           affinity:
             podAntiAffinity:
@@ -719,6 +711,7 @@ write_files:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
           serviceAccountName: nginx-ingress-controller
+	  priorityClassName: important-pods
           initContainers:
           - command:
             - sh
@@ -836,16 +829,13 @@ write_files:
             component: kube-proxy
             k8s-app: kube-proxy
             kubernetes.io/cluster-service: "true"
-          annotations:
-            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           tolerations:
           - key: node-role.kubernetes.io/master
             operator: Exists
             effect: NoSchedule
-          - key: CriticalAddonsOnly
-            operator: Exists
           hostNetwork: true
+	  priorityClassName: critical-pods
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
@@ -1583,6 +1573,41 @@ write_files:
        apiGroup: rbac.authorization.k8s.io
        kind: ClusterRole
        name: restricted-psp-user
+- path: /srv/priority_classes.ayml
+  permissions: 0544
+  content:
+    apiVersion: scheduling.k8s.io/v1alpha1
+    kind: PriorityClass
+    metadata:
+      name: core-pods
+    value: 1000000
+    globalDefault: false
+    description: "This priority class should be used for k8s components api/scheduler/controller-manager."
+    ---
+    apiVersion: scheduling.k8s.io/v1alpha1
+    kind: PriorityClass
+    metadata:
+      name: critical-pods
+    value: 900000
+    globalDefault: false
+    description: "This priority class should be used for critical pods like calico and kube-proxy."
+    ---
+    apiVersion: scheduling.k8s.io/v1alpha1
+    kind: PriorityClass
+    metadata:
+      name: important-pods
+    value: 800000
+    globalDefault: false
+    description: "This priority class should be used for important pods like coredns/ingress-controller."
+    ---
+    apiVersion: scheduling.k8s.io/v1alpha1
+    kind: PriorityClass
+    metadata:
+      name: default
+    value: 500000
+    globalDefault: true
+    description: "This is a default priority class, used for cluster workloads without priority."
+    ---
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1864,6 +1889,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
+      priorityClassName: core-pods
       containers:
       - name: k8s-api-server
         image: quay.io/giantswarm/hyperkube:v1.9.2
@@ -1981,6 +2007,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
+      priorityClassName: core-pods
       containers:
       - name: k8s-controller-manager
         image: quay.io/giantswarm/hyperkube:v1.9.2
@@ -2055,6 +2082,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
+      priorityClassName: core-pods
       containers:
       - name: k8s-scheduler
         image: quay.io/giantswarm/hyperkube:v1.9.2
