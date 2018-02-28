@@ -1925,9 +1925,7 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
-        - --feature-gates=ExpandPersistentVolumes=true
-        - --feature-gates=PodPriority=true
-        - --runtime-config=scheduling.k8s.io/v1alpha1=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
@@ -1936,7 +1934,7 @@ write_files:
         - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
         - --advertise-address=$(HOST_IP)
-        - --runtime-config=api/all=true
+        - --runtime-config=api/all=true,scheduling.k8s.io/v1alpha1=true
         - --logtostderr=true
         - --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
         - --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem
