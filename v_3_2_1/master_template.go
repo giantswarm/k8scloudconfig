@@ -1574,8 +1574,8 @@ write_files:
        kind: ClusterRole
        name: restricted-psp-user
 - path: /srv/priority_classes.yaml
-  permissions: 0544
-  content:
+  permissions: 0644
+  content: |
     apiVersion: scheduling.k8s.io/v1alpha1
     kind: PriorityClass
     metadata:
