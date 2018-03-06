@@ -13,8 +13,13 @@ version directory, and then changes are introduced.
 
 ## [v3.2.1]
 
+### Added
+- Added priority classes core-components, critical-pods and important pods.
+- Added Guaranteed QoS for api/scheduler/controller-manager pods by assigning resources limits.
+
 ### Changed
-- Enable aggregation layer in Kubernetes API server
+- Enabled aggregation layer in Kubernetes API server.
+- Ordered Kubernetes cluster components scheduling process by assigning PriorityClass to pods.
 
 ## [v3.1.1]
 
