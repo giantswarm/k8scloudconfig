@@ -9,7 +9,9 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.2.1] WIP
+## [v3.2.2] WIP
+
+## [v3.2.1]
 
 ### Changed
 - Enable aggregation layer in Kubernetes API server
@@ -95,9 +97,13 @@ version directory, and then changes are introduced.
 
 ## [v0.1.0]
 
+[v3.2.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_2
+[v3.2.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_1
 [v3.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_1
 [v3.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_0
 [v3.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_0_0
+[v2.0.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_2
+[v2.0.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_1
 [v2.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v2
 [v1.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1_1
 [v1.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1
