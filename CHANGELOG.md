@@ -11,6 +11,9 @@ version directory, and then changes are introduced.
 
 ## [v3.2.2] WIP
 
+### Removed
+- Removed set-ownership-etcd-data-dir.service.
+
 ## [v3.2.1]
 
 ### Added
