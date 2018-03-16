@@ -276,9 +276,6 @@ write_files:
                 requests:
                   cpu: 250m
                   memory: 100Mi
-                limits:
-                  cpu: 250m
-                  memory: 100Mi
               livenessProbe:
                 httpGet:
                   path: /liveness
@@ -415,9 +412,6 @@ write_files:
                   value: policy,profile,workloadendpoint,node
               resources:
                 requests:
-                  cpu: 30m
-                  memory: 90Mi
-                limits:
                   cpu: 30m
                   memory: 90Mi
               volumeMounts:
@@ -634,9 +628,6 @@ write_files:
             ports:
             - containerPort: 8080
             resources:
-              limits:
-                cpu: 10m
-                memory: 20Mi
               requests:
                 cpu: 10m
                 memory: 20Mi
@@ -858,9 +849,6 @@ write_files:
                 requests:
                   memory: "80Mi"
                   cpu: "75m"
-                limits:
-                  memory: "80Mi"
-                  cpu: "75m"
               securityContext:
                 privileged: true
               volumeMounts:
@@ -994,9 +982,6 @@ write_files:
               requests:
                 cpu: 55m
                 memory: 75Mi
-              limits:
-                cpu: 55m
-                memory: 75Mi
             volumeMounts:
             - mountPath: /var/run/dbus/
               name: systemd-volume
@@ -1074,9 +1059,6 @@ write_files:
               timeoutSeconds: 5
             resources:
               requests:
-                cpu: 50m
-                memory: 75Mi
-              limits:
                 cpu: 50m
                 memory: 75Mi
           serviceAccountName: kube-state-metrics
@@ -1957,9 +1939,6 @@ write_files:
           requests:
             cpu: 300m
             memory: 300Mi
-          limits:
-            cpu: 300m
-            memory: 300Mi
         livenessProbe:
           tcpSocket:
             port: {{.Cluster.Kubernetes.API.SecurePort}}
@@ -2045,9 +2024,6 @@ write_files:
           requests:
             cpu: 200m
             memory: 200Mi
-          limits:
-            cpu: 200m
-            memory: 200Mi
         livenessProbe:
           httpGet:
             host: 127.0.0.1
@@ -2111,9 +2087,6 @@ write_files:
         - --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
         resources:
           requests:
-            cpu: 100m
-            memory: 100Mi
-          limits:
             cpu: 100m
             memory: 100Mi
         livenessProbe:
