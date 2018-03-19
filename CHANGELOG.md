@@ -11,6 +11,9 @@ version directory, and then changes are introduced.
 
 ## [v3.2.3]
 
+### Changed
+- Updated Kubernetes with version 1.9.5.
+
 ### Removed
 - Removed hard limits from core kubernetes components.
 
