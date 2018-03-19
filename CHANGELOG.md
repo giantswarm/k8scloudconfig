@@ -11,6 +11,9 @@ version directory, and then changes are introduced.
 
 ## [v3.2.3]
 
+### Changed
+- Updated nginx-ingress-controller to version 0.12.0.
+
 ### Removed
 - Removed hard limits from core kubernetes components.
 
