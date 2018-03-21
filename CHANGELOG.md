@@ -13,6 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Updated Kubernetes with version 1.9.5.
+- Updated nginx-ingress-controller to version 0.12.0.
 
 ### Removed
 - Removed hard limits from core kubernetes components.
