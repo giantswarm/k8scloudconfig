@@ -2233,8 +2233,8 @@ coreos:
     content: |
       [Unit]
       Description=k8s-setup-network-env Service
-      Wants=network-online.target docker.service
-      After=network-online.target docker.service
+      Wants=network.target docker.service
+      After=network.target docker.service
 
       [Service]
       Type=oneshot
@@ -2455,8 +2455,7 @@ coreos:
     command: stop
     mask: true
   - name: systemd-networkd-wait-online.service
-    enable: true
-    command: start
+    mask: true
   - name: k8s-addons.service
     enable: true
     command: start
