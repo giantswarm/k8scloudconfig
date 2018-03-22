@@ -13,6 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Masked systemd-networkd-wait-online unit.
+- Removed injection of unencrypted Kubernetes encryption key.
 
 ## [v3.2.3]
 
@@ -119,6 +120,10 @@ version directory, and then changes are introduced.
 
 ## [v0.1.0]
 
+
+
+[v3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
+[v3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
 [v3.2.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_2
 [v3.2.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_1
 [v3.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_1
