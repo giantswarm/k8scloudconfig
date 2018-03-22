@@ -1908,7 +1908,7 @@ write_files:
         - --service-account-lookup=true
         - --authorization-mode=RBAC
         - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
-        - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PodSecurityPolicy,Priority
+        - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
         - --etcd-servers=https://127.0.0.1:2379
@@ -2018,6 +2018,7 @@ write_files:
         - --terminated-pod-gc-threshold=10
         - --use-service-account-credentials=true
         - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
         - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
         resources:
@@ -2083,7 +2084,7 @@ write_files:
         - --logtostderr=true
         - --v=2
         - --profiling=false
-        - --feature-gates=PodPriority=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
         - --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
         resources:
           requests:
@@ -2424,7 +2425,7 @@ coreos:
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
       --allow-privileged=true \
-      --feature-gates=PodPriority=true \
+      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true \
       --pod-manifest-path=/etc/kubernetes/manifests \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,kubernetes.io/hostname=${HOSTNAME},ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \

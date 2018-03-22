@@ -13,6 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Masked systemd-networkd-wait-online unit.
+- Enabled volume resizing feature.
 
 ## [v3.2.3]
 
