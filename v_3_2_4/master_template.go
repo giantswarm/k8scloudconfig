@@ -1837,22 +1837,6 @@ write_files:
         user: scheduler
       name: service-account-context
     current-context: service-account-context
-
-- path: /etc/kubernetes/encryption/k8s-encryption-config.yaml
-  owner: root
-  permissions: 600
-  content: |
-    kind: EncryptionConfig
-    apiVersion: v1
-    resources:
-      - resources:
-        - secrets
-        providers:
-        - aescbc:
-            keys:
-            - name: key1
-              secret: {{ .ApiserverEncryptionKey }}
-        - identity: {}
 - path: /etc/kubernetes/manifests/audit-policy.yml
   owner: root
   permissions: 0644
@@ -1970,7 +1954,7 @@ write_files:
           readOnly: true
       volumes:
       {{ range .Hyperkube.Apiserver.Pod.HyperkubePodHostExtraMounts -}}
-      - hostPath: 
+      - hostPath:
           path: {{ .Path }}
         name: {{ .Name }}
       {{ end -}}
@@ -2048,7 +2032,7 @@ write_files:
           readOnly: true
       volumes:
       {{ range .Hyperkube.ControllerManager.Pod.HyperkubePodHostExtraMounts -}}
-      - hostPath: 
+      - hostPath:
           path: {{ .Path }}
         name: {{ .Name }}
       {{ end -}}

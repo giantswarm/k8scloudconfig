@@ -17,25 +17,22 @@ func TestCloudConfig(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				ApiserverEncryptionKey: "non-empty-test-apiserver-encryption-key",
-				Extension:              nopExtension{},
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 443,
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
-				ApiserverEncryptionKey: "non-empty-test-apiserver-encryption-key",
-				Extension:              nopExtension{},
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 443,
 		},
 		{
 			template: WorkerTemplate,
 			params: Params{
-				ApiserverEncryptionKey: "non-empty-test-apiserver-encryption-key",
-				EtcdPort:               2379,
-				Extension:              nopExtension{},
+				EtcdPort:  2379,
+				Extension: nopExtension{},
 			},
 			expectedEtcdPort: 2379,
 		},
@@ -78,7 +75,6 @@ func TestCloudConfigTemplating(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				ApiserverEncryptionKey: "non-empty-test-apiserver-encryption-key",
 				Cluster: v1alpha1.Cluster{
 					Calico: v1alpha1.ClusterCalico{
 						Subnet: "127.0.0.1",
@@ -98,7 +94,6 @@ func TestCloudConfigTemplating(t *testing.T) {
 		{
 			template: MasterTemplate,
 			params: Params{
-				ApiserverEncryptionKey: "non-empty-test-apiserver-encryption-key",
 				Cluster: v1alpha1.Cluster{
 					Calico: v1alpha1.ClusterCalico{
 						Subnet: "192.168.0.0",

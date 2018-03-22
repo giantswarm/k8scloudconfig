@@ -5,10 +5,7 @@ import (
 )
 
 type Params struct {
-	// ApiserverEncryptionKey is AES-CBC with PKCS#7 padding key to encrypt
-	// API etcd data.
-	ApiserverEncryptionKey string
-	Cluster                v1alpha1.Cluster
+	Cluster v1alpha1.Cluster
 	// DisableCalico flag when set removes all calico related Kubernetes
 	// manifests from the cloud config together with their initialization.
 	DisableCalico bool
