@@ -9,7 +9,7 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.2.4] WIP
+## [v3.2.4]
 
 ### Changed
 - Masked systemd-networkd-wait-online unit.
