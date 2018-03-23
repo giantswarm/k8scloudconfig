@@ -9,12 +9,23 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
+
+
+## [v3.2.5] WIP
+
+### Changed
+- Add your change here.
+
+
+
 ## [v3.2.4]
 
 ### Changed
 - Masked systemd-networkd-wait-online unit.
 - Makes injection of Kubernetes encryption key configurable.
 - Enabled volume resizing feature.
+
+
 
 ## [v3.2.3]
 
@@ -25,10 +36,14 @@ version directory, and then changes are introduced.
 ### Removed
 - Removed hard limits from core kubernetes components.
 
+
+
 ## [v3.2.2]
 
 ### Removed
 - Removed set-ownership-etcd-data-dir.service.
+
+
 
 ## [v3.2.1]
 
@@ -123,6 +138,7 @@ version directory, and then changes are introduced.
 
 
 
+[v3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
 [v3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
 [v3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
 [v3.2.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_2
