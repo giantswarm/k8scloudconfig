@@ -14,6 +14,7 @@ version directory, and then changes are introduced.
 ### Changed
 - Masked systemd-networkd-wait-online unit.
 - Removed injection of unencrypted Kubernetes encryption key.
+- Enabled volume resizing feature.
 
 ## [v3.2.3]
 
