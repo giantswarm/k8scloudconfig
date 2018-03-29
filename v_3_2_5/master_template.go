@@ -981,7 +981,7 @@ write_files:
             resources:
               requests:
                 cpu: 55m
-                memory: 75Mi
+                memory: 125Mi
             volumeMounts:
             - mountPath: /var/run/dbus/
               name: systemd-volume
