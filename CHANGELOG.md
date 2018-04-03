@@ -13,8 +13,8 @@ version directory, and then changes are introduced.
 
 ## [v3.2.5] WIP
 
-### Changed
-- Add your change here.
+### Removed
+- Removed calico-ipip-pinger.
 
 
 
