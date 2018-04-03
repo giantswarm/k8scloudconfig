@@ -14,8 +14,10 @@ version directory, and then changes are introduced.
 ## [v3.2.5] WIP
 
 ### Changed
-- Add your change here.
+- Changed kubelet bind mount mode from "shared" to "rshared".
 
+### Removed
+- Removed docker flag "--disable-legacy-registry".
 
 
 ## [v3.2.4]
