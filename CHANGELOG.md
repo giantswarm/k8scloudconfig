@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ## [v3.2.5] WIP
 
 ### Changed
-- Add your change here.
+- Disabled etcd3-defragmentation service in favor systemd timer.
 
 
 
