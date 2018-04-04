@@ -16,6 +16,9 @@ version directory, and then changes are introduced.
 ### Removed
 - Removed calico-ipip-pinger.
 
+### Changed
+- Disabled etcd3-defragmentation service in favor systemd timer.
+
 
 
 ## [v3.2.4]

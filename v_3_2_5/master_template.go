@@ -2243,8 +2243,7 @@ coreos:
       [Install]
       WantedBy=multi-user.target
   - name: etcd3-defragmentation.service
-    enable: true
-    command: start
+    enable: false
     content: |
       [Unit]
       Description=etcd defragmentation job
