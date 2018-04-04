@@ -17,8 +17,11 @@ version directory, and then changes are introduced.
 - Removed calico-ipip-pinger.
 
 ### Changed
+- Changed kubelet bind mount mode from "shared" to "rshared".
 - Disabled etcd3-defragmentation service in favor systemd timer.
 
+### Removed
+- Removed docker flag "--disable-legacy-registry".
 
 
 ## [v3.2.4]

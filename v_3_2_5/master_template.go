@@ -2160,7 +2160,7 @@ coreos:
         [Service]
         Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs {{.Cluster.Docker.Daemon.ExtraArgs}}"
         Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
-        Environment="DOCKER_OPTS=--live-restore --icc=false --disable-legacy-registry=true --userland-proxy=false"
+        Environment="DOCKER_OPTS=--live-restore --icc=false --userland-proxy=false"
   - name: k8s-setup-network-env.service
     enable: true
     command: start
@@ -2308,7 +2308,7 @@ coreos:
       {{ range .Hyperkube.Kubelet.Docker.RunExtraArgs -}}
       {{ . }} \
       {{ end -}}
-      -v /:/rootfs:ro,shared \
+      -v /:/rootfs:ro,rshared \
       -v /sys:/sys:ro \
       -v /dev:/dev:rw \
       -v /var/log:/var/log:rw \
@@ -2317,8 +2317,8 @@ coreos:
       -v /run/docker.sock:/run/docker.sock:rw \
       -v /usr/lib/os-release:/etc/os-release \
       -v /usr/share/ca-certificates/:/etc/ssl/certs \
-      -v /var/lib/docker/:/var/lib/docker:rw,shared \
-      -v /var/lib/kubelet/:/var/lib/kubelet:rw,shared \
+      -v /var/lib/docker/:/var/lib/docker:rw,rshared \
+      -v /var/lib/kubelet/:/var/lib/kubelet:rw,rshared \
       -v /etc/kubernetes/ssl/:/etc/kubernetes/ssl/ \
       -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
       -v /etc/kubernetes/manifests/:/etc/kubernetes/manifests/ \
