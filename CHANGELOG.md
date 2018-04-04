@@ -13,6 +13,9 @@ version directory, and then changes are introduced.
 
 ## [v3.2.5] WIP
 
+### Removed
+- Removed calico-ipip-pinger.
+
 ### Changed
 - Disabled etcd3-defragmentation service in favor systemd timer.
 
