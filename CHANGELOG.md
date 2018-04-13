@@ -14,6 +14,7 @@ version directory, and then changes are introduced.
 ## [v3.2.5] WIP
 
 ### Changed
+- Updated kube-state-metrics to version 1.3.0.
 - Changed kubelet bind mount mode from "shared" to "rshared".
 - Disabled etcd3-defragmentation service in favor systemd timer.
 
