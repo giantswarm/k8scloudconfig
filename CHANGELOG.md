@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ## [v3.2.5] WIP
 
 ### Changed
-- Update hyperkube 1.10.1.
+- Update hyperkube to version 1.10.1.
 - Changed kubelet bind mount mode from "shared" to "rshared".
 - Disabled etcd3-defragmentation service in favor systemd timer.
 
