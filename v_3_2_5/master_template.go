@@ -412,7 +412,8 @@ write_files:
             health
             kubernetes {{.Cluster.Kubernetes.Domain}} {{.Cluster.Kubernetes.API.ClusterIPRange}} {{.Cluster.Calico.Subnet}}/{{.Cluster.Calico.CIDR}} {
               pods insecure
-              upstream /etc/resolv.conf
+              upstream
+              fallthrough in-addr.arpa ip6.arpa
             }
             prometheus :9153
             proxy . /etc/resolv.conf
@@ -460,7 +461,7 @@ write_files:
                   topologyKey: kubernetes.io/hostname
           containers:
           - name: coredns
-            image: quay.io/giantswarm/coredns:1.0.6
+            image: quay.io/giantswarm/coredns:1.1.1
             imagePullPolicy: IfNotPresent
             args: [ "-conf", "/etc/coredns/Corefile" ]
             volumeMounts:
