@@ -19,6 +19,7 @@ version directory, and then changes are introduced.
 - Changed kubelet bind mount mode from "shared" to "rshared".
 - Disabled etcd3-defragmentation service in favor systemd timer.
 - Added /lib/modules mount for kubelet.
+- Updated CoreDNS to 1.1.1.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
