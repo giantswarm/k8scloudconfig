@@ -20,6 +20,7 @@ version directory, and then changes are introduced.
 - Disabled etcd3-defragmentation service in favor systemd timer.
 - Added /lib/modules mount for kubelet.
 - Updated CoreDNS to 1.1.1.
+- Updated Calico to 3.0.5.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
