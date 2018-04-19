@@ -6,8 +6,10 @@ users:
     groups:
       - "sudo"
       - "docker"
+{{ if ne $user.PublicKey "" }}
     ssh-authorized-keys:
        - "{{ $user.PublicKey }}"
+{{ end }}
 {{end}}
 write_files:
 {{ if not .DisableCalico -}}
