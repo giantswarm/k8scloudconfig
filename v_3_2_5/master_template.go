@@ -1865,7 +1865,7 @@ write_files:
         - --audit-policy-file=/etc/kubernetes/manifests/audit-policy.yml
         - --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
         - --requestheader-client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
-        - --requestheader-allowed-names=aggregator
+        - --requestheader-allowed-names=aggregator,{{.Cluster.Kubernetes.API.Domain}},{{.Cluster.Kubernetes.Kubelet.Domain}}
         - --requestheader-extra-headers-prefix=X-Remote-Extra-
         - --requestheader-group-headers=X-Remote-Group
         - --requestheader-username-headers=X-Remote-User
