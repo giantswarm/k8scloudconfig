@@ -22,6 +22,7 @@ version directory, and then changes are introduced.
 - Updated CoreDNS to 1.1.1.
 - Updated Calico to 3.0.5.
 - Updated Etcd to 3.3.3.
+- Added trusted certificate CNs to aggregation API allowed names.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
