@@ -15,11 +15,12 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Updated kube-state-metrics to version 1.3.1.
-- Update hyperkube to version 1.10.1.
+- Updated hyperkube to version 1.10.1.
 - Changed kubelet bind mount mode from "shared" to "rshared".
 - Disabled etcd3-defragmentation service in favor systemd timer.
 - Added /lib/modules mount for kubelet.
 - Updated CoreDNS to 1.1.1.
+- Fixed node-exporter running in container by adjusting host mounts.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
