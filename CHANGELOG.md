@@ -23,6 +23,7 @@ version directory, and then changes are introduced.
 - Updated Calico to 3.0.5.
 - Updated Etcd to 3.3.3.
 - Added trusted certificate CNs to aggregation API allowed names.
+- Disabled SSL passthrough in nginx-ingress-controller.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
