@@ -21,6 +21,10 @@ version directory, and then changes are introduced.
 - Added /lib/modules mount for kubelet.
 - Updated CoreDNS to 1.1.1.
 - Fixed node-exporter running in container by adjusting host mounts.
+- Updated Calico to 3.0.5.
+- Updated Etcd to 3.3.3.
+- Added trusted certificate CNs to aggregation API allowed names.
+- Disabled SSL passthrough in nginx-ingress-controller.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
