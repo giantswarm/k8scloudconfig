@@ -11,7 +11,14 @@ version directory, and then changes are introduced.
 
 
 
-## [v3.2.5] WIP
+## [v3.2.6] WIP
+
+### Changed
+
+### Removed
+
+
+## [v3.2.5]
 
 ### Changed
 - Updated kube-state-metrics to version 1.3.1.
