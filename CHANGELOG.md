@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ## [v3.2.6] WIP
 
 ### Changed
-- Added RBAC rules for configmaps, secrets and hpa for kube-state-metrics.
+- Changed node-exporter to have named ports.
 
 ### Removed
 
