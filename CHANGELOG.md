@@ -15,6 +15,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Changed node-exporter to have named ports.
+- Added RBAC rules for configmaps, secrets and hpa for kube-state-metrics.
 
 ### Removed
 

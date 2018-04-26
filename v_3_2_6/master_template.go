@@ -1366,6 +1366,8 @@ write_files:
           - persistentvolumes
           - namespaces
           - endpoints
+          - secrets
+          - configmaps
         verbs:
           - list
           - watch
@@ -1394,13 +1396,21 @@ write_files:
           - list
           - watch
       - apiGroups:
-        - extensions
+          - extensions
         resources:
-        - podsecuritypolicies
+          - podsecuritypolicies
         verbs:
-        - use
+          - use
         resourceNames:
-        - privileged
+          - privileged
+      - apiGroups:
+          - autoscaling
+        attributeRestrictions: null
+        resources:
+          - horizontalpodautoscalers
+        verbs:
+          - list
+          - watch
 - path: /srv/psp_policies.yaml
   owner: root
   permissions: 0644
