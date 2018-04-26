@@ -873,7 +873,6 @@ write_files:
             ports:
             - name: metrics
               containerPort: 10300
-              hostPort: 10300
             args:
               - '--log.level=debug'
               - '--path.procfs=/host/proc'
