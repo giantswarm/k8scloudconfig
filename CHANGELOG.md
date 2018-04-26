@@ -33,6 +33,7 @@ version directory, and then changes are introduced.
 - Updated Etcd to 3.3.3.
 - Added trusted certificate CNs to aggregation API allowed names.
 - Disabled SSL passthrough in nginx-ingress-controller.
+- Removed explicit hostname labeling for kubelet.
 
 ### Removed
 - Removed docker flag "--disable-legacy-registry".
