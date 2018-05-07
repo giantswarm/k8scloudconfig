@@ -1419,8 +1419,12 @@ write_files:
     kind: PodSecurityPolicy
     metadata:
       name: privileged
+      annotations:
+        seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
     spec:
       allowPrivilegeEscalation: true
+      allowedCapabilities:
+      - '*'
       fsGroup:
         rule: RunAsAny
       privileged: true
@@ -1436,7 +1440,7 @@ write_files:
       hostIPC: true
       hostNetwork: true
       hostPorts:
-      - min: 1
+      - min: 0
         max: 65536
     ---
     apiVersion: extensions/v1beta1
