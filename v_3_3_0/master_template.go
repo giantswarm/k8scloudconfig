@@ -1,4 +1,4 @@
-package v_3_2_6
+package v_3_3_0
 
 const MasterTemplate = `#cloud-config
 users:
