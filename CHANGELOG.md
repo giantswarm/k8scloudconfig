@@ -171,6 +171,8 @@ version directory, and then changes are introduced.
 
 
 
+[v3.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_0
+[v3.2.6]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_6
 [v3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
 [v3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
 [v3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
