@@ -11,12 +11,21 @@ version directory, and then changes are introduced.
 
 
 
-## [v3.2.6] WIP
+## [v3.3.0] WIP
+
+### Changed
+- Updated hyperkube to version 1.10.1.
+
+### Removed
+
+
+## [v3.2.6]
 
 ### Changed
 - Changed node-exporter to have named ports.
 - Added RBAC rules for configmaps, secrets and hpa for kube-state-metrics.
 - Synced privileged PSP with upstream (adding all added capabilities and seccomp profiles)
+- Downgraded hyperkube to version 1.9.5.
 
 ### Removed
 
@@ -162,6 +171,8 @@ version directory, and then changes are introduced.
 
 
 
+[v3.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_0
+[v3.2.6]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_6
 [v3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
 [v3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
 [v3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
