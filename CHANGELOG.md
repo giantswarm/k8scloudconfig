@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ## [v3.3.0] WIP
 
 ### Changed
-- Updated hyperkube to version 1.10.1.
+- Updated hyperkube to version 1.10.2.
 
 ### Removed
 
