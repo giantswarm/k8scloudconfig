@@ -17,6 +17,8 @@ version directory, and then changes are introduced.
 - Updated hyperkube to version 1.10.2.
 
 ### Removed
+- Removed kube-state-metrics related components (will be managed by
+chart-operator).
 
 
 ## [v3.2.6]
