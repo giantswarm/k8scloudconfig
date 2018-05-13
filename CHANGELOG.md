@@ -11,7 +11,14 @@ version directory, and then changes are introduced.
 
 
 
-## [v3.3.0] WIP
+## [v3.3.1] WIP
+
+### Changed
+
+### Removed
+
+
+## [v3.3.0]
 
 ### Changed
 - Updated hyperkube to version 1.10.2.
@@ -173,6 +180,7 @@ chart-operator).
 
 
 
+[v3.3.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_1
 [v3.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_0
 [v3.2.6]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_6
 [v3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
