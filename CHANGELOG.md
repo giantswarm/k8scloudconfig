@@ -9,9 +9,12 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
+## [v3.3.1] WIP
 
+### Changed
+- Changed some remaining images to be pulled from Giant Swarm's registry
 
-## [v3.3.0] WIP
+## [v3.3.0]
 
 ### Changed
 - Updated hyperkube to version 1.10.2.

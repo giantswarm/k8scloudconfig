@@ -138,7 +138,7 @@ write_files:
             # container programs network policy and routes on each
             # host.
             - name: calico-node
-              image: quay.io/calico/node:v3.0.5
+              image: quay.io/giantswarm/node:v3.0.5
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -233,7 +233,7 @@ write_files:
             # This container installs the Calico CNI binaries
             # and CNI network config file on each node.
             - name: install-cni
-              image: quay.io/calico/cni:v2.0.4
+              image: quay.io/giantswarm/cni:v2.0.4
               command: ["/install-cni.sh"]
               env:
                 # Name of the CNI config file to create.
@@ -314,7 +314,7 @@ write_files:
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
-              image: quay.io/calico/kube-controllers:v2.0.3
+              image: quay.io/giantswarm/kube-controllers:v2.0.3
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -551,7 +551,7 @@ write_files:
         spec:
           containers:
           - name: default-http-backend
-            image: gcr.io/google_containers/defaultbackend:1.0
+            image: quay.io/giantswarm/defaultbackend:1.0
             livenessProbe:
               httpGet:
                 path: /healthz
@@ -642,7 +642,7 @@ write_files:
             - sh
             - -c
             - sysctl -w net.core.somaxconn=32768; sysctl -w net.ipv4.ip_local_port_range="1024 65535"
-            image: alpine:3.6
+            image: quay.io/giantswarm/alpine:3.6
             imagePullPolicy: IfNotPresent
             name: sysctl
             securityContext:
