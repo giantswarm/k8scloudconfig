@@ -642,7 +642,7 @@ write_files:
             - sh
             - -c
             - sysctl -w net.core.somaxconn=32768; sysctl -w net.ipv4.ip_local_port_range="1024 65535"
-            image: quay.io/giantswarm/alpine:3.6
+            image: quay.io/giantswarm/alpine:3.7
             imagePullPolicy: IfNotPresent
             name: sysctl
             securityContext:
