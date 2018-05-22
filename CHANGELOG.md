@@ -15,6 +15,7 @@ version directory, and then changes are introduced.
 - Changed some remaining images to be pulled from Giant Swarm's registry
 - Updated Alpine sidecar for Ingress Controller to version 3.7
 - Fixed mkfs.xfs for containerized kubelet.
+- Updated hyperkube to version 1.10.3.
 
 ## [v3.3.0]
 
