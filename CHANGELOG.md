@@ -9,13 +9,23 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.3.1] WIP
+## [v3.3.2] WIP
+
+### Changed
+
+### Removed
+
+
+## [v3.3.1]
 
 ### Changed
 - Changed some remaining images to be pulled from Giant Swarm's registry.
 - Updated Alpine sidecar for Ingress Controller to version 3.7.
 - Fixed mkfs.xfs for containerized kubelet.
 - Updated hyperkube to version 1.10.3.
+
+### Removed
+
 
 ## [v3.3.0]
 
