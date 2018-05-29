@@ -1,12 +1,12 @@
-package v_3_3_1
+package v_3_3_2
 
 import (
 	"testing"
 	"text/template"
 )
 
-func Test_MasterTemplate(t *testing.T) {
-	tmpl, err := template.New("").Parse(MasterTemplate)
+func Test_WorkerTemplate(t *testing.T) {
+	tmpl, err := template.New("").Parse(WorkerTemplate)
 	if err != nil {
 		t.Fatalf("expected err = nil, got %v", err)
 	}
