@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ### Changed
 
 ### Removed
-
+- Removed node-exporter related components (will be managed by chart-operator).
 
 ## [v3.3.1]
 
