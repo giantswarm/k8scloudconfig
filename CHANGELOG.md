@@ -15,6 +15,7 @@ version directory, and then changes are introduced.
 
 ### Removed
 - Removed node-exporter related components (will be managed by chart-operator).
+- Added parameter for disabling Ingress Controller related components.
 
 ## [v3.3.1]
 
