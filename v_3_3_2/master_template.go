@@ -1528,7 +1528,7 @@ write_files:
       priorityClassName: core-pods
       containers:
       - name: k8s-api-server
-        image: quay.io/giantswarm/hyperkube:v1.10.3
+        image: quay.io/giantswarm/hyperkube:v1.10.2
         env:
         - name: HOST_IP
           valueFrom:
