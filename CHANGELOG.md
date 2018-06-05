@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.3.2]
 
 ### Changed
-- Updated hyperkube to version 1.10.2 due to regression on 1.10.3 with configmaps.
+- Updated hyperkube to version 1.10.2 due to regression in 1.10.3 with configmaps.
 
 ### Removed
 - Removed node-exporter related components (will be managed by chart-operator).
