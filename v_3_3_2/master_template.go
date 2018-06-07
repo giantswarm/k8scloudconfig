@@ -209,7 +209,7 @@ write_files:
                 requests:
                   cpu: 250m
                   memory: 100Mi
-              l      sivenessProbe:
+              livenessProbe:
                 httpGet:
                   path: /liveness
                   port: 9099
