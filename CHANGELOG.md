@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.3.3] WIP
 
 ### Changed
-
+- Remove Nginx version from `Server` header in Ingress Controller
 
 ### Removed
 
@@ -20,7 +20,6 @@ version directory, and then changes are introduced.
 ## [v3.3.2]
 
 ### Changed
-- Remove Nginx version from `Server` header in Ingress Controller
 - Updated hyperkube to version 1.10.2 due to regression in 1.10.3 with configmaps.
 
 ### Removed
