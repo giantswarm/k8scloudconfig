@@ -9,13 +9,14 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.3.2] WIP
+## [v3.3.2]
 
 ### Changed
 - Remove Nginx version from `Server` header in Ingress Controller
+- Updated hyperkube to version 1.10.2 due to regression in 1.10.3 with configmaps.
 
 ### Removed
-
+- Removed node-exporter related components (will be managed by chart-operator).
 
 ## [v3.3.1]
 
