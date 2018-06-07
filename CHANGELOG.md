@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.3.3] WIP
 
 ### Changed
-
+- Remove Nginx version from `Server` header in Ingress Controller
 
 ### Removed
 
