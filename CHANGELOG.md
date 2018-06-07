@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.3.3] WIP
 
 ### Changed
-
+- Updated hyperkube to version 1.10.4.
 
 ### Removed
 
