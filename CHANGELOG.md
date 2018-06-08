@@ -9,10 +9,12 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.3.3] WIP
+## [v3.3.3]
 
 ### Changed
+
 - Remove Nginx version from `Server` header in Ingress Controller
+- Updated hyperkube to version 1.10.4.
 
 ### Removed
 
