@@ -12,6 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.3.4] WIP
 
 ### Changed
+- Added parameter for disabling Ingress Controller related components.
 
 ### Removed
 
