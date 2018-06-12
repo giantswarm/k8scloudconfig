@@ -2012,6 +2012,8 @@ coreos:
     command: start
     content: |
       [Unit]
+      Wants=k8s-setup-network-env.service
+      After=k8s-setup-network-env.service
       Description=k8s-kubelet
       StartLimitIntervalSec=0
 
