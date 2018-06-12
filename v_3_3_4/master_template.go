@@ -911,7 +911,7 @@ write_files:
       kind: ClusterRole
       name: calico-node
       apiGroup: rbac.authorization.k8s.io
-    {{ if not .DisableIngressController -}}
+{{ if not .DisableIngressController -}}
     ---
     ## IC
     kind: ClusterRoleBinding
@@ -940,7 +940,7 @@ write_files:
       kind: Role
       name: nginx-ingress-role
       apiGroup: rbac.authorization.k8s.io
-    {{ end -}}
+{{ end -}}
 - path: /srv/rbac_roles.yaml
   owner: root
   permissions: 0644
@@ -976,7 +976,7 @@ write_files:
           - nodes
         verbs:
           - get
-    {{ if not .DisableIngressController -}}
+{{ if not .DisableIngressController -}}
     ---
     ## IC
     apiVersion: v1
@@ -1080,7 +1080,7 @@ write_files:
           - get
           - create
           - update
-    {{ end -}}
+{{ end -}}
 - path: /srv/psp_policies.yaml
   owner: root
   permissions: 0644
