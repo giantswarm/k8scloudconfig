@@ -317,7 +317,8 @@ coreos:
       --system-reserved="cpu=150m,memory=250Mi" \
       --enforce-node-allocatable=pods \
       --eviction-soft=memory.available<750Mi \
-      --eviction-hard=memory.available<500Mi \
+      --eviction-hard=memory.available<500Mi \      
+      --eviction-max-pod-grace-period=memory.available=90 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
