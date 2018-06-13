@@ -2018,7 +2018,7 @@ coreos:
       StartLimitIntervalSec=0
 
       [Service]
-      TimeoutStartSec=240
+      TimeoutStartSec=300
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
