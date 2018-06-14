@@ -12,6 +12,11 @@ users:
 {{ end }}
 {{end}}
 write_files:
+- path: /etc/ssh/trusted-user-ca-keys.pem
+  owner: root
+  permissions: 644
+  content: |
+    {{ .SSORSAPubKey }}
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644

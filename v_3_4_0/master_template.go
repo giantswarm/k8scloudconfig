@@ -12,6 +12,11 @@ users:
 {{ end }}
 {{end}}
 write_files:
+- path: /etc/ssh/trusted-user-ca-keys.pem
+  owner: root
+  permissions: 644
+  content: |
+    {{ .SSORSAPubKey }}
 {{ if not .DisableCalico -}}
 - path: /srv/calico-kube-controllers-sa.yaml
   owner: root
