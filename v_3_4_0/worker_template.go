@@ -16,7 +16,7 @@ write_files:
   owner: root
   permissions: 644
   content: |
-    {{ .SSORSAPubKey }}
+    {{ .SSOPublicKey }}
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644

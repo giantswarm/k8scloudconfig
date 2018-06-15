@@ -16,7 +16,7 @@ write_files:
   owner: root
   permissions: 644
   content: |
-    {{ .SSORSAPubKey }}
+    {{ .SSOPublicKey }}
 {{ if not .DisableCalico -}}
 - path: /srv/calico-kube-controllers-sa.yaml
   owner: root
