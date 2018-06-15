@@ -14,7 +14,7 @@ version directory, and then changes are introduced.
 ### Changed
 - Added parameter for disabling Ingress Controller related components.
 - Increased start timeout for k8s-kubelet.service.
-- Updated VerbatimSections method to return an error.
+- Updated VerbatimSections to return an error.
 
 ### Removed
 
