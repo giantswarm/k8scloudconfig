@@ -111,5 +111,5 @@ type VerbatimSection struct {
 type Extension interface {
 	Files() ([]FileAsset, error)
 	Units() ([]UnitAsset, error)
-	VerbatimSections() []VerbatimSection
+	VerbatimSections() ([]VerbatimSection, error)
 }
