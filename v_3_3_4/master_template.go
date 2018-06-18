@@ -976,7 +976,7 @@ write_files:
           - nodes
         verbs:
           - get
-{{ if not .DisableIngressController -}}
+{{- if not .DisableIngressController }}
     ---
     ## IC
     apiVersion: v1
