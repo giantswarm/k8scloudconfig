@@ -316,10 +316,10 @@ coreos:
       --kube-reserved="cpu=200m,memory=250Mi" \
       --system-reserved="cpu=150m,memory=250Mi" \
       --enforce-node-allocatable=pods \
-      --eviction-soft='memory.available<400Mi' \
-      --eviction-hard='memory.available<250Mi' \
-      --eviction-soft-grace-period='memory.available=90s' \
-      --eviction-max-pod-grace-period=90 \
+      --eviction-soft='memory.available<500Mi' \
+      --eviction-hard='memory.available<350Mi' \
+      --eviction-soft-grace-period='memory.available=15s' \
+      --eviction-max-pod-grace-period=60 \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
