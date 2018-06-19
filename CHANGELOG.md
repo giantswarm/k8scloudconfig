@@ -14,7 +14,6 @@ version directory, and then changes are introduced.
 ### Changed
 - Added parameter for disabling Ingress Controller related components.
 - Increased start timeout for k8s-kubelet.service.
-- Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
 
 ### Removed
 
