@@ -8,8 +8,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
+## [v3.4.0] WIP
 
-## [v3.3.4] WIP
+### Changed
+
+
+### Removed
+
+
+## [v3.3.4]
 
 ### Changed
 - Added parameter for disabling Ingress Controller related components.
