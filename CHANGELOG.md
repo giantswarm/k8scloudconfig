@@ -11,6 +11,9 @@ version directory, and then changes are introduced.
 
 ## [v3.4.0] WIP
 
+### Added
+- Added SSO public key into ssh trusted CA.
+
 ### Changed
 
 
