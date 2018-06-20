@@ -12,6 +12,11 @@ users:
 {{ end }}
 {{end}}
 write_files:
+- path: /etc/ssh/trusted-user-ca-keys.pem
+  owner: root
+  permissions: 644
+  content: |
+    {{ .SSOPublicKey }}
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -86,6 +91,7 @@ write_files:
     # Non defaults (#100)
     ClientAliveCountMax 2
     PasswordAuthentication no
+    TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem
 - path: /etc/sysctl.d/hardening.conf
   owner: root
   permissions: 0600
