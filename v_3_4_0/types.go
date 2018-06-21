@@ -36,6 +36,7 @@ type Params struct {
 	// then apply the manifest by adding it to ExtraManifests.
 	ExtraManifests []string
 	Node           v1alpha1.ClusterNode
+	SSOPublicKey   string
 }
 
 func (p *Params) Validate() error {
