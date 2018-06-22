@@ -897,7 +897,7 @@ write_files:
       name: node-operator
     subjects:
     - kind: User
-      name: node-operator.{{.Cluster.Kubernetes.Domain}}
+      name: node-operator.{{.BaseDomain}}
       apiGroup: rbac.authorization.k8s.io
     roleRef:
       kind: ClusterRole
