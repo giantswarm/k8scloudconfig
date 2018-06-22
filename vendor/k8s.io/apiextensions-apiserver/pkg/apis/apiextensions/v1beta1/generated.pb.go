@@ -1,5 +1,5 @@
 /*
-Copyright 2017 The Kubernetes Authors.
+Copyright 2018 The Kubernetes Authors.
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -31,12 +31,24 @@ limitations under the License.
 		CustomResourceDefinitionNames
 		CustomResourceDefinitionSpec
 		CustomResourceDefinitionStatus
+		CustomResourceSubresourceScale
+		CustomResourceSubresourceStatus
+		CustomResourceSubresources
+		CustomResourceValidation
+		ExternalDocumentation
+		JSON
+		JSONSchemaProps
+		JSONSchemaPropsOrArray
+		JSONSchemaPropsOrBool
+		JSONSchemaPropsOrStringArray
 */
 package v1beta1
 
 import proto "github.com/gogo/protobuf/proto"
 import fmt "fmt"
 import math "math"
+
+import github_com_gogo_protobuf_sortkeys "github.com/gogo/protobuf/sortkeys"
 
 import strings "strings"
 import reflect "reflect"
@@ -90,6 +102,56 @@ func (*CustomResourceDefinitionStatus) Descriptor() ([]byte, []int) {
 	return fileDescriptorGenerated, []int{5}
 }
 
+func (m *CustomResourceSubresourceScale) Reset()      { *m = CustomResourceSubresourceScale{} }
+func (*CustomResourceSubresourceScale) ProtoMessage() {}
+func (*CustomResourceSubresourceScale) Descriptor() ([]byte, []int) {
+	return fileDescriptorGenerated, []int{6}
+}
+
+func (m *CustomResourceSubresourceStatus) Reset()      { *m = CustomResourceSubresourceStatus{} }
+func (*CustomResourceSubresourceStatus) ProtoMessage() {}
+func (*CustomResourceSubresourceStatus) Descriptor() ([]byte, []int) {
+	return fileDescriptorGenerated, []int{7}
+}
+
+func (m *CustomResourceSubresources) Reset()      { *m = CustomResourceSubresources{} }
+func (*CustomResourceSubresources) ProtoMessage() {}
+func (*CustomResourceSubresources) Descriptor() ([]byte, []int) {
+	return fileDescriptorGenerated, []int{8}
+}
+
+func (m *CustomResourceValidation) Reset()      { *m = CustomResourceValidation{} }
+func (*CustomResourceValidation) ProtoMessage() {}
+func (*CustomResourceValidation) Descriptor() ([]byte, []int) {
+	return fileDescriptorGenerated, []int{9}
+}
+
+func (m *ExternalDocumentation) Reset()                    { *m = ExternalDocumentation{} }
+func (*ExternalDocumentation) ProtoMessage()               {}
+func (*ExternalDocumentation) Descriptor() ([]byte, []int) { return fileDescriptorGenerated, []int{10} }
+
+func (m *JSON) Reset()                    { *m = JSON{} }
+func (*JSON) ProtoMessage()               {}
+func (*JSON) Descriptor() ([]byte, []int) { return fileDescriptorGenerated, []int{11} }
+
+func (m *JSONSchemaProps) Reset()                    { *m = JSONSchemaProps{} }
+func (*JSONSchemaProps) ProtoMessage()               {}
+func (*JSONSchemaProps) Descriptor() ([]byte, []int) { return fileDescriptorGenerated, []int{12} }
+
+func (m *JSONSchemaPropsOrArray) Reset()                    { *m = JSONSchemaPropsOrArray{} }
+func (*JSONSchemaPropsOrArray) ProtoMessage()               {}
+func (*JSONSchemaPropsOrArray) Descriptor() ([]byte, []int) { return fileDescriptorGenerated, []int{13} }
+
+func (m *JSONSchemaPropsOrBool) Reset()                    { *m = JSONSchemaPropsOrBool{} }
+func (*JSONSchemaPropsOrBool) ProtoMessage()               {}
+func (*JSONSchemaPropsOrBool) Descriptor() ([]byte, []int) { return fileDescriptorGenerated, []int{14} }
+
+func (m *JSONSchemaPropsOrStringArray) Reset()      { *m = JSONSchemaPropsOrStringArray{} }
+func (*JSONSchemaPropsOrStringArray) ProtoMessage() {}
+func (*JSONSchemaPropsOrStringArray) Descriptor() ([]byte, []int) {
+	return fileDescriptorGenerated, []int{15}
+}
+
 func init() {
 	proto.RegisterType((*CustomResourceDefinition)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinition")
 	proto.RegisterType((*CustomResourceDefinitionCondition)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionCondition")
@@ -97,6 +159,16 @@ func init() {
 	proto.RegisterType((*CustomResourceDefinitionNames)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionNames")
 	proto.RegisterType((*CustomResourceDefinitionSpec)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionSpec")
 	proto.RegisterType((*CustomResourceDefinitionStatus)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceDefinitionStatus")
+	proto.RegisterType((*CustomResourceSubresourceScale)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceSubresourceScale")
+	proto.RegisterType((*CustomResourceSubresourceStatus)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceSubresourceStatus")
+	proto.RegisterType((*CustomResourceSubresources)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceSubresources")
+	proto.RegisterType((*CustomResourceValidation)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.CustomResourceValidation")
+	proto.RegisterType((*ExternalDocumentation)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.ExternalDocumentation")
+	proto.RegisterType((*JSON)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSON")
+	proto.RegisterType((*JSONSchemaProps)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaProps")
+	proto.RegisterType((*JSONSchemaPropsOrArray)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrArray")
+	proto.RegisterType((*JSONSchemaPropsOrBool)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrBool")
+	proto.RegisterType((*JSONSchemaPropsOrStringArray)(nil), "k8s.io.apiextensions_apiserver.pkg.apis.apiextensions.v1beta1.JSONSchemaPropsOrStringArray")
 }
 func (m *CustomResourceDefinition) Marshal() (dAtA []byte, err error) {
 	size := m.Size()
@@ -266,6 +338,21 @@ func (m *CustomResourceDefinitionNames) MarshalTo(dAtA []byte) (int, error) {
 	i++
 	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ListKind)))
 	i += copy(dAtA[i:], m.ListKind)
+	if len(m.Categories) > 0 {
+		for _, s := range m.Categories {
+			dAtA[i] = 0x32
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
 	return i, nil
 }
 
@@ -304,6 +391,26 @@ func (m *CustomResourceDefinitionSpec) MarshalTo(dAtA []byte) (int, error) {
 	i++
 	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Scope)))
 	i += copy(dAtA[i:], m.Scope)
+	if m.Validation != nil {
+		dAtA[i] = 0x2a
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Validation.Size()))
+		n7, err := m.Validation.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n7
+	}
+	if m.Subresources != nil {
+		dAtA[i] = 0x32
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Subresources.Size()))
+		n8, err := m.Subresources.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n8
+	}
 	return i, nil
 }
 
@@ -337,11 +444,716 @@ func (m *CustomResourceDefinitionStatus) MarshalTo(dAtA []byte) (int, error) {
 	dAtA[i] = 0x12
 	i++
 	i = encodeVarintGenerated(dAtA, i, uint64(m.AcceptedNames.Size()))
-	n7, err := m.AcceptedNames.MarshalTo(dAtA[i:])
+	n9, err := m.AcceptedNames.MarshalTo(dAtA[i:])
 	if err != nil {
 		return 0, err
 	}
-	i += n7
+	i += n9
+	return i, nil
+}
+
+func (m *CustomResourceSubresourceScale) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CustomResourceSubresourceScale) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0xa
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.SpecReplicasPath)))
+	i += copy(dAtA[i:], m.SpecReplicasPath)
+	dAtA[i] = 0x12
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.StatusReplicasPath)))
+	i += copy(dAtA[i:], m.StatusReplicasPath)
+	if m.LabelSelectorPath != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.LabelSelectorPath)))
+		i += copy(dAtA[i:], *m.LabelSelectorPath)
+	}
+	return i, nil
+}
+
+func (m *CustomResourceSubresourceStatus) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CustomResourceSubresourceStatus) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	return i, nil
+}
+
+func (m *CustomResourceSubresources) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CustomResourceSubresources) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Status != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Status.Size()))
+		n10, err := m.Status.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n10
+	}
+	if m.Scale != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Scale.Size()))
+		n11, err := m.Scale.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n11
+	}
+	return i, nil
+}
+
+func (m *CustomResourceValidation) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *CustomResourceValidation) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.OpenAPIV3Schema != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.OpenAPIV3Schema.Size()))
+		n12, err := m.OpenAPIV3Schema.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n12
+	}
+	return i, nil
+}
+
+func (m *ExternalDocumentation) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *ExternalDocumentation) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0xa
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Description)))
+	i += copy(dAtA[i:], m.Description)
+	dAtA[i] = 0x12
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.URL)))
+	i += copy(dAtA[i:], m.URL)
+	return i, nil
+}
+
+func (m *JSON) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JSON) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Raw != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(len(m.Raw)))
+		i += copy(dAtA[i:], m.Raw)
+	}
+	return i, nil
+}
+
+func (m *JSONSchemaProps) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JSONSchemaProps) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0xa
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.ID)))
+	i += copy(dAtA[i:], m.ID)
+	dAtA[i] = 0x12
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Schema)))
+	i += copy(dAtA[i:], m.Schema)
+	if m.Ref != nil {
+		dAtA[i] = 0x1a
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(len(*m.Ref)))
+		i += copy(dAtA[i:], *m.Ref)
+	}
+	dAtA[i] = 0x22
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Description)))
+	i += copy(dAtA[i:], m.Description)
+	dAtA[i] = 0x2a
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Type)))
+	i += copy(dAtA[i:], m.Type)
+	dAtA[i] = 0x32
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Format)))
+	i += copy(dAtA[i:], m.Format)
+	dAtA[i] = 0x3a
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Title)))
+	i += copy(dAtA[i:], m.Title)
+	if m.Default != nil {
+		dAtA[i] = 0x42
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Default.Size()))
+		n13, err := m.Default.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n13
+	}
+	if m.Maximum != nil {
+		dAtA[i] = 0x49
+		i++
+		i = encodeFixed64Generated(dAtA, i, uint64(math.Float64bits(float64(*m.Maximum))))
+	}
+	dAtA[i] = 0x50
+	i++
+	if m.ExclusiveMaximum {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i++
+	if m.Minimum != nil {
+		dAtA[i] = 0x59
+		i++
+		i = encodeFixed64Generated(dAtA, i, uint64(math.Float64bits(float64(*m.Minimum))))
+	}
+	dAtA[i] = 0x60
+	i++
+	if m.ExclusiveMinimum {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i++
+	if m.MaxLength != nil {
+		dAtA[i] = 0x68
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MaxLength))
+	}
+	if m.MinLength != nil {
+		dAtA[i] = 0x70
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MinLength))
+	}
+	dAtA[i] = 0x7a
+	i++
+	i = encodeVarintGenerated(dAtA, i, uint64(len(m.Pattern)))
+	i += copy(dAtA[i:], m.Pattern)
+	if m.MaxItems != nil {
+		dAtA[i] = 0x80
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MaxItems))
+	}
+	if m.MinItems != nil {
+		dAtA[i] = 0x88
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MinItems))
+	}
+	dAtA[i] = 0x90
+	i++
+	dAtA[i] = 0x1
+	i++
+	if m.UniqueItems {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i++
+	if m.MultipleOf != nil {
+		dAtA[i] = 0x99
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeFixed64Generated(dAtA, i, uint64(math.Float64bits(float64(*m.MultipleOf))))
+	}
+	if len(m.Enum) > 0 {
+		for _, msg := range m.Enum {
+			dAtA[i] = 0xa2
+			i++
+			dAtA[i] = 0x1
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.MaxProperties != nil {
+		dAtA[i] = 0xa8
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MaxProperties))
+	}
+	if m.MinProperties != nil {
+		dAtA[i] = 0xb0
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(*m.MinProperties))
+	}
+	if len(m.Required) > 0 {
+		for _, s := range m.Required {
+			dAtA[i] = 0xba
+			i++
+			dAtA[i] = 0x1
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
+	if m.Items != nil {
+		dAtA[i] = 0xc2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Items.Size()))
+		n14, err := m.Items.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n14
+	}
+	if len(m.AllOf) > 0 {
+		for _, msg := range m.AllOf {
+			dAtA[i] = 0xca
+			i++
+			dAtA[i] = 0x1
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if len(m.OneOf) > 0 {
+		for _, msg := range m.OneOf {
+			dAtA[i] = 0xd2
+			i++
+			dAtA[i] = 0x1
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if len(m.AnyOf) > 0 {
+		for _, msg := range m.AnyOf {
+			dAtA[i] = 0xda
+			i++
+			dAtA[i] = 0x1
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	if m.Not != nil {
+		dAtA[i] = 0xe2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Not.Size()))
+		n15, err := m.Not.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n15
+	}
+	if len(m.Properties) > 0 {
+		keysForProperties := make([]string, 0, len(m.Properties))
+		for k := range m.Properties {
+			keysForProperties = append(keysForProperties, string(k))
+		}
+		github_com_gogo_protobuf_sortkeys.Strings(keysForProperties)
+		for _, k := range keysForProperties {
+			dAtA[i] = 0xea
+			i++
+			dAtA[i] = 0x1
+			i++
+			v := m.Properties[string(k)]
+			msgSize := 0
+			if (&v) != nil {
+				msgSize = (&v).Size()
+				msgSize += 1 + sovGenerated(uint64(msgSize))
+			}
+			mapSize := 1 + len(k) + sovGenerated(uint64(len(k))) + msgSize
+			i = encodeVarintGenerated(dAtA, i, uint64(mapSize))
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(len(k)))
+			i += copy(dAtA[i:], k)
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64((&v).Size()))
+			n16, err := (&v).MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n16
+		}
+	}
+	if m.AdditionalProperties != nil {
+		dAtA[i] = 0xf2
+		i++
+		dAtA[i] = 0x1
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.AdditionalProperties.Size()))
+		n17, err := m.AdditionalProperties.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n17
+	}
+	if len(m.PatternProperties) > 0 {
+		keysForPatternProperties := make([]string, 0, len(m.PatternProperties))
+		for k := range m.PatternProperties {
+			keysForPatternProperties = append(keysForPatternProperties, string(k))
+		}
+		github_com_gogo_protobuf_sortkeys.Strings(keysForPatternProperties)
+		for _, k := range keysForPatternProperties {
+			dAtA[i] = 0xfa
+			i++
+			dAtA[i] = 0x1
+			i++
+			v := m.PatternProperties[string(k)]
+			msgSize := 0
+			if (&v) != nil {
+				msgSize = (&v).Size()
+				msgSize += 1 + sovGenerated(uint64(msgSize))
+			}
+			mapSize := 1 + len(k) + sovGenerated(uint64(len(k))) + msgSize
+			i = encodeVarintGenerated(dAtA, i, uint64(mapSize))
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(len(k)))
+			i += copy(dAtA[i:], k)
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64((&v).Size()))
+			n18, err := (&v).MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n18
+		}
+	}
+	if len(m.Dependencies) > 0 {
+		keysForDependencies := make([]string, 0, len(m.Dependencies))
+		for k := range m.Dependencies {
+			keysForDependencies = append(keysForDependencies, string(k))
+		}
+		github_com_gogo_protobuf_sortkeys.Strings(keysForDependencies)
+		for _, k := range keysForDependencies {
+			dAtA[i] = 0x82
+			i++
+			dAtA[i] = 0x2
+			i++
+			v := m.Dependencies[string(k)]
+			msgSize := 0
+			if (&v) != nil {
+				msgSize = (&v).Size()
+				msgSize += 1 + sovGenerated(uint64(msgSize))
+			}
+			mapSize := 1 + len(k) + sovGenerated(uint64(len(k))) + msgSize
+			i = encodeVarintGenerated(dAtA, i, uint64(mapSize))
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(len(k)))
+			i += copy(dAtA[i:], k)
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64((&v).Size()))
+			n19, err := (&v).MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n19
+		}
+	}
+	if m.AdditionalItems != nil {
+		dAtA[i] = 0x8a
+		i++
+		dAtA[i] = 0x2
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.AdditionalItems.Size()))
+		n20, err := m.AdditionalItems.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n20
+	}
+	if len(m.Definitions) > 0 {
+		keysForDefinitions := make([]string, 0, len(m.Definitions))
+		for k := range m.Definitions {
+			keysForDefinitions = append(keysForDefinitions, string(k))
+		}
+		github_com_gogo_protobuf_sortkeys.Strings(keysForDefinitions)
+		for _, k := range keysForDefinitions {
+			dAtA[i] = 0x92
+			i++
+			dAtA[i] = 0x2
+			i++
+			v := m.Definitions[string(k)]
+			msgSize := 0
+			if (&v) != nil {
+				msgSize = (&v).Size()
+				msgSize += 1 + sovGenerated(uint64(msgSize))
+			}
+			mapSize := 1 + len(k) + sovGenerated(uint64(len(k))) + msgSize
+			i = encodeVarintGenerated(dAtA, i, uint64(mapSize))
+			dAtA[i] = 0xa
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(len(k)))
+			i += copy(dAtA[i:], k)
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64((&v).Size()))
+			n21, err := (&v).MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n21
+		}
+	}
+	if m.ExternalDocs != nil {
+		dAtA[i] = 0x9a
+		i++
+		dAtA[i] = 0x2
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.ExternalDocs.Size()))
+		n22, err := m.ExternalDocs.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n22
+	}
+	if m.Example != nil {
+		dAtA[i] = 0xa2
+		i++
+		dAtA[i] = 0x2
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Example.Size()))
+		n23, err := m.Example.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n23
+	}
+	return i, nil
+}
+
+func (m *JSONSchemaPropsOrArray) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JSONSchemaPropsOrArray) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Schema != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Schema.Size()))
+		n24, err := m.Schema.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n24
+	}
+	if len(m.JSONSchemas) > 0 {
+		for _, msg := range m.JSONSchemas {
+			dAtA[i] = 0x12
+			i++
+			i = encodeVarintGenerated(dAtA, i, uint64(msg.Size()))
+			n, err := msg.MarshalTo(dAtA[i:])
+			if err != nil {
+				return 0, err
+			}
+			i += n
+		}
+	}
+	return i, nil
+}
+
+func (m *JSONSchemaPropsOrBool) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JSONSchemaPropsOrBool) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	dAtA[i] = 0x8
+	i++
+	if m.Allows {
+		dAtA[i] = 1
+	} else {
+		dAtA[i] = 0
+	}
+	i++
+	if m.Schema != nil {
+		dAtA[i] = 0x12
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Schema.Size()))
+		n25, err := m.Schema.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n25
+	}
+	return i, nil
+}
+
+func (m *JSONSchemaPropsOrStringArray) Marshal() (dAtA []byte, err error) {
+	size := m.Size()
+	dAtA = make([]byte, size)
+	n, err := m.MarshalTo(dAtA)
+	if err != nil {
+		return nil, err
+	}
+	return dAtA[:n], nil
+}
+
+func (m *JSONSchemaPropsOrStringArray) MarshalTo(dAtA []byte) (int, error) {
+	var i int
+	_ = i
+	var l int
+	_ = l
+	if m.Schema != nil {
+		dAtA[i] = 0xa
+		i++
+		i = encodeVarintGenerated(dAtA, i, uint64(m.Schema.Size()))
+		n26, err := m.Schema.MarshalTo(dAtA[i:])
+		if err != nil {
+			return 0, err
+		}
+		i += n26
+	}
+	if len(m.Property) > 0 {
+		for _, s := range m.Property {
+			dAtA[i] = 0x12
+			i++
+			l = len(s)
+			for l >= 1<<7 {
+				dAtA[i] = uint8(uint64(l)&0x7f | 0x80)
+				l >>= 7
+				i++
+			}
+			dAtA[i] = uint8(l)
+			i++
+			i += copy(dAtA[i:], s)
+		}
+	}
 	return i, nil
 }
 
@@ -431,6 +1243,12 @@ func (m *CustomResourceDefinitionNames) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = len(m.ListKind)
 	n += 1 + l + sovGenerated(uint64(l))
+	if len(m.Categories) > 0 {
+		for _, s := range m.Categories {
+			l = len(s)
+			n += 1 + l + sovGenerated(uint64(l))
+		}
+	}
 	return n
 }
 
@@ -445,6 +1263,14 @@ func (m *CustomResourceDefinitionSpec) Size() (n int) {
 	n += 1 + l + sovGenerated(uint64(l))
 	l = len(m.Scope)
 	n += 1 + l + sovGenerated(uint64(l))
+	if m.Validation != nil {
+		l = m.Validation.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Subresources != nil {
+		l = m.Subresources.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
 	return n
 }
 
@@ -459,6 +1285,261 @@ func (m *CustomResourceDefinitionStatus) Size() (n int) {
 	}
 	l = m.AcceptedNames.Size()
 	n += 1 + l + sovGenerated(uint64(l))
+	return n
+}
+
+func (m *CustomResourceSubresourceScale) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.SpecReplicasPath)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.StatusReplicasPath)
+	n += 1 + l + sovGenerated(uint64(l))
+	if m.LabelSelectorPath != nil {
+		l = len(*m.LabelSelectorPath)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *CustomResourceSubresourceStatus) Size() (n int) {
+	var l int
+	_ = l
+	return n
+}
+
+func (m *CustomResourceSubresources) Size() (n int) {
+	var l int
+	_ = l
+	if m.Status != nil {
+		l = m.Status.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Scale != nil {
+		l = m.Scale.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *CustomResourceValidation) Size() (n int) {
+	var l int
+	_ = l
+	if m.OpenAPIV3Schema != nil {
+		l = m.OpenAPIV3Schema.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *ExternalDocumentation) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.Description)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.URL)
+	n += 1 + l + sovGenerated(uint64(l))
+	return n
+}
+
+func (m *JSON) Size() (n int) {
+	var l int
+	_ = l
+	if m.Raw != nil {
+		l = len(m.Raw)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *JSONSchemaProps) Size() (n int) {
+	var l int
+	_ = l
+	l = len(m.ID)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.Schema)
+	n += 1 + l + sovGenerated(uint64(l))
+	if m.Ref != nil {
+		l = len(*m.Ref)
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	l = len(m.Description)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.Type)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.Format)
+	n += 1 + l + sovGenerated(uint64(l))
+	l = len(m.Title)
+	n += 1 + l + sovGenerated(uint64(l))
+	if m.Default != nil {
+		l = m.Default.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if m.Maximum != nil {
+		n += 9
+	}
+	n += 2
+	if m.Minimum != nil {
+		n += 9
+	}
+	n += 2
+	if m.MaxLength != nil {
+		n += 1 + sovGenerated(uint64(*m.MaxLength))
+	}
+	if m.MinLength != nil {
+		n += 1 + sovGenerated(uint64(*m.MinLength))
+	}
+	l = len(m.Pattern)
+	n += 1 + l + sovGenerated(uint64(l))
+	if m.MaxItems != nil {
+		n += 2 + sovGenerated(uint64(*m.MaxItems))
+	}
+	if m.MinItems != nil {
+		n += 2 + sovGenerated(uint64(*m.MinItems))
+	}
+	n += 3
+	if m.MultipleOf != nil {
+		n += 10
+	}
+	if len(m.Enum) > 0 {
+		for _, e := range m.Enum {
+			l = e.Size()
+			n += 2 + l + sovGenerated(uint64(l))
+		}
+	}
+	if m.MaxProperties != nil {
+		n += 2 + sovGenerated(uint64(*m.MaxProperties))
+	}
+	if m.MinProperties != nil {
+		n += 2 + sovGenerated(uint64(*m.MinProperties))
+	}
+	if len(m.Required) > 0 {
+		for _, s := range m.Required {
+			l = len(s)
+			n += 2 + l + sovGenerated(uint64(l))
+		}
+	}
+	if m.Items != nil {
+		l = m.Items.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	if len(m.AllOf) > 0 {
+		for _, e := range m.AllOf {
+			l = e.Size()
+			n += 2 + l + sovGenerated(uint64(l))
+		}
+	}
+	if len(m.OneOf) > 0 {
+		for _, e := range m.OneOf {
+			l = e.Size()
+			n += 2 + l + sovGenerated(uint64(l))
+		}
+	}
+	if len(m.AnyOf) > 0 {
+		for _, e := range m.AnyOf {
+			l = e.Size()
+			n += 2 + l + sovGenerated(uint64(l))
+		}
+	}
+	if m.Not != nil {
+		l = m.Not.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	if len(m.Properties) > 0 {
+		for k, v := range m.Properties {
+			_ = k
+			_ = v
+			l = v.Size()
+			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + l + sovGenerated(uint64(l))
+			n += mapEntrySize + 2 + sovGenerated(uint64(mapEntrySize))
+		}
+	}
+	if m.AdditionalProperties != nil {
+		l = m.AdditionalProperties.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	if len(m.PatternProperties) > 0 {
+		for k, v := range m.PatternProperties {
+			_ = k
+			_ = v
+			l = v.Size()
+			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + l + sovGenerated(uint64(l))
+			n += mapEntrySize + 2 + sovGenerated(uint64(mapEntrySize))
+		}
+	}
+	if len(m.Dependencies) > 0 {
+		for k, v := range m.Dependencies {
+			_ = k
+			_ = v
+			l = v.Size()
+			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + l + sovGenerated(uint64(l))
+			n += mapEntrySize + 2 + sovGenerated(uint64(mapEntrySize))
+		}
+	}
+	if m.AdditionalItems != nil {
+		l = m.AdditionalItems.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	if len(m.Definitions) > 0 {
+		for k, v := range m.Definitions {
+			_ = k
+			_ = v
+			l = v.Size()
+			mapEntrySize := 1 + len(k) + sovGenerated(uint64(len(k))) + 1 + l + sovGenerated(uint64(l))
+			n += mapEntrySize + 2 + sovGenerated(uint64(mapEntrySize))
+		}
+	}
+	if m.ExternalDocs != nil {
+		l = m.ExternalDocs.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	if m.Example != nil {
+		l = m.Example.Size()
+		n += 2 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *JSONSchemaPropsOrArray) Size() (n int) {
+	var l int
+	_ = l
+	if m.Schema != nil {
+		l = m.Schema.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if len(m.JSONSchemas) > 0 {
+		for _, e := range m.JSONSchemas {
+			l = e.Size()
+			n += 1 + l + sovGenerated(uint64(l))
+		}
+	}
+	return n
+}
+
+func (m *JSONSchemaPropsOrBool) Size() (n int) {
+	var l int
+	_ = l
+	n += 2
+	if m.Schema != nil {
+		l = m.Schema.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	return n
+}
+
+func (m *JSONSchemaPropsOrStringArray) Size() (n int) {
+	var l int
+	_ = l
+	if m.Schema != nil {
+		l = m.Schema.Size()
+		n += 1 + l + sovGenerated(uint64(l))
+	}
+	if len(m.Property) > 0 {
+		for _, s := range m.Property {
+			l = len(s)
+			n += 1 + l + sovGenerated(uint64(l))
+		}
+	}
 	return n
 }
 
@@ -522,6 +1603,7 @@ func (this *CustomResourceDefinitionNames) String() string {
 		`ShortNames:` + fmt.Sprintf("%v", this.ShortNames) + `,`,
 		`Kind:` + fmt.Sprintf("%v", this.Kind) + `,`,
 		`ListKind:` + fmt.Sprintf("%v", this.ListKind) + `,`,
+		`Categories:` + fmt.Sprintf("%v", this.Categories) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -535,6 +1617,8 @@ func (this *CustomResourceDefinitionSpec) String() string {
 		`Version:` + fmt.Sprintf("%v", this.Version) + `,`,
 		`Names:` + strings.Replace(strings.Replace(this.Names.String(), "CustomResourceDefinitionNames", "CustomResourceDefinitionNames", 1), `&`, ``, 1) + `,`,
 		`Scope:` + fmt.Sprintf("%v", this.Scope) + `,`,
+		`Validation:` + strings.Replace(fmt.Sprintf("%v", this.Validation), "CustomResourceValidation", "CustomResourceValidation", 1) + `,`,
+		`Subresources:` + strings.Replace(fmt.Sprintf("%v", this.Subresources), "CustomResourceSubresources", "CustomResourceSubresources", 1) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -546,6 +1630,187 @@ func (this *CustomResourceDefinitionStatus) String() string {
 	s := strings.Join([]string{`&CustomResourceDefinitionStatus{`,
 		`Conditions:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.Conditions), "CustomResourceDefinitionCondition", "CustomResourceDefinitionCondition", 1), `&`, ``, 1) + `,`,
 		`AcceptedNames:` + strings.Replace(strings.Replace(this.AcceptedNames.String(), "CustomResourceDefinitionNames", "CustomResourceDefinitionNames", 1), `&`, ``, 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *CustomResourceSubresourceScale) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CustomResourceSubresourceScale{`,
+		`SpecReplicasPath:` + fmt.Sprintf("%v", this.SpecReplicasPath) + `,`,
+		`StatusReplicasPath:` + fmt.Sprintf("%v", this.StatusReplicasPath) + `,`,
+		`LabelSelectorPath:` + valueToStringGenerated(this.LabelSelectorPath) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *CustomResourceSubresourceStatus) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CustomResourceSubresourceStatus{`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *CustomResourceSubresources) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CustomResourceSubresources{`,
+		`Status:` + strings.Replace(fmt.Sprintf("%v", this.Status), "CustomResourceSubresourceStatus", "CustomResourceSubresourceStatus", 1) + `,`,
+		`Scale:` + strings.Replace(fmt.Sprintf("%v", this.Scale), "CustomResourceSubresourceScale", "CustomResourceSubresourceScale", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *CustomResourceValidation) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&CustomResourceValidation{`,
+		`OpenAPIV3Schema:` + strings.Replace(fmt.Sprintf("%v", this.OpenAPIV3Schema), "JSONSchemaProps", "JSONSchemaProps", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *ExternalDocumentation) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&ExternalDocumentation{`,
+		`Description:` + fmt.Sprintf("%v", this.Description) + `,`,
+		`URL:` + fmt.Sprintf("%v", this.URL) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *JSON) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&JSON{`,
+		`Raw:` + valueToStringGenerated(this.Raw) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *JSONSchemaProps) String() string {
+	if this == nil {
+		return "nil"
+	}
+	keysForProperties := make([]string, 0, len(this.Properties))
+	for k := range this.Properties {
+		keysForProperties = append(keysForProperties, k)
+	}
+	github_com_gogo_protobuf_sortkeys.Strings(keysForProperties)
+	mapStringForProperties := "map[string]JSONSchemaProps{"
+	for _, k := range keysForProperties {
+		mapStringForProperties += fmt.Sprintf("%v: %v,", k, this.Properties[k])
+	}
+	mapStringForProperties += "}"
+	keysForPatternProperties := make([]string, 0, len(this.PatternProperties))
+	for k := range this.PatternProperties {
+		keysForPatternProperties = append(keysForPatternProperties, k)
+	}
+	github_com_gogo_protobuf_sortkeys.Strings(keysForPatternProperties)
+	mapStringForPatternProperties := "map[string]JSONSchemaProps{"
+	for _, k := range keysForPatternProperties {
+		mapStringForPatternProperties += fmt.Sprintf("%v: %v,", k, this.PatternProperties[k])
+	}
+	mapStringForPatternProperties += "}"
+	keysForDependencies := make([]string, 0, len(this.Dependencies))
+	for k := range this.Dependencies {
+		keysForDependencies = append(keysForDependencies, k)
+	}
+	github_com_gogo_protobuf_sortkeys.Strings(keysForDependencies)
+	mapStringForDependencies := "JSONSchemaDependencies{"
+	for _, k := range keysForDependencies {
+		mapStringForDependencies += fmt.Sprintf("%v: %v,", k, this.Dependencies[k])
+	}
+	mapStringForDependencies += "}"
+	keysForDefinitions := make([]string, 0, len(this.Definitions))
+	for k := range this.Definitions {
+		keysForDefinitions = append(keysForDefinitions, k)
+	}
+	github_com_gogo_protobuf_sortkeys.Strings(keysForDefinitions)
+	mapStringForDefinitions := "JSONSchemaDefinitions{"
+	for _, k := range keysForDefinitions {
+		mapStringForDefinitions += fmt.Sprintf("%v: %v,", k, this.Definitions[k])
+	}
+	mapStringForDefinitions += "}"
+	s := strings.Join([]string{`&JSONSchemaProps{`,
+		`ID:` + fmt.Sprintf("%v", this.ID) + `,`,
+		`Schema:` + fmt.Sprintf("%v", this.Schema) + `,`,
+		`Ref:` + valueToStringGenerated(this.Ref) + `,`,
+		`Description:` + fmt.Sprintf("%v", this.Description) + `,`,
+		`Type:` + fmt.Sprintf("%v", this.Type) + `,`,
+		`Format:` + fmt.Sprintf("%v", this.Format) + `,`,
+		`Title:` + fmt.Sprintf("%v", this.Title) + `,`,
+		`Default:` + strings.Replace(fmt.Sprintf("%v", this.Default), "JSON", "JSON", 1) + `,`,
+		`Maximum:` + valueToStringGenerated(this.Maximum) + `,`,
+		`ExclusiveMaximum:` + fmt.Sprintf("%v", this.ExclusiveMaximum) + `,`,
+		`Minimum:` + valueToStringGenerated(this.Minimum) + `,`,
+		`ExclusiveMinimum:` + fmt.Sprintf("%v", this.ExclusiveMinimum) + `,`,
+		`MaxLength:` + valueToStringGenerated(this.MaxLength) + `,`,
+		`MinLength:` + valueToStringGenerated(this.MinLength) + `,`,
+		`Pattern:` + fmt.Sprintf("%v", this.Pattern) + `,`,
+		`MaxItems:` + valueToStringGenerated(this.MaxItems) + `,`,
+		`MinItems:` + valueToStringGenerated(this.MinItems) + `,`,
+		`UniqueItems:` + fmt.Sprintf("%v", this.UniqueItems) + `,`,
+		`MultipleOf:` + valueToStringGenerated(this.MultipleOf) + `,`,
+		`Enum:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.Enum), "JSON", "JSON", 1), `&`, ``, 1) + `,`,
+		`MaxProperties:` + valueToStringGenerated(this.MaxProperties) + `,`,
+		`MinProperties:` + valueToStringGenerated(this.MinProperties) + `,`,
+		`Required:` + fmt.Sprintf("%v", this.Required) + `,`,
+		`Items:` + strings.Replace(fmt.Sprintf("%v", this.Items), "JSONSchemaPropsOrArray", "JSONSchemaPropsOrArray", 1) + `,`,
+		`AllOf:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.AllOf), "JSONSchemaProps", "JSONSchemaProps", 1), `&`, ``, 1) + `,`,
+		`OneOf:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.OneOf), "JSONSchemaProps", "JSONSchemaProps", 1), `&`, ``, 1) + `,`,
+		`AnyOf:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.AnyOf), "JSONSchemaProps", "JSONSchemaProps", 1), `&`, ``, 1) + `,`,
+		`Not:` + strings.Replace(fmt.Sprintf("%v", this.Not), "JSONSchemaProps", "JSONSchemaProps", 1) + `,`,
+		`Properties:` + mapStringForProperties + `,`,
+		`AdditionalProperties:` + strings.Replace(fmt.Sprintf("%v", this.AdditionalProperties), "JSONSchemaPropsOrBool", "JSONSchemaPropsOrBool", 1) + `,`,
+		`PatternProperties:` + mapStringForPatternProperties + `,`,
+		`Dependencies:` + mapStringForDependencies + `,`,
+		`AdditionalItems:` + strings.Replace(fmt.Sprintf("%v", this.AdditionalItems), "JSONSchemaPropsOrBool", "JSONSchemaPropsOrBool", 1) + `,`,
+		`Definitions:` + mapStringForDefinitions + `,`,
+		`ExternalDocs:` + strings.Replace(fmt.Sprintf("%v", this.ExternalDocs), "ExternalDocumentation", "ExternalDocumentation", 1) + `,`,
+		`Example:` + strings.Replace(fmt.Sprintf("%v", this.Example), "JSON", "JSON", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *JSONSchemaPropsOrArray) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&JSONSchemaPropsOrArray{`,
+		`Schema:` + strings.Replace(fmt.Sprintf("%v", this.Schema), "JSONSchemaProps", "JSONSchemaProps", 1) + `,`,
+		`JSONSchemas:` + strings.Replace(strings.Replace(fmt.Sprintf("%v", this.JSONSchemas), "JSONSchemaProps", "JSONSchemaProps", 1), `&`, ``, 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *JSONSchemaPropsOrBool) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&JSONSchemaPropsOrBool{`,
+		`Allows:` + fmt.Sprintf("%v", this.Allows) + `,`,
+		`Schema:` + strings.Replace(fmt.Sprintf("%v", this.Schema), "JSONSchemaProps", "JSONSchemaProps", 1) + `,`,
+		`}`,
+	}, "")
+	return s
+}
+func (this *JSONSchemaPropsOrStringArray) String() string {
+	if this == nil {
+		return "nil"
+	}
+	s := strings.Join([]string{`&JSONSchemaPropsOrStringArray{`,
+		`Schema:` + strings.Replace(fmt.Sprintf("%v", this.Schema), "JSONSchemaProps", "JSONSchemaProps", 1) + `,`,
+		`Property:` + fmt.Sprintf("%v", this.Property) + `,`,
 		`}`,
 	}, "")
 	return s
@@ -1179,6 +2444,35 @@ func (m *CustomResourceDefinitionNames) Unmarshal(dAtA []byte) error {
 			}
 			m.ListKind = string(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Categories", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Categories = append(m.Categories, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -1346,6 +2640,72 @@ func (m *CustomResourceDefinitionSpec) Unmarshal(dAtA []byte) error {
 			}
 			m.Scope = ResourceScope(dAtA[iNdEx:postIndex])
 			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Validation", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Validation == nil {
+				m.Validation = &CustomResourceValidation{}
+			}
+			if err := m.Validation.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Subresources", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Subresources == nil {
+				m.Subresources = &CustomResourceSubresources{}
+			}
+			if err := m.Subresources.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
 		default:
 			iNdEx = preIndex
 			skippy, err := skipGenerated(dAtA[iNdEx:])
@@ -1478,6 +2838,2299 @@ func (m *CustomResourceDefinitionStatus) Unmarshal(dAtA []byte) error {
 	}
 	return nil
 }
+func (m *CustomResourceSubresourceScale) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CustomResourceSubresourceScale: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CustomResourceSubresourceScale: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field SpecReplicasPath", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.SpecReplicasPath = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field StatusReplicasPath", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.StatusReplicasPath = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field LabelSelectorPath", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			s := string(dAtA[iNdEx:postIndex])
+			m.LabelSelectorPath = &s
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CustomResourceSubresourceStatus) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CustomResourceSubresourceStatus: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CustomResourceSubresourceStatus: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CustomResourceSubresources) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CustomResourceSubresources: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CustomResourceSubresources: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Status", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Status == nil {
+				m.Status = &CustomResourceSubresourceStatus{}
+			}
+			if err := m.Status.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Scale", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Scale == nil {
+				m.Scale = &CustomResourceSubresourceScale{}
+			}
+			if err := m.Scale.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *CustomResourceValidation) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: CustomResourceValidation: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: CustomResourceValidation: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OpenAPIV3Schema", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.OpenAPIV3Schema == nil {
+				m.OpenAPIV3Schema = &JSONSchemaProps{}
+			}
+			if err := m.OpenAPIV3Schema.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *ExternalDocumentation) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: ExternalDocumentation: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: ExternalDocumentation: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field URL", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.URL = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JSON) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JSON: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JSON: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Raw", wireType)
+			}
+			var byteLen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				byteLen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if byteLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + byteLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Raw = append(m.Raw[:0], dAtA[iNdEx:postIndex]...)
+			if m.Raw == nil {
+				m.Raw = []byte{}
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JSONSchemaProps) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JSONSchemaProps: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JSONSchemaProps: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ID", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.ID = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Schema", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Schema = JSONSchemaURL(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 3:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Ref", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			s := string(dAtA[iNdEx:postIndex])
+			m.Ref = &s
+			iNdEx = postIndex
+		case 4:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Description", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Description = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 5:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Type", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Type = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 6:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Format", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Format = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 7:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Title", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Title = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 8:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Default", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Default == nil {
+				m.Default = &JSON{}
+			}
+			if err := m.Default.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 9:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Maximum", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += 8
+			v = uint64(dAtA[iNdEx-8])
+			v |= uint64(dAtA[iNdEx-7]) << 8
+			v |= uint64(dAtA[iNdEx-6]) << 16
+			v |= uint64(dAtA[iNdEx-5]) << 24
+			v |= uint64(dAtA[iNdEx-4]) << 32
+			v |= uint64(dAtA[iNdEx-3]) << 40
+			v |= uint64(dAtA[iNdEx-2]) << 48
+			v |= uint64(dAtA[iNdEx-1]) << 56
+			v2 := float64(math.Float64frombits(v))
+			m.Maximum = &v2
+		case 10:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExclusiveMaximum", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.ExclusiveMaximum = bool(v != 0)
+		case 11:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Minimum", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += 8
+			v = uint64(dAtA[iNdEx-8])
+			v |= uint64(dAtA[iNdEx-7]) << 8
+			v |= uint64(dAtA[iNdEx-6]) << 16
+			v |= uint64(dAtA[iNdEx-5]) << 24
+			v |= uint64(dAtA[iNdEx-4]) << 32
+			v |= uint64(dAtA[iNdEx-3]) << 40
+			v |= uint64(dAtA[iNdEx-2]) << 48
+			v |= uint64(dAtA[iNdEx-1]) << 56
+			v2 := float64(math.Float64frombits(v))
+			m.Minimum = &v2
+		case 12:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExclusiveMinimum", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.ExclusiveMinimum = bool(v != 0)
+		case 13:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxLength", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MaxLength = &v
+		case 14:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MinLength", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MinLength = &v
+		case 15:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Pattern", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Pattern = string(dAtA[iNdEx:postIndex])
+			iNdEx = postIndex
+		case 16:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxItems", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MaxItems = &v
+		case 17:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MinItems", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MinItems = &v
+		case 18:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field UniqueItems", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.UniqueItems = bool(v != 0)
+		case 19:
+			if wireType != 1 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MultipleOf", wireType)
+			}
+			var v uint64
+			if (iNdEx + 8) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += 8
+			v = uint64(dAtA[iNdEx-8])
+			v |= uint64(dAtA[iNdEx-7]) << 8
+			v |= uint64(dAtA[iNdEx-6]) << 16
+			v |= uint64(dAtA[iNdEx-5]) << 24
+			v |= uint64(dAtA[iNdEx-4]) << 32
+			v |= uint64(dAtA[iNdEx-3]) << 40
+			v |= uint64(dAtA[iNdEx-2]) << 48
+			v |= uint64(dAtA[iNdEx-1]) << 56
+			v2 := float64(math.Float64frombits(v))
+			m.MultipleOf = &v2
+		case 20:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Enum", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Enum = append(m.Enum, JSON{})
+			if err := m.Enum[len(m.Enum)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 21:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MaxProperties", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MaxProperties = &v
+		case 22:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field MinProperties", wireType)
+			}
+			var v int64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.MinProperties = &v
+		case 23:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Required", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Required = append(m.Required, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		case 24:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Items", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Items == nil {
+				m.Items = &JSONSchemaPropsOrArray{}
+			}
+			if err := m.Items.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 25:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AllOf", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AllOf = append(m.AllOf, JSONSchemaProps{})
+			if err := m.AllOf[len(m.AllOf)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 26:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field OneOf", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.OneOf = append(m.OneOf, JSONSchemaProps{})
+			if err := m.OneOf[len(m.OneOf)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 27:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AnyOf", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.AnyOf = append(m.AnyOf, JSONSchemaProps{})
+			if err := m.AnyOf[len(m.AnyOf)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 28:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Not", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Not == nil {
+				m.Not = &JSONSchemaProps{}
+			}
+			if err := m.Not.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 29:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Properties", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			var keykey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				keykey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapkey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLenmapkey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapkey := int(stringLenmapkey)
+			if intStringLenmapkey < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postStringIndexmapkey := iNdEx + intStringLenmapkey
+			if postStringIndexmapkey > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapkey := string(dAtA[iNdEx:postStringIndexmapkey])
+			iNdEx = postStringIndexmapkey
+			if m.Properties == nil {
+				m.Properties = make(map[string]JSONSchemaProps)
+			}
+			if iNdEx < postIndex {
+				var valuekey uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					valuekey |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				var mapmsglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					mapmsglen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				postmsgIndex := iNdEx + mapmsglen
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				if postmsgIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				mapvalue := &JSONSchemaProps{}
+				if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+					return err
+				}
+				iNdEx = postmsgIndex
+				m.Properties[mapkey] = *mapvalue
+			} else {
+				var mapvalue JSONSchemaProps
+				m.Properties[mapkey] = mapvalue
+			}
+			iNdEx = postIndex
+		case 30:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AdditionalProperties", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.AdditionalProperties == nil {
+				m.AdditionalProperties = &JSONSchemaPropsOrBool{}
+			}
+			if err := m.AdditionalProperties.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 31:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field PatternProperties", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			var keykey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				keykey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapkey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLenmapkey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapkey := int(stringLenmapkey)
+			if intStringLenmapkey < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postStringIndexmapkey := iNdEx + intStringLenmapkey
+			if postStringIndexmapkey > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapkey := string(dAtA[iNdEx:postStringIndexmapkey])
+			iNdEx = postStringIndexmapkey
+			if m.PatternProperties == nil {
+				m.PatternProperties = make(map[string]JSONSchemaProps)
+			}
+			if iNdEx < postIndex {
+				var valuekey uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					valuekey |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				var mapmsglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					mapmsglen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				postmsgIndex := iNdEx + mapmsglen
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				if postmsgIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				mapvalue := &JSONSchemaProps{}
+				if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+					return err
+				}
+				iNdEx = postmsgIndex
+				m.PatternProperties[mapkey] = *mapvalue
+			} else {
+				var mapvalue JSONSchemaProps
+				m.PatternProperties[mapkey] = mapvalue
+			}
+			iNdEx = postIndex
+		case 32:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Dependencies", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			var keykey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				keykey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapkey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLenmapkey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapkey := int(stringLenmapkey)
+			if intStringLenmapkey < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postStringIndexmapkey := iNdEx + intStringLenmapkey
+			if postStringIndexmapkey > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapkey := string(dAtA[iNdEx:postStringIndexmapkey])
+			iNdEx = postStringIndexmapkey
+			if m.Dependencies == nil {
+				m.Dependencies = make(JSONSchemaDependencies)
+			}
+			if iNdEx < postIndex {
+				var valuekey uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					valuekey |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				var mapmsglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					mapmsglen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				postmsgIndex := iNdEx + mapmsglen
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				if postmsgIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				mapvalue := &JSONSchemaPropsOrStringArray{}
+				if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+					return err
+				}
+				iNdEx = postmsgIndex
+				m.Dependencies[mapkey] = *mapvalue
+			} else {
+				var mapvalue JSONSchemaPropsOrStringArray
+				m.Dependencies[mapkey] = mapvalue
+			}
+			iNdEx = postIndex
+		case 33:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field AdditionalItems", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.AdditionalItems == nil {
+				m.AdditionalItems = &JSONSchemaPropsOrBool{}
+			}
+			if err := m.AdditionalItems.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 34:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Definitions", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			var keykey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				keykey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			var stringLenmapkey uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLenmapkey |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLenmapkey := int(stringLenmapkey)
+			if intStringLenmapkey < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postStringIndexmapkey := iNdEx + intStringLenmapkey
+			if postStringIndexmapkey > l {
+				return io.ErrUnexpectedEOF
+			}
+			mapkey := string(dAtA[iNdEx:postStringIndexmapkey])
+			iNdEx = postStringIndexmapkey
+			if m.Definitions == nil {
+				m.Definitions = make(JSONSchemaDefinitions)
+			}
+			if iNdEx < postIndex {
+				var valuekey uint64
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					valuekey |= (uint64(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				var mapmsglen int
+				for shift := uint(0); ; shift += 7 {
+					if shift >= 64 {
+						return ErrIntOverflowGenerated
+					}
+					if iNdEx >= l {
+						return io.ErrUnexpectedEOF
+					}
+					b := dAtA[iNdEx]
+					iNdEx++
+					mapmsglen |= (int(b) & 0x7F) << shift
+					if b < 0x80 {
+						break
+					}
+				}
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				postmsgIndex := iNdEx + mapmsglen
+				if mapmsglen < 0 {
+					return ErrInvalidLengthGenerated
+				}
+				if postmsgIndex > l {
+					return io.ErrUnexpectedEOF
+				}
+				mapvalue := &JSONSchemaProps{}
+				if err := mapvalue.Unmarshal(dAtA[iNdEx:postmsgIndex]); err != nil {
+					return err
+				}
+				iNdEx = postmsgIndex
+				m.Definitions[mapkey] = *mapvalue
+			} else {
+				var mapvalue JSONSchemaProps
+				m.Definitions[mapkey] = mapvalue
+			}
+			iNdEx = postIndex
+		case 35:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field ExternalDocs", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.ExternalDocs == nil {
+				m.ExternalDocs = &ExternalDocumentation{}
+			}
+			if err := m.ExternalDocs.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 36:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Example", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Example == nil {
+				m.Example = &JSON{}
+			}
+			if err := m.Example.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JSONSchemaPropsOrArray) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrArray: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrArray: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Schema", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Schema == nil {
+				m.Schema = &JSONSchemaProps{}
+			}
+			if err := m.Schema.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field JSONSchemas", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.JSONSchemas = append(m.JSONSchemas, JSONSchemaProps{})
+			if err := m.JSONSchemas[len(m.JSONSchemas)-1].Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JSONSchemaPropsOrBool) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrBool: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrBool: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 0 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Allows", wireType)
+			}
+			var v int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				v |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			m.Allows = bool(v != 0)
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Schema", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Schema == nil {
+				m.Schema = &JSONSchemaProps{}
+			}
+			if err := m.Schema.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
+func (m *JSONSchemaPropsOrStringArray) Unmarshal(dAtA []byte) error {
+	l := len(dAtA)
+	iNdEx := 0
+	for iNdEx < l {
+		preIndex := iNdEx
+		var wire uint64
+		for shift := uint(0); ; shift += 7 {
+			if shift >= 64 {
+				return ErrIntOverflowGenerated
+			}
+			if iNdEx >= l {
+				return io.ErrUnexpectedEOF
+			}
+			b := dAtA[iNdEx]
+			iNdEx++
+			wire |= (uint64(b) & 0x7F) << shift
+			if b < 0x80 {
+				break
+			}
+		}
+		fieldNum := int32(wire >> 3)
+		wireType := int(wire & 0x7)
+		if wireType == 4 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrStringArray: wiretype end group for non-group")
+		}
+		if fieldNum <= 0 {
+			return fmt.Errorf("proto: JSONSchemaPropsOrStringArray: illegal tag %d (wire type %d)", fieldNum, wire)
+		}
+		switch fieldNum {
+		case 1:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Schema", wireType)
+			}
+			var msglen int
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				msglen |= (int(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			if msglen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + msglen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			if m.Schema == nil {
+				m.Schema = &JSONSchemaProps{}
+			}
+			if err := m.Schema.Unmarshal(dAtA[iNdEx:postIndex]); err != nil {
+				return err
+			}
+			iNdEx = postIndex
+		case 2:
+			if wireType != 2 {
+				return fmt.Errorf("proto: wrong wireType = %d for field Property", wireType)
+			}
+			var stringLen uint64
+			for shift := uint(0); ; shift += 7 {
+				if shift >= 64 {
+					return ErrIntOverflowGenerated
+				}
+				if iNdEx >= l {
+					return io.ErrUnexpectedEOF
+				}
+				b := dAtA[iNdEx]
+				iNdEx++
+				stringLen |= (uint64(b) & 0x7F) << shift
+				if b < 0x80 {
+					break
+				}
+			}
+			intStringLen := int(stringLen)
+			if intStringLen < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			postIndex := iNdEx + intStringLen
+			if postIndex > l {
+				return io.ErrUnexpectedEOF
+			}
+			m.Property = append(m.Property, string(dAtA[iNdEx:postIndex]))
+			iNdEx = postIndex
+		default:
+			iNdEx = preIndex
+			skippy, err := skipGenerated(dAtA[iNdEx:])
+			if err != nil {
+				return err
+			}
+			if skippy < 0 {
+				return ErrInvalidLengthGenerated
+			}
+			if (iNdEx + skippy) > l {
+				return io.ErrUnexpectedEOF
+			}
+			iNdEx += skippy
+		}
+	}
+
+	if iNdEx > l {
+		return io.ErrUnexpectedEOF
+	}
+	return nil
+}
 func skipGenerated(dAtA []byte) (n int, err error) {
 	l := len(dAtA)
 	iNdEx := 0
@@ -1588,58 +5241,137 @@ func init() {
 }
 
 var fileDescriptorGenerated = []byte{
-	// 845 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xbc, 0x55, 0xcf, 0x8b, 0x23, 0x45,
-	0x14, 0x4e, 0xe7, 0xc7, 0xcc, 0x58, 0xeb, 0xb8, 0x52, 0x20, 0x34, 0x83, 0x76, 0x66, 0x23, 0xca,
-	0x2a, 0x4e, 0xb7, 0xb3, 0xae, 0xa2, 0x07, 0x0f, 0x66, 0x05, 0x59, 0xdc, 0x55, 0xa9, 0x59, 0x14,
-	0x74, 0xc5, 0xad, 0x74, 0xde, 0x74, 0xca, 0xa4, 0xab, 0x9a, 0xaa, 0xea, 0xe0, 0x80, 0x82, 0x22,
-	0xde, 0x3d, 0x78, 0xf1, 0x3f, 0xf0, 0x4f, 0x99, 0xe3, 0x82, 0x97, 0x3d, 0x05, 0x27, 0xfe, 0x0b,
-	0x7a, 0xc9, 0x49, 0xaa, 0xba, 0x52, 0x49, 0x8c, 0x71, 0x07, 0x24, 0xde, 0xa6, 0xdf, 0x8f, 0xef,
-	0xfb, 0xde, 0xf7, 0x5e, 0x6a, 0xd0, 0xe9, 0xf0, 0x4d, 0x15, 0x33, 0x91, 0x0c, 0xcb, 0x1e, 0x48,
-	0x0e, 0x1a, 0x54, 0x32, 0x06, 0xde, 0x17, 0x32, 0x71, 0x09, 0x5a, 0x30, 0xf8, 0x4a, 0x03, 0x57,
-	0x4c, 0x70, 0x75, 0x44, 0x0b, 0xa6, 0x40, 0x8e, 0x41, 0x26, 0xc5, 0x30, 0x33, 0x39, 0xb5, 0x5a,
-	0x90, 0x8c, 0x8f, 0x7b, 0xa0, 0xe9, 0x71, 0x92, 0x01, 0x07, 0x49, 0x35, 0xf4, 0xe3, 0x42, 0x0a,
-	0x2d, 0xf0, 0xdb, 0x15, 0x5c, 0xbc, 0x52, 0xfd, 0x85, 0x87, 0x8b, 0x8b, 0x61, 0x66, 0x72, 0x6a,
-	0xb5, 0x20, 0x76, 0x70, 0x07, 0x47, 0x19, 0xd3, 0x83, 0xb2, 0x17, 0xa7, 0x22, 0x4f, 0x32, 0x91,
-	0x89, 0xc4, 0xa2, 0xf6, 0xca, 0x53, 0xfb, 0x65, 0x3f, 0xec, 0x5f, 0x15, 0xdb, 0xc1, 0xcd, 0x85,
-	0xf8, 0x9c, 0xa6, 0x03, 0xc6, 0x41, 0x9e, 0x2d, 0x14, 0xe7, 0xa0, 0x69, 0x32, 0x5e, 0xd3, 0x78,
-	0x90, 0x6c, 0xea, 0x92, 0x25, 0xd7, 0x2c, 0x87, 0xb5, 0x86, 0x37, 0x1e, 0xd7, 0xa0, 0xd2, 0x01,
-	0xe4, 0x74, 0xad, 0xef, 0xb5, 0x4d, 0x7d, 0xa5, 0x66, 0xa3, 0x84, 0x71, 0xad, 0xb4, 0xfc, 0x7b,
-	0x53, 0xe7, 0xfb, 0x06, 0x0a, 0x6f, 0x95, 0x4a, 0x8b, 0x9c, 0x80, 0x12, 0xa5, 0x4c, 0xe1, 0x5d,
-	0x38, 0x65, 0x9c, 0x69, 0x26, 0x38, 0x7e, 0x80, 0xf6, 0xcc, 0x54, 0x7d, 0xaa, 0x69, 0x18, 0x1c,
-	0x06, 0xd7, 0xaf, 0xdc, 0x78, 0x35, 0x5e, 0x38, 0xee, 0x49, 0x16, 0x36, 0x9b, 0xea, 0x78, 0x7c,
-	0x1c, 0x7f, 0xd8, 0xfb, 0x12, 0x52, 0x7d, 0x17, 0x34, 0xed, 0xe2, 0xf3, 0x49, 0xbb, 0x36, 0x9d,
-	0xb4, 0xd1, 0x22, 0x46, 0x3c, 0x2a, 0xfe, 0x06, 0x35, 0x55, 0x01, 0x69, 0x58, 0xb7, 0xe8, 0x9f,
-	0xc5, 0xff, 0x69, 0x9f, 0xf1, 0xa6, 0x41, 0x4e, 0x0a, 0x48, 0xbb, 0x4f, 0x3a, 0x21, 0x4d, 0xf3,
-	0x45, 0x2c, 0x2d, 0xfe, 0x21, 0x40, 0x3b, 0x4a, 0x53, 0x5d, 0xaa, 0xb0, 0x61, 0x15, 0x7c, 0xbe,
-	0x2d, 0x05, 0x96, 0xa4, 0xfb, 0x94, 0xd3, 0xb0, 0x53, 0x7d, 0x13, 0x47, 0xde, 0xf9, 0xa3, 0x8e,
-	0xae, 0x6d, 0x6a, 0xbd, 0x25, 0x78, 0xbf, 0x5a, 0xc7, 0x6d, 0xd4, 0xd4, 0x67, 0x05, 0xd8, 0x55,
-	0x3c, 0xd1, 0x7d, 0x7d, 0x3e, 0xcf, 0xbd, 0xb3, 0x02, 0x66, 0x93, 0xf6, 0x0b, 0x8f, 0x05, 0x30,
-	0x85, 0xc4, 0x42, 0xe0, 0xb7, 0xfc, 0xdc, 0x75, 0x0b, 0x76, 0x6d, 0x55, 0xd8, 0x6c, 0xd2, 0xbe,
-	0xea, 0xdb, 0x56, 0xb5, 0xe2, 0x31, 0xc2, 0x23, 0xaa, 0xf4, 0x3d, 0x49, 0xb9, 0xaa, 0x60, 0x59,
-	0x0e, 0xce, 0xbe, 0x97, 0x2f, 0x77, 0x1e, 0xa6, 0xa3, 0x7b, 0xe0, 0x28, 0xf1, 0x9d, 0x35, 0x34,
-	0xf2, 0x0f, 0x0c, 0xf8, 0x45, 0xb4, 0x23, 0x81, 0x2a, 0xc1, 0xc3, 0xa6, 0x95, 0xec, 0xbd, 0x24,
-	0x36, 0x4a, 0x5c, 0x16, 0xbf, 0x84, 0x76, 0x73, 0x50, 0x8a, 0x66, 0x10, 0xb6, 0x6c, 0xe1, 0x55,
-	0x57, 0xb8, 0x7b, 0xb7, 0x0a, 0x93, 0x79, 0xbe, 0x33, 0x0b, 0xd0, 0xb3, 0x9b, 0x5c, 0xbb, 0xc3,
-	0x94, 0xc6, 0xf7, 0xd7, 0x7e, 0x00, 0xf1, 0xe5, 0x26, 0x34, 0xdd, 0xf6, 0xfc, 0x9f, 0x76, 0xe4,
-	0x7b, 0xf3, 0xc8, 0xd2, 0xf1, 0x7f, 0x8d, 0x5a, 0x4c, 0x43, 0x6e, 0x76, 0xd0, 0xb8, 0x7e, 0xe5,
-	0xc6, 0x27, 0x5b, 0xba, 0xbd, 0xee, 0xbe, 0xd3, 0xd0, 0xba, 0x6d, 0xd8, 0x48, 0x45, 0xda, 0xf9,
-	0x33, 0x40, 0xcf, 0x6d, 0x6a, 0xf9, 0x80, 0xe6, 0xa0, 0x8c, 0xe3, 0xc5, 0xa8, 0x94, 0x74, 0xe4,
-	0x2e, 0xce, 0x3b, 0xfe, 0x91, 0x8d, 0x12, 0x97, 0xc5, 0xaf, 0xa0, 0x3d, 0xc5, 0x78, 0x56, 0x8e,
-	0xa8, 0x74, 0xe7, 0xe4, 0xa7, 0x3e, 0x71, 0x71, 0xe2, 0x2b, 0x70, 0x8c, 0x90, 0x1a, 0x08, 0xa9,
-	0x2d, 0x47, 0xd8, 0x38, 0x6c, 0x18, 0x64, 0xf3, 0x40, 0x9c, 0xf8, 0x28, 0x59, 0xaa, 0xc0, 0x87,
-	0xa8, 0x39, 0x64, 0xbc, 0xef, 0xb6, 0xee, 0x7f, 0xc5, 0xef, 0x33, 0xde, 0x27, 0x36, 0x63, 0xf8,
-	0x47, 0x4c, 0x69, 0x13, 0x71, 0x2b, 0x5f, 0x71, 0xdd, 0x56, 0xfa, 0x8a, 0xce, 0x2f, 0xf5, 0xcd,
-	0x4b, 0x37, 0x4f, 0x03, 0x7e, 0x1e, 0xb5, 0x32, 0x29, 0xca, 0xc2, 0x4d, 0xed, 0xdd, 0x7b, 0xcf,
-	0x04, 0x49, 0x95, 0x33, 0x57, 0x36, 0x06, 0x69, 0x16, 0xe0, 0x46, 0xf6, 0x57, 0xf6, 0x71, 0x15,
-	0x26, 0xf3, 0x3c, 0xfe, 0x2e, 0x40, 0x2d, 0xee, 0x86, 0x35, 0x27, 0x74, 0x7f, 0x4b, 0x7b, 0xb6,
-	0x76, 0x2d, 0xe4, 0x56, 0x4e, 0x56, 0xcc, 0xf8, 0x26, 0x6a, 0xa9, 0x54, 0x14, 0xe0, 0x5c, 0x8c,
-	0xe6, 0x45, 0x27, 0x26, 0x38, 0x9b, 0xb4, 0xf7, 0xe7, 0x70, 0x36, 0x40, 0xaa, 0xe2, 0xce, 0xaf,
-	0x75, 0x14, 0xfd, 0xfb, 0x8b, 0x86, 0x7f, 0x0a, 0x10, 0x4a, 0xe7, 0x2f, 0x85, 0x0a, 0x03, 0x7b,
-	0xc9, 0x0f, 0xb6, 0x34, 0xa1, 0x7f, 0x92, 0x16, 0xff, 0x55, 0x7c, 0x48, 0x91, 0x25, 0x1d, 0xf8,
-	0xe7, 0x00, 0xed, 0xd3, 0x34, 0x85, 0x42, 0x43, 0xbf, 0x3a, 0xb4, 0xfa, 0xff, 0xe0, 0xfd, 0x33,
-	0x4e, 0xd5, 0xfe, 0x3b, 0xcb, 0xd4, 0x64, 0x55, 0x49, 0xf7, 0xe8, 0xfc, 0x22, 0xaa, 0x3d, 0xbc,
-	0x88, 0x6a, 0x8f, 0x2e, 0xa2, 0xda, 0xb7, 0xd3, 0x28, 0x38, 0x9f, 0x46, 0xc1, 0xc3, 0x69, 0x14,
-	0x3c, 0x9a, 0x46, 0xc1, 0x6f, 0xd3, 0x28, 0xf8, 0xf1, 0xf7, 0xa8, 0xf6, 0xe9, 0xae, 0xa3, 0xfc,
-	0x2b, 0x00, 0x00, 0xff, 0xff, 0x3e, 0xed, 0x57, 0x73, 0x4c, 0x09, 0x00, 0x00,
+	// 2102 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xc4, 0x58, 0xcb, 0x6f, 0x63, 0x49,
+	0xd5, 0x4f, 0xd9, 0x79, 0x56, 0x92, 0x49, 0x52, 0xdd, 0xe9, 0xef, 0x76, 0xbe, 0x6e, 0x3b, 0xf1,
+	0x30, 0xa3, 0x00, 0xd3, 0x36, 0x3d, 0x0f, 0x66, 0x40, 0x62, 0x11, 0x27, 0x01, 0xf5, 0x90, 0x74,
+	0xa2, 0x72, 0x77, 0x23, 0x98, 0x67, 0xe5, 0xba, 0xec, 0x54, 0xe7, 0xbe, 0xfa, 0x56, 0x5d, 0x77,
+	0x22, 0x01, 0xe2, 0xa1, 0x11, 0x12, 0x12, 0x0f, 0x41, 0x6f, 0x90, 0xd8, 0x80, 0xc4, 0x06, 0x21,
+	0x58, 0xc0, 0x92, 0x25, 0x8b, 0x5e, 0x8e, 0xc4, 0x66, 0x56, 0x16, 0x6d, 0xfe, 0x05, 0x24, 0xa4,
+	0xac, 0x50, 0x3d, 0xee, 0xcb, 0x8e, 0x67, 0x5a, 0x1a, 0x7b, 0x7a, 0xe7, 0x7b, 0x5e, 0xbf, 0x5f,
+	0x9d, 0x3a, 0x75, 0xea, 0x94, 0x61, 0xeb, 0xe4, 0x0d, 0x5e, 0x65, 0x7e, 0xed, 0x24, 0x3a, 0xa2,
+	0xa1, 0x47, 0x05, 0xe5, 0xb5, 0x0e, 0xf5, 0x9a, 0x7e, 0x58, 0x33, 0x0a, 0x12, 0x30, 0x7a, 0x2a,
+	0xa8, 0xc7, 0x99, 0xef, 0xf1, 0x1b, 0x24, 0x60, 0x9c, 0x86, 0x1d, 0x1a, 0xd6, 0x82, 0x93, 0xb6,
+	0xd4, 0xf1, 0xbc, 0x41, 0xad, 0x73, 0xf3, 0x88, 0x0a, 0x72, 0xb3, 0xd6, 0xa6, 0x1e, 0x0d, 0x89,
+	0xa0, 0xcd, 0x6a, 0x10, 0xfa, 0xc2, 0x47, 0x5f, 0xd3, 0xe1, 0xaa, 0x39, 0xeb, 0xf7, 0x92, 0x70,
+	0xd5, 0xe0, 0xa4, 0x2d, 0x75, 0x3c, 0x6f, 0x50, 0x35, 0xe1, 0xd6, 0x6e, 0xb4, 0x99, 0x38, 0x8e,
+	0x8e, 0xaa, 0xb6, 0xef, 0xd6, 0xda, 0x7e, 0xdb, 0xaf, 0xa9, 0xa8, 0x47, 0x51, 0x4b, 0x7d, 0xa9,
+	0x0f, 0xf5, 0x4b, 0xa3, 0xad, 0xbd, 0x9a, 0x92, 0x77, 0x89, 0x7d, 0xcc, 0x3c, 0x1a, 0x9e, 0xa5,
+	0x8c, 0x5d, 0x2a, 0x48, 0xad, 0x33, 0xc0, 0x71, 0xad, 0x36, 0xcc, 0x2b, 0x8c, 0x3c, 0xc1, 0x5c,
+	0x3a, 0xe0, 0xf0, 0xe5, 0x4f, 0x72, 0xe0, 0xf6, 0x31, 0x75, 0xc9, 0x80, 0xdf, 0x2b, 0xc3, 0xfc,
+	0x22, 0xc1, 0x9c, 0x1a, 0xf3, 0x04, 0x17, 0x61, 0xbf, 0x53, 0xe5, 0xc7, 0x45, 0x68, 0x6d, 0x47,
+	0x5c, 0xf8, 0x2e, 0xa6, 0xdc, 0x8f, 0x42, 0x9b, 0xee, 0xd0, 0x16, 0xf3, 0x98, 0x60, 0xbe, 0x87,
+	0xde, 0x87, 0xb3, 0x72, 0x55, 0x4d, 0x22, 0x88, 0x05, 0xd6, 0xc1, 0xe6, 0xfc, 0xcb, 0x5f, 0xaa,
+	0xa6, 0x19, 0x4f, 0x40, 0xd2, 0x34, 0x4b, 0xeb, 0x6a, 0xe7, 0x66, 0xf5, 0xe0, 0xe8, 0x3e, 0xb5,
+	0xc5, 0x3e, 0x15, 0xa4, 0x8e, 0x1e, 0x77, 0xcb, 0x13, 0xbd, 0x6e, 0x19, 0xa6, 0x32, 0x9c, 0x44,
+	0x45, 0xdf, 0x83, 0x93, 0x3c, 0xa0, 0xb6, 0x55, 0x50, 0xd1, 0xdf, 0xaa, 0x7e, 0xaa, 0xfd, 0xac,
+	0x0e, 0x5b, 0x48, 0x23, 0xa0, 0x76, 0x7d, 0xc1, 0x10, 0x99, 0x94, 0x5f, 0x58, 0xc1, 0xa2, 0x0f,
+	0x00, 0x9c, 0xe6, 0x82, 0x88, 0x88, 0x5b, 0x45, 0xc5, 0xe0, 0x9d, 0x71, 0x31, 0x50, 0x20, 0xf5,
+	0xe7, 0x0c, 0x87, 0x69, 0xfd, 0x8d, 0x0d, 0x78, 0xe5, 0x3f, 0x05, 0xb8, 0x31, 0xcc, 0x75, 0xdb,
+	0xf7, 0x9a, 0x7a, 0x3b, 0x6e, 0xc1, 0x49, 0x71, 0x16, 0x50, 0xb5, 0x15, 0x73, 0xf5, 0xd7, 0xe2,
+	0xf5, 0xdc, 0x39, 0x0b, 0xe8, 0x79, 0xb7, 0xfc, 0xc2, 0x27, 0x06, 0x90, 0x86, 0x58, 0x85, 0x40,
+	0x5f, 0x49, 0xd6, 0x5d, 0x50, 0xc1, 0x36, 0xf2, 0xc4, 0xce, 0xbb, 0xe5, 0xa5, 0xc4, 0x2d, 0xcf,
+	0x15, 0x75, 0x20, 0x72, 0x08, 0x17, 0x77, 0x42, 0xe2, 0x71, 0x1d, 0x96, 0xb9, 0xd4, 0xa4, 0xef,
+	0x0b, 0x4f, 0x57, 0x1e, 0xd2, 0xa3, 0xbe, 0x66, 0x20, 0xd1, 0xde, 0x40, 0x34, 0x7c, 0x01, 0x02,
+	0x7a, 0x11, 0x4e, 0x87, 0x94, 0x70, 0xdf, 0xb3, 0x26, 0x15, 0xe5, 0x24, 0x97, 0x58, 0x49, 0xb1,
+	0xd1, 0xa2, 0xcf, 0xc3, 0x19, 0x97, 0x72, 0x4e, 0xda, 0xd4, 0x9a, 0x52, 0x86, 0x4b, 0xc6, 0x70,
+	0x66, 0x5f, 0x8b, 0x71, 0xac, 0xaf, 0x9c, 0x03, 0x78, 0x6d, 0x58, 0xd6, 0xf6, 0x18, 0x17, 0xe8,
+	0xed, 0x81, 0x03, 0x50, 0x7d, 0xba, 0x15, 0x4a, 0x6f, 0x55, 0xfe, 0xcb, 0x06, 0x7c, 0x36, 0x96,
+	0x64, 0x8a, 0xff, 0xbb, 0x70, 0x8a, 0x09, 0xea, 0xca, 0x3d, 0x28, 0x6e, 0xce, 0xbf, 0xfc, 0xad,
+	0x31, 0xd5, 0x5e, 0x7d, 0xd1, 0x70, 0x98, 0xba, 0x25, 0xd1, 0xb0, 0x06, 0xad, 0xfc, 0xa1, 0x00,
+	0xaf, 0x0f, 0x73, 0xb9, 0x4d, 0x5c, 0xca, 0x65, 0xc6, 0x03, 0x27, 0x0a, 0x89, 0x63, 0x2a, 0x2e,
+	0xc9, 0xf8, 0xa1, 0x92, 0x62, 0xa3, 0x45, 0x2f, 0xc1, 0x59, 0xce, 0xbc, 0x76, 0xe4, 0x90, 0xd0,
+	0x94, 0x53, 0xb2, 0xea, 0x86, 0x91, 0xe3, 0xc4, 0x02, 0x55, 0x21, 0xe4, 0xc7, 0x7e, 0x28, 0x14,
+	0x86, 0x55, 0x5c, 0x2f, 0xca, 0xc8, 0xb2, 0x41, 0x34, 0x12, 0x29, 0xce, 0x58, 0xa0, 0x75, 0x38,
+	0x79, 0xc2, 0xbc, 0xa6, 0xd9, 0xf5, 0xe4, 0x14, 0x7f, 0x93, 0x79, 0x4d, 0xac, 0x34, 0x12, 0xdf,
+	0x61, 0x5c, 0x48, 0x89, 0xd9, 0xf2, 0x5c, 0xd6, 0x95, 0x65, 0x62, 0x21, 0xf1, 0x6d, 0x22, 0x68,
+	0xdb, 0x0f, 0x19, 0xe5, 0xd6, 0x74, 0x8a, 0xbf, 0x9d, 0x48, 0x71, 0xc6, 0xa2, 0xf2, 0x8f, 0xc9,
+	0xe1, 0x45, 0x22, 0x5b, 0x09, 0x7a, 0x1e, 0x4e, 0xb5, 0x43, 0x3f, 0x0a, 0x4c, 0x96, 0x92, 0x6c,
+	0x7f, 0x43, 0x0a, 0xb1, 0xd6, 0xc9, 0xaa, 0xec, 0xd0, 0x50, 0x6e, 0x98, 0x49, 0x51, 0x52, 0x95,
+	0xf7, 0xb4, 0x18, 0xc7, 0x7a, 0xf4, 0x43, 0x00, 0xa7, 0x3c, 0x93, 0x1c, 0x59, 0x72, 0x6f, 0x8f,
+	0xa9, 0x2e, 0x54, 0x7a, 0x53, 0xba, 0x3a, 0xf3, 0x1a, 0x19, 0xbd, 0x0a, 0xa7, 0xb8, 0xed, 0x07,
+	0xd4, 0x64, 0xbd, 0x14, 0x1b, 0x35, 0xa4, 0xf0, 0xbc, 0x5b, 0x5e, 0x8c, 0xc3, 0x29, 0x01, 0xd6,
+	0xc6, 0xe8, 0x27, 0x00, 0xc2, 0x0e, 0x71, 0x58, 0x93, 0xc8, 0xf8, 0x6a, 0x2f, 0x46, 0x5d, 0xd6,
+	0xf7, 0x92, 0xf0, 0x7a, 0xd3, 0xd2, 0x6f, 0x9c, 0x81, 0x46, 0xbf, 0x00, 0x70, 0x81, 0x47, 0x47,
+	0xa1, 0xf1, 0x92, 0xfb, 0x2c, 0xb9, 0x7c, 0x7b, 0xa4, 0x5c, 0x1a, 0x19, 0x80, 0xfa, 0x72, 0xaf,
+	0x5b, 0x5e, 0xc8, 0x4a, 0x70, 0x8e, 0x40, 0xe5, 0x9f, 0x05, 0x58, 0xfa, 0xf8, 0xdb, 0x01, 0x3d,
+	0x02, 0x10, 0xda, 0x71, 0xd7, 0xe5, 0x16, 0x50, 0x5d, 0xe1, 0xfd, 0x31, 0xed, 0x7e, 0xd2, 0xde,
+	0xd3, 0x1b, 0x3a, 0x11, 0xc9, 0x03, 0x90, 0xfc, 0x46, 0xbf, 0x01, 0x70, 0x91, 0xd8, 0x36, 0x0d,
+	0x04, 0x6d, 0xea, 0x43, 0x5b, 0xf8, 0x0c, 0xea, 0x72, 0xd5, 0xb0, 0x5a, 0xdc, 0xca, 0x42, 0xe3,
+	0x3c, 0x93, 0xca, 0x7f, 0x41, 0x7f, 0x56, 0x33, 0x5b, 0xd0, 0xb0, 0x89, 0x43, 0xd1, 0x0e, 0x5c,
+	0x96, 0x77, 0x3d, 0xa6, 0x81, 0xc3, 0x6c, 0xc2, 0x0f, 0x89, 0x38, 0x36, 0x27, 0xd5, 0x32, 0x10,
+	0xcb, 0x8d, 0x3e, 0x3d, 0x1e, 0xf0, 0x40, 0x6f, 0x42, 0xa4, 0xef, 0xbf, 0x5c, 0x1c, 0x7d, 0x94,
+	0x93, 0x9b, 0xac, 0x31, 0x60, 0x81, 0x2f, 0xf0, 0x42, 0xdb, 0x70, 0xc5, 0x21, 0x47, 0xd4, 0x69,
+	0x50, 0x87, 0xda, 0xc2, 0x0f, 0x55, 0xa8, 0xa2, 0x0a, 0xb5, 0xda, 0xeb, 0x96, 0x57, 0xf6, 0xfa,
+	0x95, 0x78, 0xd0, 0xbe, 0xb2, 0x01, 0xcb, 0xc3, 0x17, 0xae, 0xa7, 0x8a, 0xdf, 0x15, 0xe0, 0xda,
+	0xf0, 0x8a, 0x45, 0x3f, 0x4a, 0x87, 0x1f, 0x7d, 0xb7, 0xbd, 0x3b, 0xae, 0xd3, 0x61, 0xa6, 0x1f,
+	0x38, 0x38, 0xf9, 0xa0, 0xef, 0xcb, 0x46, 0x43, 0x1c, 0x6a, 0x6a, 0xea, 0x9d, 0xb1, 0x51, 0x90,
+	0x20, 0xf5, 0x39, 0xdd, 0xc3, 0x88, 0xa3, 0x5a, 0x16, 0x71, 0x68, 0xe5, 0x8f, 0xa0, 0x7f, 0xfe,
+	0x4d, 0x3b, 0x0a, 0xfa, 0x19, 0x80, 0x4b, 0x7e, 0x40, 0xbd, 0xad, 0xc3, 0x5b, 0xf7, 0x5e, 0x69,
+	0xa8, 0xa9, 0xdb, 0xa4, 0xea, 0xf6, 0xa7, 0xe4, 0xf9, 0x66, 0xe3, 0xe0, 0xb6, 0x0e, 0x78, 0x18,
+	0xfa, 0x01, 0xaf, 0x5f, 0xea, 0x75, 0xcb, 0x4b, 0x07, 0x79, 0x28, 0xdc, 0x8f, 0x5d, 0x71, 0xe1,
+	0xea, 0xee, 0xa9, 0xa0, 0xa1, 0x47, 0x9c, 0x1d, 0xdf, 0x8e, 0x5c, 0xea, 0x09, 0x4d, 0xf4, 0x35,
+	0x38, 0xdf, 0xa4, 0xdc, 0x0e, 0x59, 0xa0, 0x1a, 0xaf, 0x2e, 0xef, 0x4b, 0xa6, 0x2c, 0xe7, 0x77,
+	0x52, 0x15, 0xce, 0xda, 0xa1, 0xeb, 0xb0, 0x18, 0x85, 0x8e, 0xa9, 0xe2, 0x79, 0x63, 0x5e, 0xbc,
+	0x8b, 0xf7, 0xb0, 0x94, 0x57, 0x36, 0xe0, 0xa4, 0xe4, 0x89, 0xae, 0xc2, 0x62, 0x48, 0x1e, 0xaa,
+	0xa8, 0x0b, 0xf5, 0x19, 0x69, 0x82, 0xc9, 0x43, 0x2c, 0x65, 0x95, 0x3f, 0x5d, 0x83, 0x4b, 0x7d,
+	0x6b, 0x41, 0x6b, 0xb0, 0xc0, 0x9a, 0x86, 0x03, 0x34, 0x41, 0x0b, 0xb7, 0x76, 0x70, 0x81, 0x35,
+	0xd1, 0xeb, 0x70, 0x5a, 0xbf, 0x5e, 0x0c, 0x68, 0x39, 0x99, 0x3b, 0x95, 0x54, 0xde, 0x2c, 0x69,
+	0x38, 0x49, 0xc4, 0x98, 0x2b, 0x0e, 0xb4, 0x65, 0x4e, 0x89, 0xe6, 0x40, 0x5b, 0x58, 0xca, 0xfa,
+	0x17, 0x3f, 0xf9, 0x94, 0x8b, 0x5f, 0x37, 0xd3, 0xf4, 0x54, 0x7e, 0xae, 0xc8, 0x0c, 0xc9, 0x2f,
+	0xc2, 0xe9, 0x96, 0x1f, 0xba, 0x44, 0xa8, 0xdb, 0x23, 0x33, 0xff, 0x7c, 0x5d, 0x49, 0xb1, 0xd1,
+	0xca, 0x01, 0x40, 0x30, 0xe1, 0x50, 0x6b, 0x26, 0x3f, 0x00, 0xdc, 0x91, 0x42, 0xac, 0x75, 0xe8,
+	0x3e, 0x9c, 0x69, 0xd2, 0x16, 0x89, 0x1c, 0x61, 0xcd, 0xaa, 0x12, 0xda, 0x1e, 0x41, 0x09, 0xd5,
+	0xe7, 0xe5, 0x04, 0xb1, 0xa3, 0xe3, 0xe2, 0x18, 0x00, 0xbd, 0x00, 0x67, 0x5c, 0x72, 0xca, 0xdc,
+	0xc8, 0xb5, 0xe6, 0xd6, 0xc1, 0x26, 0xd0, 0x66, 0xfb, 0x5a, 0x84, 0x63, 0x9d, 0xec, 0x8c, 0xf4,
+	0xd4, 0x76, 0x22, 0xce, 0x3a, 0xd4, 0x28, 0x2d, 0xb8, 0x0e, 0x36, 0x67, 0xd3, 0xce, 0xb8, 0xdb,
+	0xa7, 0xc7, 0x03, 0x1e, 0x0a, 0x8c, 0x79, 0xca, 0x79, 0x3e, 0x03, 0xa6, 0x45, 0x38, 0xd6, 0xe5,
+	0xc1, 0x8c, 0xfd, 0xc2, 0x30, 0x30, 0xe3, 0x3c, 0xe0, 0x81, 0xbe, 0x08, 0xe7, 0x5c, 0x72, 0xba,
+	0x47, 0xbd, 0xb6, 0x38, 0xb6, 0x16, 0xd7, 0xc1, 0x66, 0xb1, 0xbe, 0xd8, 0xeb, 0x96, 0xe7, 0xf6,
+	0x63, 0x21, 0x4e, 0xf5, 0xca, 0x98, 0x79, 0xc6, 0xf8, 0xb9, 0x8c, 0x71, 0x2c, 0xc4, 0xa9, 0x5e,
+	0x0e, 0x68, 0x01, 0x11, 0xf2, 0x70, 0x59, 0x4b, 0xf9, 0x01, 0xed, 0x50, 0x8b, 0x71, 0xac, 0x47,
+	0x9b, 0x70, 0xd6, 0x25, 0xa7, 0x6a, 0x98, 0xb6, 0x96, 0x55, 0xd8, 0x05, 0x39, 0x6b, 0xee, 0x1b,
+	0x19, 0x4e, 0xb4, 0xca, 0x92, 0x79, 0xda, 0x72, 0x25, 0x63, 0x69, 0x64, 0x38, 0xd1, 0xca, 0x22,
+	0x8e, 0x3c, 0xf6, 0x20, 0xa2, 0xda, 0x18, 0xa9, 0xcc, 0x24, 0x45, 0x7c, 0x37, 0x55, 0xe1, 0xac,
+	0x9d, 0x1c, 0x66, 0xdd, 0xc8, 0x11, 0x2c, 0x70, 0xe8, 0x41, 0xcb, 0xba, 0xa4, 0xf2, 0xaf, 0xe6,
+	0xa2, 0xfd, 0x44, 0x8a, 0x33, 0x16, 0x88, 0xc2, 0x49, 0xea, 0x45, 0xae, 0x75, 0x59, 0xcd, 0x16,
+	0x23, 0x29, 0xc1, 0xe4, 0xe4, 0xec, 0x7a, 0x91, 0x8b, 0x55, 0x78, 0xf4, 0x3a, 0x5c, 0x74, 0xc9,
+	0xa9, 0x6c, 0x07, 0x34, 0x14, 0x72, 0xcc, 0x5e, 0x55, 0x8b, 0x5f, 0x91, 0xf7, 0xf9, 0x7e, 0x56,
+	0x81, 0xf3, 0x76, 0xca, 0x91, 0x79, 0x19, 0xc7, 0x2b, 0x19, 0xc7, 0xac, 0x02, 0xe7, 0xed, 0x64,
+	0xa6, 0x43, 0xfa, 0x20, 0x62, 0x21, 0x6d, 0x5a, 0xff, 0xa7, 0x66, 0x7a, 0x95, 0x69, 0x6c, 0x64,
+	0x38, 0xd1, 0xa2, 0x4e, 0xfc, 0xea, 0xb2, 0xd4, 0x31, 0xbc, 0x3b, 0xda, 0x4e, 0x7e, 0x10, 0x6e,
+	0x85, 0x21, 0x39, 0xd3, 0x37, 0x4d, 0xf6, 0xbd, 0x85, 0x38, 0x9c, 0x22, 0x8e, 0x73, 0xd0, 0xb2,
+	0xae, 0xaa, 0xdc, 0x8f, 0xfa, 0x06, 0x49, 0xba, 0xce, 0x96, 0x04, 0xc1, 0x1a, 0x4b, 0x82, 0xfa,
+	0x9e, 0x2c, 0x8d, 0xb5, 0xf1, 0x82, 0x1e, 0x48, 0x10, 0xac, 0xb1, 0xd4, 0x4a, 0xbd, 0xb3, 0x83,
+	0x96, 0xf5, 0xff, 0x63, 0x5e, 0xa9, 0x04, 0xc1, 0x1a, 0x0b, 0x31, 0x58, 0xf4, 0x7c, 0x61, 0x5d,
+	0x1b, 0xcb, 0xf5, 0xac, 0x2e, 0x9c, 0xdb, 0xbe, 0xc0, 0x12, 0x03, 0xfd, 0x0a, 0x40, 0x18, 0xa4,
+	0x25, 0x7a, 0x5d, 0xad, 0xf2, 0xdd, 0xd1, 0x42, 0x56, 0xd3, 0xda, 0xde, 0xf5, 0x44, 0x78, 0x96,
+	0x4e, 0xe9, 0x99, 0x33, 0x90, 0x61, 0x81, 0x7e, 0x0f, 0xe0, 0x65, 0xd2, 0xd4, 0x33, 0x3b, 0x71,
+	0x32, 0x27, 0xa8, 0xa4, 0x32, 0x72, 0x67, 0xd4, 0x65, 0x5e, 0xf7, 0x7d, 0xa7, 0x6e, 0xf5, 0xba,
+	0xe5, 0xcb, 0x5b, 0x17, 0xa0, 0xe2, 0x0b, 0xb9, 0xa0, 0x3f, 0x03, 0xb8, 0x62, 0xba, 0x68, 0x86,
+	0x61, 0x59, 0x25, 0x90, 0x8e, 0x3a, 0x81, 0xfd, 0x38, 0x3a, 0x8f, 0x57, 0x4d, 0x1e, 0x57, 0x06,
+	0xf4, 0x78, 0x90, 0x1a, 0xfa, 0x1b, 0x80, 0x0b, 0x4d, 0x1a, 0x50, 0xaf, 0x49, 0x3d, 0x5b, 0x72,
+	0x5d, 0x1f, 0xc9, 0xa3, 0xac, 0x9f, 0xeb, 0x4e, 0x06, 0x42, 0xd3, 0xac, 0x1a, 0x9a, 0x0b, 0x59,
+	0xd5, 0x79, 0xb7, 0x7c, 0x25, 0x75, 0xcd, 0x6a, 0x70, 0x8e, 0x25, 0xfa, 0x35, 0x80, 0x4b, 0xe9,
+	0x06, 0xe8, 0x2b, 0x65, 0x63, 0x8c, 0x75, 0xa0, 0xc6, 0xd7, 0xad, 0x3c, 0x20, 0xee, 0x67, 0x80,
+	0xfe, 0x02, 0xe4, 0xa4, 0x16, 0x3f, 0xf3, 0xb8, 0x55, 0x51, 0xb9, 0x7c, 0x6f, 0xe4, 0xb9, 0x4c,
+	0x10, 0x74, 0x2a, 0x5f, 0x4a, 0x47, 0xc1, 0x44, 0x73, 0xde, 0x2d, 0xaf, 0x66, 0x33, 0x99, 0x28,
+	0x70, 0x96, 0x21, 0xfa, 0x29, 0x80, 0x0b, 0x34, 0x9d, 0xb8, 0xb9, 0xf5, 0xfc, 0x48, 0x92, 0x78,
+	0xe1, 0x10, 0xaf, 0xff, 0x41, 0xc8, 0xa8, 0x38, 0xce, 0x61, 0xcb, 0x09, 0x92, 0x9e, 0x12, 0x37,
+	0x70, 0xa8, 0xf5, 0xb9, 0x11, 0x4f, 0x90, 0xbb, 0x3a, 0x2e, 0x8e, 0x01, 0xd6, 0xe4, 0xcb, 0xa7,
+	0xef, 0xe4, 0xa0, 0x65, 0x58, 0x3c, 0xa1, 0x67, 0x7a, 0xb0, 0xc7, 0xf2, 0x27, 0x6a, 0xc2, 0xa9,
+	0x0e, 0x71, 0xa2, 0xf8, 0xf1, 0x36, 0xe2, 0xae, 0x8b, 0x75, 0xf0, 0xaf, 0x16, 0xde, 0x00, 0x6b,
+	0x8f, 0x00, 0xbc, 0x72, 0xf1, 0x81, 0x7e, 0xa6, 0xb4, 0x7e, 0x0b, 0xe0, 0xca, 0xc0, 0xd9, 0xbd,
+	0x80, 0xd1, 0x83, 0x3c, 0xa3, 0xb7, 0x46, 0x7d, 0x08, 0x1b, 0x22, 0x64, 0x5e, 0x5b, 0x4d, 0x1e,
+	0x59, 0x7a, 0x3f, 0x07, 0x70, 0xb9, 0xff, 0x38, 0x3c, 0xcb, 0x7c, 0x55, 0x1e, 0x15, 0xe0, 0x95,
+	0x8b, 0x07, 0x26, 0x14, 0x26, 0x2f, 0xc3, 0xf1, 0xbc, 0xb0, 0x61, 0xfa, 0xca, 0x4c, 0x1e, 0x95,
+	0x1f, 0x00, 0x38, 0x7f, 0x3f, 0xb1, 0x8b, 0xff, 0x87, 0x1f, 0xf9, 0xdb, 0x3e, 0xee, 0x3f, 0xa9,
+	0x82, 0xe3, 0x2c, 0x6e, 0xe5, 0xaf, 0x00, 0xae, 0x5e, 0xd8, 0x58, 0xe5, 0x13, 0x94, 0x38, 0x8e,
+	0xff, 0x50, 0xff, 0x45, 0x33, 0x9b, 0x3e, 0x41, 0xb7, 0x94, 0x14, 0x1b, 0x6d, 0x26, 0x7b, 0x85,
+	0xcf, 0x2a, 0x7b, 0x95, 0xbf, 0x03, 0x78, 0xed, 0xe3, 0x2a, 0xf1, 0x99, 0x6c, 0xe9, 0x26, 0x9c,
+	0x35, 0x43, 0xd1, 0x99, 0xda, 0x4e, 0xf3, 0x0e, 0x30, 0x4d, 0xe3, 0x0c, 0x27, 0xda, 0xfa, 0x8d,
+	0xc7, 0x4f, 0x4a, 0x13, 0x1f, 0x3e, 0x29, 0x4d, 0x7c, 0xf4, 0xa4, 0x34, 0xf1, 0x83, 0x5e, 0x09,
+	0x3c, 0xee, 0x95, 0xc0, 0x87, 0xbd, 0x12, 0xf8, 0xa8, 0x57, 0x02, 0xff, 0xea, 0x95, 0xc0, 0x2f,
+	0xff, 0x5d, 0x9a, 0xf8, 0xce, 0x8c, 0x01, 0xff, 0x5f, 0x00, 0x00, 0x00, 0xff, 0xff, 0x0a, 0x6f,
+	0x04, 0x49, 0xd3, 0x1e, 0x00, 0x00,
 }

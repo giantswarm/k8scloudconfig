@@ -13,6 +13,7 @@ type Cluster struct {
 	Kubernetes ClusterKubernetes `json:"kubernetes" yaml:"kubernetes"`
 	Masters    []ClusterNode     `json:"masters" yaml:"masters"`
 	Vault      ClusterVault      `json:"vault" yaml:"vault"`
+	Version    string            `json:"version" yaml:"version"`
 	Workers    []ClusterNode     `json:"workers" yaml:"workers"`
 }
 
@@ -32,8 +33,7 @@ type ClusterDocker struct {
 }
 
 type ClusterDockerDaemon struct {
-	CIDR      string `json:"cidr" yaml:"cidr"`
-	ExtraArgs string `json:"extraArgs" yaml:"extraArgs"`
+	CIDR string `json:"cidr" yaml:"cidr"`
 }
 
 type ClusterEtcd struct {
@@ -119,4 +119,9 @@ type ClusterNode struct {
 type ClusterVault struct {
 	Address string `json:"address" yaml:"address"`
 	Token   string `json:"token" yaml:"token"`
+}
+
+type CredentialSecret struct {
+	Name      string `json:"name" yaml:"name"`
+	Namespace string `json:"namespace" yaml:"namespace"`
 }
