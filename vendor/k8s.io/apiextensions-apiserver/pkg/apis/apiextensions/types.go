@@ -16,7 +16,9 @@ limitations under the License.
 
 package apiextensions
 
-import metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+import (
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
+)
 
 // CustomResourceDefinitionSpec describes how a user wants their resource to appear
 type CustomResourceDefinitionSpec struct {
@@ -26,9 +28,12 @@ type CustomResourceDefinitionSpec struct {
 	Version string
 	// Names are the names used to describe this custom resource
 	Names CustomResourceDefinitionNames
-
 	// Scope indicates whether this resource is cluster or namespace scoped.  Default is namespaced
 	Scope ResourceScope
+	// Validation describes the validation methods for CustomResources
+	Validation *CustomResourceValidation
+	// Subresources describes the subresources for CustomResources
+	Subresources *CustomResourceSubresources
 }
 
 // CustomResourceDefinitionNames indicates the names to serve this CustomResourceDefinition
@@ -44,9 +49,12 @@ type CustomResourceDefinitionNames struct {
 	Kind string
 	// ListKind is the serialized kind of the list for this resource.  Defaults to <kind>List.
 	ListKind string
+	// Categories is a list of grouped resources custom resources belong to (e.g. 'all')
+	// +optional
+	Categories []string
 }
 
-// ResourceScope is an enum defining the different scopes availabe to a custom resource
+// ResourceScope is an enum defining the different scopes available to a custom resource
 type ResourceScope string
 
 const (
@@ -113,8 +121,9 @@ type CustomResourceDefinitionStatus struct {
 // a CustomResourceDefinition
 const CustomResourceCleanupFinalizer = "customresourcecleanup.apiextensions.k8s.io"
 
-// +genclient=true
-// +nonNamespaced=true
+// +genclient
+// +genclient:nonNamespaced
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
 
 // CustomResourceDefinition represents a resource that should be exposed on the API server.  Its name MUST be in the format
 // <.spec.name>.<.spec.group>.
@@ -128,6 +137,8 @@ type CustomResourceDefinition struct {
 	Status CustomResourceDefinitionStatus
 }
 
+// +k8s:deepcopy-gen:interfaces=k8s.io/apimachinery/pkg/runtime.Object
+
 // CustomResourceDefinitionList is a list of CustomResourceDefinition objects.
 type CustomResourceDefinitionList struct {
 	metav1.TypeMeta
@@ -135,4 +146,48 @@ type CustomResourceDefinitionList struct {
 
 	// Items individual CustomResourceDefinitions
 	Items []CustomResourceDefinition
+}
+
+// CustomResourceValidation is a list of validation methods for CustomResources.
+type CustomResourceValidation struct {
+	// OpenAPIV3Schema is the OpenAPI v3 schema to be validated against.
+	OpenAPIV3Schema *JSONSchemaProps
+}
+
+// CustomResourceSubresources defines the status and scale subresources for CustomResources.
+type CustomResourceSubresources struct {
+	// Status denotes the status subresource for CustomResources
+	Status *CustomResourceSubresourceStatus
+	// Scale denotes the scale subresource for CustomResources
+	Scale *CustomResourceSubresourceScale
+}
+
+// CustomResourceSubresourceStatus defines how to serve the status subresource for CustomResources.
+// Status is represented by the `.status` JSON path inside of a CustomResource. When set,
+// * exposes a /status subresource for the custom resource
+// * PUT requests to the /status subresource take a custom resource object, and ignore changes to anything except the status stanza
+// * PUT/POST/PATCH requests to the custom resource ignore changes to the status stanza
+type CustomResourceSubresourceStatus struct{}
+
+// CustomResourceSubresourceScale defines how to serve the scale subresource for CustomResources.
+type CustomResourceSubresourceScale struct {
+	// SpecReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Spec.Replicas.
+	// Only JSON paths without the array notation are allowed.
+	// Must be a JSON Path under .spec.
+	// If there is no value under the given path in the CustomResource, the /scale subresource will return an error on GET.
+	SpecReplicasPath string
+	// StatusReplicasPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Replicas.
+	// Only JSON paths without the array notation are allowed.
+	// Must be a JSON Path under .status.
+	// If there is no value under the given path in the CustomResource, the status replica value in the /scale subresource
+	// will default to 0.
+	StatusReplicasPath string
+	// LabelSelectorPath defines the JSON path inside of a CustomResource that corresponds to Scale.Status.Selector.
+	// Only JSON paths without the array notation are allowed.
+	// Must be a JSON Path under .status.
+	// Must be set to work with HPA.
+	// If there is no value under the given path in the CustomResource, the status label selector value in the /scale
+	// subresource will default to the empty string.
+	// +optional
+	LabelSelectorPath *string
 }
