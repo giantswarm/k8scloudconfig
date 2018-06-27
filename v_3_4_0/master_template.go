@@ -601,6 +601,7 @@ write_files:
       labels:
         k8s-addon: ingress-nginx.addons.k8s.io
     data:
+      enable-vts-status: "true"
       server-name-hash-bucket-size: "1024"
       server-name-hash-max-size: "1024"
       server-tokens: "false"
@@ -705,6 +706,9 @@ write_files:
     apiVersion: v1
     kind: Service
     metadata:
+      annotations:
+        prometheus.io/port: "10254"
+        prometheus.io/scrape: "true"
       name: nginx-ingress-controller
       namespace: kube-system
       labels:
