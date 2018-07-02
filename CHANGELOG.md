@@ -18,7 +18,7 @@ version directory, and then changes are introduced.
 - Parameterize image registry domain.
 
 ### Changed
-
+- Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
 
 ### Removed
 
