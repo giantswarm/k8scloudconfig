@@ -15,6 +15,7 @@ version directory, and then changes are introduced.
 - Added SSO public key into ssh trusted CA.
 - Added RBAC rules for node-operator.
 - Enabled monitoring for ingress controller metrics.
+- Parameterize image registry domain.
 
 ### Changed
 - Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
