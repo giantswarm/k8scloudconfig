@@ -17,7 +17,7 @@ version directory, and then changes are introduced.
 - Enabled monitoring for ingress controller metrics.
 
 ### Changed
-
+- Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
 
 ### Removed
 
