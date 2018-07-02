@@ -37,7 +37,7 @@ type Params struct {
 	// then apply the manifest by adding it to ExtraManifests.
 	ExtraManifests []string
 	Node           v1alpha1.ClusterNode
-	// Domain of the docker image registry to use.
+	// RegistryDomain is the host of the docker image registry to use.
 	RegistryDomain string
 	SSOPublicKey   string
 }
