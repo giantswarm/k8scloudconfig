@@ -14,6 +14,7 @@ version directory, and then changes are introduced.
 ### Added
 - Added SSO public key into ssh trusted CA.
 - Added RBAC rules for node-operator.
+- Added RBAC rules for prometheus.
 - Enabled monitoring for ingress controller metrics.
 - Parameterize image registry domain.
 
