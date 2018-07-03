@@ -605,6 +605,7 @@ write_files:
       server-name-hash-bucket-size: "1024"
       server-name-hash-max-size: "1024"
       server-tokens: "false"
+      worker-processes: "4"
 - path: /srv/ingress-controller-dep.yml
   owner: root
   permissions: 0644
