@@ -20,6 +20,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
+- Updated etcd version to 3.3.8
 
 ### Removed
 

@@ -1964,7 +1964,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       LimitNOFILE=40000
-      Environment=IMAGE={{ .RegistryDomain }}/giantswarm/etcd:v3.3.3
+      Environment=IMAGE={{ .RegistryDomain }}/giantswarm/etcd:v3.3.8
       Environment=NAME=%p.service
       EnvironmentFile=/etc/network-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
