@@ -17,6 +17,7 @@ version directory, and then changes are introduced.
 - Added RBAC rules for prometheus.
 - Enabled monitoring for ingress controller metrics.
 - Parameterize image registry domain.
+- Set "worker-processes" to 4 for nginx-ingress-controller.
 
 ### Changed
 - Add memory eviction thresholds for kubelet in order to preserve node in case of heavy load.
