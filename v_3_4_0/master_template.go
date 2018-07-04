@@ -1599,7 +1599,7 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
@@ -1710,7 +1710,7 @@ write_files:
         - --terminated-pod-gc-threshold=10
         - --use-service-account-credentials=true
         - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
         resources:
@@ -1776,7 +1776,7 @@ write_files:
         - --logtostderr=true
         - --v=2
         - --profiling=false
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
         resources:
           requests:
@@ -2122,7 +2122,7 @@ coreos:
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
       --allow-privileged=true \
-      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true \
+      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true \
       --pod-manifest-path=/etc/kubernetes/manifests \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
