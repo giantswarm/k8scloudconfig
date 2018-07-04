@@ -909,6 +909,20 @@ write_files:
       name: node-operator
       apiGroup: rbac.authorization.k8s.io
     ---
+    ## prometheus-external is prometheus from host cluster
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: prometheus-external
+    subjects:
+    - kind: User
+      name: prometheus.{{.BaseDomain}}
+      apiGroup: rbac.authorization.k8s.io
+    roleRef:
+      kind: ClusterRole
+      name: prometheus-external
+      apiGroup: rbac.authorization.k8s.io
+    ---
     ## Calico
     kind: ClusterRoleBinding
     apiVersion: rbac.authorization.k8s.io/v1beta1
@@ -981,6 +995,28 @@ write_files:
     - apiGroups: [""]
       resources: ["pods"]
       verbs: ["list", "delete"]
+    ---
+    ## prometheus-external
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1
+    metadata:
+      name: prometheus-external
+    rules:
+    - apiGroups: [""]
+      resources:
+      - nodes
+      - nodes/proxy
+      - services
+      - endpoints
+      - pods
+      verbs: ["get", "list", "watch"]
+    - apiGroups:
+      - extensions
+      resources:
+      - ingresses
+      verbs: ["get", "list", "watch"]
+    - nonResourceURLs: ["/metrics"]
+      verbs: ["get"]
     ---
     ## Calico
     kind: ClusterRole
