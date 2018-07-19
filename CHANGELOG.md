@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.5.0] WIP
 
 ### Changed
-
+- Added separate parameter for disabling the Ingress Controller service manifest.
 
 ### Removed
 

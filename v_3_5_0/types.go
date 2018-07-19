@@ -17,9 +17,13 @@ type Params struct {
 	// config related to Kubernetes encryption at REST.
 	DisableEncryptionAtREST bool
 	// DisableIngressController flag. When set removes all manifests from the
-	// cloud config related to Ingress Controller. This allows us to migrate
-	// providers to chart-operator independently.
+	// cloud config related to Ingress Controller. There is a separate param
+	// for the Ingress Controller service as these will be migrated separately.
 	DisableIngressController bool
+	// DisableIngressControllerService flag. When set removes the manifest for
+	// the Ingress Controller service. This allows us to migrate providers to
+	// chart-operator independently.
+	DisableIngressControllerService bool
 	// Hyperkube allows to pass extra `docker run` and `command` arguments
 	// to hyperkube image commands. This allows to e.g. add cloud provider
 	// extensions.
