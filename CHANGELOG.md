@@ -13,6 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 
+- Disabled HSTS headers in nginx-ingress-controller.
 
 ### Removed
 
