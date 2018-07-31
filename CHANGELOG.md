@@ -12,6 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.5.0] WIP
 
 ### Changed
+- Disabled HSTS headers in nginx-ingress-controller.
 - Added separate parameter for disabling the Ingress Controller service manifest.
 
 ### Removed

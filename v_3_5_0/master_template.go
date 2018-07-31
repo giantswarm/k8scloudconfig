@@ -606,6 +606,9 @@ write_files:
       server-name-hash-max-size: "1024"
       server-tokens: "false"
       worker-processes: "4"
+      # Disables setting a 'Strict-Transport-Security' header, which can be harmful.
+      # See https://github.com/kubernetes/ingress-nginx/issues/549#issuecomment-291894246
+      hsts: "false"
 - path: /srv/ingress-controller-dep.yml
   owner: root
   permissions: 0644
