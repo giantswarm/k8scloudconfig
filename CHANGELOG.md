@@ -9,7 +9,15 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
-## [v3.5.0] WIP
+## [v3.6.0] WIP
+
+### Changed
+
+
+### Removed
+
+
+## [v3.5.0]
 
 ### Changed
 - Disabled HSTS headers in nginx-ingress-controller.
@@ -236,6 +244,7 @@ chart-operator).
 
 
 
+[v3.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_0
 [v3.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_0
 [v3.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_4_0
 [v3.3.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_4
