@@ -133,7 +133,7 @@ write_files:
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-node-critical
           serviceAccountName: calico-node
           # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
           # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
@@ -315,7 +315,7 @@ write_files:
           # The controllers must run in the host network namespace so that
           # it isn't governed by policy that would prevent it from working.
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-cluster-critical
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
@@ -450,7 +450,7 @@ write_files:
             k8s-app: coredns
         spec:
           serviceAccountName: coredns
-          priorityClassName: important-pods
+          priorityClassName: system-cluster-critical
           tolerations:
             - key: node-role.kubernetes.io/master
               effect: NoSchedule
@@ -648,7 +648,7 @@ write_files:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
           serviceAccountName: nginx-ingress-controller
-          priorityClassName: important-pods
+          priorityClassName: system-cluster-critical
           initContainers:
           - command:
             - sh
@@ -777,7 +777,7 @@ write_files:
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-node-critical
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
@@ -1290,41 +1290,6 @@ write_files:
        apiGroup: rbac.authorization.k8s.io
        kind: ClusterRole
        name: restricted-psp-user
-- path: /srv/priority_classes.yaml
-  permissions: 0644
-  content: |
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: core-pods
-    value: 1000000
-    globalDefault: false
-    description: "This priority class should be used for k8s components api/scheduler/controller-manager."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: critical-pods
-    value: 900000
-    globalDefault: false
-    description: "This priority class should be used for critical pods like calico and kube-proxy."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: important-pods
-    value: 800000
-    globalDefault: false
-    description: "This priority class should be used for important pods like coredns/ingress-controller."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: default
-    value: 500000
-    globalDefault: true
-    description: "This is a default priority class, used for cluster workloads without priority."
-    ---
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1370,14 +1335,6 @@ write_files:
               echo "failed to apply /srv/$manifest, retrying in 5 sec"
               sleep 5s
           done
-      done
-
-      while
-          /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/priority_classes.yaml
-          [ "$?" -ne "0" ]
-      do
-          echo "failed to apply /srv/priority_classes.yaml, retrying in 5 sec"
-          sleep 5s
       done
 
       {{ if not .DisableCalico -}}
@@ -1614,7 +1571,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-api-server
         image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
@@ -1646,7 +1603,7 @@ write_files:
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
-        - --etcd-servers=https://127.0.0.1:2379
+        - --etcd-servers=https://127.0.0.1:2379  
         - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
         - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
@@ -1736,7 +1693,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-controller-manager
         image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
@@ -1809,7 +1766,7 @@ write_files:
       namespace: kube-system
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-scheduler
         image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
