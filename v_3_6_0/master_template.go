@@ -781,7 +781,7 @@ write_files:
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
-              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
               command:
               - /hyperkube
               - proxy
@@ -1617,7 +1617,7 @@ write_files:
       priorityClassName: core-pods
       containers:
       - name: k8s-api-server
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         env:
         - name: HOST_IP
           valueFrom:
@@ -1739,7 +1739,7 @@ write_files:
       priorityClassName: core-pods
       containers:
       - name: k8s-controller-manager
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         command:
         - /hyperkube
         - controller-manager
@@ -1812,7 +1812,7 @@ write_files:
       priorityClassName: core-pods
       containers:
       - name: k8s-scheduler
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         command:
         - /hyperkube
         - scheduler
@@ -2104,7 +2104,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4"
+      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
