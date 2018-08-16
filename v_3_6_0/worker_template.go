@@ -23,7 +23,7 @@ write_files:
   content: |
     apiVersion: kubeproxy.config.k8s.io/v1alpha1
     clientConnection:
-      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yaml
+      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
     kind: KubeProxyConfiguration
     mode: iptables
     resourceContainer: /kube-proxy
@@ -251,8 +251,9 @@ coreos:
   - name: systemd-networkd-wait-online.service
     mask: true
   - name: k8s-setup-kubelet-config.service
-    enabled: true
-    contents: |
+    enable: true
+    command: start
+    content: |
       [Unit]
       Description=k8s-setup-kubelet-config Service
       After=k8s-setup-network-env.service docker.service

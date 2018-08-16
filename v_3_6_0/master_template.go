@@ -795,7 +795,7 @@ write_files:
               command:
               - /hyperkube
               - proxy
-              - --config=/etc/kubernetes/config/proxy-config.yaml
+              - --config=/etc/kubernetes/config/proxy-config.yml
               - --v=2
               livenessProbe:
                 httpGet:
@@ -1450,7 +1450,7 @@ write_files:
   content: |
     apiVersion: kubeproxy.config.k8s.io/v1alpha1
     clientConnection:
-      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yaml
+      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
     kind: KubeProxyConfiguration
     mode: iptables
     resourceContainer: /kube-proxy
@@ -1561,7 +1561,7 @@ write_files:
       provider: DefaultProvider
     apiVersion: componentconfig/v1alpha1
     clientConnection:
-      kubeconfig: /etc/kubernetes/config/scheduler-kubeconfig.yaml
+      kubeconfig: /etc/kubernetes/config/scheduler-kubeconfig.yml
     failureDomains: kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region
     hardPodAffinitySymmetricWeight: 1
 - path: /etc/kubernetes/config/scheduler-kubeconfig.yml
@@ -1836,7 +1836,7 @@ write_files:
         command:
         - /hyperkube
         - scheduler
-        - --config=/etc/kubernetes/config/scheduler-config.yaml
+        - --config=/etc/kubernetes/config/scheduler-config.yml
         - --v=2
         resources:
           requests:
@@ -1972,8 +1972,9 @@ coreos:
       [Install]
       WantedBy=multi-user.target
   - name: k8s-setup-kubelet-config.service
-    enabled: true
-    contents: |
+    enable: true
+    command: start
+    content: |
       [Unit]
       Description=k8s-setup-kubelet-config Service
       After=k8s-setup-network-env.service docker.service
