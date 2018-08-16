@@ -2124,8 +2124,8 @@ coreos:
     command: start
     content: |
       [Unit]
-      Wants=k8s-setup-network-env.service
-      After=k8s-setup-network-env.service
+      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service
+      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       Description=k8s-kubelet
       StartLimitIntervalSec=0
 
