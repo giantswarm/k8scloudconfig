@@ -12,7 +12,7 @@ version directory, and then changes are introduced.
 ## [v3.6.0] WIP
 
 ### Changed
-
+- Updated Kubernetes (hyperkube) to version 1.11.1.
 
 ### Removed
 

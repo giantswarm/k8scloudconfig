@@ -126,6 +126,8 @@ write_files:
         metadata:
           labels:
             k8s-app: calico-node
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           # Tolerations part was taken from calico manifest for kubeadm as we are using same taint for master.
           tolerations:
@@ -133,7 +135,7 @@ write_files:
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-node-critical
           serviceAccountName: calico-node
           # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
           # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
@@ -306,6 +308,8 @@ write_files:
           namespace: kube-system
           labels:
             k8s-app: calico-kube-controllers
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           # Tolerations part was taken from calico manifest for kubeadm as we are using same taint for master.
           tolerations:
@@ -315,7 +319,7 @@ write_files:
           # The controllers must run in the host network namespace so that
           # it isn't governed by policy that would prevent it from working.
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-cluster-critical
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
@@ -448,9 +452,11 @@ write_files:
         metadata:
           labels:
             k8s-app: coredns
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           serviceAccountName: coredns
-          priorityClassName: important-pods
+          priorityClassName: system-cluster-critical
           tolerations:
             - key: node-role.kubernetes.io/master
               effect: NoSchedule
@@ -634,6 +640,8 @@ write_files:
         metadata:
           labels:
             k8s-app: nginx-ingress-controller
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           affinity:
             podAntiAffinity:
@@ -648,7 +656,7 @@ write_files:
                         - nginx-ingress-controller
                   topologyKey: kubernetes.io/hostname
           serviceAccountName: nginx-ingress-controller
-          priorityClassName: important-pods
+          priorityClassName: system-cluster-critical
           initContainers:
           - command:
             - sh
@@ -771,24 +779,23 @@ write_files:
             component: kube-proxy
             k8s-app: kube-proxy
             kubernetes.io/cluster-service: "true"
+          annotations:
+            scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
           tolerations:
           - key: node-role.kubernetes.io/master
             operator: Exists
             effect: NoSchedule
           hostNetwork: true
-          priorityClassName: critical-pods
+          priorityClassName: system-node-critical
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
-              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
               command:
               - /hyperkube
               - proxy
-              - --proxy-mode=iptables
-              - --logtostderr=true
-              - --kubeconfig=/etc/kubernetes/config/proxy-kubeconfig.yml
-              - --conntrack-max-per-core=131072
+              - --config=/etc/kubernetes/config/proxy-config.yml
               - --v=2
               livenessProbe:
                 httpGet:
@@ -1290,41 +1297,6 @@ write_files:
        apiGroup: rbac.authorization.k8s.io
        kind: ClusterRole
        name: restricted-psp-user
-- path: /srv/priority_classes.yaml
-  permissions: 0644
-  content: |
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: core-pods
-    value: 1000000
-    globalDefault: false
-    description: "This priority class should be used for k8s components api/scheduler/controller-manager."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: critical-pods
-    value: 900000
-    globalDefault: false
-    description: "This priority class should be used for critical pods like calico and kube-proxy."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: important-pods
-    value: 800000
-    globalDefault: false
-    description: "This priority class should be used for important pods like coredns/ingress-controller."
-    ---
-    apiVersion: scheduling.k8s.io/v1alpha1
-    kind: PriorityClass
-    metadata:
-      name: default
-    value: 500000
-    globalDefault: true
-    description: "This is a default priority class, used for cluster workloads without priority."
-    ---
 - path: /opt/wait-for-domains
   permissions: 0544
   content: |
@@ -1370,14 +1342,6 @@ write_files:
               echo "failed to apply /srv/$manifest, retrying in 5 sec"
               sleep 5s
           done
-      done
-
-      while
-          /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/priority_classes.yaml
-          [ "$?" -ne "0" ]
-      do
-          echo "failed to apply /srv/priority_classes.yaml, retrying in 5 sec"
-          sleep 5s
       done
 
       {{ if not .DisableCalico -}}
@@ -1480,7 +1444,16 @@ write_files:
         user: proxy
       name: service-account-context
     current-context: service-account-context
-
+- path: /etc/kubernetes/config/proxy-config.yml
+  owner: root
+  permissions: 0644
+  content: |
+    apiVersion: kubeproxy.config.k8s.io/v1alpha1
+    clientConnection:
+      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
+    kind: KubeProxyConfiguration
+    mode: iptables
+    resourceContainer: /kube-proxy
 - path: /etc/kubernetes/config/proxy-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1503,6 +1476,35 @@ write_files:
         user: proxy
       name: service-account-context
     current-context: service-account-context
+- path: /etc/kubernetes/config/kubelet-config.yaml.tmpl
+  owner: root
+  permissions: 0644
+  content: |
+    kind: KubeletConfiguration
+    apiVersion: kubelet.config.k8s.io/v1beta1
+    address: ${DEFAULT_IPV4}
+    port: 10250
+    healthzBindAddress: ${DEFAULT_IPV4}
+    healthzPort: 10248
+    clusterDNS:
+      - {{.Cluster.Kubernetes.DNS.IP}}
+    clusterDomain: {{.Cluster.Kubernetes.Domain}}
+    staticPodPath: /etc/kubernetes/manifests
+    evictionSoft:
+      memory.available: "500Mi"
+    evictionHard:
+      memory.available: "200Mi"
+    evictionSoftGracePeriod:
+      memory.available: "5s"
+    evictionMaxPodGracePeriod: 60
+    authentication:
+      anonymous:
+        enabled: true # Defaults to false as of 1.10
+      webhook:
+        enabled: false # Deafults to true as of 1.10
+    authorization:
+      mode: AlwaysAllow # Deafults to webhook as of 1.10
+    readOnlyPort: 10255 # Used by heapster. Defaults to 0 (disabled) as of 1.10. Needed for metrics.
 - path: /etc/kubernetes/config/kubelet-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1525,6 +1527,7 @@ write_files:
         user: kubelet
       name: service-account-context
     current-context: service-account-context
+
 - path: /etc/kubernetes/config/controller-manager-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1547,6 +1550,18 @@ write_files:
         user: controller-manager
       name: service-account-context
     current-context: service-account-context
+- path: /etc/kubernetes/config/scheduler-config.yml
+  owner: root
+  permissions: 0644
+  content: |
+    kind: KubeSchedulerConfiguration
+    algorithmSource:
+      provider: DefaultProvider
+    apiVersion: componentconfig/v1alpha1
+    clientConnection:
+      kubeconfig: /etc/kubernetes/config/scheduler-kubeconfig.yml
+    failureDomains: kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region
+    hardPodAffinitySymmetricWeight: 1
 - path: /etc/kubernetes/config/scheduler-kubeconfig.yml
   owner: root
   permissions: 0644
@@ -1612,12 +1627,14 @@ write_files:
     metadata:
       name: k8s-api-server
       namespace: kube-system
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-api-server
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         env:
         - name: HOST_IP
           valueFrom:
@@ -1642,7 +1659,6 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
@@ -1734,12 +1750,14 @@ write_files:
     metadata:
       name: k8s-controller-manager
       namespace: kube-system
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-controller-manager
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         command:
         - /hyperkube
         - controller-manager
@@ -1749,11 +1767,9 @@ write_files:
         - --logtostderr=true
         - --v=2
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
-        - --profiling=false
         - --terminated-pod-gc-threshold=10
         - --use-service-account-credentials=true
         - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
         resources:
@@ -1807,20 +1823,19 @@ write_files:
     metadata:
       name: k8s-scheduler
       namespace: kube-system
+      annotations:
+        scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       hostNetwork: true
-      priorityClassName: core-pods
+      priorityClassName: system-node-critical
       containers:
       - name: k8s-scheduler
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
         command:
         - /hyperkube
         - scheduler
-        - --logtostderr=true
+        - --config=/etc/kubernetes/config/scheduler-config.yml
         - --v=2
-        - --profiling=false
-        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
-        - --kubeconfig=/etc/kubernetes/config/scheduler-kubeconfig.yml
         resources:
           requests:
             cpu: 100m
@@ -1951,6 +1966,21 @@ coreos:
       ExecStartPre=-/bin/bash -c "gpasswd -d core rkt; gpasswd -d core docker; gpasswd -d core wheel"
       ExecStartPre=/bin/bash -c "until [ -f '/etc/sysctl.d/hardening.conf' ]; do echo Waiting for sysctl file; sleep 1s;done;"
       ExecStart=/usr/sbin/sysctl -p /etc/sysctl.d/hardening.conf
+
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-setup-kubelet-config.service
+    enable: true
+    command: start
+    content: |
+      [Unit]
+      Description=k8s-setup-kubelet-config Service
+      After=k8s-setup-network-env.service docker.service
+      Requires=k8s-setup-network-env.service docker.service
+
+      [Service]
+      EnvironmentFile=/etc/network-environment
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-config.yaml.tmpl >/etc/kubernetes/config/kubelet-config.yaml'
 
       [Install]
       WantedBy=multi-user.target
@@ -2093,8 +2123,8 @@ coreos:
     command: start
     content: |
       [Unit]
-      Wants=k8s-setup-network-env.service
-      After=k8s-setup-network-env.service
+      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service
+      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       Description=k8s-kubelet
       StartLimitIntervalSec=0
 
@@ -2104,7 +2134,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.10.4"
+      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -2148,34 +2178,18 @@ coreos:
       {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
-      --address=${DEFAULT_IPV4} \
-      --port={{.Cluster.Kubernetes.Kubelet.Port}} \
       --node-ip=${DEFAULT_IPV4} \
+      --config=/etc/kubernetes/config/kubelet-config.yaml \
       --containerized \
       --enable-server \
       --logtostderr=true \
-      --machine-id-file=/rootfs/etc/machine-id \
       --cadvisor-port=4194 \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
-      --healthz-bind-address=${DEFAULT_IPV4} \
-      --healthz-port=10248 \
-      --cluster-dns={{.Cluster.Kubernetes.DNS.IP}} \
-      --cluster-domain={{.Cluster.Kubernetes.Domain}} \
       --network-plugin=cni \
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
-      --allow-privileged=true \
-      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true \
-      --pod-manifest-path=/etc/kubernetes/manifests \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
-      --kube-reserved="cpu=200m,memory=250Mi" \
-      --system-reserved="cpu=150m,memory=250Mi" \
-      --eviction-soft='memory.available<500Mi' \
-      --eviction-hard='memory.available<350Mi' \
-      --eviction-soft-grace-period='memory.available=5s' \
-      --eviction-max-pod-grace-period=60 \
-      --enforce-node-allocatable=pods \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
