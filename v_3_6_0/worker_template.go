@@ -66,11 +66,11 @@ write_files:
       ExpandPersistentVolumes: true
     staticPodPath: /etc/kubernetes/manifests
     evictionSoft:
-      memory.available:  "500Mi"
+      memory.available: "500Mi"
     evictionHard:
-      memory.available:  "200Mi"
+      memory.available: "200Mi"
     evictionSoftGracePeriod:
-      memory.available:  "5s"
+      memory.available: "5s"
     evictionMaxPodGracePeriod: 60
     authentication:
       anonymous:
