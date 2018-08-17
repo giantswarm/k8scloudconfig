@@ -62,8 +62,6 @@ write_files:
     clusterDNS:
       - {{.Cluster.Kubernetes.DNS.IP}}
     clusterDomain: {{.Cluster.Kubernetes.Domain}}
-    featureGates:
-      ExpandPersistentVolumes: true
     staticPodPath: /etc/kubernetes/manifests
     evictionSoft:
       memory.available: "500Mi"
@@ -365,7 +363,6 @@ coreos:
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --network-plugin=cni \
       --register-node=true \
-      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
       --v=2"
