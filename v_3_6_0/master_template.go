@@ -1491,6 +1491,7 @@ write_files:
     clusterDomain: {{.Cluster.Kubernetes.Domain}}
     featureGates:
       ExpandPersistentVolumes: true
+      CustomResourceSubresources: true
     staticPodPath: /etc/kubernetes/manifests
     evictionSoft:
       memory.available:  "500Mi"
@@ -1661,6 +1662,7 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
@@ -1771,6 +1773,7 @@ write_files:
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --terminated-pod-gc-threshold=10
         - --use-service-account-credentials=true
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml
         - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
@@ -1836,6 +1839,7 @@ write_files:
         command:
         - /hyperkube
         - scheduler
+        - --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true
         - --config=/etc/kubernetes/config/scheduler-config.yml
         - --v=2
         resources:
@@ -2189,6 +2193,7 @@ coreos:
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
       --network-plugin=cni \
       --register-node=true \
+      --feature-gates=ExpandPersistentVolumes=true,PodPriority=true,CustomResourceSubresources=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
       --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
       --node-labels="node-role.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
