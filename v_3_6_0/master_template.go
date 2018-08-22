@@ -408,6 +408,79 @@ write_files:
     metadata:
       name: calico-kube-controllers
       namespace: kube-system
+    ---
+
+    # Calico Version v3.2.0
+    # https://docs.projectcalico.org/v3.2/releases#v3.2.0
+
+    ---
+
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-kube-controllers
+    rules:
+      - apiGroups:
+        - ""
+        - extensions
+        resources:
+          - pods
+          - namespaces
+          - networkpolicies
+          - nodes
+          - serviceaccounts
+        verbs:
+          - watch
+          - list
+      - apiGroups:
+        - networking.k8s.io
+        resources:
+          - networkpolicies
+        verbs:
+          - watch
+          - list
+    ---
+    kind: ClusterRoleBinding
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-kube-controllers
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: calico-kube-controllers
+    subjects:
+    - kind: ServiceAccount
+      name: calico-kube-controllers
+      namespace: kube-system
+
+    ---
+
+    kind: ClusterRole
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    metadata:
+      name: calico-node
+    rules:
+      - apiGroups: [""]
+        resources:
+          - pods
+          - nodes
+        verbs:
+          - get
+
+    ---
+
+    apiVersion: rbac.authorization.k8s.io/v1beta1
+    kind: ClusterRoleBinding
+    metadata:
+      name: calico-node
+    roleRef:
+      apiGroup: rbac.authorization.k8s.io
+      kind: ClusterRole
+      name: calico-node
+    subjects:
+    - kind: ServiceAccount
+      name: calico-node
+      namespace: kube-system
 {{ end -}}
 - path: /srv/coredns.yaml
   owner: root
@@ -977,33 +1050,6 @@ write_files:
       kind: ClusterRole
       name: prometheus-external
       apiGroup: rbac.authorization.k8s.io
-    ---
-    ## Calico
-    kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    metadata:
-      name: calico-kube-controllers
-    subjects:
-    - kind: ServiceAccount
-      name: calico-kube-controllers
-      namespace: kube-system
-    roleRef:
-      kind: ClusterRole
-      name: calico-kube-controllers
-      apiGroup: rbac.authorization.k8s.io
-    ---
-    kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    metadata:
-      name: calico-node
-    subjects:
-    - kind: ServiceAccount
-      name: calico-node
-      namespace: kube-system
-    roleRef:
-      kind: ClusterRole
-      name: calico-node
-      apiGroup: rbac.authorization.k8s.io
 {{- if not .DisableIngressController }}
     ---
     ## IC
@@ -1072,38 +1118,6 @@ write_files:
       verbs: ["get", "list", "watch"]
     - nonResourceURLs: ["/metrics"]
       verbs: ["get"]
-    ---
-    ## Calico
-    kind: ClusterRole
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    metadata:
-      name: calico-kube-controllers
-      namespace: kube-system
-    rules:
-      - apiGroups:
-        - ""
-        - extensions
-        resources:
-          - pods
-          - namespaces
-          - networkpolicies
-          - nodes
-        verbs:
-          - watch
-          - list
-    ---
-    kind: ClusterRole
-    apiVersion: rbac.authorization.k8s.io/v1beta1
-    metadata:
-      name: calico-node
-      namespace: kube-system
-    rules:
-      - apiGroups: [""]
-        resources:
-          - pods
-          - nodes
-        verbs:
-          - get
 {{- if not .DisableIngressController }}
     ---
     ## IC
