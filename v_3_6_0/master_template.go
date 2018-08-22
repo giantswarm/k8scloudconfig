@@ -229,7 +229,6 @@ write_files:
               resources:
                 requests:
                   cpu: 250m
-                  memory: 100Mi
               livenessProbe:
                 httpGet:
                   path: /liveness
