@@ -22,6 +22,9 @@ write_files:
   owner: root
   permissions: 644
   content: |
+    # Extra changes:
+    #  - added "nodename_file_optional" set to true (can be removed on the next upgrade)
+    #
     # Calico Version v3.2.0
     # https://docs.projectcalico.org/v3.2/releases#v3.2.0
     # This manifest includes the following component versions:
@@ -65,6 +68,7 @@ write_files:
               "etcd_cert_file": "__ETCD_CERT_FILE__",
               "etcd_ca_cert_file": "__ETCD_CA_CERT_FILE__",
               "mtu": __CNI_MTU__,
+              "nodename_file_optional": true,
               "ipam": {
                   "type": "calico-ipam"
               },
