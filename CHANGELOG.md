@@ -13,6 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Updated Kubernetes (hyperkube) to version 1.11.1.
+- Updated Calico to version 3.2.0.
 
 ### Removed
 
