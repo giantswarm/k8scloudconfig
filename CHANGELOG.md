@@ -16,7 +16,7 @@ version directory, and then changes are introduced.
 - Updated Calico to version 3.2.0.
 
 ### Removed
-
+- Removed coreDNS related components (will be managed by chart-operator).
 
 ## [v3.5.0]
 
