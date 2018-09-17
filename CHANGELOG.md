@@ -22,6 +22,9 @@ chart-operator).
 ### Removed
 
 
+## [v3.5.1]
+
+
 ## [v3.5.0]
 
 ### Changed
