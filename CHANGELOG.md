@@ -18,6 +18,9 @@ version directory, and then changes are introduced.
 ### Removed
 - Removed coreDNS related components (will be managed by chart-operator).
 
+## [v3.5.1]
+
+
 ## [v3.5.0]
 
 ### Changed
