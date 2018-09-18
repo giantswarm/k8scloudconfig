@@ -11,6 +11,10 @@ version directory, and then changes are introduced.
 
 ## [v3.6.0] WIP
 
+### Added
+- Added template flag for removing CoreDNS resources (will be managed by
+chart-operator).
+
 ### Changed
 - Updated Kubernetes (hyperkube) to version 1.11.1.
 - Updated Calico to version 3.2.0.
