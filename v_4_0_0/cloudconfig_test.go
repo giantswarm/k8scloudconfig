@@ -85,8 +85,8 @@ func TestCloudConfigTemplating(t *testing.T) {
 			},
 
 			expectedString: `
-                - name: CALICO_IPV4POOL_CIDR
-                  value: "127.0.0.1/16"
+                      - name: CALICO_IPV4POOL_CIDR
+                        value: "127.0.0.1/16"
 `,
 		},
 
@@ -104,8 +104,8 @@ func TestCloudConfigTemplating(t *testing.T) {
 			},
 
 			expectedString: `
-                - name: CALICO_IPV4POOL_CIDR
-                  value: "192.168.0.0/24"
+                      - name: CALICO_IPV4POOL_CIDR
+                        value: "192.168.0.0/24"
 `,
 		},
 	}
