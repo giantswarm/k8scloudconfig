@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"io/ioutil"
 	"path"
+	"runtime"
 	"text/template"
 
 	"github.com/giantswarm/microerror"
@@ -39,4 +40,15 @@ func RenderFiles(filespath string, ctx interface{}) (*Files, error) {
 	}
 
 	return &files, nil
+}
+
+// GetFilesPath retrieves runtime path for the ignition templates
+func GetFilesPath() (string, error) {
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		return "", microerror.New("failed to retrieve runtime information")
+	}
+	filesPath := path.Join(path.Dir(filename), FilesDir)
+
+	return filesPath, nil
 }
