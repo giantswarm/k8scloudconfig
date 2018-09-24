@@ -191,195 +191,69 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          {{ .SSOPublicKey }}
-    - path: /etc/kubernetes/config/proxy-config.yml
+        source: "data:text/plain,{{ .SSOPublicKey }}"
+ 
+    - path: /etc/kubernetes/config/proxy-config.yaml
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          apiVersion: kubeproxy.config.k8s.io/v1alpha1
-          clientConnection:
-            kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
-          kind: KubeProxyConfiguration
-          mode: iptables
-          resourceContainer: /kube-proxy
-    - path: /etc/kubernetes/config/proxy-kubeconfig.yml
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/proxy-config.yaml" }}"
+
+    - path: /etc/kubernetes/config/proxy-kubeconfig.yaml
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          apiVersion: v1
-          kind: Config
-          users:
-          - name: proxy
-            user:
-              client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
-              client-key: /etc/kubernetes/ssl/apiserver-key.pem
-          clusters:
-          - name: local
-            cluster:
-              certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-              server: https://{{.Cluster.Kubernetes.API.Domain}}
-          contexts:
-          - context:
-              cluster: local
-              user: proxy
-            name: service-account-context
-          current-context: service-account-context
-          - path: /etc/kubernetes/config/proxy-kubeconfig.yml
-          filesystem: root
-          mode: 0644
-          contents:
-            inline: |
-              apiVersion: v1
-              kind: Config
-              users:
-              - name: proxy
-                user:
-                  client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
-                  client-key: /etc/kubernetes/ssl/apiserver-key.pem
-              clusters:
-              - name: local
-                cluster:
-                  certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-                  server: https://{{.Cluster.Kubernetes.API.Domain}}
-              contexts:
-              - context:
-                  cluster: local
-                  user: proxy
-                name: service-account-context
-              current-context: service-account-context
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/proxy-kubeconfig.yaml" }}"
+
     - path: /etc/kubernetes/config/kubelet-config.yaml.tmpl
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          kind: KubeletConfiguration
-          apiVersion: kubelet.config.k8s.io/v1beta1
-          address: ${DEFAULT_IPV4}
-          port: 10250
-          healthzBindAddress: ${DEFAULT_IPV4}
-          healthzPort: 10248
-          clusterDNS:
-            - {{.Cluster.Kubernetes.DNS.IP}}
-          clusterDomain: {{.Cluster.Kubernetes.Domain}}
-          staticPodPath: /etc/kubernetes/manifests
-          evictionSoft:
-            memory.available: "500Mi"
-          evictionHard:
-            memory.available: "200Mi"
-          evictionSoftGracePeriod:
-            memory.available: "5s"
-          evictionMaxPodGracePeriod: 60
-          authentication:
-            anonymous:
-              enabled: true # Defaults to false as of 1.10
-            webhook:
-              enabled: false # Deafults to true as of 1.10
-          authorization:
-            mode: AlwaysAllow # Deafults to webhook as of 1.10
-          readOnlyPort: 10255 # Used by heapster. Defaults to 0 (disabled) as of 1.10. Needed for metrics.
-    - path: /etc/kubernetes/config/kubelet-kubeconfig.yml
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-config.yaml.tmpl" }}"
+        
+    - path: /etc/kubernetes/config/kubelet-kubeconfig.yaml
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          apiVersion: v1
-          kind: Config
-          users:
-          - name: kubelet
-            user:
-              client-certificate: /etc/kubernetes/ssl/apiserver-crt.pem
-              client-key: /etc/kubernetes/ssl/apiserver-key.pem
-          clusters:
-          - name: local
-            cluster:
-              certificate-authority: /etc/kubernetes/ssl/apiserver-ca.pem
-              server: https://{{.Cluster.Kubernetes.API.Domain}}
-          contexts:
-          - context:
-              cluster: local
-              user: kubelet
-            name: service-account-context
-          current-context: service-account-context
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kubelet-kubeconfig.yaml" }}"
+  
     - path: /opt/wait-for-domains
       filesystem: root
       mode: 0544
       contents:
-        inline: |
-          #!/bin/bash
-          domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/wait-for-domains" }}"
 
-          for domain in $domains; do
-            until nslookup $domain; do
-                echo "Waiting for domain $domain to be available"
-                sleep 5
-            done
-
-            echo "Successfully resolved domain $domain"
-          done
     - path: /etc/ssh/sshd_config
       filesystem: root
       mode: 0644
       contents:
-        inline: |
-          # Use most defaults for sshd configuration.
-          UsePrivilegeSeparation sandbox
-          Subsystem sftp internal-sftp
-          ClientAliveInterval 180
-          UseDNS no
-          UsePAM yes
-          PrintLastLog no # handled by PAM
-          PrintMotd no # handled by PAM
-          # Non defaults (#100)
-          ClientAliveCountMax 2
-          PasswordAuthentication no
-          TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/sshd_config" }}"
+
     - path: /etc/sysctl.d/hardening.conf
       filesystem: root
       mode: 0600
       contents:
-        inline: |
-          kernel.kptr_restrict = 2
-          kernel.sysrq = 0
-          net.ipv4.conf.all.log_martians = 1
-          net.ipv4.conf.all.send_redirects = 0
-          net.ipv4.conf.default.accept_redirects = 0
-          net.ipv4.conf.default.log_martians = 1
-          net.ipv4.tcp_timestamps = 0
-          net.ipv6.conf.all.accept_redirects = 0
-          net.ipv6.conf.default.accept_redirects = 0
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/hardening.conf" }}"
+
     - path: /etc/audit/rules.d/10-docker.rules
       filesystem: root
       mode: 0600
       contents:
-        inline: |
-          -w /usr/bin/docker -k docker
-          -w /var/lib/docker -k docker
-          -w /etc/docker -k docker
-          -w /etc/systemd/system/docker.service.d/10-giantswarm-extra-args.conf -k docker
-          -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
-          -w /usr/lib/systemd/system/docker.service -k docker
-          -w /usr/lib/systemd/system/docker.socket -k docker
-    {{range .Extension.Files}}
-    - path: {{.Metadata.Path}}
-      filesystem: {{.Metadata.Owner}}
-      mode: {{printf "%#o" .Metadata.Permissions}}
-      contents:
-        inline: |
-          {{range .Content}}{{.}}
-          {{end}}{{end}}
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/10-docker.rules" }}"
+
     - path: /etc/modules-load.d/ip_vs.conf
       filesystem: root
       mode: 0600
       contents:
-        inline: |
-          ip_vs
-          ip_vs_rr
-          ip_vs_wrr
-          ip_vs_sh
-          nf_conntrack_ipv4
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
+
+    {{ range .Extension.Files -}}
+    - path: {{ .Metadata.Path }}
+      filesystem: {{ .Metadata.Owner }}
+      mode: {{printf "%#o" .Metadata.Permissions}}
+      contents:
+        source: "data:text/plain;charset=utf-8,{{ .Content }}"
+    {{ end -}}
 
 {{ range .Extension.VerbatimSections }}
 {{ .Content }}

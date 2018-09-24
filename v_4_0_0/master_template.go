@@ -511,7 +511,7 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
-    {{ range .Extension.Files-}}
+    {{ range .Extension.Files -}}
     - path: {{.Metadata.Path}}
       filesystem: {{.Metadata.Owner}}
       mode: {{printf "%#o" .Metadata.Permissions}}
