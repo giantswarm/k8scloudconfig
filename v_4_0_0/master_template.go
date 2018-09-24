@@ -647,24 +647,7 @@ write_files:
         port: 53
         protocol: TCP
 {{- end }}
-- path: /srv/network-policy.json
-  owner: root
-  permissions: 0644
-  content: |
-    {
-      "kind": "ThirdPartyResource",
-      "apiVersion": "extensions/v1beta1",
-      "metadata": {
-        "name": "network-policy.net.alpha.kubernetes.io"
-      },
-      "description": "Specification for a network isolation policy",
-      "versions": [
-        {
-          "name": "v1alpha1"
-        }
-      ]
-    }
-{{- if not .DisableIngressController }}
+{{ if not .DisableIngressController }}
 - path: /srv/default-backend-dep.yml
   owner: root
   permissions: 0644
@@ -1455,7 +1438,7 @@ write_files:
       {{ end -}}
       MANIFESTS="${MANIFESTS} kube-proxy-sa.yaml"
       MANIFESTS="${MANIFESTS} kube-proxy-ds.yaml"
-      {{- if not .DisableCoreDNS }}
+      {{ if not .DisableCoreDNS }}
       MANIFESTS="${MANIFESTS} coredns.yaml"
       {{ end -}}
       {{ if not .DisableIngressController -}}
