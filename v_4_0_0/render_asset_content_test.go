@@ -8,6 +8,8 @@ import (
 
 const (
 	testTemplate = `foo: {{.Foo}}`
+	testMultilineTemplate = `foo: {{.Foo}}
+secondline`
 )
 
 type FakeParams struct {
@@ -29,6 +31,30 @@ func TestRenderAssetContent(t *testing.T) {
 
 	for _, tc := range tests {
 		content, err := RenderAssetContent(tc.assetContent, tc.params)
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		assert.Equal(t, tc.expectedContent, content, "content should be equal")
+	}
+}
+
+
+func TestRenderFileAssetContent(t *testing.T) {
+	tests := []struct {
+		assetContent    string
+		params          FakeParams
+		expectedContent string
+	}{
+		{
+			assetContent:    testMultilineTemplate,
+			params:          FakeParams{Foo: "bar"},
+			expectedContent: "foo: bar\nsecondline",
+		},
+	}
+
+	for _, tc := range tests {
+		content, err := RenderFileAssetContent(tc.assetContent, tc.params)
 		if err != nil {
 			t.Fatal(err)
 		}

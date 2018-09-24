@@ -21,3 +21,19 @@ func RenderAssetContent(assetContent string, params interface{}) ([]string, erro
 	content := strings.Split(buf.String(), "\n")
 	return content, nil
 }
+
+func RenderFileAssetContent(assetContent string, params interface{}) (string, error) {
+	tmpl, err := template.New("").Parse(assetContent)
+	if err != nil {
+		return "", err
+	}
+
+	buf := new(bytes.Buffer)
+
+	if err := tmpl.Execute(buf, params); err != nil {
+		return "", err
+	}
+
+	content := buf.String()
+	return content, nil
+}
