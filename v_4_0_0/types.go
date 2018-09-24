@@ -43,7 +43,7 @@ type Params struct {
 	// The general use-case is to create a manifest file with Extension and
 	// then apply the manifest by adding it to ExtraManifests.
 	ExtraManifests []string
-	Files *Files
+	Files          *Files
 	Node           v1alpha1.ClusterNode
 	// RegistryDomain is the host of the docker image registry to use.
 	RegistryDomain string

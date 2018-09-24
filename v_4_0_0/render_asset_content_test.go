@@ -7,7 +7,7 @@ import (
 )
 
 const (
-	testTemplate = `foo: {{.Foo}}`
+	testTemplate          = `foo: {{.Foo}}`
 	testMultilineTemplate = `foo: {{.Foo}}
 secondline`
 )
@@ -38,7 +38,6 @@ func TestRenderAssetContent(t *testing.T) {
 		assert.Equal(t, tc.expectedContent, content, "content should be equal")
 	}
 }
-
 
 func TestRenderFileAssetContent(t *testing.T) {
 	tests := []struct {
