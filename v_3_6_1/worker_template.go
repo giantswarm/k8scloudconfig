@@ -1,4 +1,4 @@
-package v_3_6_0
+package v_3_6_1
 
 const WorkerTemplate = `#cloud-config
 users:

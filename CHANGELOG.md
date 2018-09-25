@@ -15,6 +15,9 @@ version directory, and then changes are introduced.
 - Switched from cloudinit to ignition.
 - Enable admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
 
+## [v3.6.1]
+
+
 ## [v3.6.0]
 
 ### Added
