@@ -264,6 +264,7 @@ chart-operator).
 
 
 
+[v4.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_0
 [v3.6.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_1
 [v3.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_0
 [v3.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_0
