@@ -647,24 +647,7 @@ write_files:
         port: 53
         protocol: TCP
 {{- end }}
-- path: /srv/network-policy.json
-  owner: root
-  permissions: 0644
-  content: |
-    {
-      "kind": "ThirdPartyResource",
-      "apiVersion": "extensions/v1beta1",
-      "metadata": {
-        "name": "network-policy.net.alpha.kubernetes.io"
-      },
-      "description": "Specification for a network isolation policy",
-      "versions": [
-        {
-          "name": "v1alpha1"
-        }
-      ]
-    }
-{{- if not .DisableIngressController }}
+{{ if not .DisableIngressController }}
 - path: /srv/default-backend-dep.yml
   owner: root
   permissions: 0644
@@ -913,7 +896,7 @@ write_files:
           serviceAccountName: kube-proxy
           containers:
             - name: kube-proxy
-              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
+              image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm
               command:
               - /hyperkube
               - proxy
@@ -1455,7 +1438,7 @@ write_files:
       {{ end -}}
       MANIFESTS="${MANIFESTS} kube-proxy-sa.yaml"
       MANIFESTS="${MANIFESTS} kube-proxy-ds.yaml"
-      {{- if not .DisableCoreDNS }}
+      {{ if not .DisableCoreDNS }}
       MANIFESTS="${MANIFESTS} coredns.yaml"
       {{ end -}}
       {{ if not .DisableIngressController -}}
@@ -1691,7 +1674,7 @@ write_files:
       priorityClassName: system-node-critical
       containers:
       - name: k8s-api-server
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm
         env:
         - name: HOST_IP
           valueFrom:
@@ -1716,7 +1699,7 @@ write_files:
         - --repair-malformed-updates=false
         - --service-account-lookup=true
         - --authorization-mode=RBAC
-        - --admission-control=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority
+        - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
         - --etcd-servers=https://127.0.0.1:2379
@@ -1814,7 +1797,7 @@ write_files:
       priorityClassName: system-node-critical
       containers:
       - name: k8s-controller-manager
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm
         command:
         - /hyperkube
         - controller-manager
@@ -1887,7 +1870,7 @@ write_files:
       priorityClassName: system-node-critical
       containers:
       - name: k8s-scheduler
-        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1
+        image: {{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm
         command:
         - /hyperkube
         - scheduler
@@ -2191,7 +2174,7 @@ coreos:
       RestartSec=0
       TimeoutStopSec=10
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1"
+      Environment="IMAGE={{ .RegistryDomain }}/giantswarm/hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/docker pull $IMAGE
