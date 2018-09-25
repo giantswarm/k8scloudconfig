@@ -21,7 +21,7 @@ const (
 
 type RenderParams struct {
 	Foo   string
-	Files *Files
+	Files Files
 }
 
 func Test_RenderFiles(t *testing.T) {

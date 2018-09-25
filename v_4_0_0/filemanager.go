@@ -3,8 +3,9 @@ package v_4_0_0
 import (
 	"bytes"
 	"encoding/base64"
-	"io/ioutil"
-	"path"
+	"fmt"
+	"os"
+	"path/filepath"
 	"text/template"
 
 	"github.com/giantswarm/microerror"
@@ -13,30 +14,30 @@ import (
 // Files is map[string]string for files that we fetched from disk and then filled with data.
 type Files map[string]string
 
-func RenderFiles(filespath string, ctx interface{}) (*Files, error) {
+func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	files := Files{}
-	dirList, err := ioutil.ReadDir(filespath)
-	if err != nil {
-		return nil, microerror.Maskf(err, "Failed to read files dir: %s, error: %#v", filespath, err)
-	}
 
-	for _, dir := range dirList {
-		fileList, err := ioutil.ReadDir(path.Join(filespath, dir.Name()))
-		if err != nil {
-			return nil, microerror.Maskf(err, "Failed to read dir: %s, error: %#v", path.Join(filespath, dir.Name()), err)
-		}
-
-		for _, file := range fileList {
-			tmpl, err := template.ParseFiles(path.Join(filespath, dir.Name(), file.Name()))
+	err := filepath.Walk(filesdir, func(path string, f os.FileInfo, err error) error {
+		if f.Mode().IsRegular() {
+			tmpl, err := template.ParseFiles(path)
 			if err != nil {
-				return nil, microerror.Maskf(err, "Failed to file: %s, error: %#v", path.Join(filespath, dir.Name(), file.Name()), err)
+				return microerror.Maskf(err, "failed to parse file #%q", path)
 			}
 			var data bytes.Buffer
 			tmpl.Execute(&data, ctx)
 
-			files[dir.Name()+"/"+file.Name()] = base64.StdEncoding.EncodeToString(data.Bytes())
+			relativePath, err := filepath.Rel(filesdir, path)
+			fmt.Printf("path: %s", relativePath)
+			if err != nil {
+				return microerror.Mask(err)
+			}
+			files[relativePath] = base64.StdEncoding.EncodeToString(data.Bytes())
 		}
+		return nil
+	})
+	if err != nil {
+		return nil, microerror.Mask(err)
 	}
 
-	return &files, nil
+	return files, nil
 }
