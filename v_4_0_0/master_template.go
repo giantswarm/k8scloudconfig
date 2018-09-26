@@ -97,6 +97,8 @@ systemd:
       ExecStart=/usr/bin/docker run --rm --net=host -v /etc:/etc --name $NAME $IMAGE
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
+      [Install]
+      WantedBy=multi-user.target
   - name: etcd3.service
     enabled: true
     contents: |
@@ -260,6 +262,8 @@ systemd:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
+      [Install]
+      WantedBy=multi-user.target
   - name: etcd2.service
     enabled: false
     mask: true
@@ -512,8 +516,8 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
     {{ range .Extension.Files -}}
-    - path: {{.Metadata.Path}}
-      filesystem: {{.Metadata.Owner}}
+    - path: {{ .Metadata.Path }}
+      filesystem: {{ .Metadata.Owner }}
       mode: {{printf "%#o" .Metadata.Permissions}}
       contents:
         source: "data:text/plain;charset=utf-8,{{ .Content }}"
