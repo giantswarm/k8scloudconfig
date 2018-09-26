@@ -2,11 +2,10 @@ package v_4_0_0
 
 import (
 	"encoding/base64"
+	"fmt"
+	"path"
+	"runtime"
 	"testing"
-)
-
-const (
-	FilesDir = "files"
 )
 
 func TestCloudConfig(t *testing.T) {
@@ -42,11 +41,11 @@ func TestCloudConfig(t *testing.T) {
 	for _, tc := range tests {
 		c := DefaultCloudConfigConfig()
 
-		filesPath, err := GetFilesPath()
-		if err != nil {
-			t.Error(err)
+		_, filename, _, ok := runtime.Caller(0)
+		if !ok {
+			t.Errorf("failed to retrieve runtime information")
 		}
-
+		filesPath := path.Join(path.Dir(filename), FilesDir)
 		files, err := RenderFiles(filesPath, tc.params)
 		if err != nil {
 			t.Errorf("failed to render ignition files, %v:", err)
@@ -64,7 +63,7 @@ func TestCloudConfig(t *testing.T) {
 		if cloudConfig.params.EtcdPort != tc.expectedEtcdPort {
 			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.EtcdPort)
 		}
-
+		fmt.Println(cloudConfig.template)
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatal(err)
 		}
