@@ -3,7 +3,6 @@ package v_4_0_0
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"os"
 	"path/filepath"
 	"text/template"
