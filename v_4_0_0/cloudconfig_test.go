@@ -2,7 +2,6 @@ package v_4_0_0
 
 import (
 	"encoding/base64"
-	"fmt"
 	"path"
 	"runtime"
 	"testing"
@@ -63,7 +62,6 @@ func TestCloudConfig(t *testing.T) {
 		if cloudConfig.params.EtcdPort != tc.expectedEtcdPort {
 			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.EtcdPort)
 		}
-		fmt.Println(cloudConfig.template)
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatal(err)
 		}
