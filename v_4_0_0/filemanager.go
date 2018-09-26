@@ -11,9 +11,16 @@ import (
 	"github.com/giantswarm/microerror"
 )
 
-// Files is map[string]string for files that we fetched from disk and then filled with data.
+// Files is map[string]string (k: filename, v: contents) for files that are fetched from disk
+// and then filled with data.
 type Files map[string]string
 
+// RenderFiles walks over filesdir and parses all regular files with
+// text/template. Parsed templates are then rendered with ctx, base64 encoded
+// and added to returned Files.
+//
+// filesdir must not contain any other files than templates that can be parsed
+// with text/template.
 func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	files := Files{}
 
@@ -27,7 +34,6 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 			tmpl.Execute(&data, ctx)
 
 			relativePath, err := filepath.Rel(filesdir, path)
-			fmt.Printf("path: %s", relativePath)
 			if err != nil {
 				return microerror.Mask(err)
 			}
