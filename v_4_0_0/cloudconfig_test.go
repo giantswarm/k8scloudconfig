@@ -2,8 +2,8 @@ package v_4_0_0
 
 import (
 	"encoding/base64"
+	"fmt"
 	"path"
-	"runtime"
 	"testing"
 )
 
@@ -40,11 +40,12 @@ func TestCloudConfig(t *testing.T) {
 	for _, tc := range tests {
 		c := DefaultCloudConfigConfig()
 
-		_, filename, _, ok := runtime.Caller(0)
-		if !ok {
-			t.Errorf("failed to retrieve runtime information")
+		packagePath, err := getPackagePath()
+		if err != nil {
+			t.Errorf("failed to retrieve package path, %v:", err)
 		}
-		filesPath := path.Join(path.Dir(filename), FilesDir)
+		fmt.Printf("package: %s", packagePath)
+		filesPath := path.Join(packagePath, FilesDir)
 		files, err := RenderFiles(filesPath, tc.params)
 		if err != nil {
 			t.Errorf("failed to render ignition files, %v:", err)

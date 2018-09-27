@@ -30,10 +30,11 @@ func Test_MasterTemplate(t *testing.T) {
 			Extension: nopExtension{},
 		}
 
-		filesPath, err := GetFilesPath()
+		ignitionPath, err := getPackagePath()
 		if err != nil {
 			t.Error(err)
 		}
+		filesPath := GetFilesPath(ignitionPath)
 
 		files, err := RenderFiles(filesPath, params)
 		if err != nil {
