@@ -31,7 +31,7 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 		if f.Mode().IsRegular() {
 			tmpl, err := template.ParseFiles(path)
 			if err != nil {
-				return microerror.Maskf(err, "failed to parse file #%q", path)
+				return microerror.Maskf(err, "failed to parse file %#q", path)
 			}
 			var data bytes.Buffer
 			tmpl.Execute(&data, ctx)
