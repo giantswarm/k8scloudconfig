@@ -2,7 +2,6 @@ package v_4_0_0
 
 import (
 	"encoding/base64"
-	"fmt"
 	"path"
 	"testing"
 )
@@ -44,7 +43,6 @@ func TestCloudConfig(t *testing.T) {
 		if err != nil {
 			t.Errorf("failed to retrieve package path, %v:", err)
 		}
-		fmt.Printf("package: %s", packagePath)
 		filesPath := path.Join(packagePath, FilesDir)
 		files, err := RenderFiles(filesPath, tc.params)
 		if err != nil {
