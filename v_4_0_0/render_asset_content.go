@@ -2,6 +2,7 @@ package v_4_0_0
 
 import (
 	"bytes"
+	"encoding/base64"
 	"strings"
 	"text/template"
 )
@@ -34,6 +35,6 @@ func RenderFileAssetContent(assetContent string, params interface{}) (string, er
 		return "", err
 	}
 
-	content := buf.String()
+	content := base64.StdEncoding.EncodeToString(buf.Bytes())
 	return content, nil
 }

@@ -104,8 +104,7 @@ type FileAsset struct {
 type UnitMetadata struct {
 	AssetContent string
 	Name         string
-	Enable       bool
-	Command      string
+	Enabled      bool
 }
 
 type UnitAsset struct {

@@ -28,7 +28,7 @@ systemd:
         ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
-    enabled: {{.Metadata.Enable}}
+    enabled: {{.Metadata.Enabled}}
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
@@ -306,7 +306,7 @@ storage:
       mode: 0644
       contents:
         source: "data:text/plain,{{ .SSOPublicKey }}"
-        
+
     {{- if not .DisableCalico }}
     - path: /srv/calico-all.yaml
       filesystem: root
@@ -315,7 +315,7 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-all.yaml" }}"
     {{- end }}
 
-    {{- if not .DisableCoreDNS }}       
+    {{- if not .DisableCoreDNS }}
     - path: /srv/coredns.yaml
       filesystem: root
       mode: 0644
@@ -517,10 +517,12 @@ storage:
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
-      filesystem: {{ .Metadata.Owner }}
+      filesystem: root
+      user:
+        name: {{ .Metadata.Owner }}
       mode: {{printf "%#o" .Metadata.Permissions}}
       contents:
-        source: "data:text/plain;charset=utf-8,{{ .Content }}"
+        source: "data:text/plain;charset=utf-8;base64,{{ .Content }}"
     {{ end -}}
 
 {{ range .Extension.VerbatimSections }}

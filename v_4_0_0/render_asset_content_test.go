@@ -7,9 +7,7 @@ import (
 )
 
 const (
-	testTemplate          = `foo: {{.Foo}}`
-	testMultilineTemplate = `foo: {{.Foo}}
-secondline`
+	testTemplate = `foo: {{.Foo}}`
 )
 
 type FakeParams struct {
@@ -46,9 +44,10 @@ func TestRenderFileAssetContent(t *testing.T) {
 		expectedContent string
 	}{
 		{
-			assetContent:    testMultilineTemplate,
-			params:          FakeParams{Foo: "bar"},
-			expectedContent: "foo: bar\nsecondline",
+			assetContent: testTemplate,
+			params:       FakeParams{Foo: "bar"},
+			// expected base64 encoding of `foo: bar`
+			expectedContent: "Zm9vOiBiYXI=",
 		},
 	}
 
