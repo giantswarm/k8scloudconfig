@@ -21,7 +21,7 @@ systemd:
   units:
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
-    enabled: {{.Metadata.Enable}}
+    enabled: {{.Metadata.Enabled}}
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
@@ -253,7 +253,10 @@ storage:
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
-      filesystem: {{ .Metadata.Owner }}
+      user:
+        name: {{ .Metadata.Owner.User }}
+      group:
+        name: {{ .Metadata.Owner.Group }}
       mode: {{printf "%#o" .Metadata.Permissions}}
       contents:
         source: "data:text/plain;charset=utf-8,{{ .Content }}"

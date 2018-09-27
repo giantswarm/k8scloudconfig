@@ -519,7 +519,9 @@ storage:
     - path: {{ .Metadata.Path }}
       filesystem: root
       user:
-        name: {{ .Metadata.Owner }}
+        name: {{ .Metadata.Owner.User }}
+      group:
+        name: {{ .Metadata.Owner.Group }}
       mode: {{printf "%#o" .Metadata.Permissions}}
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{ .Content }}"

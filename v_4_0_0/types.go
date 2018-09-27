@@ -91,9 +91,14 @@ type HyperkubePodHostMount struct {
 type FileMetadata struct {
 	AssetContent string
 	Path         string
-	Owner        string
+	Owner        Owner
 	Encoding     string
 	Permissions  int
+}
+
+type Owner struct {
+	User  string
+	Group string
 }
 
 type FileAsset struct {
