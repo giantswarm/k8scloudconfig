@@ -253,6 +253,7 @@ storage:
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
+      filesystem: root
       user:
         name: {{ .Metadata.Owner.User }}
       group:
