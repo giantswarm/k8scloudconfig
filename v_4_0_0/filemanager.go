@@ -3,7 +3,6 @@ package v_4_0_0
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -27,7 +26,6 @@ type Files map[string]string
 func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	files := Files{}
 
-	fmt.Printf("dir: %s", filesdir)
 	err := filepath.Walk(filesdir, func(path string, f os.FileInfo, err error) error {
 		if f.Mode().IsRegular() {
 			tmpl, err := template.ParseFiles(path)
@@ -52,17 +50,17 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	return files, nil
 }
 
-// GetFilesPath returns path for the ignition assets based on
+// GetIgnitionPath returns path for the ignition assets based on
 // base ignition directory and package subdirectory with assets.
-func GetFilesPath(ignitionDir string) string {
+func GetIgnitionPath(ignitionDir string) string {
 	return filepath.Join(ignitionDir, FilesDir)
 }
 
-// getPackagePath returns top package path for the current runtime file.
+// GetPackagePath returns top package path for the current runtime file.
 // For example, for /go/src/k8scloudconfig/v_4_0_0/file.go function
 // returns /go/src/k8scloudconfig.
 // This function used only in tests for retrieving ignition assets in runtime.
-func getPackagePath() (string, error) {
+func GetPackagePath() (string, error) {
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {
 		return "", microerror.New("failed to retrieve runtime information")

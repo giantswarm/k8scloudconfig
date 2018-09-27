@@ -30,13 +30,13 @@ func Test_MasterTemplate(t *testing.T) {
 			Extension: nopExtension{},
 		}
 
-		ignitionPath, err := getPackagePath()
+		packagePath, err := GetPackagePath()
 		if err != nil {
 			t.Error(err)
 		}
-		filesPath := GetFilesPath(ignitionPath)
+		ignitionPath := GetIgnitionPath(packagePath)
 
-		files, err := RenderFiles(filesPath, params)
+		files, err := RenderFiles(ignitionPath, params)
 		if err != nil {
 			t.Errorf("failed to render ignition files, %v:", err)
 		}

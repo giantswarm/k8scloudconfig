@@ -40,7 +40,7 @@ func TestCloudConfig(t *testing.T) {
 	for _, tc := range tests {
 		c := DefaultCloudConfigConfig()
 
-		packagePath, err := getPackagePath()
+		packagePath, err := GetPackagePath()
 		if err != nil {
 			t.Errorf("failed to retrieve package path, %v:", err)
 		}
