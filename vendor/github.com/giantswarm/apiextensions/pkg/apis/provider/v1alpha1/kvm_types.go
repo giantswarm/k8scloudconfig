@@ -71,6 +71,7 @@ type KVMConfigSpecKVM struct {
 	Network         KVMConfigSpecKVMNetwork         `json:"network" yaml:"network"`
 	// NOTE THIS IS DEPRECATED
 	NodeController KVMConfigSpecKVMNodeController `json:"nodeController" yaml:"nodeController"`
+	PortMappings   []KVMConfigSpecKVMPortMappings `json:"portMappings" yaml:"portMappings"`
 	Workers        []KVMConfigSpecKVMNode         `json:"workers" yaml:"workers"`
 }
 
@@ -92,9 +93,10 @@ type KVMConfigSpecKVMK8sKVMDocker struct {
 }
 
 type KVMConfigSpecKVMNode struct {
-	CPUs   int     `json:"cpus" yaml:"cpus"`
-	Disk   float64 `json:"disk" yaml:"disk"`
-	Memory string  `json:"memory" yaml:"memory"`
+	CPUs               int     `json:"cpus" yaml:"cpus"`
+	Disk               float64 `json:"disk" yaml:"disk"`
+	Memory             string  `json:"memory" yaml:"memory"`
+	DockerVolumeSizeGB int     `json:"dockerVolumeSizeGB" yaml:"dockerVolumeSizeGB"`
 }
 
 type KVMConfigSpecKVMNetwork struct {
@@ -113,6 +115,12 @@ type KVMConfigSpecKVMNodeController struct {
 // NOTE THIS IS DEPRECATED
 type KVMConfigSpecKVMNodeControllerDocker struct {
 	Image string `json:"image" yaml:"image"`
+}
+
+type KVMConfigSpecKVMPortMappings struct {
+	Name       string `json:"name" yaml:"name"`
+	NodePort   int    `json:"nodePort" yaml:"nodePort"`
+	TargetPort int    `json:"targetPort" yaml:"targetPort"`
 }
 
 type KVMConfigSpecVersionBundle struct {
