@@ -1,9 +1,8 @@
 package v_4_0_0
 
 import (
+	"strings"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -32,8 +31,9 @@ func TestRenderAssetContent(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-
-		assert.Equal(t, tc.expectedContent, content, "content should be equal")
+		if strings.Join(content, "\n") != strings.Join(tc.expectedContent, "\n") {
+			t.Fatalf("expected %#v, got %#v", tc.expectedContent, content)
+		}
 	}
 }
 
@@ -56,7 +56,8 @@ func TestRenderFileAssetContent(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
-
-		assert.Equal(t, tc.expectedContent, content, "content should be equal")
+		if content != tc.expectedContent {
+			t.Fatalf("expected %#v, got %#v", tc.expectedContent, content)
+		}
 	}
 }

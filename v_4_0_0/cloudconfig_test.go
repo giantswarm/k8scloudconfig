@@ -43,7 +43,7 @@ func TestCloudConfig(t *testing.T) {
 		if err != nil {
 			t.Errorf("failed to retrieve package path, %v:", err)
 		}
-		filesPath := path.Join(packagePath, FilesDir)
+		filesPath := path.Join(packagePath, version, filesDir)
 		files, err := RenderFiles(filesPath, tc.params)
 		if err != nil {
 			t.Errorf("failed to render ignition files, %v:", err)

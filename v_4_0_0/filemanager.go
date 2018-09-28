@@ -11,7 +11,10 @@ import (
 	"github.com/giantswarm/microerror"
 )
 
-const FilesDir = "v_4_0_0/files"
+const (
+	version  = "v_4_0_0"
+	filesDir = "files"
+)
 
 // Files is map[string]string (k: filename, v: contents) for files that are fetched from disk
 // and then filled with data.
@@ -53,7 +56,7 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 // GetIgnitionPath returns path for the ignition assets based on
 // base ignition directory and package subdirectory with assets.
 func GetIgnitionPath(ignitionDir string) string {
-	return filepath.Join(ignitionDir, FilesDir)
+	return filepath.Join(ignitionDir, version, filesDir)
 }
 
 // GetPackagePath returns top package path for the current runtime file.
