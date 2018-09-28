@@ -43,6 +43,7 @@ type Params struct {
 	// The general use-case is to create a manifest file with Extension and
 	// then apply the manifest by adding it to ExtraManifests.
 	ExtraManifests []string
+	Files          Files
 	Node           v1alpha1.ClusterNode
 	// RegistryDomain is the host of the docker image registry to use.
 	RegistryDomain string
@@ -90,21 +91,25 @@ type HyperkubePodHostMount struct {
 type FileMetadata struct {
 	AssetContent string
 	Path         string
-	Owner        string
+	Owner        Owner
 	Encoding     string
 	Permissions  int
 }
 
+type Owner struct {
+	User  string
+	Group string
+}
+
 type FileAsset struct {
 	Metadata FileMetadata
-	Content  []string
+	Content  string
 }
 
 type UnitMetadata struct {
 	AssetContent string
 	Name         string
-	Enable       bool
-	Command      string
+	Enabled      bool
 }
 
 type UnitAsset struct {

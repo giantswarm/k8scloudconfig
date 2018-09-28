@@ -30,7 +30,19 @@ func Test_MasterTemplate(t *testing.T) {
 			Extension: nopExtension{},
 		}
 
-		err := tmpl.Execute(new(nopWriter), params)
+		packagePath, err := GetPackagePath()
+		if err != nil {
+			t.Error(err)
+		}
+		ignitionPath := GetIgnitionPath(packagePath)
+
+		files, err := RenderFiles(ignitionPath, params)
+		if err != nil {
+			t.Errorf("failed to render ignition files, %v:", err)
+		}
+		params.Files = files
+
+		err = tmpl.Execute(new(nopWriter), params)
 		if err != nil {
 			t.Fatalf("expected err = nil, got %v", err)
 		}

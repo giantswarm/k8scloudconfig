@@ -1,9 +1,8 @@
 package v_4_0_0
 
 import (
+	"strings"
 	"testing"
-
-	"github.com/stretchr/testify/assert"
 )
 
 const (
@@ -32,7 +31,33 @@ func TestRenderAssetContent(t *testing.T) {
 		if err != nil {
 			t.Fatal(err)
 		}
+		if strings.Join(content, "\n") != strings.Join(tc.expectedContent, "\n") {
+			t.Fatalf("expected %#v, got %#v", tc.expectedContent, content)
+		}
+	}
+}
 
-		assert.Equal(t, tc.expectedContent, content, "content should be equal")
+func TestRenderFileAssetContent(t *testing.T) {
+	tests := []struct {
+		assetContent    string
+		params          FakeParams
+		expectedContent string
+	}{
+		{
+			assetContent: testTemplate,
+			params:       FakeParams{Foo: "bar"},
+			// expected base64 encoding of `foo: bar`
+			expectedContent: "Zm9vOiBiYXI=",
+		},
+	}
+
+	for _, tc := range tests {
+		content, err := RenderFileAssetContent(tc.assetContent, tc.params)
+		if err != nil {
+			t.Fatal(err)
+		}
+		if content != tc.expectedContent {
+			t.Fatalf("expected %#v, got %#v", tc.expectedContent, content)
+		}
 	}
 }

@@ -5,9 +5,15 @@ import (
 	"encoding/base64"
 	"os"
 	"path/filepath"
+	"runtime"
 	"text/template"
 
 	"github.com/giantswarm/microerror"
+)
+
+const (
+	version  = "v_4_0_0"
+	filesDir = "files"
 )
 
 // Files is map[string]string (k: filename, v: contents) for files that are fetched from disk
@@ -27,7 +33,7 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 		if f.Mode().IsRegular() {
 			tmpl, err := template.ParseFiles(path)
 			if err != nil {
-				return microerror.Maskf(err, "failed to parse file #%q", path)
+				return microerror.Maskf(err, "failed to parse file %#q", path)
 			}
 			var data bytes.Buffer
 			tmpl.Execute(&data, ctx)
@@ -45,4 +51,23 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	}
 
 	return files, nil
+}
+
+// GetIgnitionPath returns path for the ignition assets based on
+// base ignition directory and package subdirectory with assets.
+func GetIgnitionPath(ignitionDir string) string {
+	return filepath.Join(ignitionDir, version, filesDir)
+}
+
+// GetPackagePath returns top package path for the current runtime file.
+// For example, for /go/src/k8scloudconfig/v_4_0_0/file.go function
+// returns /go/src/k8scloudconfig.
+// This function used only in tests for retrieving ignition assets in runtime.
+func GetPackagePath() (string, error) {
+	_, filename, _, ok := runtime.Caller(0)
+	if !ok {
+		return "", microerror.New("failed to retrieve runtime information")
+	}
+
+	return filepath.Dir(filepath.Dir(filename)), nil
 }

@@ -1,287 +1,81 @@
 package v_4_0_0
 
-const WorkerTemplate = `#cloud-config
-users:
-{{ range $index, $user := .Cluster.Kubernetes.SSH.UserList }}  - name: {{ $user.Name }}
-    groups:
-      - "sudo"
-      - "docker"
+const WorkerTemplate = `---
+ignition:
+  version: "2.2.0"
+passwd:
+  users:
+{{ range $index, $user := .Cluster.Kubernetes.SSH.UserList }}
+    - name: {{ $user.Name }}
+      shell: "/bin/bash"
+      groups:
+        - "sudo"
+        - "docker"
 {{ if ne $user.PublicKey "" }}
-    ssh-authorized-keys:
-       - "{{ $user.PublicKey }}"
+      sshAuthorizedKeys:
+        - "{{ $user.PublicKey }}"
 {{ end }}
-{{end}}
-write_files:
-- path: /etc/ssh/trusted-user-ca-keys.pem
-  owner: root
-  permissions: 644
-  content: |
-    {{ .SSOPublicKey }}
-- path: /etc/kubernetes/config/proxy-config.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: kubeproxy.config.k8s.io/v1alpha1
-    clientConnection:
-      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
-    kind: KubeProxyConfiguration
-    mode: iptables
-    resourceContainer: /kube-proxy
-- path: /etc/kubernetes/config/proxy-kubeconfig.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: v1
-    kind: Config
-    users:
-    - name: proxy
-      user:
-        client-certificate: /etc/kubernetes/ssl/worker-crt.pem
-        client-key: /etc/kubernetes/ssl/worker-key.pem
-    clusters:
-    - name: local
-      cluster:
-        certificate-authority: /etc/kubernetes/ssl/worker-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
-    contexts:
-    - context:
-        cluster: local
-        user: proxy
-      name: service-account-context
-    current-context: service-account-context
-- path: /etc/kubernetes/config/kubelet-config.yaml.tmpl
-  owner: root
-  permissions: 0644
-  content: |
-    kind: KubeletConfiguration
-    apiVersion: kubelet.config.k8s.io/v1beta1
-    address: ${DEFAULT_IPV4}
-    port: 10250
-    healthzBindAddress: ${DEFAULT_IPV4}
-    healthzPort: 10248
-    clusterDNS:
-      - {{.Cluster.Kubernetes.DNS.IP}}
-    clusterDomain: {{.Cluster.Kubernetes.Domain}}
-    staticPodPath: /etc/kubernetes/manifests
-    evictionSoft:
-      memory.available: "500Mi"
-    evictionHard:
-      memory.available: "200Mi"
-    evictionSoftGracePeriod:
-      memory.available: "5s"
-    evictionMaxPodGracePeriod: 60
-    authentication:
-      anonymous:
-        enabled: true # Defaults to false as of 1.10
-      webhook:
-        enabled: false # Deafults to true as of 1.10
-    authorization:
-      mode: AlwaysAllow # Deafults to webhook as of 1.10
-    readOnlyPort: 10255 # Used by heapster. Defaults to 0 (disabled) as of 1.10. Needed for metrics.
-- path: /etc/kubernetes/config/kubelet-kubeconfig.yml
-  owner: root
-  permissions: 0644
-  content: |
-    apiVersion: v1
-    kind: Config
-    users:
-    - name: kubelet
-      user:
-        client-certificate: /etc/kubernetes/ssl/worker-crt.pem
-        client-key: /etc/kubernetes/ssl/worker-key.pem
-    clusters:
-    - name: local
-      cluster:
-        certificate-authority: /etc/kubernetes/ssl/worker-ca.pem
-        server: https://{{.Cluster.Kubernetes.API.Domain}}
-    contexts:
-    - context:
-        cluster: local
-        user: kubelet
-      name: service-account-context
-    current-context: service-account-context
-- path: /opt/wait-for-domains
-  permissions: 0544
-  content: |
-      #!/bin/bash
-      domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
+{{ end }}
 
-      for domain in $domains; do
-        until nslookup $domain; do
-            echo "Waiting for domain $domain to be available"
-            sleep 5
-        done
-
-        echo "Successfully resolved domain $domain"
-      done
-
-- path: /etc/ssh/sshd_config
-  owner: root
-  permissions: 0600
-  content: |
-    # Use most defaults for sshd configuration.
-    UsePrivilegeSeparation sandbox
-    Subsystem sftp internal-sftp
-    ClientAliveInterval 180
-    UseDNS no
-    UsePAM yes
-    PrintLastLog no # handled by PAM
-    PrintMotd no # handled by PAM
-    # Non defaults (#100)
-    ClientAliveCountMax 2
-    PasswordAuthentication no
-    TrustedUserCAKeys /etc/ssh/trusted-user-ca-keys.pem
-- path: /etc/sysctl.d/hardening.conf
-  owner: root
-  permissions: 0600
-  content: |
-    kernel.kptr_restrict = 2
-    kernel.sysrq = 0
-    net.ipv4.conf.all.log_martians = 1
-    net.ipv4.conf.all.send_redirects = 0
-    net.ipv4.conf.default.accept_redirects = 0
-    net.ipv4.conf.default.log_martians = 1
-    net.ipv4.tcp_timestamps = 0
-    net.ipv6.conf.all.accept_redirects = 0
-    net.ipv6.conf.default.accept_redirects = 0
-
-- path: /etc/audit/rules.d/10-docker.rules
-  owner: root
-  permissions: 644
-  content: |
-    -w /usr/bin/docker -k docker
-    -w /var/lib/docker -k docker
-    -w /etc/docker -k docker
-    -w /etc/systemd/system/docker.service.d/10-giantswarm-extra-args.conf -k docker
-    -w /etc/systemd/system/docker.service.d/01-wait-docker.conf -k docker
-    -w /usr/lib/systemd/system/docker.service -k docker
-    -w /usr/lib/systemd/system/docker.socket -k docker
-
-- path: /etc/systemd/system/audit-rules.service.d/10-Wait-For-Docker.conf
-  owner: root
-  permissions: 644
-  content: |
-    [Service]
-    ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
-
-{{range .Extension.Files}}
-- path: {{.Metadata.Path}}
-  owner: {{.Metadata.Owner}}
-  {{ if .Metadata.Encoding }}
-  encoding: {{.Metadata.Encoding}}
-  {{ end }}
-  permissions: {{printf "%#o" .Metadata.Permissions}}
-  content: |
-    {{range .Content}}{{.}}
-    {{end}}{{end}}
-
-- path: /etc/modules-load.d/ip_vs.conf
-  owner: root
-  permissions: 644
-  content: |
-    ip_vs
-    ip_vs_rr
-    ip_vs_wrr
-    ip_vs_sh
-    nf_conntrack_ipv4
-
-coreos:
+systemd:
   units:
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
-    enable: {{.Metadata.Enable}}
-    command: {{.Metadata.Command}}
-    content: |
+    enabled: {{.Metadata.Enabled}}
+    contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
   - name: wait-for-domains.service
-    enable: true
-    command: start
-    content: |
+    enabled: true
+    contents: |
       [Unit]
       Description=Wait for etcd and k8s API domains to be available
-
       [Service]
       Type=oneshot
       ExecStart=/opt/wait-for-domains
-
       [Install]
       WantedBy=multi-user.target
   - name: os-hardeing.service
-    enable: true
-    command: start
-    content: |
+    enabled: true
+    contents: |
       [Unit]
       Description=Apply os hardening
-
       [Service]
       Type=oneshot
       ExecStartPre=-/bin/bash -c "gpasswd -d core rkt; gpasswd -d core docker; gpasswd -d core wheel"
       ExecStartPre=/bin/bash -c "until [ -f '/etc/sysctl.d/hardening.conf' ]; do echo Waiting for sysctl file; sleep 1s;done;"
       ExecStart=/usr/sbin/sysctl -p /etc/sysctl.d/hardening.conf
-
       [Install]
       WantedBy=multi-user.target
-  - name: update-engine.service
-    enable: false
-    command: stop
-    mask: true
-  - name: locksmithd.service
-    enable: false
-    command: stop
-    mask: true
-  - name: etcd2.service
-    enable: false
-    command: stop
-    mask: true
-  - name: fleet.service
-    enable: false
-    command: stop
-    mask: true
-  - name: fleet.socket
-    enable: false
-    command: stop
-    mask: true
-  - name: flanneld.service
-    enable: false
-    command: stop
-    mask: true
-  - name: systemd-networkd-wait-online.service
-    mask: true
   - name: k8s-setup-kubelet-config.service
-    enable: true
-    command: start
-    content: |
+    enabled: true
+    contents: |
       [Unit]
       Description=k8s-setup-kubelet-config Service
       After=k8s-setup-network-env.service docker.service
       Requires=k8s-setup-network-env.service docker.service
-
       [Service]
       EnvironmentFile=/etc/network-environment
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-config.yaml.tmpl >/etc/kubernetes/config/kubelet-config.yaml'
-
       [Install]
       WantedBy=multi-user.target
   - name: docker.service
-    enable: true
-    command: start
-    drop-ins:
-    - name: 10-giantswarm-extra-args.conf
-      content: |
-        [Service]
-        Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
-        Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
-        Environment="DOCKER_OPTS=--live-restore --icc=false --userland-proxy=false"
+    enabled: true
+    contents: |
+    dropins:
+      - name: 10-giantswarm-extra-args.conf
+        contents: |
+          [Service]
+          Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
+          Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+          Environment="DOCKER_OPTS=--live-restore --icc=false --userland-proxy=false"
   - name: k8s-setup-network-env.service
-    enable: true
-    command: start
-    content: |
+    enabled: true
+    contents: |
       [Unit]
       Description=k8s-setup-network-env Service
       Wants=network.target docker.service
       After=network.target docker.service
-
       [Service]
       Type=oneshot
       RemainAfterExit=yes
@@ -289,16 +83,18 @@ coreos:
       Environment="IMAGE={{.Cluster.Kubernetes.NetworkSetup.Docker.Image}}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
+      ExecStartPre=/usr/bin/mkdir -p /opt/bin/
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
       ExecStart=/usr/bin/docker run --rm --net=host -v /etc:/etc --name $NAME $IMAGE
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
+      [Install]
+      WantedBy=multi-user.target
   - name: k8s-kubelet.service
-    enable: true
-    command: start
-    content: |
+    enabled: true
+    contents: |
       [Unit]
       Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       After=k8s-setup-network-env.service k8s-setup-kubelet-config.service
@@ -369,9 +165,103 @@ coreos:
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
       ExecStopPost=-/usr/bin/docker rm -f $NAME
+      [Install]
+      WantedBy=multi-user.target
+  - name: etcd2.service
+    enabled: false
+    mask: true
+  - name: update-engine.service
+    enabled: false
+    mask: true
+  - name: locksmithd.service
+    enabled: false
+    mask: true
+  - name: fleet.service
+    enabled: false
+    mask: true
+  - name: fleet.socket
+    enabled: false
+    mask: true
+  - name: flanneld.service
+    enabled: false
+    mask: true
+  - name: systemd-networkd-wait-online.service
+    enabled: false
+    mask: true
 
-  update:
-    reboot-strategy: off
+storage:
+  files:
+    - path: /etc/ssh/trusted-user-ca-keys.pem
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain,{{ .SSOPublicKey }}"
+ 
+    - path: /etc/kubernetes/config/proxy-config.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/proxy-config.yaml" }}"
+
+    - path: /etc/kubernetes/config/proxy-kubeconfig.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/proxy-kubeconfig.yaml" }}"
+
+    - path: /etc/kubernetes/config/kubelet-config.yaml.tmpl
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-config.yaml.tmpl" }}"
+        
+    - path: /etc/kubernetes/config/kubelet-kubeconfig.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kubelet-kubeconfig.yaml" }}"
+  
+    - path: /opt/wait-for-domains
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/wait-for-domains" }}"
+
+    - path: /etc/ssh/sshd_config
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/sshd_config" }}"
+
+    - path: /etc/sysctl.d/hardening.conf
+      filesystem: root
+      mode: 0600
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/hardening.conf" }}"
+
+    - path: /etc/audit/rules.d/10-docker.rules
+      filesystem: root
+      mode: 0600
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/10-docker.rules" }}"
+
+    - path: /etc/modules-load.d/ip_vs.conf
+      filesystem: root
+      mode: 0600
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
+
+    {{ range .Extension.Files -}}
+    - path: {{ .Metadata.Path }}
+      filesystem: root
+      user:
+        name: {{ .Metadata.Owner.User }}
+      group:
+        name: {{ .Metadata.Owner.Group }}
+      mode: {{printf "%#o" .Metadata.Permissions}}
+      contents:
+        source: "data:text/plain;charset=utf-8,{{ .Content }}"
+    {{ end -}}
 
 {{ range .Extension.VerbatimSections }}
 {{ .Content }}
