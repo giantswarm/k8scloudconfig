@@ -5,7 +5,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/giantswarm/k8scloudconfig/ignition"
+	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 )
 
 func TestCloudConfig(t *testing.T) {
