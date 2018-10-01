@@ -4,15 +4,19 @@ import (
 	"encoding/base64"
 	"path"
 	"testing"
+
+	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 )
 
 func TestCloudConfig(t *testing.T) {
 	tests := []struct {
+		name             string
 		template         string
 		params           Params
 		expectedEtcdPort int
 	}{
 		{
+			name:     "master",
 			template: MasterTemplate,
 			params: Params{
 				Extension: nopExtension{},
@@ -20,6 +24,7 @@ func TestCloudConfig(t *testing.T) {
 			expectedEtcdPort: 443,
 		},
 		{
+			name:     "worker",
 			template: WorkerTemplate,
 			params: Params{
 				Extension: nopExtension{},
@@ -27,6 +32,7 @@ func TestCloudConfig(t *testing.T) {
 			expectedEtcdPort: 443,
 		},
 		{
+			name:     "worker",
 			template: WorkerTemplate,
 			params: Params{
 				EtcdPort:  2379,
@@ -69,5 +75,11 @@ func TestCloudConfig(t *testing.T) {
 		if _, err := base64.StdEncoding.DecodeString(cloudConfigBase64); err != nil {
 			t.Errorf("The string isn't Base64 encoded: %v", err)
 		}
+
+		_, err = ignition.ConvertTemplatetoJSON([]byte(cloudConfig.String()))
+		if err != nil {
+			t.Fatalf("failed to validate ignition %#q config, %v:", tc.name, err)
+		}
+
 	}
 }

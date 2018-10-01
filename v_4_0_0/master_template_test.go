@@ -44,7 +44,7 @@ func Test_MasterTemplate(t *testing.T) {
 
 		err = tmpl.Execute(new(nopWriter), params)
 		if err != nil {
-			t.Fatalf("expected err = nil, got %v", err)
+			t.Fatalf("failed to execute master template, expected err = nil, got %v", err)
 		}
 	}
 }
