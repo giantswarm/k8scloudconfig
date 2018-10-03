@@ -305,7 +305,7 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain,{{ .SSOPublicKey }}"
+        source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     {{- if not .DisableCalico }}
     - path: /srv/calico-all.yaml
