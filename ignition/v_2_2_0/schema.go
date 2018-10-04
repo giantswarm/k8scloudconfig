@@ -134,20 +134,20 @@ type PasswdGroup struct {
 	System       bool   `json:"system,omitempty"`
 }
 type PasswdUser struct {
-	Create            *Usercreate        `json:"create,omitempty"`
-	Gecos             string             `json:"gecos,omitempty"`
-	Groups            []Group            `json:"groups,omitempty"`
-	HomeDir           string             `json:"homeDir,omitempty"`
-	Name              string             `json:"name,omitempty"`
-	NoCreateHome      bool               `json:"noCreateHome,omitempty"`
-	NoLogInit         bool               `json:"noLogInit,omitempty"`
-	NoUserGroup       bool               `json:"noUserGroup,omitempty"`
-	PasswordHash      *string            `json:"passwordHash,omitempty"`
-	PrimaryGroup      string             `json:"primaryGroup,omitempty"`
-	SSHAuthorizedKeys []SSHAuthorizedKey `json:"sshAuthorizedKeys,omitempty"`
-	Shell             string             `json:"shell,omitempty"`
-	System            bool               `json:"system,omitempty"`
-	UID               *int               `json:"uid,omitempty"`
+	Create            *Usercreate        `json:"create,omitempty" yaml:"create,omitempty"`
+	Gecos             string             `json:"gecos,omitempty" yaml:"gecos,omitempty"`
+	Groups            []Group            `json:"groups,omitempty" yaml:"groups,omitempty"`
+	HomeDir           string             `json:"homeDir,omitempty" yaml:"homeDir,omitempty"`
+	Name              string             `json:"name,omitempty" yaml:"name,omitempty"`
+	NoCreateHome      bool               `json:"noCreateHome,omitempty" yaml:"noCreateHome,omitempty"`
+	NoLogInit         bool               `json:"noLogInit,omitempty" yaml:"noLogInit,omitempty"`
+	NoUserGroup       bool               `json:"noUserGroup,omitempty" yaml:"noUserGroup,omitempty"`
+	PasswordHash      *string            `json:"passwordHash,omitempty" yaml:"passwordHash,omitempty"`
+	PrimaryGroup      string             `json:"primaryGroup,omitempty" yaml:"primaryGroup,omitempty"`
+	SSHAuthorizedKeys []SSHAuthorizedKey `json:"sshAuthorizedKeys,omitempty" yaml:"sshAuthorizedKeys,omitempty"`
+	Shell             string             `json:"shell,omitempty" yaml:"shell,omitempty"`
+	System            bool               `json:"system,omitempty" yaml:"system,omitempty"`
+	UID               *int               `json:"uid,omitempty" yaml:"uid,omitempty"`
 }
 type Raid struct {
 	Devices []Device     `json:"devices,omitempty"`
