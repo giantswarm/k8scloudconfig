@@ -381,6 +381,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/rbac_roles.yaml" }}"
 
+    - path: /srv/priority_classes.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/priority_classes.yaml" }}"
+
     - path: /srv/psp_policies.yaml
       filesystem: root
       mode: 0644
