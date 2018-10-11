@@ -24,13 +24,14 @@ write_files:
   content: |
     # Extra changes:
     #  - added "nodename_file_optional" set to true (can be removed on the next upgrade)
+    #  - added resource limits
     #
-    # Calico Version v3.2.0
-    # https://docs.projectcalico.org/v3.2/releases#v3.2.0
+    # Calico Version v3.2.3
+    # https://docs.projectcalico.org/v3.2/releases#v3.2.3
     # This manifest includes the following component versions:
-    #   calico/node:v3.2.0
-    #   calico/cni:v3.2.0
-    #   calico/kube-controllers:v3.2.0
+    #   calico/node:v3.2.3
+    #   calico/cni:v3.2.3
+    #   calico/kube-controllers:v3.2.3
 
     # This ConfigMap is used to configure a self-hosted Calico installation.
     kind: ConfigMap
@@ -138,6 +139,8 @@ write_files:
             # if it ever gets evicted.
             scheduler.alpha.kubernetes.io/critical-pod: ''
         spec:
+          nodeSelector:
+            beta.kubernetes.io/os: linux
           hostNetwork: true
           tolerations:
             # Make sure calico-node gets scheduled on all nodes.
@@ -157,7 +160,7 @@ write_files:
             # container programs network policy and routes on each
             # host.
             - name: calico-node
-              image: {{ .RegistryDomain }}/giantswarm/node:v3.2.0
+              image: {{ .RegistryDomain }}/giantswarm/node:v3.2.3
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -233,6 +236,10 @@ write_files:
               resources:
                 requests:
                   cpu: 250m
+                  memory: 150Mi
+                limits:
+                  cpu: 250m
+                  memory: 150Mi
               livenessProbe:
                 httpGet:
                   path: /liveness
@@ -263,7 +270,7 @@ write_files:
             # This container installs the Calico CNI binaries
             # and CNI network config file on each node.
             - name: install-cni
-              image: {{ .RegistryDomain }}/giantswarm/cni:v3.2.0
+              image: {{ .RegistryDomain }}/giantswarm/cni:v3.2.3
               command: ["/install-cni.sh"]
               env:
                 # Name of the CNI config file to create.
@@ -361,7 +368,7 @@ write_files:
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
-              image: {{ .RegistryDomain }}/giantswarm/kube-controllers:v3.2.0
+              image: {{ .RegistryDomain }}/giantswarm/kube-controllers:v3.2.3
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -394,6 +401,13 @@ write_files:
                 # Mount in the etcd TLS secrets.
                 - mountPath: /calico-secrets
                   name: etcd-certs
+              resources:
+                requests:
+                  cpu: 250m
+                  memory: 100Mi
+                limits:
+                  cpu: 250m
+                  memory: 100Mi
               readinessProbe:
                 exec:
                   command:
@@ -414,8 +428,8 @@ write_files:
       namespace: kube-system
     ---
 
-    # Calico Version v3.2.0
-    # https://docs.projectcalico.org/v3.2/releases#v3.2.0
+    # Calico Version v3.2.3
+    # https://docs.projectcalico.org/v3.2/releases#v3.2.3
 
     ---
 
