@@ -16,6 +16,10 @@ version directory, and then changes are introduced.
 - Enable admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
 - Use patched GiantSwarm build of Kubernetes (`hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm`).
 
+## [v3.6.2]
+
+### Changed
+
 ## [v3.6.1]
 
 ### Changed
@@ -265,6 +269,7 @@ chart-operator).
 
 
 [v4.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_0
+[v3.6.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_2
 [v3.6.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_1
 [v3.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_0
 [v3.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_0
