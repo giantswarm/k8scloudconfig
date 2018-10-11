@@ -24,6 +24,7 @@ write_files:
   content: |
     # Extra changes:
     #  - added "nodename_file_optional" set to true (can be removed on the next upgrade)
+    #  - added resource limits
     #
     # Calico Version v3.2.2
     # https://docs.projectcalico.org/v3.2/releases#v3.2.2
