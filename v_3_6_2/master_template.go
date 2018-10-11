@@ -26,12 +26,12 @@ write_files:
     #  - added "nodename_file_optional" set to true (can be removed on the next upgrade)
     #  - added resource limits
     #
-    # Calico Version v3.2.2
-    # https://docs.projectcalico.org/v3.2/releases#v3.2.2
+    # Calico Version v3.2.3
+    # https://docs.projectcalico.org/v3.2/releases#v3.2.3
     # This manifest includes the following component versions:
-    #   calico/node:v3.2.2
-    #   calico/cni:v3.2.2
-    #   calico/kube-controllers:v3.2.2
+    #   calico/node:v3.2.3
+    #   calico/cni:v3.2.3
+    #   calico/kube-controllers:v3.2.3
 
     # This ConfigMap is used to configure a self-hosted Calico installation.
     kind: ConfigMap
@@ -160,7 +160,7 @@ write_files:
             # container programs network policy and routes on each
             # host.
             - name: calico-node
-              image: {{ .RegistryDomain }}/giantswarm/node:v3.2.2
+              image: {{ .RegistryDomain }}/giantswarm/node:v3.2.3
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -270,7 +270,7 @@ write_files:
             # This container installs the Calico CNI binaries
             # and CNI network config file on each node.
             - name: install-cni
-              image: {{ .RegistryDomain }}/giantswarm/cni:v3.2.2
+              image: {{ .RegistryDomain }}/giantswarm/cni:v3.2.3
               command: ["/install-cni.sh"]
               env:
                 # Name of the CNI config file to create.
@@ -368,7 +368,7 @@ write_files:
           serviceAccountName: calico-kube-controllers
           containers:
             - name: calico-kube-controllers
-              image: {{ .RegistryDomain }}/giantswarm/kube-controllers:v3.2.2
+              image: {{ .RegistryDomain }}/giantswarm/kube-controllers:v3.2.3
               env:
                 # The location of the Calico etcd cluster.
                 - name: ETCD_ENDPOINTS
@@ -428,8 +428,8 @@ write_files:
       namespace: kube-system
     ---
 
-    # Calico Version v3.2.2
-    # https://docs.projectcalico.org/v3.2/releases#v3.2.2
+    # Calico Version v3.2.3
+    # https://docs.projectcalico.org/v3.2/releases#v3.2.3
 
     ---
 
