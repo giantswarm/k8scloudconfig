@@ -19,6 +19,7 @@ version directory, and then changes are introduced.
 ## [v3.6.2]
 
 ### Changed
+- Updated Calico to 3.2.2 and added resource limits.
 
 ## [v3.6.1]
 
