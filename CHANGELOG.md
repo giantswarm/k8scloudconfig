@@ -13,7 +13,7 @@ version directory, and then changes are introduced.
 
 ### Changed
 - Switched from cloudinit to ignition.
-- Enable admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
+- Enabled admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
 - Use patched GiantSwarm build of Kubernetes (`hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm`).
 - Updated Calico to 3.2.3
 - Updated Calico manifest with resource limits.
@@ -23,6 +23,7 @@ version directory, and then changes are introduced.
 ### Changed
 - Updated Calico to 3.2.3
 - Updated Calico manifest with resource limits.
+- Enabled admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
 
 ## [v3.6.1]
 
