@@ -53,7 +53,7 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	}
 	// Set the kubernetes/etcd images since they are used multiple times
 	config.Params.Images = Images{
-		Kubernetes: kubernetesImages,
+		Kubernetes: kubernetesImage,
 		Etcd:       etcdImage,
 	}
 
