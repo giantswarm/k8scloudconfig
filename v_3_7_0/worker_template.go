@@ -62,7 +62,6 @@ write_files:
     clusterDNS:
       - {{.Cluster.Kubernetes.DNS.IP}}
     clusterDomain: {{.Cluster.Kubernetes.Domain}}
-    staticPodPath: /etc/kubernetes/manifests
     evictionSoft:
       memory.available: "500Mi"
     evictionHard:
