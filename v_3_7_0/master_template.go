@@ -1724,6 +1724,8 @@ write_files:
         - --anonymous-auth=false
         - --insecure-port=0
         - --kubelet-https=true
+		- --kubelet-client-certificate=/etc/kubernetes/ssl/apiserver-crt.pem
+		- --kubelet-client-key=/etc/kubernetes/ssl/apiserver-key.pem
         - --kubelet-preferred-address-types=InternalIP
         - --secure-port={{.Cluster.Kubernetes.API.SecurePort}}
         - --bind-address=$(HOST_IP)
