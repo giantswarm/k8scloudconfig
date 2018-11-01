@@ -27,6 +27,7 @@ version directory, and then changes are introduced.
 - Updated audit policy version
 - Moved audit policy out of static pod path
 - Updated rbac resources to v1
+- Remove static pod path from worker nodes
 
 ## [v3.6.2]
 
