@@ -1684,7 +1684,7 @@ write_files:
         - identity: {}
 {{ end -}}
 
-- path: /etc/kubernetes/manifests/audit-policy.yml
+- path: /etc/kubernetes/policies/audit-policy.yml
   owner: root
   permissions: 0644
   content: |
@@ -1758,7 +1758,7 @@ write_files:
         - --audit-log-maxage=30
         - --audit-log-maxbackup=30
         - --audit-log-maxsize=100
-        - --audit-policy-file=/etc/kubernetes/manifests/audit-policy.yml
+        - --audit-policy-file=/etc/kubernetes/policies/audit-policy.yml
         - --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
         - --requestheader-client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --requestheader-allowed-names=aggregator,{{.Cluster.Kubernetes.API.Domain}},{{.Cluster.Kubernetes.Kubelet.Domain}}
@@ -1791,6 +1791,9 @@ write_files:
         - mountPath: /etc/kubernetes/encryption/
           name: k8s-encryption
           readOnly: true
+        - mountPath: /etc/kubernetes/policies
+          name: k8s-policies
+          readOnly: true
         - mountPath: /etc/kubernetes/manifests
           name: k8s-manifests
           readOnly: true
@@ -1812,6 +1815,9 @@ write_files:
       - hostPath:
           path: /etc/kubernetes/encryption/
         name: k8s-encryption
+      - hostPath:
+          path: /etc/kubernetes/policies
+        name: k8s-policies
       - hostPath:
           path: /etc/kubernetes/manifests
         name: k8s-manifests
