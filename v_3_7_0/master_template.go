@@ -444,7 +444,7 @@ write_files:
     ---
 
     kind: ClusterRole
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: calico-kube-controllers
     rules:
@@ -469,7 +469,7 @@ write_files:
           - list
     ---
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: calico-kube-controllers
     roleRef:
@@ -484,7 +484,7 @@ write_files:
     ---
 
     kind: ClusterRole
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: calico-node
     rules:
@@ -497,7 +497,7 @@ write_files:
 
     ---
 
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
       name: calico-node
@@ -987,7 +987,7 @@ write_files:
   content: |
     ## User
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: giantswarm-admin
     subjects:
@@ -1001,7 +1001,7 @@ write_files:
     ---
     ## Worker
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: kubelet
     subjects:
@@ -1014,7 +1014,7 @@ write_files:
       apiGroup: rbac.authorization.k8s.io
     ---
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: proxy
     subjects:
@@ -1028,7 +1028,7 @@ write_files:
     ---
     ## Master
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: kube-controller-manager
     subjects:
@@ -1041,7 +1041,7 @@ write_files:
       apiGroup: rbac.authorization.k8s.io
     ---
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: kube-scheduler
     subjects:
@@ -1084,7 +1084,7 @@ write_files:
     ---
     ## IC
     kind: ClusterRoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: nginx-ingress-controller
     subjects:
@@ -1097,7 +1097,7 @@ write_files:
       apiGroup: rbac.authorization.k8s.io
     ---
     kind: RoleBinding
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     metadata:
       name: nginx-ingress-controller
       namespace: kube-system
@@ -1157,7 +1157,7 @@ write_files:
       name: nginx-ingress-controller
       namespace: kube-system
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
       name: nginx-ingress-controller
@@ -1210,7 +1210,7 @@ write_files:
         verbs:
           - update
     ---
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: Role
     metadata:
       name: nginx-ingress-role
@@ -1315,7 +1315,7 @@ write_files:
   content: |
     # restrictedPSP grants access to use
     # the restricted PSP.
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
       name: restricted-psp-user
@@ -1331,7 +1331,7 @@ write_files:
     ---
     # privilegedPSP grants access to use the privileged
     # PSP.
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRole
     metadata:
       name: privileged-psp-user
@@ -1348,7 +1348,7 @@ write_files:
   owner: root
   permissions: 0644
   content: |
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
         name: privileged-psp-users
@@ -1372,7 +1372,7 @@ write_files:
     ---
     # grants the restricted PSP role to
     # the all authenticated users.
-    apiVersion: rbac.authorization.k8s.io/v1beta1
+    apiVersion: rbac.authorization.k8s.io/v1
     kind: ClusterRoleBinding
     metadata:
         name: restricted-psp-users
