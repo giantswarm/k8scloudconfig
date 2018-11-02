@@ -689,7 +689,7 @@ write_files:
       ]
     }
 {{- if not .DisableIngressController }}
-- path: /srv/default-backend-dep.yml
+- path: /srv/default-backend-dep.yaml
   owner: root
   permissions: 0644
   content: |
@@ -723,7 +723,7 @@ write_files:
               requests:
                 cpu: 10m
                 memory: 20Mi
-- path: /srv/default-backend-svc.yml
+- path: /srv/default-backend-svc.yaml
   owner: root
   permissions: 0644
   content: |
@@ -741,7 +741,7 @@ write_files:
         targetPort: 8080
       selector:
         k8s-app: default-http-backend
-- path: /srv/ingress-controller-cm.yml
+- path: /srv/ingress-controller-cm.yaml
   owner: root
   permissions: 0644
   content: |
@@ -761,7 +761,7 @@ write_files:
       # Disables setting a 'Strict-Transport-Security' header, which can be harmful.
       # See https://github.com/kubernetes/ingress-nginx/issues/549#issuecomment-291894246
       hsts: "false"
-- path: /srv/ingress-controller-dep.yml
+- path: /srv/ingress-controller-dep.yaml
   owner: root
   permissions: 0644
   content: |
@@ -859,7 +859,7 @@ write_files:
               hostPort: 443
 {{- end }}
 {{- if not .DisableIngressControllerService }}
-- path: /srv/ingress-controller-svc.yml
+- path: /srv/ingress-controller-svc.yaml
   owner: root
   permissions: 0644
   content: |
@@ -941,7 +941,7 @@ write_files:
               command:
               - /hyperkube
               - proxy
-              - --config=/etc/kubernetes/config/proxy-config.yml
+              - --config=/etc/kubernetes/config/proxy-config.yaml
               - --v=2
               livenessProbe:
                 httpGet:
@@ -1403,7 +1403,7 @@ write_files:
   content: |
       #!/bin/bash
 
-      export KUBECONFIG=/etc/kubernetes/config/addons-kubeconfig.yml
+      export KUBECONFIG=/etc/kubernetes/config/addons-kubeconfig.yaml
       # kubectl 1.8.4
       KUBECTL={{ .RegistryDomain }}/giantswarm/docker-kubectl:8cabd75bacbcdad7ac5d85efc3ca90c2fabf023b
 
@@ -1483,13 +1483,13 @@ write_files:
       MANIFESTS="${MANIFESTS} coredns.yaml"
       {{ end -}}
       {{ if not .DisableIngressController -}}
-      MANIFESTS="${MANIFESTS} default-backend-dep.yml"
-      MANIFESTS="${MANIFESTS} default-backend-svc.yml"
-      MANIFESTS="${MANIFESTS} ingress-controller-cm.yml"
-      MANIFESTS="${MANIFESTS} ingress-controller-dep.yml"
+      MANIFESTS="${MANIFESTS} default-backend-dep.yaml"
+      MANIFESTS="${MANIFESTS} default-backend-svc.yaml"
+      MANIFESTS="${MANIFESTS} ingress-controller-cm.yaml"
+      MANIFESTS="${MANIFESTS} ingress-controller-dep.yaml"
       {{ end -}}
       {{ if not .DisableIngressControllerService -}}
-      MANIFESTS="${MANIFESTS} ingress-controller-svc.yml"
+      MANIFESTS="${MANIFESTS} ingress-controller-svc.yaml"
       {{ end -}}
 
       for manifest in $MANIFESTS
@@ -1503,7 +1503,7 @@ write_files:
           done
       done
       echo "Addons successfully installed"
-- path: /etc/kubernetes/config/addons-kubeconfig.yml
+- path: /etc/kubernetes/config/addons-kubeconfig.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1525,17 +1525,17 @@ write_files:
         user: proxy
       name: service-account-context
     current-context: service-account-context
-- path: /etc/kubernetes/config/proxy-config.yml
+- path: /etc/kubernetes/config/proxy-config.yaml
   owner: root
   permissions: 0644
   content: |
     apiVersion: kubeproxy.config.k8s.io/v1alpha1
     clientConnection:
-      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yml
+      kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yaml
     kind: KubeProxyConfiguration
     mode: iptables
     resourceContainer: /kube-proxy
-- path: /etc/kubernetes/config/proxy-kubeconfig.yml
+- path: /etc/kubernetes/config/proxy-kubeconfig.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1567,6 +1567,11 @@ write_files:
     port: 10250
     healthzBindAddress: ${DEFAULT_IPV4}
     healthzPort: 10248
+    featureGates:
+      RotateKubeletServerCertificate: true
+      RotateKubeletClientCertificate: true
+    serverTLSBootstrap: true
+    rotateCertificates: true
     clusterDNS:
       - {{.Cluster.Kubernetes.DNS.IP}}
     clusterDomain: {{.Cluster.Kubernetes.Domain}}
@@ -1579,14 +1584,10 @@ write_files:
       memory.available: "5s"
     evictionMaxPodGracePeriod: 60
     authentication:
-      anonymous:
-        enabled: true # Defaults to false as of 1.10
-      webhook:
-        enabled: false # Deafults to true as of 1.10
-    authorization:
-      mode: AlwaysAllow # Deafults to webhook as of 1.10
+      x509:
+        clientCAFile: /etc/kubernetes/ssl/apiserver-ca.pem
     readOnlyPort: 10255 # Used by heapster. Defaults to 0 (disabled) as of 1.10. Needed for metrics.
-- path: /etc/kubernetes/config/kubelet-kubeconfig.yml
+- path: /etc/kubernetes/config/kubelet-bootstrap-kubeconfig.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1609,7 +1610,7 @@ write_files:
       name: service-account-context
     current-context: service-account-context
 
-- path: /etc/kubernetes/config/controller-manager-kubeconfig.yml
+- path: /etc/kubernetes/config/controller-manager-kubeconfig.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1631,7 +1632,7 @@ write_files:
         user: controller-manager
       name: service-account-context
     current-context: service-account-context
-- path: /etc/kubernetes/config/scheduler-config.yml
+- path: /etc/kubernetes/config/scheduler-config.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1640,10 +1641,10 @@ write_files:
       provider: DefaultProvider
     apiVersion: componentconfig/v1alpha1
     clientConnection:
-      kubeconfig: /etc/kubernetes/config/scheduler-kubeconfig.yml
+      kubeconfig: /etc/kubernetes/config/scheduler-kubeconfig.yaml
     failureDomains: kubernetes.io/hostname,failure-domain.beta.kubernetes.io/zone,failure-domain.beta.kubernetes.io/region
     hardPodAffinitySymmetricWeight: 1
-- path: /etc/kubernetes/config/scheduler-kubeconfig.yml
+- path: /etc/kubernetes/config/scheduler-kubeconfig.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1684,7 +1685,7 @@ write_files:
         - identity: {}
 {{ end -}}
 
-- path: /etc/kubernetes/policies/audit-policy.yml
+- path: /etc/kubernetes/policies/audit-policy.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1699,7 +1700,7 @@ write_files:
         omitStages:
           - "RequestReceived"
 
-- path: /etc/kubernetes/manifests/k8s-api-server.yml
+- path: /etc/kubernetes/manifests/k8s-api-server.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1733,6 +1734,9 @@ write_files:
         - --insecure-port=0
         - --kubelet-https=true
         - --kubelet-preferred-address-types=InternalIP
+        - --kubelet-client-certificate=/etc/kubernetes/ssl/apiserver-crt.pem
+        - --kubelet-client-client=/etc/kubernetes/ssl/apiserver-key.pem
+        - --kubelet-certificate-authority=/etc/kubernetes/ssl/cluster-ca.pem
         - --secure-port={{.Cluster.Kubernetes.API.SecurePort}}
         - --bind-address=$(HOST_IP)
         - --etcd-prefix={{.Cluster.Etcd.Prefix}}
@@ -1752,13 +1756,13 @@ write_files:
         - --logtostderr=true
         - --tls-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
         - --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem
-        - --client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
+        - --client-ca-file=/etc/kubernetes/ssl/apiserver-ca-bundle.pem
         - --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
         - --audit-log-path=/var/log/apiserver/audit.log
         - --audit-log-maxage=30
         - --audit-log-maxbackup=30
         - --audit-log-maxsize=100
-        - --audit-policy-file=/etc/kubernetes/policies/audit-policy.yml
+        - --audit-policy-file=/etc/kubernetes/policies/audit-policy.yaml
         - --experimental-encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
         - --requestheader-client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --requestheader-allowed-names=aggregator,{{.Cluster.Kubernetes.API.Domain}},{{.Cluster.Kubernetes.Kubelet.Domain}}
@@ -1828,7 +1832,7 @@ write_files:
           path: /etc/kubernetes/ssl
         name: ssl-certs-kubernetes
 
-- path: /etc/kubernetes/manifests/k8s-controller-manager.yml
+- path: /etc/kubernetes/manifests/k8s-controller-manager.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1856,9 +1860,11 @@ write_files:
         - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
         - --terminated-pod-gc-threshold=10
         - --use-service-account-credentials=true
-        - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yml
+        - --kubeconfig=/etc/kubernetes/config/controller-manager-kubeconfig.yaml
         - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
         - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
+        - --cluster-signing-cert-file=/etc/kubernetes/ssl/cluster-ca.pem
+        - --cluster-signing-key-file=/etc/kubernetes/ssl/cluster-ca-key.pem
         resources:
           requests:
             cpu: 200m
@@ -1901,7 +1907,7 @@ write_files:
           path: /etc/kubernetes/ssl
         name: ssl-certs-kubernetes
 
-- path: /etc/kubernetes/manifests/k8s-scheduler.yml
+- path: /etc/kubernetes/manifests/k8s-scheduler.yaml
   owner: root
   permissions: 0644
   content: |
@@ -1921,7 +1927,7 @@ write_files:
         command:
         - /hyperkube
         - scheduler
-        - --config=/etc/kubernetes/config/scheduler-config.yml
+        - --config=/etc/kubernetes/config/scheduler-config.yaml
         - --v=2
         resources:
           requests:
@@ -2067,6 +2073,14 @@ coreos:
 
       [Service]
       EnvironmentFile=/etc/network-environment
+      Environment="CLUSTER_CA_KEY=/etc/kubernetes/ssl/cluster-ca-key.pem"
+      Environment="CLUSTER_CA_CERT=/etc/kubernetes/ssl/cluster-ca.pem"
+      Environment="APISERVER_CA=/etc/kubernetes/ssl/apiserver-ca.pem"
+      Environment="APISERVER_BUNDLE=/etc/kubernetes/ssl/apiserver-ca-bundle.pem"
+
+      ExecStartPre=/bin/bash -c "if [ ! -f ${CLUSTER_CA_KEY} ]; then openssl genrsa -out ${CLUSTER_CA_KEY} 2048; fi"
+      ExecStartPre=/bin/bash -c "if [ ! -f ${CLUSTER_CA_CERT} ]; then openssl req -x509 -new -nodes -key ${CLUSTER_CA_KEY} -subj "/CN=clusterca" -days 10000 -out ${CLUSTER_CA_CERT}"
+      ExecStartPre=/bin/bash -c "if [ ! -f ${APISERVER_BUNDLE} ]; then cat ${CLUSTER_CA_CERT} ${APISERVER_CA} > ${APISERVER_BUNDLE}"
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-config.yaml.tmpl >/etc/kubernetes/config/kubelet-config.yaml'
 
       [Install]
@@ -2257,9 +2271,6 @@ coreos:
       -v /usr/lib64/libxfs.so.0:/usr/lib/libxfs.so.0 \
       -v /usr/lib64/libxcmd.so.0:/usr/lib/libxcmd.so.0 \
       -v /usr/lib64/libreadline.so.7:/usr/lib/libreadline.so.7 \
-      -e ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/server-ca.pem \
-      -e ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem \
-      -e ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem \
       --name $NAME \
       $IMAGE \
       /hyperkube kubelet \
@@ -2275,7 +2286,8 @@ coreos:
       --network-plugin=cni \
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
-      --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yml \
+      --kubeconfig=/etc/kubernetes/config/kubelet-kubeconfig.yaml \
+      --bootstrap-kubeconfig=/etc/kubernetes/config/kubelet-bootstrap-kubeconfig.yaml \
       --node-labels="node-role.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
       --v=2"
       ExecStop=-/usr/bin/docker stop -t 10 $NAME
