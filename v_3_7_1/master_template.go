@@ -26,6 +26,7 @@ write_files:
     #  - Added "nodename_file_optional" set to true (can be removed on the next upgrade).
     #  - Added resource limits to calico-node and calico-kube-controllers.
     #  - Added resource limits to install-cni.
+    #  - Added priorityClassName.
     #
     # Calico Version v3.2.3
     # https://docs.projectcalico.org/v3.2/releases#v3.2.3
