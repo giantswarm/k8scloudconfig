@@ -1443,7 +1443,7 @@ write_files:
       done
 
       # wait for etcd dns (return code 35 is bad certificate which is good enough here)
-      # since dns is flapping while we switch back to an elb for etcd we do this 10 times in a row
+      # to avoid issues with flapping dns once it is changed on an upgrade we better check 10 times in a row.
       n=0
       until [ $n -ge 10 ]
       do
