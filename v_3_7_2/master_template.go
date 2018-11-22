@@ -1442,6 +1442,15 @@ write_files:
           done
       done
 
+      # check for other master and remove it
+      THIS_MACHINE=$(cat /etc/hostname)
+      for master in $(/usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get nodes --no-headers=true --selector role=master | awk '{print $1}')
+      do
+          if [ "$master" != "$THIS_MACHINE" ]; then
+              /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL delete node $master
+          fi
+      done
+
       # wait for etcd dns (return code 35 is bad certificate which is good enough here)
       # to avoid issues with flapping dns once it is changed on an upgrade we better check 10 times in a row.
       n=0
@@ -1457,15 +1466,6 @@ write_files:
             sleep 3s
         done
         n=$[$n+1]
-      done
-
-      # check for other master and remove it
-      THIS_MACHINE=$(cat /etc/hostname)
-      for master in $(/usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get nodes --no-headers=true --selector role=master | awk '{print $1}')
-      do
-          if [ "$master" != "$THIS_MACHINE" ]; then
-              /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL delete node $master
-          fi
       done
 
       # install kube-proxy
