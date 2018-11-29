@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:7a2114b81fcdcb0a14934e61fdf3179ae5520666005f7327edb6eaab69f78de6"
+  branch = "remove-etcd-port"
+  digest = "1:069a42c6949a2b9c3c746efa123648eda0e1629aa0133a3001b47d0884d2fdae"
   name = "github.com/giantswarm/apiextensions"
   packages = ["pkg/apis/provider/v1alpha1"]
   pruneopts = "UT"
-  revision = "d67eedc9266b64dfd2d94fc61afb3d7dc8b10e8e"
+  revision = "c5140272822a44f8311972b35f78f7113bad6b66"
 
 [[projects]]
   branch = "master"

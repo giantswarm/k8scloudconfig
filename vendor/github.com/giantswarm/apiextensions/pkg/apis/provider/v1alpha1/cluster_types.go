@@ -12,14 +12,12 @@ type Cluster struct {
 	ID         string            `json:"id" yaml:"id"`
 	Kubernetes ClusterKubernetes `json:"kubernetes" yaml:"kubernetes"`
 	Masters    []ClusterNode     `json:"masters" yaml:"masters"`
-	Vault      ClusterVault      `json:"vault" yaml:"vault"`
 	Version    string            `json:"version" yaml:"version"`
 	Workers    []ClusterNode     `json:"workers" yaml:"workers"`
 }
 
 type ClusterCalico struct {
 	CIDR   int    `json:"cidr" yaml:"cidr"`
-	Domain string `json:"domain" yaml:"domain"`
 	MTU    int    `json:"mtu" yaml:"mtu"`
 	Subnet string `json:"subnet" yaml:"subnet"`
 }
@@ -39,7 +37,6 @@ type ClusterDockerDaemon struct {
 type ClusterEtcd struct {
 	AltNames string `json:"altNames" yaml:"altNames"`
 	Domain   string `json:"domain" yaml:"domain"`
-	Port     int    `json:"port" yaml:"port"`
 	Prefix   string `json:"prefix" yaml:"prefix"`
 }
 
@@ -48,7 +45,6 @@ type ClusterKubernetes struct {
 	CloudProvider     string                             `json:"cloudProvider" yaml:"cloudProvider"`
 	DNS               ClusterKubernetesDNS               `json:"dns" yaml:"dns"`
 	Domain            string                             `json:"domain" yaml:"domain"`
-	Hyperkube         ClusterKubernetesHyperkube         `json:"hyperkube" yaml:"hyperkube"`
 	IngressController ClusterKubernetesIngressController `json:"ingressController" yaml:"ingressController"`
 	Kubelet           ClusterKubernetesKubelet           `json:"kubelet" yaml:"kubelet"`
 	NetworkSetup      ClusterKubernetesNetworkSetup      `json:"networkSetup" yaml:"networkSetup"`
@@ -66,14 +62,6 @@ type ClusterKubernetesAPI struct {
 
 type ClusterKubernetesDNS struct {
 	IP net.IP `json:"ip" yaml:"ip"`
-}
-
-type ClusterKubernetesHyperkube struct {
-	Docker ClusterKubernetesHyperkubeDocker `json:"docker" yaml:"docker"`
-}
-
-type ClusterKubernetesHyperkubeDocker struct {
-	Image string `json:"image" yaml:"image"`
 }
 
 type ClusterKubernetesIngressController struct {
@@ -114,9 +102,4 @@ type ClusterKubernetesSSHUser struct {
 
 type ClusterNode struct {
 	ID string `json:"id" yaml:"id"`
-}
-
-type ClusterVault struct {
-	Address string `json:"address" yaml:"address"`
-	Token   string `json:"token" yaml:"token"`
 }
