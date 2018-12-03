@@ -21,20 +21,17 @@ version directory, and then changes are introduced.
 ## [v3.7.3] WIP
 
 ### Changed
-
-### Removed
+- update kubernetes to 1.12.3 (CVE-2018-1002105)
 
 ## [v3.6.3] WIP
+- update kubernetes to 1.11.5 (CVE-2018-1002105)
 
 ### Changed
-
-### Removed
+- update kubernetes to 1.10.11 (CVE-2018-1002105)
 
 ## [v3.5.2] WIP
 
 ### Changed
-
-### Removed
 
 ## [v3.7.2]
 
