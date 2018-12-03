@@ -24,6 +24,18 @@ version directory, and then changes are introduced.
 
 ### Removed
 
+## [v3.6.3] WIP
+
+### Changed
+
+### Removed
+
+## [v3.5.2] WIP
+
+### Changed
+
+### Removed
+
 ## [v3.7.2]
 
 ### Changed
@@ -306,6 +318,8 @@ chart-operator).
 
 [v4.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_0
 [v3.7.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_3
+[v3.6.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_3
+[v3.5.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_2
 [v3.7.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_2
 [v3.7.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_1
 [v3.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_0
