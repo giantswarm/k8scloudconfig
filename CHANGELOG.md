@@ -23,6 +23,7 @@ version directory, and then changes are introduced.
 ### Changed
 
 ### Removed
+- Remove params and manifests for CoreDNS and Ingress Controller now they are migrated to charts. 
 
 ## [v3.7.2]
 
