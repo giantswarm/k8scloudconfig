@@ -62,6 +62,9 @@ systemd:
       After=k8s-setup-network-env.service docker.service
       Requires=k8s-setup-network-env.service docker.service
       [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-config.yaml.tmpl >/etc/kubernetes/config/kubelet-config.yaml'
       [Install]
