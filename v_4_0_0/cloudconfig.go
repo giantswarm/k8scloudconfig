@@ -30,6 +30,16 @@ func DefaultCloudConfigConfig() CloudConfigConfig {
 	}
 }
 
+func DefaultParams() Params {
+	return Params{
+		RegistryDomain: defaultRegistryDomain,
+		Images: Images{
+			Kubernetes: kubernetesImage,
+			Etcd:       etcdImage,
+		},
+	}
+}
+
 type CloudConfig struct {
 	config   string
 	params   Params
@@ -47,15 +57,6 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	// Default to 443 for non AWS providers.
 	if config.Params.EtcdPort == 0 {
 		config.Params.EtcdPort = 443
-	}
-	// Set default registry to quay.io
-	if config.Params.RegistryDomain == "" {
-		config.Params.RegistryDomain = defaultRegistryDomain
-	}
-	// Set the kubernetes/etcd images since they are used multiple times
-	config.Params.Images = Images{
-		Kubernetes: kubernetesImage,
-		Etcd:       etcdImage,
 	}
 
 	// extract cluster base domain
