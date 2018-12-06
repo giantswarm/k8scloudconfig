@@ -90,7 +90,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{.Cluster.Kubernetes.NetworkSetup.Docker.Image}}"
+      Environment=IMAGE={{ .RegistryDomain }}/{{ .Images.Etcd }}
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
