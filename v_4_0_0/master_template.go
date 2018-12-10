@@ -198,7 +198,7 @@ systemd:
       Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       After=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       Description=k8s-kubelet
-      StartLimitIntervalSec=30
+      StartLimitIntervalSec=0
       [Service]
       TimeoutStartSec=300
       Restart=always
@@ -208,6 +208,8 @@ systemd:
       Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
       Environment="NAME=%p.service"
       Environment="NETWORK_CONFIG_CONTAINER="
+      # https://github.com/kubernetes/kubernetes/issues/71078
+      ExecStartPre=/bin/sleep 30
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
