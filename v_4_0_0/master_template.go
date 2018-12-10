@@ -198,7 +198,7 @@ systemd:
       Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       After=k8s-setup-network-env.service k8s-setup-kubelet-config.service
       Description=k8s-kubelet
-      StartLimitIntervalSec=0
+      StartLimitIntervalSec=30
       [Service]
       TimeoutStartSec=300
       Restart=always
