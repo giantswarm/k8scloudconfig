@@ -212,7 +212,7 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kubelet-worker.yaml" }}"
 
-    - path: /etc/kubernetes/config/proxy-config.yaml
+    - path: /etc/kubernetes/config/proxy-config.yml
       filesystem: root
       mode: 0644
       contents:

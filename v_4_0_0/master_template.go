@@ -360,7 +360,7 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/ingress-controller-svc.yaml" }}"
     {{- end }}
 
-    - path: /etc/kubernetes/config/proxy-config.yaml
+    - path: /etc/kubernetes/config/proxy-config.yml
       filesystem: root
       mode: 0644
       contents:
