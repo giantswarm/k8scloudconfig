@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "teemow-remove-aws-elb-settings"
-  digest = "1:66c269c8efa56b3551ec8c6abc53ee8ca4d406277a1a00a2eb487be9d4edb964"
+  branch = "master"
+  digest = "1:2ee0e4235a2a37b530e8b6f6060416e781f6188fb18417e013945111fe6a5e6c"
   name = "github.com/giantswarm/apiextensions"
   packages = ["pkg/apis/provider/v1alpha1"]
   pruneopts = "UT"
-  revision = "16ad1520fe137ec3d3f16ac50de8637a1c6daf52"
+  revision = "858ead97a5762244870ebbe3a83503f5132b2fde"
 
 [[projects]]
   branch = "master"

@@ -65,6 +65,12 @@ type AWSConfigSpec struct {
 }
 
 type AWSConfigSpecAWS struct {
+	API AWSConfigSpecAWSAPI `json:"api" yaml:"api"`
+	// TODO remove the deprecated AZ field due to AvailabilityZones.
+	//
+	//     https://github.com/giantswarm/giantswarm/issues/4507
+	//
+	AZ string `json:"az" yaml:"az"`
 	// AvailabilityZones is the number of AWS availability zones used to spread
 	// the tenant cluster's worker nodes across. There are limitations on
 	// availability zone settings due to binary IP range splitting and provider
@@ -82,8 +88,9 @@ type AWSConfigSpecAWS struct {
 	// done in order to provide more HA during single availability zone failures.
 	// In case a specific availability zone fails, not all tenant clusters will be
 	// affected due to the described selection process.
-	AvailabilityZones int              `json:"availabilityZones" yaml:"availabilityZones"`
-	CredentialSecret  CredentialSecret `json:"credentialSecret" yaml:"credentialSecret"`
+	AvailabilityZones int                  `json:"availabilityZones" yaml:"availabilityZones"`
+	CredentialSecret  CredentialSecret     `json:"credentialSecret" yaml:"credentialSecret"`
+	Etcd              AWSConfigSpecAWSEtcd `json:"etcd" yaml:"etcd"`
 
 	// HostedZones is AWS hosted zones names in the host cluster account.
 	// For each zone there will be "CLUSTER_ID.k8s" NS record created in
@@ -96,10 +103,33 @@ type AWSConfigSpecAWS struct {
 	//	- *.CLUSTER_ID.k8s.{{ .Spec.AWS.HostedZones.Ingress.Name }}
 	HostedZones AWSConfigSpecAWSHostedZones `json:"hostedZones" yaml:"hostedZones"`
 
-	Masters []AWSConfigSpecAWSNode `json:"masters" yaml:"masters"`
-	Region  string                 `json:"region" yaml:"region"`
-	VPC     AWSConfigSpecAWSVPC    `json:"vpc" yaml:"vpc"`
-	Workers []AWSConfigSpecAWSNode `json:"workers" yaml:"workers"`
+	Ingress AWSConfigSpecAWSIngress `json:"ingress" yaml:"ingress"`
+	Masters []AWSConfigSpecAWSNode  `json:"masters" yaml:"masters"`
+	Region  string                  `json:"region" yaml:"region"`
+	VPC     AWSConfigSpecAWSVPC     `json:"vpc" yaml:"vpc"`
+	Workers []AWSConfigSpecAWSNode  `json:"workers" yaml:"workers"`
+}
+
+// AWSConfigSpecAWSAPI deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSAPI struct {
+	HostedZones string                 `json:"hostedZones" yaml:"hostedZones"`
+	ELB         AWSConfigSpecAWSAPIELB `json:"elb" yaml:"elb"`
+}
+
+// AWSConfigSpecAWSAPIELB deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSAPIELB struct {
+	IdleTimeoutSeconds int `json:"idleTimeoutSeconds" yaml:"idleTimeoutSeconds"`
+}
+
+// AWSConfigSpecAWSEtcd deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSEtcd struct {
+	HostedZones string                  `json:"hostedZones" yaml:"hostedZones"`
+	ELB         AWSConfigSpecAWSEtcdELB `json:"elb" yaml:"elb"`
+}
+
+// AWSConfigSpecAWSEtcdELB deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSEtcdELB struct {
+	IdleTimeoutSeconds int `json:"idleTimeoutSeconds" yaml:"idleTimeoutSeconds"`
 }
 
 type AWSConfigSpecAWSHostedZones struct {
@@ -110,6 +140,17 @@ type AWSConfigSpecAWSHostedZones struct {
 
 type AWSConfigSpecAWSHostedZonesZone struct {
 	Name string `json:"name" yaml:"name"`
+}
+
+// AWSConfigSpecAWSIngress deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSIngress struct {
+	HostedZones string                     `json:"hostedZones" yaml:"hostedZones"`
+	ELB         AWSConfigSpecAWSIngressELB `json:"elb" yaml:"elb"`
+}
+
+// AWSConfigSpecAWSIngressELB deprecated since aws-operator v12 resources.
+type AWSConfigSpecAWSIngressELB struct {
+	IdleTimeoutSeconds int `json:"idleTimeoutSeconds" yaml:"idleTimeoutSeconds"`
 }
 
 type AWSConfigSpecAWSNode struct {
