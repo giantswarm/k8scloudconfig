@@ -13,37 +13,38 @@ func TestCloudConfig(t *testing.T) {
 		name             string
 		template         string
 		params           Params
+		customEtcdPort   int
 		expectedEtcdPort int
 	}{
 		{
-			name:     "master",
-			template: MasterTemplate,
-			params: Params{
-				Extension: nopExtension{},
-			},
+			name:             "master",
+			template:         MasterTemplate,
+			params:           DefaultParams(),
 			expectedEtcdPort: 443,
 		},
 		{
-			name:     "worker",
-			template: WorkerTemplate,
-			params: Params{
-				Extension: nopExtension{},
-			},
+			name:             "worker",
+			template:         WorkerTemplate,
+			params:           DefaultParams(),
 			expectedEtcdPort: 443,
 		},
 		{
-			name:     "worker",
-			template: WorkerTemplate,
-			params: Params{
-				EtcdPort:  2379,
-				Extension: nopExtension{},
-			},
+			name:             "worker",
+			template:         WorkerTemplate,
+			params:           DefaultParams(),
+			customEtcdPort:   2379,
 			expectedEtcdPort: 2379,
 		},
 	}
 
 	for _, tc := range tests {
 		c := DefaultCloudConfigConfig()
+
+		tc.params.Extension = nopExtension{}
+
+		if tc.customEtcdPort != 0 {
+			tc.params.EtcdPort = tc.customEtcdPort
+		}
 
 		packagePath, err := GetPackagePath()
 		if err != nil {
