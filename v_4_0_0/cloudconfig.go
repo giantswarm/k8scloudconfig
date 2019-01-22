@@ -6,14 +6,15 @@ import (
 	"encoding/base64"
 	"text/template"
 
-	"strings"
-
 	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 	"github.com/giantswarm/microerror"
 )
 
 const (
 	defaultRegistryDomain = "quay.io"
+	kubernetesImage       = "giantswarm/hyperkube:v1.12.3"
+	etcdImage             = "giantswarm/etcd:v3.3.9"
+	etcdPort              = 443
 )
 
 type CloudConfigConfig struct {
@@ -25,6 +26,17 @@ func DefaultCloudConfigConfig() CloudConfigConfig {
 	return CloudConfigConfig{
 		Params:   Params{},
 		Template: "",
+	}
+}
+
+func DefaultParams() Params {
+	return Params{
+		EtcdPort:       etcdPort,
+		RegistryDomain: defaultRegistryDomain,
+		Images: Images{
+			Kubernetes: kubernetesImage,
+			Etcd:       etcdImage,
+		},
 	}
 }
 
@@ -41,17 +53,6 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
-
-	// Default to 443 for non AWS providers.
-	if config.Params.EtcdPort == 0 {
-		config.Params.EtcdPort = 443
-	}
-	// Set default registry to quay.io
-	if config.Params.RegistryDomain == "" {
-		config.Params.RegistryDomain = defaultRegistryDomain
-	}
-	// extract cluster base domain
-	config.Params.BaseDomain = strings.TrimPrefix(config.Params.Cluster.Kubernetes.API.Domain, "api.")
 
 	c := &CloudConfig{
 		config:   "",
