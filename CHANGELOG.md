@@ -16,6 +16,7 @@ version directory, and then changes are introduced.
 - Double the inotify watches.
 - Switch kube-proxy from `iptables` to `ipvs`.
 - Add worker node labels.
+- Increase timeouts for etcd defragmentaion.
 
 ### Removed
 
