@@ -25,10 +25,7 @@ func RenderAssetContent(assetContent string, params interface{}) ([]string, erro
 
 // RenderFileAssetContent returns base64 representation of the rendered assetContent.
 func RenderFileAssetContent(assetContent string, params interface{}) (string, error) {
-	tmpl, err := template.New("").Parse(assetContent)
-	if err != nil {
-		return "", err
-	}
+	tmpl := template.Must(template.New("").Parse(assetContent))
 
 	buf := new(bytes.Buffer)
 

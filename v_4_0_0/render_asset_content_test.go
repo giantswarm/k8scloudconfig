@@ -6,7 +6,8 @@ import (
 )
 
 const (
-	testTemplate = `foo: {{.Foo}}`
+	testTemplate    = `foo: {{.Foo}}`
+	invalidTemplate = `foo: {{.Foo}`
 )
 
 type FakeParams struct {
@@ -60,4 +61,13 @@ func TestRenderFileAssetContent(t *testing.T) {
 			t.Fatalf("expected %#v, got %#v", tc.expectedContent, content)
 		}
 	}
+
+	defer func() {
+		if r := recover(); r == nil {
+			t.Errorf("TestRenderFileAssetContent should have panicked!")
+		}
+	}()
+
+	// This function should cause a panic
+	RenderFileAssetContent(invalidTemplate, struct{}{})
 }
