@@ -506,6 +506,48 @@ storage:
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
+        
+    - path: /opt/install-debug-tools
+      filesystem: root
+      mode: 0544
+      contents:
+        inline: |
+            #!/bin/bash
+            set -eu
+            # download calicoctl
+            CALICOCTL_VERSION=v3.5.0
+            wget https://github.com/projectcalico/calicoctl/releases/download/${CALICOCTL_VERSION}/calicoctl-linux-amd64
+            mv calicoctl-linux-amd64 /opt/bin/calicoctl
+            chmod +x /opt/bin/calicoctl
+            # download crictl
+            CRICTL_VERSION=v1.13.0
+            wget https://github.com/kubernetes-sigs/cri-tools/releases/download/${CRICTL_VERSION}/crictl-${CRICTL_VERSION}-linux-amd64.tar.gz
+            tar xvf crictl-${CRICTL_VERSION}-linux-amd64.tar.gz
+            mv crictl /opt/bin/crictl
+            chmod +x /opt/bin/crictl
+            rm crictl-${CRICTL_VERSION}-linux-amd64.tar.gz
+    - path: /etc/calico/calicoctl.cfg
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          apiVersion: projectcalico.org/v3
+          kind: CalicoAPIConfig
+          metadata:
+          spec:
+            etcdEndpoints: https://${COREOS_PRIVATE_IPV4}:2379
+            etcdKeyFile: /etc/kubernetes/ssl/etcd/etcd-key.pem 
+            etcdCertFile: /etc/kubernetes/ssl/etcd/etcd.pem 
+            etcdCACertFile: /etc/kubernetes/ssl/etcd/etcd-ca.pem      
+    - path: /etc/crictl.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        inline: |
+          runtime-endpoint: unix:///var/run/dockershim/dockershim.sock
+          image-endpoint: unix:///var/run/dockershim/dockershim.sock
+          timeout: 10
+          debug: false
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
