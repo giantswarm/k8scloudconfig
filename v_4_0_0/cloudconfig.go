@@ -72,7 +72,7 @@ func (c *CloudConfig) ExecuteTemplate() error {
 	buf := new(bytes.Buffer)
 	err = tmpl.Execute(buf, c.params)
 	if err != nil {
-		return err
+		return microerror.Maskf(invalidConfigError, "cloudconfig template is not valid")
 	}
 
 	ignitionJSON, err := ignition.ConvertTemplatetoJSON(buf.Bytes())
