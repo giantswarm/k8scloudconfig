@@ -42,6 +42,9 @@ version directory, and then changes are introduced.
 
 ## [v3.6.4]
 
+### Changed
+- Update `libreadline` version
+
 ## [v3.6.3]
 - update kubernetes to 1.11.5 (CVE-2018-1002105)
 
@@ -49,6 +52,9 @@ version directory, and then changes are introduced.
 - update kubernetes to 1.10.11 (CVE-2018-1002105)
 
 ## [v3.5.3]
+
+### Changed
+- Update `libreadline` version
 
 ## [v3.5.2]
 
