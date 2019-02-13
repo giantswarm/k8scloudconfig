@@ -66,7 +66,7 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 func (c *CloudConfig) ExecuteTemplate() error {
 	tmpl, err := template.New("cloudconfig").Parse(c.template)
 	if err != nil {
-		return err
+		return microerror.Mask(err)
 	}
 
 	buf := new(bytes.Buffer)
@@ -77,7 +77,7 @@ func (c *CloudConfig) ExecuteTemplate() error {
 
 	ignitionJSON, err := ignition.ConvertTemplatetoJSON(buf.Bytes())
 	if err != nil {
-		return err
+		return microerror.Mask(err)
 	}
 
 	c.config = string(ignitionJSON)
