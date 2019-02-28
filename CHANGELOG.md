@@ -10,7 +10,7 @@ versions are frozen. To freeze current version all files are copied to a new
 version directory, and then changes are introduced.
 
 ## [v4.2.0] WIP
-- Switch to calico-typha with kubernetes datastore.
+- Switch to calico-typha with kubernetes datastore. 
 
 ## [v4.1.0] 
 ### Changed
