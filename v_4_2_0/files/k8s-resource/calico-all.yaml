@@ -67,7 +67,6 @@ data:
 ---
 # This manifest creates a Service, which will be backed by Calico's Typha daemon.
 # Typha sits in between Felix and the API server, reducing Calico's load on the API server.
-install-cni
 apiVersion: v1
 kind: Service
 metadata:
@@ -578,11 +577,12 @@ rules:
       - get
   # added by giantswarm
   - apiGroups: [""]
-      resources:
-        - nodes
-      verbs:
-        - update
-        - patch
+    resources:
+      - nodes
+    verbs:
+      - get
+      - update
+      - patch
   - apiGroups: [""]
     resources:
       - endpoints

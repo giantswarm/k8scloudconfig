@@ -13,27 +13,21 @@ func TestCloudConfig(t *testing.T) {
 		name             string
 		template         string
 		params           Params
-		customEtcdPort   int
-		expectedEtcdPort int
 	}{
 		{
 			name:             "master",
 			template:         MasterTemplate,
 			params:           DefaultParams(),
-			expectedEtcdPort: 443,
 		},
 		{
 			name:             "worker",
 			template:         WorkerTemplate,
 			params:           DefaultParams(),
-			expectedEtcdPort: 443,
 		},
 		{
 			name:             "worker",
 			template:         WorkerTemplate,
 			params:           DefaultParams(),
-			customEtcdPort:   2379,
-			expectedEtcdPort: 2379,
 		},
 	}
 
@@ -41,10 +35,6 @@ func TestCloudConfig(t *testing.T) {
 		c := DefaultCloudConfigConfig()
 
 		tc.params.Extension = nopExtension{}
-
-		if tc.customEtcdPort != 0 {
-			tc.params.EtcdPort = tc.customEtcdPort
-		}
 
 		packagePath, err := GetPackagePath()
 		if err != nil {
@@ -65,9 +55,6 @@ func TestCloudConfig(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if cloudConfig.params.EtcdPort != tc.expectedEtcdPort {
-			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.EtcdPort)
-		}
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatal(err)
 		}
