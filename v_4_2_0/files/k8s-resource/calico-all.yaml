@@ -158,10 +158,10 @@ spec:
               value: "9093"
           resources:
             requests:
-              cpu: 250m
+              cpu: 200m
               memory: 150Mi
             limits:
-              cpu: 250m
+              cpu: 200m
               memory: 150Mi
           livenessProbe:
             exec:
