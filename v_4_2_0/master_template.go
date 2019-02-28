@@ -144,7 +144,7 @@ systemd:
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://127.0.0.1:2379 \
           --initial-advertise-peer-urls=https://127.0.0.1:2380 \
-          --listen-client-urls=https://0.0.0.0:2379 \
+          --listen-client-urls=https://127.0.0.1:2379 \
           --listen-peer-urls=https://${DEFAULT_IPV4}:2380 \
           --initial-cluster-token k8s-etcd-cluster \
           --initial-cluster etcd0=https://127.0.0.1:2380 \
