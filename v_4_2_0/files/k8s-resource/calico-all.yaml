@@ -7,12 +7,12 @@
 #  - Added resource limits to install-cni.
 #  - Added 'priorityClassName: system-cluster-critical' to calico daemonset.
 #
-# Calico Version v3.5.2
-# https://docs.projectcalico.org/v3.5/releases#v3.5.2
+# Calico Version {{ .Calico.Version }}
+# https://docs.projectcalico.org/v3.5/releases#{{ .Calico.Version }}
 # This manifest includes the following component versions:
-#   calico/node:v3.5.2
-#   calico/cni:v3.5.2
-#   calico/typha:v3.5.2
+#   calico/node:{{ .Calico.Version }}
+#   calico/cni:{{ .Calico.Version }}
+#   calico/typha:{{ .Calico.Version }}
 #
 # This ConfigMap is used to configure a self-hosted Calico installation.
 kind: ConfigMap
@@ -22,7 +22,7 @@ metadata:
   namespace: kube-system
 data:
   # You must set a non-zero value for Typha replicas below.
-  typha_service_name: "calico-typha"
+  typha_service_name: "{{if .Calico.TyphaEnabled}}calico-typha{{else}}none{{end}}"
 
   # Configure the Calico backend to use.
   calico_backend: "bird"
@@ -97,7 +97,7 @@ spec:
   # We recommend using Typha if you have more than 50 nodes.  Above 100 nodes it is essential
   # (when using the Kubernetes datastore).  Use one replica for every 100-200 nodes.  In
   # production, we recommend running at least 3 replicas to reduce the impact of rolling upgrade.
-  replicas: 3
+  replicas: {{if .Calico.TyphaEnabled}}{{.Calico.TyphaReplicas}}{{else}}0{{end}}
   revisionHistoryLimit: 2
   selector:
     matchLabels:
@@ -125,7 +125,7 @@ spec:
       serviceAccountName: calico-node
       priorityClassName: system-cluster-critical
       containers:
-        - image: {{ .RegistryDomain }}/giantswarm/typha:v3.5.2
+        - image: {{ .RegistryDomain }}/giantswarm/typha:{{ .Calico.Version }}
           name: calico-typha
           ports:
             - containerPort: 5473
@@ -244,7 +244,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: {{ .RegistryDomain }}/giantswarm/node:v3.2.3
+          image: {{ .RegistryDomain }}/giantswarm/node:{{ .Calico.Version }}
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
@@ -345,7 +345,7 @@ spec:
         # This container installs the Calico CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: {{ .RegistryDomain }}/giantswarm/cni:v3.2.3
+          image: {{ .RegistryDomain }}/giantswarm/cni:{{ .Calico.Version }}
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
@@ -552,8 +552,8 @@ spec:
     plural: networkpolicies
     singular: networkpolicy
 ---
-# Calico Version v3.5.2
-# https://docs.projectcalico.org/v3.2/releases#v3.5.2
+# Calico Version {{ .Calico.Version }}
+# https://docs.projectcalico.org/v3.5/releases#{{ .Calico.Version }}
 
 # Include a clusterrole for the calico-node DaemonSet,
 # and bind it to the calico-node serviceaccount.
@@ -570,6 +570,15 @@ rules:
       - namespaces
     verbs:
       - get
+  # Added by giantswarm
+  - apiGroups: [""]
+    resources:
+      - pods
+      - nodes
+      - namespaces
+    verbs:
+      - update
+      - patch
   - apiGroups: [""]
     resources:
       - endpoints
