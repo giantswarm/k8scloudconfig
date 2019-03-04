@@ -19,7 +19,10 @@ version directory, and then changes are introduced.
 - Add fine-grained Audit Policy
 
 ## [v3.8.0] WIP
-- Update kubernetes to 1.13.4 CVE-2019-1002100
+- Update kubernetes to 1.12.6 CVE-2019-1002100
+
+## [v4.0.1]
+- Update kubernetes to 1.12.6 CVE-2019-1002100
 
 ## [v4.0.0]
 
@@ -34,6 +37,9 @@ version directory, and then changes are introduced.
 
 - Ingress Controller and CoreDNS manifests. Now migrated to chart-operator.
 - Removed nodename_file_optional from calico configmap.
+
+## [v3.7.5]
+- Update kubernetes to 1.12.6 CVE-2019-1002100
 
 ## [v3.7.4]
 
