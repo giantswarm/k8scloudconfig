@@ -11,6 +11,7 @@ version directory, and then changes are introduced.
 
 ## [v4.1.0] WIP
 ### Changed
+- Update kubernetes to 1.13.4 CVE-2019-1002100
 - Intall calicoctl, crictl and configure etcctl tooling in masters.
 - Update kubernetes to 1.13.3.
 - Update etcd to 3.3.12.
@@ -18,6 +19,7 @@ version directory, and then changes are introduced.
 - Add fine-grained Audit Policy
 
 ## [v3.8.0] WIP
+- Update kubernetes to 1.13.4 CVE-2019-1002100
 
 ## [v4.0.0]
 
