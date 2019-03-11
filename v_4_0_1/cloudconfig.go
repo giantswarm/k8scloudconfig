@@ -1,4 +1,4 @@
-package v_4_0_0
+package v_4_0_1
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 
 const (
 	defaultRegistryDomain = "quay.io"
-	kubernetesImage       = "giantswarm/hyperkube:v1.12.3"
+	kubernetesImage       = "giantswarm/hyperkube:v1.12.6"
 	etcdImage             = "giantswarm/etcd:v3.3.9"
 	etcdPort              = 443
 )
