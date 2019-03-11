@@ -1,4 +1,4 @@
-package v_4_0_0
+package v_4_0_1
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	version  = "v_4_0_0"
+	version  = "v_4_0_1"
 	filesDir = "files"
 )
 
@@ -60,7 +60,7 @@ func GetIgnitionPath(ignitionDir string) string {
 }
 
 // GetPackagePath returns top package path for the current runtime file.
-// For example, for /go/src/k8scloudconfig/v_4_0_0/file.go function
+// For example, for /go/src/k8scloudconfig/v_4_0_1/file.go function
 // returns /go/src/k8scloudconfig.
 // This function used only in tests for retrieving ignition assets in runtime.
 func GetPackagePath() (string, error) {
