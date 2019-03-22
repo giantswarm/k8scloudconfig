@@ -12,6 +12,7 @@ version directory, and  then changes are introduced.
 ## [v4.1.1] 
 ### Changed
 - Update kubernetes to 1.13.4 CVE-2019-1002100
+- Pinned calico-kube-controllers to master.
 
 ## [v4.1.0] 
 ### Changed
