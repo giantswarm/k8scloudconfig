@@ -13,6 +13,7 @@ version directory, and  then changes are introduced.
 ### Changed
 - Pin calico-kube-controllers to master.
 - Fix calico-node felix severity log level.
+- Enable `serviceaccount` controller in calico-kube-controller.
 
 ## [v4.1.1] 
 ### Changed
