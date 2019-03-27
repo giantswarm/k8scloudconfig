@@ -12,6 +12,7 @@ version directory, and  then changes are introduced.
 ## [v4.1.2]
 ### Changed
 - Pin calico-kube-controllers to master.
+- Fix calico-node felix severity log level.
 
 ## [v4.1.1] 
 ### Changed
