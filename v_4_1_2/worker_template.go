@@ -59,7 +59,7 @@ systemd:
       RemainAfterExit=yes
       TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
-      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-worker.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
       [Install]
       WantedBy=multi-user.target
   - name: docker.service
@@ -204,7 +204,7 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet.yaml.tmpl" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-worker.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/kubeconfig/kubelet.yaml
       filesystem: root
