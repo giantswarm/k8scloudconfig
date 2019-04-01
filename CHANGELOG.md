@@ -10,7 +10,7 @@ versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
 ## [v4.2.0] WIP
-### Changed
+- Fix race condition issue with systemd units.
 - Remove `UsePrivilegeSeparation` option from sshd configuration.
 
 ## [v4.1.2]
