@@ -25,9 +25,8 @@ spec:
         scheduler.alpha.kubernetes.io/critical-pod: ''
     spec:
       tolerations:
-      - key: node-role.kubernetes.io/master
+      - effect: NoSchedule
         operator: Exists
-        effect: NoSchedule
       hostNetwork: true
       priorityClassName: system-node-critical
       serviceAccountName: kube-proxy
