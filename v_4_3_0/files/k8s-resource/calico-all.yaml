@@ -94,6 +94,7 @@ metadata:
   name: calico-node
   namespace: kube-system
   labels:
+    giantswarm.io/service-type: managed
     k8s-app: calico-node
 spec:
   selector:
@@ -107,6 +108,7 @@ spec:
     metadata:
       labels:
         k8s-app: calico-node
+        giantswarm.io/service-type: managed
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
         # marks the pod as a critical add-on, ensuring it gets
@@ -332,6 +334,7 @@ metadata:
   name: calico-kube-controllers
   namespace: kube-system
   labels:
+    giantswarm.io/service-type: managed
     k8s-app: calico-kube-controllers
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
@@ -346,6 +349,7 @@ spec:
       namespace: kube-system
       labels:
         k8s-app: calico-kube-controllers
+        giantswarm.io/service-type: managed
     spec:
       nodeSelector:
         kubernetes.io/os: linux
