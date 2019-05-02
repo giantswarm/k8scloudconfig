@@ -20,6 +20,7 @@ version directory, and  then changes are introduced.
 - Update calico to 3.6.1
 - Change node labels for master and workers
 - Update kube-proxy and calico to tolerate every taint effects and CriticalAddonsOnly
+- Add managed giantswarm label to calico daemonset
 
 ## [v4.2.0]
 
