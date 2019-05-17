@@ -10,11 +10,21 @@ clusterDomain: {{.Cluster.Kubernetes.Domain}}
 staticPodPath: /etc/kubernetes/manifests
 evictionSoft:
   memory.available: "500Mi"
+  nodefs.inodesFree: "5%"
+  imagefs.available: "10%"
+evictionSoftGracePeriod:
+  memory.available: "30s"
+  imagefs.available: "30s"
+  nodefs.inodesFree: "30s"
 evictionHard:
   memory.available: "200Mi"
-evictionSoftGracePeriod:
-  memory.available: "5s"
 evictionMaxPodGracePeriod: 60
+systemReserved:
+  cpu: "250m"
+  memory: "0.2Gi"
+kubeReserved:
+  cpu: "250m"
+  memory: "1Gi"
 authentication:
   anonymous:
     enabled: true # Defaults to false as of 1.10

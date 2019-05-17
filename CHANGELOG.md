@@ -14,6 +14,8 @@ version directory, and  then changes are introduced.
 ### Changed
 
 -- Change Felix configuration to add metric server and expose data to be scraped for prometheus.
+-- Add cpu/mem reservation for kubelet and system processes.	
+-- Add eviction in worker nodes when image and node filesystems are less than 5% and 10%
 
 ## [v4.3.0]
 
