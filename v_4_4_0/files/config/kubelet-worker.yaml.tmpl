@@ -9,21 +9,11 @@ clusterDNS:
 clusterDomain: {{.Cluster.Kubernetes.Domain}}
 evictionSoft:
   memory.available: "500Mi"
-  nodefs.inodesFree: "5%"
-  imagefs.available: "5%"
-evictionSoftGracePeriod:
-  memory.available: "30s"
-  imagefs.available: "60s"
-  nodefs.inodesFree: "60s"
 evictionHard:
   memory.available: "200Mi"
+evictionSoftGracePeriod:
+  memory.available: "5s"
 evictionMaxPodGracePeriod: 60
-systemReserved:
-  cpu: "250m"
-  memory: "0.2Gi"
-kubeReserved:
-  cpu: "250m"
-  memory: "1Gi"
 authentication:
   anonymous:
     enabled: true # Defaults to false as of 1.10
