@@ -11,9 +11,14 @@ version directory, and  then changes are introduced.
 
 ## [v4.4.0] WIP
 
+### Added
+
+-- Add nginx-ingress controller performance improvements into operating system provisioning.
+
 ### Changed
 
 -- Change Felix configuration to add metric server and expose data to be scraped for prometheus.
+-- Harden `restricted` podsecuritypolicy.
 
 ## [v4.3.0]
 
