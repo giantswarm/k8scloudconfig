@@ -3,6 +3,8 @@ kind: Pod
 metadata:
   name: k8s-scheduler
   namespace: kube-system
+  labels:
+    k8s-app: scheduler
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
 spec:
