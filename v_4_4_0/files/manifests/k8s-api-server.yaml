@@ -5,6 +5,7 @@ metadata:
   namespace: kube-system
   labels:
     k8s-app: api-server
+    tier: control-plane
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
 spec:
