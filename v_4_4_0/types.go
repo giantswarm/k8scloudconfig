@@ -97,8 +97,18 @@ type FileMetadata struct {
 }
 
 type Owner struct {
-	User  string
-	Group string
+	Group Group
+	User  User
+}
+
+type Group struct {
+	ID   int
+	Name string
+}
+
+type User struct {
+	ID   int
+	Name string
 }
 
 type FileAsset struct {
