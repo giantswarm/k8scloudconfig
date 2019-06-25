@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "master"
-  digest = "1:0f8f8adf495b28a3e4824cdc955045f2c7880ed5e36cf507b2a20eb7b4711b60"
+  branch = "k8s-1.15"
+  digest = "1:b37425a4d8c91fb4c73f32cbff406e2e4201b6913b5632429e25dc713f54b60b"
   name = "github.com/giantswarm/apiextensions"
   packages = ["pkg/apis/provider/v1alpha1"]
   pruneopts = "UT"
-  revision = "0dc2df5b5d85f01e86af6e06c8024861ef11c2c9"
+  revision = "6ca7d0f56037ffbcf3946d92fee5623e10a798f0"
 
 [[projects]]
   branch = "master"
@@ -121,18 +121,18 @@
   version = "v2.2.2"
 
 [[projects]]
-  digest = "1:46e3296eec0a6e864c2ef813ccfdb0b83d144fcc23414d97dd4894e9464cf4d5"
+  digest = "1:009c97a2e9e26b34d39af301ed95c7030a2e5e7aa7c268e4be1a32a1e6379820"
   name = "k8s.io/apiextensions-apiserver"
   packages = [
     "pkg/apis/apiextensions",
     "pkg/apis/apiextensions/v1beta1",
   ]
   pruneopts = "UT"
-  revision = "7d26de67f177df719a36756e658973478df68485"
-  version = "kubernetes-1.13.2"
+  revision = "14e95df34f1f469647f494f5185a036e26fddcab"
+  version = "kubernetes-1.15.0"
 
 [[projects]]
-  digest = "1:64cc55bfc7c794bc04562c22daf8486dc65c84251d820e41672d76893205ad45"
+  digest = "1:11ac23292d4540291a2f98899240cba9305bd74a3c5b3c11c0f5245aa77ece78"
   name = "k8s.io/apimachinery"
   packages = [
     "pkg/api/resource",
@@ -158,8 +158,8 @@
     "third_party/forked/golang/reflect",
   ]
   pruneopts = "UT"
-  revision = "2b1284ed4c93a43499e781493253e2ac5959c4fd"
-  version = "kubernetes-1.13.2"
+  revision = "1799e75a07195de9460b8ef7300883499f12127b"
+  version = "kubernetes-1.15.0"
 
 [[projects]]
   digest = "1:e2999bf1bb6eddc2a6aa03fe5e6629120a53088926520ca3b4765f77d7ff7eab"
@@ -168,6 +168,14 @@
   pruneopts = "UT"
   revision = "a5bc97fbc634d635061f3146511332c7e313a55a"
   version = "v0.1.0"
+
+[[projects]]
+  branch = "master"
+  digest = "1:8b5d43a2ffe1c0df5e9d7f635227f179341964dd7d0b72fc12f857186a47c224"
+  name = "k8s.io/utils"
+  packages = ["pointer"]
+  pruneopts = "UT"
+  revision = "c55fbcfc754a5b2ec2fbae8fb9dcac36bdba6a12"
 
 [solve-meta]
   analyzer-name = "dep"
