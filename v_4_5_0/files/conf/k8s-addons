@@ -14,11 +14,16 @@ NAMESPACES="default kube-system"
 for namespace in ${NAMESPACES}
 do
     while
-        /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL label namespace ${namespace} name=${namespace}
+        /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get namespaces -l name=${namespace} | grep ${namespace}
         [ "$?" -ne "0" ]
     do
-        echo "failed to label namespace ${namespace}, retrying in 5 sec"
-        sleep 5s
+        while
+            /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL label namespace ${namespace} name=${namespace}
+            [ "$?" -ne "0" ]
+        do
+            echo "failed to label namespace ${namespace}, retrying in 5 sec"
+            sleep 5s
+        done
     done
 done
 
