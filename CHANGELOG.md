@@ -12,6 +12,7 @@ version directory, and  then changes are introduced.
 ## [v4.5.0] WIP
 - Add configuration necessery for generic support of rbd storage.
 - Add `name` label for `kube-system` and `default` namespaces.
+- Update `giantswarm-critical` priority class manifest to use `v1` stable.
 
 ## [v4.4.0]
 
