@@ -11,6 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [v4.6.0] WIP
 
+### Changed
+
+- Make --image-pull-progress-deadline configurable for kubelets so a longer
+duration can be used in AWS China regions to mitigate slow image pulls.
+
 ## [v4.5.0]
 
 ### Changed
