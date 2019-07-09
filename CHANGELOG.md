@@ -11,7 +11,7 @@ version directory, and  then changes are introduced.
 
 ## [v4.6.0] WIP
 
-### Changed
+### Fixed
 
 - Update `giantswarm-critical` priority class manifest to use `v1` stable.
 
