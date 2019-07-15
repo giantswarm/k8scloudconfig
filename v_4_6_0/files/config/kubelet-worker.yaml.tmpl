@@ -14,6 +14,17 @@ evictionHard:
 evictionSoftGracePeriod:
   memory.available: "5s"
 evictionMaxPodGracePeriod: 60
+kubeReserved:
+  cpu: 500m
+  memory: 512Mi
+  ephemeral-storage: 1024Mi
+kubeReservedCgroup: /podruntime.slice
+kubeletCgroups: /podruntime.slice
+runtimeCgroups: /podruntime.slice
+systemReserved:
+  cpu: 500m
+  memory: 512Mi
+systemReservedCgroup: /system.slice
 authentication:
   anonymous:
     enabled: true # Defaults to false as of 1.10
