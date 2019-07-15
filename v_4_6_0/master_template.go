@@ -27,6 +27,16 @@ passwd:
 
 systemd:
   units:
+  - name: podruntime-slice
+    path: /etc/systemd/system/podruntime.slice
+    content: |
+      [Unit]
+      Description=Limited resources slice for Kubernetes services
+      Documentation=man:systemd.special(7)
+      DefaultDependencies=no
+      Before=slices.target
+      Requires=-.slice
+      After=-.slice
   - name: audit-rules.service
     enabled: true
     dropins:
