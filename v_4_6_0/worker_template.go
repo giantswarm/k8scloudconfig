@@ -101,6 +101,14 @@ systemd:
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
       [Install]
       WantedBy=multi-user.target
+  - name: containerd.service
+    enabled: true
+    contents: |
+    dropins:
+      - name: 10-change-cgroup.conf
+        contents: |
+          [Service]
+          Slice=podruntime.slice
   - name: docker.service
     enabled: true
     contents: |
@@ -108,6 +116,7 @@ systemd:
       - name: 10-giantswarm-extra-args.conf
         contents: |
           [Service]
+          Slice=podruntime.slice
           Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
           Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
           Environment="DOCKER_OPTS=--live-restore --icc=false --userland-proxy=false"
@@ -146,6 +155,7 @@ systemd:
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
+      Slice=podruntime.slice
       EnvironmentFile=/etc/network-environment
       Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
       Environment="NAME=%p.service"
