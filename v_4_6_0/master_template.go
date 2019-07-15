@@ -216,7 +216,7 @@ systemd:
       EnvironmentFile=/etc/network-environment
       Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
       Environment="NAME=%p.service"
-      Environment="PATH=/opt/bin/:/usr/bin/:/usr/sbin:/sbin:$PATH"
+      Environment="PATH=/opt/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker stop -t 10 $NAME
       ExecStartPre=-/usr/bin/docker rm -f $NAME
@@ -231,6 +231,9 @@ systemd:
       -v /run/calico/:/run/calico/:rw \
       -v /run/docker/:/run/docker/:rw \
       -v /run/docker.sock:/run/docker.sock:rw \
+      -v /usr/bin/docker:/usr/bin/docker \
+      -v /run/metadata/torcx:/run/metadata/torcx \
+      -v /run/torcx/:/run/torcx/ \
       -v /usr/lib/os-release:/etc/os-release \
       -v /usr/share/ca-certificates/:/etc/ssl/certs \
       -v /var/lib/calico/:/var/lib/calico \

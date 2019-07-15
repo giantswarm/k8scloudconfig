@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [v4.6.0] WIP
 
+### Changed
+
+- Mount relevant directories so that the command `docker` can run in `Kubelet`. This is needed for `rbd` to mount `Ceph` volumes on the nodes.
+
 ### Fixed
 
 - Update `giantswarm-critical` priority class manifest to use `v1` stable.
