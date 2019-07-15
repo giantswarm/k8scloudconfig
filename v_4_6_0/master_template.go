@@ -44,6 +44,8 @@ systemd:
     - name: 10-change-user-session-cgroup.conf
       contents: |
         [Service]
+        CPUAccounting=true
+        MemoryAccounting=true
         Slice=system-user-%i.slice
   # End - manual management for cgroup structure
   - name: audit-rules.service
@@ -115,6 +117,8 @@ systemd:
       - name: 10-change-cgroup.conf
         contents: |
           [Service]
+          CPUAccounting=true
+          MemoryAccounting=true
           Slice=podruntime.slice
   - name: docker.service
     enabled: true
@@ -123,6 +127,8 @@ systemd:
       - name: 10-giantswarm-extra-args.conf
         contents: |
           [Service]
+          CPUAccounting=true
+          MemoryAccounting=true
           Slice=podruntime.slice
           Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
           Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
@@ -253,6 +259,8 @@ systemd:
       Restart=always
       RestartSec=0
       TimeoutStopSec=10
+      CPUAccounting=true
+      MemoryAccounting=true
       Slice=podruntime.slice
       EnvironmentFile=/etc/network-environment
       Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
