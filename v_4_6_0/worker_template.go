@@ -27,6 +27,7 @@ passwd:
 
 systemd:
   units:
+  # Start - manual management for cgroup structure
   - name: podruntime-slice
     path: /etc/systemd/system/podruntime.slice
     content: |
@@ -37,6 +38,14 @@ systemd:
       Before=slices.target
       Requires=-.slice
       After=-.slice
+  - name: user@.service
+    enabled: true
+    dropins:
+    - name: 10-change-user-session-cgroup.conf
+      contents: |
+        [Service]
+        Slice=system-user-%i.slice
+  # End - manual management for cgroup structure
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
     enabled: {{.Metadata.Enabled}}
