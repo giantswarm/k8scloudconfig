@@ -15,10 +15,6 @@ evictionHard:
 evictionSoftGracePeriod:
   memory.available: "5s"
 evictionMaxPodGracePeriod: 60
-enforceNodeAllocatable:
-  - pods
-  - kube-reserved
-  - system-reserved
 kubeReserved:
   cpu: 500m
   memory: 512Mi
