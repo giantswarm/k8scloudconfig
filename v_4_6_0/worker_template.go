@@ -114,7 +114,7 @@ systemd:
           CPUAccounting=true
           MemoryAccounting=true
           Slice=podruntime.slice
-          Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
+          Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --cgroup-parent=/podruntime.slice --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
           Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
           Environment="DOCKER_OPTS=--live-restore --icc=false --userland-proxy=false"
   - name: k8s-setup-network-env.service
@@ -206,7 +206,6 @@ systemd:
       {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
-      --cgroup-parent=/podruntime.slice \
       --node-ip=${DEFAULT_IPV4} \
       --config=/etc/kubernetes/config/kubelet.yaml \
       --containerized \
