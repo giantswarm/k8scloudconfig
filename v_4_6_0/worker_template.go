@@ -38,15 +38,6 @@ systemd:
       Before=slices.target
       Requires=-.slice
       After=-.slice
-  - name: user@.service
-    enabled: true
-    dropins:
-    - name: 10-change-user-session-cgroup.conf
-      contents: |
-        [Service]
-        CPUAccounting=true
-        MemoryAccounting=true
-        Slice=system-user-%i.slice
   # End - manual management for cgroup structure
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
