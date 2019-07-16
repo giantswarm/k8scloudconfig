@@ -28,7 +28,7 @@ passwd:
 systemd:
   units:
   # Start - manual management for cgroup structure
-  - name: podruntime-slice
+  - name: podruntime.slice
     path: /etc/systemd/system/podruntime.slice
     content: |
       [Unit]
