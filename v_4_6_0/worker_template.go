@@ -206,6 +206,7 @@ systemd:
       {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
+      --cgroup-parent=/podruntime.slice \
       --node-ip=${DEFAULT_IPV4} \
       --config=/etc/kubernetes/config/kubelet.yaml \
       --containerized \

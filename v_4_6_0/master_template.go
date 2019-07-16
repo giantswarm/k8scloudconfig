@@ -180,6 +180,7 @@ systemd:
           $IMAGE \
           etcd \
           --name etcd0 \
+          --cgroup-parent=/podruntime.slice \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
@@ -308,6 +309,7 @@ systemd:
       {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
       {{ . }} \
       {{ end -}}
+      --cgroup-parent=/podruntime.slice \
       --node-ip=${DEFAULT_IPV4} \
       --config=/etc/kubernetes/config/kubelet.yaml \
       --containerized \
