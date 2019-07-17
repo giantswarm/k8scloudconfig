@@ -42,7 +42,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
-	  ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs chown root:giantswarm "
+      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs chown root:giantswarm "
       [Install]
       WantedBy=multi-user.target
   - name: wait-for-domains.service
