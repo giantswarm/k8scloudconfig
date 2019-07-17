@@ -33,6 +33,18 @@ systemd:
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  - name: set-certs-group-owner-giantswarm.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Change group owner for certificates to giantswarm
+      Wants=k8s-kubelet.service k8s-setup-network-env.service
+      After=k8s-kubelet.service k8s-setup-network-env.service
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs chown root:giantswarm "
+      [Install]
+      WantedBy=multi-user.target
   - name: wait-for-domains.service
     enabled: true
     contents: |

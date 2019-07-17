@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [v4.6.0] WIP
 
+### Added
+
+- Systemd unit, which sets certificates group owner to `giantswarm`, so that cert-exporter running as user `giantswarm` is able to read certificates.
+
 ### Changed
 
 - Mount relevant directories so that the command `docker` can run in `Kubelet`. This is needed for `rbd` to mount `Ceph` volumes on the nodes.
