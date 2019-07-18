@@ -283,6 +283,7 @@ systemd:
       --enable-server \
       --logtostderr=true \
       --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
+      --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
       --network-plugin=cni \
       --register-node=true \
       --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
