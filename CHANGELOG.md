@@ -21,6 +21,7 @@ version directory, and  then changes are introduced.
 - Add explicit cgroups for finer grained resources management over operating system components and container runtime.
 - Make --image-pull-progress-deadline configurable for kubelets so a longer
 duration can be used in AWS China regions to mitigate slow image pulls.
+- Harden `restricted` podsecuritypolicy.
 
 ### Fixed
 
