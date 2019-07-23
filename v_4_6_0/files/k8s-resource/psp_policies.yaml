@@ -33,6 +33,7 @@ metadata:
   name: restricted
 spec:
   privileged: false
+  allowPrivilegeEscalation: false
   runAsUser:
     rule: MustRunAsNonRoot
   seLinux:
