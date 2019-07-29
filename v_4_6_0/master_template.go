@@ -325,6 +325,51 @@ systemd:
       ExecStopPost=-/usr/bin/docker rm -f $NAME
       [Install]
       WantedBy=multi-user.target
+  - name: node-exporter.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Node Exporter
+
+      [Service]
+      ExecStartPre=/bin/sh -c "docker rm -f node-exporter-binarycopy; \
+                  docker create --name node-exporter-binarycopy {{ .RegistryDomain }}/node-exporter:v0.18.0-giantswarm && \
+                  docker cp node-exporter-binarycopy:/bin/node_exporter /opt/bin/node_exporter && \
+                  docker rm -f node-exporter-binarycopy"
+      ExecStart=/opt/bin/node_exporter \
+                --log.level=info \
+                --web.listen-address=:10300 \
+                --collector.arp \
+                --collector.bcache \
+                --collector.conntrack \
+                --collector.cpu \
+                --collector.edac \
+                --collector.entropy \
+                --collector.filefd \
+                --collector.filesystem \
+                --collector.hwmon \
+                --collector.loadavg \
+                --collector.mdadm \
+                --collector.meminfo \
+                --collector.netdev \
+                --collector.netstat \
+                --collector.sockstat \
+                --collector.stat \
+                --collector.systemd \
+                --collector.time \
+                --collector.timex \
+                --collector.uname \
+                --collector.vmstat \
+                --collector.xfs \
+                --no-collector.diskstats \
+                --no-collector.infiniband \
+                --no-collector.ipvs \
+                --no-collector.textfile \
+                --no-collector.wifi \
+                --no-collector.zfs
+
+      [Install]
+      WantedBy=multi-user.target
   - name: etcd2.service
     enabled: false
     mask: true
