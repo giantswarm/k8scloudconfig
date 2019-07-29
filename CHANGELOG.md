@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Systemd unit, which sets certificates group owner to `giantswarm`, so that cert-exporter running as user `giantswarm` is able to read certificates.
+- node-exporter as systemd unit instead of daemonset in Kubernetes.
 
 ### Changed
 
