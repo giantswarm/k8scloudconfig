@@ -229,7 +229,7 @@ systemd:
       Description=Node Exporter
       After=k8s-setup-network-env.service docker.service
       Requires=k8s-setup-network-env.service docker.service
-  
+
       [Service]
       ExecStartPre=/bin/sh -c "docker rm -f node-exporter-binarycopy; \
                   docker create --name node-exporter-binarycopy {{ .RegistryDomain }}//node-exporter:v0.18.0 && \
@@ -266,7 +266,7 @@ systemd:
                 --no-collector.textfile \
                 --no-collector.wifi \
                 --no-collector.zfs
-  
+
       [Install]
       WantedBy=multi-user.target
   - name: etcd2.service
