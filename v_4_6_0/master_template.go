@@ -330,6 +330,8 @@ systemd:
     contents: |
       [Unit]
       Description=Node Exporter
+      After=k8s-setup-network-env.service docker.service
+      Requires=k8s-setup-network-env.service docker.service
 
       [Service]
       ExecStartPre=/bin/sh -c "docker rm -f node-exporter-binarycopy; \
