@@ -334,6 +334,8 @@ systemd:
       Requires=k8s-setup-network-env.service docker.service
 
       [Service]
+      Restart=on-failure
+      RestartSec=5s
       ExecStartPre=/bin/sh -c "docker rm -f node-exporter-binarycopy; \
                   docker create --name node-exporter-binarycopy {{ .RegistryDomain }}/node-exporter:v0.18.0-giantswarm && \
                   docker cp node-exporter-binarycopy:/bin/node_exporter /opt/bin/node_exporter && \
