@@ -61,7 +61,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
-      ExecStartPre=/bin/sh -c "while [ ! -d /rootfs/var/lib/kubelet/pods ]; do echo 'Waiting for kubelet dirs being created...'; sleep 1; done"
+      ExecStartPre=/bin/sh -c "while [ ! -d /var/lib/kubelet/pods ]; do echo 'Waiting for kubelet dirs being created...'; sleep 1; done"
       ExecStartPre=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs -i  sh -c 'chown root:giantswarm {} && chmod 640 {}'"
       ExecStart=/bin/sh -c "chown root:giantswarm /var/lib/kubelet -R"
       [Install]
