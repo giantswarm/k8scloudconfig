@@ -11,7 +11,9 @@ version directory, and  then changes are introduced.
 
 ## [v4.7.0] WIP
 
-### TODO
+### Added
+
+- Enable TTLAfterFinished feature gate. This allows a TTL controller to clean up jobs after they finish execution.
 
 ## [v4.6.0]
 
