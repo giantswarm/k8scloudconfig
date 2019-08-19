@@ -13,6 +13,10 @@ version directory, and  then changes are introduced.
 
 ### TODO
 
+### Added
+
+- Enabled TTLAfterFinished feature gate. This allows a TTL controller to clean up jobs after they finish execution.
+
 ## [v4.6.0]
 
 ### Added
