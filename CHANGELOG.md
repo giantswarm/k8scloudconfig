@@ -15,6 +15,11 @@ version directory, and  then changes are introduced.
 
 - Enable TTLAfterFinished feature gate. This allows a TTL controller to clean up jobs after they finish execution.
 
+### Changed
+
+- Update kubernetes to 1.14.6, includes fixes for CVE-2019-9512, CVE-2019-9514
+- Update calico to 3.8.2
+
 ## [v4.6.0]
 
 ### Added
