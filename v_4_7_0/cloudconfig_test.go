@@ -40,8 +40,6 @@ func TestCloudConfig(t *testing.T) {
 	for _, tc := range tests {
 		c := DefaultCloudConfigConfig()
 
-		tc.params.Extension = nopExtension{}
-
 		if tc.customEtcdPort != 0 {
 			tc.params.EtcdPort = tc.customEtcdPort
 		}
