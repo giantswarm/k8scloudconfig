@@ -24,7 +24,11 @@ func Test_MasterTemplate(t *testing.T) {
 
 	// Test with Params struct. This should contain all evaluated fields.
 	{
-		params := Params{}
+		params := Params{
+			// Extension has to be set because it's interface and
+			// template evaluation will panic otherwise.
+			Extension: nopExtension{},
+		}
 
 		packagePath, err := GetPackagePath()
 		if err != nil {
