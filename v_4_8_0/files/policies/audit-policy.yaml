@@ -109,7 +109,7 @@ rules:
     omitStages:
       - "RequestReceived"
   # Get repsonses can be large; skip them.
-  - level: Request
+  - level: None
     verbs: ["get", "list", "watch"]
     resources:
       - group: "" # core
