@@ -9,13 +9,65 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
-## [v4.4.0] WIP
+## [v4.8.0] WIP
+
+### Added
+
+- TODO
+
+## [v4.7.0]
+
+### Added
+
+- Enable TTLAfterFinished feature gate. This allows a TTL controller to clean up jobs after they finish execution.
+
+### Changed
+
+- Update kubernetes to 1.14.6, includes fixes for CVE-2019-9512, CVE-2019-9514
+- Update calico to 3.8.2
+
+## [v4.6.0]
+
+### Added
+
+- Systemd unit, which sets certificates group owner to `giantswarm`, so that cert-exporter running as user `giantswarm` is able to read certificates.
+
+### Changed
+
+- Mount relevant directories so that the command `docker` can run in `Kubelet`. This is needed for `rbd` to mount `Ceph` volumes on the nodes.
+- Add explicit cgroups for finer grained resources management over operating system components and container runtime.
+- Make --image-pull-progress-deadline configurable for kubelets so a longer
+duration can be used in AWS China regions to mitigate slow image pulls.
+- Harden `restricted` podsecuritypolicy.
+
+### Fixed
+
+- Update `giantswarm-critical` priority class manifest to use `v1` stable.
+
+## [v4.5.1]
+
+### Changed
+
+- Update kubernetes to 1.14.5 CVE-2019-1002101, CVE-2019-11246
+
+## [v4.5.0]
+
+### Changed
+
+- Add configuration necessery for generic support of rbd storage.
+- Add `name` label for `kube-system` and `default` namespaces.
+
+## [v4.4.0]
 
 ### Changed
 
 - Change Felix configuration to add metric server and expose data to be scraped for prometheus.
 - Add `k8s-app` label for `api-server`, `controller-manager` and `scheduler`.
 - Harden SSH config and tuned networking kernel settings
+- Update kubernetes to 1.14.3
+- Update calico to 3.7.1
+- Update etcd to 3.3.13.
+
 
 ## [v4.3.0]
 
@@ -389,6 +441,10 @@ chart-operator).
 
 ## [v0.1.0]
 
+[v4.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_7_0
+[v4.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_6_0
+[v4.5.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_1
+[v4.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_0
 [v4.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_4_0
 [v4.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_3_0
 [v4.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_2_0
