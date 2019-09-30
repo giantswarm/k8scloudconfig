@@ -98,6 +98,7 @@ systemd:
       RemainAfterExit=yes
       TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-configmap.yaml.tmpl >/etc/kubernetes/config/kubelet-configmap.yaml'
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
       [Install]
       WantedBy=multi-user.target
@@ -309,6 +310,7 @@ systemd:
       {{ . }} \
       {{ end -}}
       --node-ip=${DEFAULT_IPV4} \
+      --dynamic-config-dir=/etc/kubernetes/kubeconfig/kubelet-dynamic-config/ \
       --config=/etc/kubernetes/config/kubelet.yaml \
       --containerized \
       --enable-server \
@@ -362,6 +364,19 @@ systemd:
       [Install]
       WantedBy=multi-user.target
 
+  - name: kubelet-dynamic-config.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Patch node to use dynamic config
+      Wants=k8s-kubelet.service k8s-setup-network-env.service wait-for-domains.service
+      After=k8s-kubelet.service k8s-setup-network-env.service wait-for-domains.service
+      [Service]
+      Type=oneshot
+      ExecStart=/opt/patch-node-dynamic-config
+      [Install]
+      WantedBy=multi-user.target
+
   - name: debug-tools.service
     enabled: true
     contents: |
@@ -375,6 +390,11 @@ systemd:
       WantedBy=multi-user.target
 
 storage:
+  directories: 
+    - path: /etc/kubernetes/kubeconfig/kubelet-dynamic-config/
+      filesystem: root
+      mode: 0744
+
   files:
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
@@ -493,6 +513,24 @@ storage:
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-master.yaml.tmpl" }}"
+
+    - path: /etc/kubernetes/config/kubelet-configmap.yaml.tmpl
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-configmap.yaml.tmpl" }}"
+
+    - path: /etc/kubernetes/config/kubelet-node-dynamic-config.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-node-dynamic-config-master.yaml" }}"
+
+    - path: /opt/patch-node-dynamic-config
+      filesystem: root
+      mode: 0744
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/patch-node-dynamic-kubelet-config" }}"
 
     - path: /etc/kubernetes/kubeconfig/kubelet.yaml
       filesystem: root

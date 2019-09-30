@@ -62,6 +62,16 @@ do
     sleep 3s
 done
 
+# create dynamic kubelet configmap
+KUBELET_CONFIGMAP="/etc/kubernetes/config/kubelet-configmap.yaml"
+while
+    /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f $KUBELET_CONFIGMAP
+    [ "$?" -ne "0" ]
+do
+    echo "failed to create kubelet dynamic configuration configmap, retrying in 5 sec"
+    sleep 5s
+done
+
 # create kube-proxy configmap
 while
     /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv $KUBECTL create configmap kube-proxy --from-file=kube-proxy.yaml=/srv/kube-proxy-config.yaml -o yaml --dry-run \
@@ -161,3 +171,4 @@ do
     done
 done
 echo "Addons successfully installed"
+

@@ -13,7 +13,7 @@ version directory, and  then changes are introduced.
 
 ### Added
 
-- TODO
+- Added kubelet dynamic config support.
 
 ## [v4.7.0]
 
@@ -441,6 +441,7 @@ chart-operator).
 
 ## [v0.1.0]
 
+[v4.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_0
 [v4.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_7_0
 [v4.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_6_0
 [v4.5.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_1

@@ -138,6 +138,18 @@ systemd:
       ExecStopPost=-/usr/bin/docker rm -f $NAME
       [Install]
       WantedBy=multi-user.target
+  - name: kubelet-dynamic-config.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Patch node to use dynamic config
+      Wants=k8s-kubelet.service k8s-setup-network-env.service
+      After=k8s-kubelet.service k8s-setup-network-env.service
+      [Service]
+      Type=oneshot
+      ExecStart=/opt/patch-node-dynamic-config
+      [Install]
+      WantedBy=multi-user.target
   - name: k8s-kubelet.service
     enabled: true
     contents: |
@@ -207,6 +219,7 @@ systemd:
       {{ . }} \
       {{ end -}}
       --node-ip=${DEFAULT_IPV4} \
+      --dynamic-config-dir=/etc/kubernetes/kubeconfig/kubelet-dynamic-config/ \
       --config=/etc/kubernetes/config/kubelet.yaml \
       --containerized \
       --enable-server \
@@ -246,6 +259,11 @@ systemd:
     mask: true
 
 storage:
+  directories: 
+    - path: /etc/kubernetes/kubeconfig/kubelet-dynamic-config/
+      filesystem: root
+      mode: 0744
+
   files:
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
@@ -258,6 +276,18 @@ storage:
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-worker.yaml.tmpl" }}"
+  
+    - path: /etc/kubernetes/config/kubelet-node-dynamic-config.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-node-dynamic-config-worker.yaml" }}"
+   
+    - path: /opt/patch-node-dynamic-config
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/patch-node-dynamic-kubelet-config" }}"
 
     - path: /etc/kubernetes/kubeconfig/kubelet.yaml
       filesystem: root

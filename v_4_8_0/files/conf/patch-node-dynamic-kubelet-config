@@ -1,0 +1,18 @@
+#!/bin/bash
+set -eu
+
+# Patch node to use remote configmap as dynamic kubelet config
+KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml
+NODE_PATCH=/etc/kubernetes/config/kubelet-node-dynamic-config.yaml
+KUBECTL={{ .RegistryDomain }}/giantswarm/docker-kubectl:f5cae44c480bd797dc770dd5f62d40b74063c0d7
+
+/usr/bin/docker pull $KUBECTL
+
+while
+  /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL patch node ${HOSTNAME} --patch "$(cat $NODE_PATCH)"
+  [ "$?" -ne "0" ]
+do
+  echo "failed patch node to use dynamic configmap, retrying in 5 sec"
+  sleep 5s
+done
+

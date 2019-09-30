@@ -1,0 +1,6 @@
+spec:
+  configSource:
+    configMap:
+      name: kubelet-configuration-master-values
+      namespace: kube-system
+      kubeletConfigKey: kubelet
