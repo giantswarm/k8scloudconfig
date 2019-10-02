@@ -373,6 +373,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service wait-for-domains.service
       [Service]
       Type=oneshot
+      TimeoutStartSec=0
       ExecStart=/opt/patch-node-dynamic-config
       [Install]
       WantedBy=multi-user.target
