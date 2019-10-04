@@ -1,8 +1,6 @@
 kind: KubeletConfiguration
 apiVersion: kubelet.config.k8s.io/v1beta1
-address: ${DEFAULT_IPV4}
 port: 10250
-healthzBindAddress: ${DEFAULT_IPV4}
 healthzPort: 10248
 clusterDNS:
   - {{.Cluster.Kubernetes.DNS.IP}}

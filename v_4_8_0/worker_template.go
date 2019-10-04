@@ -91,7 +91,7 @@ systemd:
       RemainAfterExit=yes
       TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
-      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-worker.yaml.tmpl >/etc/kubernetes/config/kubelet-worker.yaml'
       [Install]
       WantedBy=multi-user.target
   - name: containerd.service
@@ -220,8 +220,11 @@ systemd:
       {{ . }} \
       {{ end -}}
       --node-ip=${DEFAULT_IPV4} \
+      --address=${DEFAULT_IPV4} \
+      --healthz-bind-address=${DEFAULT_IPV4} \
       --dynamic-config-dir=/etc/kubernetes/kubeconfig/kubelet-dynamic-config/ \
-      --config=/etc/kubernetes/config/kubelet.yaml \
+      # Local config file gets overriden by kubelet-dynamic-config-worker configmap when reach is api connection for first time. \
+      --config=/etc/kubernetes/config/kubelet-worker.yaml \
       --containerized \
       --enable-server \
       --logtostderr=true \
@@ -272,7 +275,7 @@ storage:
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
-    - path: /etc/kubernetes/config/kubelet.yaml.tmpl
+    - path: /etc/kubernetes/config/kubelet-worker.yaml.tmpl
       filesystem: root
       mode: 0644
       contents:

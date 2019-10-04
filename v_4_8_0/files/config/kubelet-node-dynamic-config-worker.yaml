@@ -1,6 +1,6 @@
 spec:
   configSource:
     configMap:
-      name: kubelet-configuration-worker-values
+      name: kubelet-dynamic-config-worker
       namespace: kube-system
       kubeletConfigKey: kubelet

@@ -98,8 +98,8 @@ systemd:
       RemainAfterExit=yes
       TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
-      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-configmap.yaml.tmpl >/etc/kubernetes/config/kubelet-configmap.yaml'
-      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-worker.yaml.tmpl >/etc/kubernetes/config/kubelet-worker.yaml'
+      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet-master.yaml.tmpl >/etc/kubernetes/config/kubelet-master.yaml'
       [Install]
       WantedBy=multi-user.target
   - name: containerd.service
@@ -310,8 +310,10 @@ systemd:
       {{ . }} \
       {{ end -}}
       --node-ip=${DEFAULT_IPV4} \
+      --address=${DEFAULT_IPV4} \
       --dynamic-config-dir=/etc/kubernetes/kubeconfig/kubelet-dynamic-config/ \
-      --config=/etc/kubernetes/config/kubelet.yaml \
+      # Local config file gets overriden by kubelet-dynamic-config-master configmap when reach is api connection for first time. \
+      --config=/etc/kubernetes/config/kubelet-master.yaml \
       --containerized \
       --enable-server \
       --logtostderr=true \
@@ -509,24 +511,24 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kube-proxy-master.yaml" }}"
 
-    - path: /etc/kubernetes/config/kubelet.yaml.tmpl
+    - path: /etc/kubernetes/config/kubelet-master.yaml.tmpl
       filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-master.yaml.tmpl" }}"
 
-    - path: /etc/kubernetes/config/kubelet-configmap.yaml.tmpl
+    - path: /etc/kubernetes/config/kubelet-worker.yaml.tmpl
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-configmap.yaml.tmpl" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-worker.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/config/kubelet-node-dynamic-config.yaml
       filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-node-dynamic-config-master.yaml" }}"
-
+   
     - path: /opt/patch-node-dynamic-config
       filesystem: root
       mode: 0744

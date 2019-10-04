@@ -63,13 +63,16 @@ do
 done
 
 # create dynamic kubelet configmap
-KUBELET_CONFIGMAP="/etc/kubernetes/config/kubelet-configmap.yaml"
-while
-    /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f $KUBELET_CONFIGMAP
-    [ "$?" -ne "0" ]
+for i in {worker,master}
 do
-    echo "failed to create kubelet dynamic configuration configmap, retrying in 5 sec"
-    sleep 5s
+  KUBELET_CONFIGMAP="/etc/kubernetes/config/kubelet-${i}.yaml"
+  while
+      /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL create configmap -n kube-system kubelet-dynamic-config-$i --from-file=kubelet=$KUBELET_CONFIGMAP
+      [ "$?" -ne "0" ]
+  do
+      echo "failed to create kubelet dynamic configuration configmap, retrying in 5 sec"
+      sleep 5s
+  done
 done
 
 # create kube-proxy configmap
