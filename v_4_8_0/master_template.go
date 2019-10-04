@@ -311,6 +311,7 @@ systemd:
       {{ end -}}
       --node-ip=${DEFAULT_IPV4} \
       --address=${DEFAULT_IPV4} \
+      --healthz-bind-address=${DEFAULT_IPV4} \
       --dynamic-config-dir=/etc/kubernetes/kubeconfig/kubelet-dynamic-config/ \
       # Local config file gets overriden by kubelet-dynamic-config-master configmap when reach is api connection for first time. \
       --config=/etc/kubernetes/config/kubelet-master.yaml \
