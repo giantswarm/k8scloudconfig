@@ -1,8 +1,4 @@
-<<<<<<< HEAD
 package v_4_9_0
-=======
-package v_4_8_0
->>>>>>> master
 
 import (
 	"bytes"
