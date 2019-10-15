@@ -21,6 +21,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Add k8s-api-healthz service to master node to enable proper LB health checks to api and etcd.
+- Set api-server listen address to 0.0.0.0.
 
 ## [v4.7.0]
 
