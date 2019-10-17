@@ -16,6 +16,10 @@ version directory, and  then changes are introduced.
 
 - Bind kube-proxy metrics address to 0.0.0.0 instead on default 127.0.0.1 in config file.
 
+### Changed
+
+- Remove Calico Node limits.
+
 ## [v4.8.0] 
 
 ### Added
