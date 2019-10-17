@@ -173,7 +173,6 @@ systemd:
       MemoryAccounting=true
       Slice=kubereserved.slice
       EnvironmentFile=/etc/network-environment
-      Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
       Environment="PATH=/opt/bin/:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       Environment="PATH=/opt/bin/:/usr/bin/:/usr/sbin:/sbin:$PATH"
       Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem"
