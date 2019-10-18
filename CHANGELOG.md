@@ -20,6 +20,12 @@ version directory, and  then changes are introduced.
 
 - Remove Calico Node limits.
 
+## [v4.8.1] 
+
+### Changed
+
+- Update kubernetes to 1.14.8, includes fixes for CVE-2019-11253
+
 ## [v4.8.0] 
 
 ### Added
@@ -453,6 +459,7 @@ chart-operator).
 
 ## [v0.1.0]
 [v4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
+[v4.8.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_1
 [v4.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_0
 [v4.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_7_0
 [v4.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_6_0
