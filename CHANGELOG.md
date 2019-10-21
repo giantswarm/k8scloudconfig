@@ -15,7 +15,7 @@ version directory, and  then changes are introduced.
 
 - Bind kube-proxy metrics address to 0.0.0.0 instead of default 127.0.0.1 in config file.
 - Remove Calico Node limits.
-- Update Kubernetes to `1.15.4` (CVE-2019-11251).
+- Update Kubernetes to `1.15.5` (including CVE-2019-11251).
 - Update Calico to `3.9.1`.
 - Update etcd to `3.3.15`.
 - Update `calicoctl` (debug tool) to `3.9.1`.
