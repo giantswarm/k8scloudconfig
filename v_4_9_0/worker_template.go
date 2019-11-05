@@ -336,6 +336,15 @@ storage:
         {{end}}
     {{ end -}}
 
+  directories:
+  - path: /var/log/fluentbit_db
+    filesystem: root
+    mode: 2644
+    user:
+      name: giantswarm
+    group:
+      name: giantswarm
+
 {{ range .Extension.VerbatimSections }}
 {{ .Content }}
 {{ end }}
