@@ -470,10 +470,7 @@ chart-operator).
 
 ## [v0.1.0]
 
-<<<<<<< HEAD
-=======
 [v5.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_0_0
->>>>>>> master
 [v4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
 [v4.8.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_1
 [v4.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_0
