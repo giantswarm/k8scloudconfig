@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [v5.0.0] WIP
 
+### Changed
+
+- Switch from `iptables` to `ipvs` mode in kube-proxy and tune kernel params accordingly.
+
 ## [v4.9.0] - 2019-10-17
 
 ### Changed
