@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Switch from `iptables` to `ipvs` mode in kube-proxy and tune kernel params accordingly.
 
+### Added
+
+- Add eviction hard setting for image file system in kubelet.
+
 ## [v4.9.0] - 2019-10-17
 
 ### Changed
