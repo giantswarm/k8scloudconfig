@@ -27,7 +27,7 @@ spec:
     max: 65536
 ---
 ---
-apiVersion: extensions/v1beta1
+apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: restricted
@@ -35,7 +35,10 @@ spec:
   privileged: false
   allowPrivilegeEscalation: false
   runAsUser:
-    rule: MustRunAsNonRoot
+    ranges:
+      - max: 65535
+        min: 1000
+    rule: MustRunAs
   seLinux:
     rule: RunAsAny
   supplementalGroups:
