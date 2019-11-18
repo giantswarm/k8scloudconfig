@@ -27,7 +27,7 @@ spec:
     max: 65536
 ---
 ---
-apiVersion: policy/v1beta1
+apiVersion: extensions/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: restricted
