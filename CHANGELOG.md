@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Switch from `iptables` to `ipvs` mode in kube-proxy and tune kernel params accordingly.
+- Changed `restricted` PodSecurityPolicy to restrict the allowed range of user IDs for PODs.
 
 ### Added
 
