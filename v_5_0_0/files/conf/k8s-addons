@@ -143,7 +143,7 @@ done
 
 # apply network policies:
 NETWORK_POLICIES_FILE="network_policies.yaml"
-NAMESPACES="default giantswarm"
+NAMESPACES="kube-system giantswarm"
 for namespace in ${NAMESPACES}; do
     while
       /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /srv:/srv -v /etc/kubernetes:/etc/kubernetes $KUBECTL apply -f /srv/$NETWORK_POLICIES_FILE -n $namespace
