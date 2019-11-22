@@ -20,6 +20,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Add eviction hard setting for image file system in kubelet.
+- Add Deny All as default Network Policy in `kube-system` and `giantswarm namespaces.
 
 ## [v4.9.0] - 2019-10-17
 
