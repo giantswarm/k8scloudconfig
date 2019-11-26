@@ -16,6 +16,11 @@ version directory, and  then changes are introduced.
 - Moved kubelet from container to host process (`--containerized` flag is removed in Kubernetes 1.16).
 - Switch from `iptables` to `ipvs` mode in kube-proxy and tune kernel params accordingly (all providers but azure).
 - Changed `restricted` PodSecurityPolicy to restrict the allowed range of user IDs for PODs.
+- Update Kubernetes to `1.16.3`.
+- Update Calico to `3.10.1`.
+- Update etcd to `3.3.17`.
+- Update `calicoctl` (debug tool) to `3.10.1`.
+- Update `crictl` (debug tool) to `1.16.1`.
 
 ### Added
 
