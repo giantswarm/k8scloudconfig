@@ -25,7 +25,7 @@ do
 done
 
 # label namespaces (required for network egress policies)
-NAMESPACES="default kube-system" 
+NAMESPACES="default kube-system giantswarm"
 for namespace in ${NAMESPACES}
 do
     if ! /usr/bin/docker run -e KUBECONFIG=${KUBECONFIG} --net=host --rm -v /etc/kubernetes:/etc/kubernetes $KUBECTL get namespaces -l name=${namespace} | grep ${namespace}; then
