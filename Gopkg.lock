@@ -10,12 +10,12 @@
   version = "v1.1.1"
 
 [[projects]]
-  branch = "combine-capiv2-k8s-1-16"
+  branch = "master"
   digest = "1:d914e4b4106cef270f44419f5cce310826c9cf710b858172fc7f31e17db05c82"
   name = "github.com/giantswarm/apiextensions"
   packages = ["pkg/apis/provider/v1alpha1"]
   pruneopts = "UT"
-  revision = "06c805638fce103923cab892a8881f58879ac8d3"
+  revision = "29482fb3d774cedee3578619809e04274372bf9b"
 
 [[projects]]
   branch = "master"
