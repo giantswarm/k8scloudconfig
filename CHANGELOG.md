@@ -23,6 +23,7 @@ version directory, and  then changes are introduced.
 - Clean up k8s-addons (use system `kubectl`, avoid `kubectl get cs`).
 - Apply kubelet restricted role labels using new systemd service.
 - Increase `fs.inotify.max_user_instances` to 8192.
+- Change Priority Class for `calico-node` to `system-node-critical`.
 
 ### Added
 
