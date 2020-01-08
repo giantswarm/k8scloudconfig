@@ -290,9 +290,9 @@ systemd:
         --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
         --network-plugin=cni \
         --register-node=true \
-        --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+        --register-with-taints=node.kubernetes.io/master=:NoSchedule \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
-        --node-labels="node.kubernetes.io/master,node-role.kubernetes.io/master,kubernetes.io/role=master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+        --node-labels="node.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
         --v=2
       [Install]
       WantedBy=multi-user.target
@@ -317,6 +317,24 @@ systemd:
   - name: systemd-networkd-wait-online.service
     enabled: false
     mask: true
+  - name: k8s-label-node.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Adds labels to the node after kubelet startup
+      After=k8s-kubelet.service
+      Requires=k8s-kubelet.service
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      TimeoutStartSec=1200
+      Environment="KUBECTL=/opt/bin/hyperkube kubectl --kubeconfig /etc/kubernetes/kubeconfig/kubelet.yaml"
+      ExecStart=/bin/sh -c '\
+        while [ "$($KUBECTL get nodes $(hostname)| wc -l)" -lt "1" ]; do sleep 1 && echo "Waiting for healthy k8s";done;sleep 30s; \
+        $KUBECTL label nodes --overwrite $(hostname) node-role.kubernetes.io/master=""; \
+        $KUBECTL label nodes --overwrite $(hostname) kubernetes.io/role=master'
+      [Install]
+      WantedBy=multi-user.target
   - name: k8s-addons.service
     enabled: true
     contents: |
