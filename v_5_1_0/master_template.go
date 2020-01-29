@@ -349,18 +349,6 @@ systemd:
       [Install]
       WantedBy=multi-user.target
 
-  - name: debug-tools.service
-    enabled: true
-    contents: |
-      [Unit]
-      Description=Install calicoctl and crictl tools
-      After=network.target
-      [Service]
-      Type=oneshot
-      ExecStart=/opt/install-debug-tools
-      [Install]
-      WantedBy=multi-user.target
-
 storage:
   files:
     - path: /etc/ssh/trusted-user-ca-keys.pem
