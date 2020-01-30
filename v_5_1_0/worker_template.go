@@ -232,6 +232,20 @@ systemd:
     enabled: false
     mask: true
 
+{{ if .Debug.Enabled }}
+  - name: logentries.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Logentries
+      [Service]
+      Environment=LOGENTRIES_PREFIX={{ .Debug.LogsPrefix }}-worker
+      Environment=LOGENTRIES_TOKEN={{ .Debug.LogsToken }}
+      ExecStart=/bin/sh /opt/bin/logentries.sh ${LOGENTRIES_PREFIX} ${LOGENTRIES_TOKEN}
+      [Install]
+      WantedBy=multi-user.target
+{{ end }}
+
 storage:
   directories:
     - path: /var/log/fluentbit_db
@@ -307,6 +321,14 @@ storage:
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
+
+    {{ if .Debug.Enabled }}
+    - path: /opt/bin/logentries.sh
+      filesystem: root
+      mode: 0444
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/logentries.sh" }}"
+    {{ end }}
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
