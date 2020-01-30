@@ -205,9 +205,9 @@ systemd:
       RemainAfterExit=yes
       Environment="KUBECTL=/opt/bin/hyperkube kubectl --kubeconfig /etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
-        while [ "$($KUBECTL get nodes $(hostname)| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
-        $KUBECTL label nodes --overwrite $(hostname) node-role.kubernetes.io/worker=""; \
-        $KUBECTL label nodes --overwrite $(hostname) kubernetes.io/role=worker'
+        while [ "$($KUBECTL get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
+        $KUBECTL label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/worker=""; \
+        $KUBECTL label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=worker'
       [Install]
       WantedBy=multi-user.target
   - name: etcd2.service

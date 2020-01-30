@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [v5.1.0] - 2020-01-21
 
+- Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
+
 ## [v5.0.0] - 2020-01-02
 
 ### Changed
