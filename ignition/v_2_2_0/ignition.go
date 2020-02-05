@@ -11,12 +11,12 @@ func ConvertTemplatetoJSON(dataIn []byte) ([]byte, error) {
 	cfg := Config{}
 
 	if err := yaml.Unmarshal(dataIn, &cfg); err != nil {
-		return nil, microerror.Maskf(err, "failed to unmarshal yaml input")
+		return nil, microerror.Mask(err)
 	}
 
 	dataOut, err := json.MarshalIndent(&cfg, "", "  ")
 	if err != nil {
-		return nil, microerror.Maskf(err, "failed to marshal output")
+		return nil, microerror.Mask(err)
 	}
 	dataOut = append(dataOut, '\n')
 
