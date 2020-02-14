@@ -2,10 +2,13 @@
 domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} {{ .RegistryDomain }}"
 
 for domain in $domains; do
-until nslookup $domain; do
-    echo "Waiting for domain $domain to be available"
-    sleep 5
-done
-
-echo "Successfully resolved domain $domain"
+  if [[ $domain =~ ^[0-9]+\.[0-9]+\.[0-9]+\.[0-9]+$ ]]; then
+    until nslookup $domain; do
+      echo "Waiting for domain $domain to be available"
+      sleep 5
+    done
+    echo "Successfully resolved domain $domain"
+  else
+    echo "$domain is an IP address, skipping domain check."
+  fi
 done
