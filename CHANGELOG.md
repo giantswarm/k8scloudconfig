@@ -13,7 +13,6 @@ version directory, and  then changes are introduced.
 
 - Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
 - Extend ignition with debug options.
-- Increase kubelet hard memory eviction from 200Mi to 400Mi.
 
 ## [v5.0.0] - 2020-01-02
 
