@@ -9,11 +9,14 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
-## [v5.1.0] - Unreleased
+## [v5.2.0] - Unreleased
+
+- Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
+
+## [v5.1.0] - 2020-01-21
 
 - Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
 - Extend ignition with debug options.
-- Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
 
 ## [v5.0.0] - 2020-01-02
 
