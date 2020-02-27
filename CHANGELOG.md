@@ -11,9 +11,13 @@ version directory, and  then changes are introduced.
 
 ## [v5.2.0] - Unreleased
 
+### Changed
+
 - Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
 
 ## [v5.1.0] - 2020-01-21
+
+### Changed
 
 - Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
 - Extend ignition with debug options.
@@ -496,6 +500,7 @@ chart-operator).
 
 ## [v0.1.0]
 
+[v5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
 [v5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_0
 [v5.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_0_0
 [v4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
