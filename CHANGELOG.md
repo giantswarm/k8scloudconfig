@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [v5.2.0] - Unreleased
 
+- Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
+
 ## [v5.1.0] - 2020-01-21
 
 - Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
