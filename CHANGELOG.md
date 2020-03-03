@@ -9,6 +9,12 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
+## [v5.3.0] - Unreleased
+
+### Changed
+
+- Update Kubernetes to `1.16.7`.
+
 ## [v5.2.0] - Unreleased
 
 ### Changed
