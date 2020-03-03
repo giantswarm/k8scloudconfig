@@ -263,6 +263,9 @@ storage:
       group:
         name: giantswarm
   files:
+    - path: /boot/coreos/first_boot
+      filesystem: root
+
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
       mode: 0644
