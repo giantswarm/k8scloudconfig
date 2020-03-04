@@ -508,7 +508,7 @@ chart-operator).
 ## [v0.1.0]
 
 [v5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
-[v5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
+[v5.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
 [v5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_0
 [v5.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_0_0
 [v4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
