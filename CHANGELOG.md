@@ -16,6 +16,12 @@ version directory, and  then changes are introduced.
 - Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
 - Make provisioning idempotent by generating `/boot/coreos/first_boot` file on every boot.
 
+## [v5.1.1] - Unreleased
+
+### Changed
+
+- Update Kubernetes to `1.16.7`.
+
 ## [v5.1.0] - 2020-01-21
 
 ### Changed
