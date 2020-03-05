@@ -293,6 +293,10 @@ systemd:
         --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+        {{ if eq .Cluster.Kubernetes.CloudProvider "aws" -}}
+        --cni-config-dir=/etc/cni/net.d \
+        --cni-bin-dir=/opt/cni/bin \
+        {{ end -}}
         --v=2
       [Install]
       WantedBy=multi-user.target
@@ -382,11 +386,24 @@ storage:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     {{- if not .DisableCalico }}
+    {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
+    - path: /srv/aws-cni.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/aws-cni.yaml" }}"
+    - path: /srv/calico-policy-only.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-policy-only.yaml" }}"
+    {{- else }}
     - path: /srv/calico-all.yaml
       filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-all.yaml" }}"
+    {{- end }}
     {{- end }}
 
     {{- if not .DisableIngressControllerService }}
