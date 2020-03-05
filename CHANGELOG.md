@@ -15,6 +15,7 @@ version directory, and  then changes are introduced.
 
 - Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
 - Make provisioning idempotent by generating `/boot/coreos/first_boot` file on every boot.
+- Use [AWS VPC CNI](https://github.com/aws/amazon-vpc-cni-k8s) for pod networking and Calico for ensuring network policies.
 
 ## [v5.1.1] - Unreleased
 
