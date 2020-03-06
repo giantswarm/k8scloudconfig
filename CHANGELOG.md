@@ -15,6 +15,7 @@ version directory, and  then changes are introduced.
 
 - Reserve ports `30000-32767` from ephemeral port range for `kube-apiserver` use.
 - Make provisioning idempotent by generating `/boot/coreos/first_boot` file on every boot.
+- Enable ':9393/metrics' prometheus endpoint in docker daemon.
 
 ## [v5.1.1] - Unreleased
 
