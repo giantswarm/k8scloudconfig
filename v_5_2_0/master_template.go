@@ -74,7 +74,7 @@ systemd:
       ExecStart=/opt/wait-for-domains
       [Install]
       WantedBy=multi-user.target
-  - name: os-hardeing.service
+  - name: os-hardening.service
     enabled: true
     contents: |
       [Unit]
