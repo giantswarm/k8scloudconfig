@@ -53,8 +53,10 @@ func (p *Params) Validate() error {
 }
 
 type Images struct {
-	Kubernetes string
-	Etcd       string
+	Calico         string
+	CoreDNS        string
+	Etcd           string
+	Kubernetes     string
 }
 
 type Hyperkube struct {

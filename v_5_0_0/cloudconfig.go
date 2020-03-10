@@ -6,15 +6,14 @@ import (
 	"encoding/base64"
 	"text/template"
 
-	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 	"github.com/giantswarm/microerror"
+
+	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 )
 
 const (
 	defaultRegistryDomain            = "quay.io"
 	defaultImagePullProgressDeadline = "1m"
-	kubernetesImage                  = "giantswarm/hyperkube:v1.16.3"
-	etcdImage                        = "giantswarm/etcd:v3.3.17"
 	etcdPort                         = 443
 )
 
