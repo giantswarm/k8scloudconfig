@@ -22,7 +22,7 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 	var versions Versions
 
 	{
-		component, err := findComponent(releaseComponents,"kubernetes")
+		component, err := findComponent(releaseComponents, "kubernetes")
 		if err != nil {
 			return Versions{}, err
 		}
@@ -30,7 +30,7 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 	}
 
 	{
-		component, err := findComponent(releaseComponents,"etcd")
+		component, err := findComponent(releaseComponents, "etcd")
 		if err != nil {
 			return Versions{}, err
 		}
@@ -38,7 +38,7 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 	}
 
 	{
-		component, err := findComponent(releaseComponents,"calico")
+		component, err := findComponent(releaseComponents, "calico")
 		if err != nil {
 			return Versions{}, err
 		}

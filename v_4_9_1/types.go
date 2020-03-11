@@ -51,10 +51,10 @@ func (p *Params) Validate() error {
 }
 
 type Versions struct {
-	Calico string
-	Etcd string
-	Kubectl string
-	Kubernetes string
+	Calico               string
+	Etcd                 string
+	Kubectl              string
+	Kubernetes           string
 	KubernetesAPIHealthz string
 }
 
