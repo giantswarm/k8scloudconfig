@@ -41,9 +41,9 @@ type Params struct {
 	// cancelled if no progress has been made.
 	ImagePullProgressDeadline string
 	// Container images used in the ignition templates
-	Images Images
-	Node   v1alpha1.ClusterNode
-	SSOPublicKey   string
+	Images       Images
+	Node         v1alpha1.ClusterNode
+	SSOPublicKey string
 }
 
 func (p *Params) Validate() error {
