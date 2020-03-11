@@ -44,8 +44,6 @@ type Params struct {
 	Images Images
 	Node   v1alpha1.ClusterNode
 	SSOPublicKey   string
-	// Versions of components used in the ignition templates
-	Versions Versions
 }
 
 func (p *Params) Validate() error {
@@ -59,11 +57,6 @@ type Images struct {
 	Etcd                  string
 	Hyperkube             string
 	KubernetesAPIHealthz  string
-}
-
-type Versions struct {
-	Calico     string
-	Kubernetes string
 }
 
 type Hyperkube struct {
