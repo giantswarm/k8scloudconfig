@@ -56,6 +56,7 @@ type Images struct {
 	CalicoNode            string
 	Etcd                  string
 	Hyperkube             string
+	Kubectl               string
 	KubernetesAPIHealthz  string
 }
 
