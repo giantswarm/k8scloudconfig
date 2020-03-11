@@ -8,13 +8,13 @@ import (
 
 func BuildImages(registryDomain string, versions Versions) Images {
 	return Images{
-		CalicoCNI:             buildImage("giantswarm/cni", registryDomain, versions.Calico),
-		CalicoKubeControllers: buildImage("giantswarm/kube-controllers", registryDomain, versions.Calico),
-		CalicoNode:            buildImage("giantswarm/node", registryDomain, versions.Calico),
-		Etcd:                  buildImage("giantswarm/etcd", registryDomain, versions.Etcd),
-		Hyperkube:             buildImage("giantswarm/hyperkube", registryDomain, versions.Kubernetes),
-		Kubectl:               buildImage("giantswarm/docker-kubectl", registryDomain, versions.Kubectl),
-		KubernetesAPIHealthz:  buildImage("giantswarm/k8s-api-healthz", registryDomain, versions.KubernetesAPIHealthz),
+		CalicoCNI:             buildImage(registryDomain, "giantswarm/cni", versions.Calico),
+		CalicoKubeControllers: buildImage(registryDomain, "giantswarm/kube-controllers", versions.Calico),
+		CalicoNode:            buildImage(registryDomain, "giantswarm/node", versions.Calico),
+		Etcd:                  buildImage(registryDomain, "giantswarm/etcd", versions.Etcd),
+		Hyperkube:             buildImage(registryDomain, "giantswarm/hyperkube", versions.Kubernetes),
+		Kubectl:               buildImage(registryDomain, "giantswarm/docker-kubectl", versions.Kubectl),
+		KubernetesAPIHealthz:  buildImage(registryDomain, "giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz),
 	}
 }
 
