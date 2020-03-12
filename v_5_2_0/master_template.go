@@ -98,6 +98,7 @@ systemd:
       RemainAfterExit=yes
       TimeoutStartSec=0
       EnvironmentFile=/etc/network-environment
+      EnvironmentFile=/etc/kubelet-environment
       ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
       [Install]
       WantedBy=multi-user.target
@@ -487,6 +488,11 @@ storage:
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-addons" }}"
+        - path: /opt/bin/setup-kubelet-environment
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-kubelet-environment" }}"
 
     - path: /etc/kubernetes/kubeconfig/addons.yaml
       filesystem: root
