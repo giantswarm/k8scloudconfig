@@ -328,6 +328,11 @@ storage:
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/sshd_config" }}"
+    - path: /opt/bin/setup-kubelet-environment
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-kubelet-environment" }}"
 
     - path: /etc/sysctl.d/hardening.conf
       filesystem: root

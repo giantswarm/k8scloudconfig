@@ -488,7 +488,7 @@ storage:
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-addons" }}"
-        - path: /opt/bin/setup-kubelet-environment
+    - path: /opt/bin/setup-kubelet-environment
       filesystem: root
       mode: 0544
       contents:
