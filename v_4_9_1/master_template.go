@@ -363,7 +363,7 @@ systemd:
       WantedBy=multi-user.target
 
   - name: debug-tools.service
-    enabled: true
+    enabled: false
     contents: |
       [Unit]
       Description=Install calicoctl and crictl tools

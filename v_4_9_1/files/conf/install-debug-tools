@@ -9,8 +9,8 @@ mv calicoctl-linux-amd64 /opt/bin/calicoctl
 chmod +x /opt/bin/calicoctl
 
 # download crictl
-wget https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ .Versions.Kubernetes }}/crictl-{{ .Versions.Kubernetes }}-linux-amd64.tar.gz
-tar xvf crictl-{{ .Versions.Kubernetes }}-linux-amd64.tar.gz
+wget https://github.com/kubernetes-sigs/cri-tools/releases/download/{{ .Versions.CRITools }}/crictl-{{ .Versions.CRITools }}-linux-amd64.tar.gz
+tar xvf crictl-{{ .Versions.CRITools }}-linux-amd64.tar.gz
 mv crictl /opt/bin/crictl
 chmod +x /opt/bin/crictl
-rm crictl-{{ .Versions.Kubernetes }}-linux-amd64.tar.gz
+rm crictl-{{ .Versions.CRITools }}-linux-amd64.tar.gz
