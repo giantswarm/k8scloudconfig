@@ -53,6 +53,10 @@ version directory, and  then changes are introduced.
 - Add eviction hard setting for image file system in kubelet.
 - Add Deny All as default Network Policy in `kube-system` and `giantswarm namespaces.
 
+## [v4.10.0] - 2020-03-16
+
+- Use [AWS VPC CNI](https://github.com/aws/amazon-vpc-cni-k8s) for pod networking and Calico for ensuring network policies.
+
 ## [v4.9.1] - 2020-03-10
 
 ## [v4.9.0] - 2019-10-17

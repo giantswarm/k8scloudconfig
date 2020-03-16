@@ -26,6 +26,7 @@ systemReserved:
   cpu: 250m
   memory: 384Mi
 systemReservedCgroup: /system.slice
+maxPods: ${MAX_PODS}
 authentication:
   anonymous:
     enabled: true # Defaults to false as of 1.10
