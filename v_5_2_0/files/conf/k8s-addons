@@ -13,7 +13,7 @@ for namespace in ${NAMESPACES}
 do
     if ! $KUBECTL get namespaces -l name=${namespace} | grep ${namespace}; then
         while
-            $KUBECTL label namespace ${namespace} name=${namespace}
+            $KUBECTL label namespace ${namespace} name=${namespace} --overwrite=true
             [ "$?" -ne "0" ]
         do
             echo "failed to label namespace ${namespace}, retrying in 5 sec"
