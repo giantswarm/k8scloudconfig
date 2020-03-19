@@ -1,4 +1,4 @@
-package v_5_2_0
+package v_6_0_0
 
 import (
 	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
