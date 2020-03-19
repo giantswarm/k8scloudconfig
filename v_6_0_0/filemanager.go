@@ -1,4 +1,4 @@
-package v_5_2_0
+package v_6_0_0
 
 import (
 	"bytes"
@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	version  = "v_5_2_0"
+	version  = "v_6_0_0"
 	filesDir = "files"
 )
 
