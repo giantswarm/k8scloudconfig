@@ -164,7 +164,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
+      Environment="IMAGE={{ .Images.Hyperkube }}"
       Environment="NAME=%p.service"
       ExecStartPre=/bin/bash -c "/usr/bin/docker create --name $NAME $IMAGE"
       ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
