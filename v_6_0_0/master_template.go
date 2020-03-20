@@ -149,7 +149,7 @@ systemd:
       [Service]
       Type=oneshot
       TimeoutStartSec=0
-      Environment="IMAGE={{.Cluster.Kubernetes.NetworkSetup.Docker.Image}}"
+      Environment="IMAGE={{ .Images.KubernetesNetworkSetupDocker }}"
       Environment="NAME=%p.service"
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
       ExecStartPre=/usr/bin/docker pull $IMAGE
@@ -177,7 +177,7 @@ systemd:
       CPUAccounting=true
       MemoryAccounting=true
       Slice=kubereserved.slice
-      Environment=IMAGE={{ .RegistryDomain }}/{{ .Images.Etcd }}
+      Environment=IMAGE={{ .Images.Etcd }}
       Environment=NAME=%p.service
       EnvironmentFile=/etc/network-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
@@ -224,7 +224,7 @@ systemd:
       [Service]
       Type=oneshot
       EnvironmentFile=/etc/network-environment
-      Environment=IMAGE={{ .RegistryDomain }}/{{ .Images.Etcd }}
+      Environment=IMAGE={{ .Images.Etcd }}
       Environment=NAME=%p.service
       ExecStartPre=-/usr/bin/docker stop  $NAME
       ExecStartPre=-/usr/bin/docker rm  $NAME
@@ -266,7 +266,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{ .RegistryDomain }}/{{ .Images.Kubernetes }}"
+      Environment="IMAGE={{ .Images.Hyperkube }}"
       Environment="NAME=%p.service"
       ExecStartPre=/bin/bash -c "/usr/bin/docker create --name $NAME $IMAGE"
       ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
