@@ -68,13 +68,14 @@ type Debug struct {
 }
 
 type Images struct {
-	CalicoCNI             string
-	CalicoKubeControllers string
-	CalicoNode            string
-	Etcd                  string
-	Hyperkube             string
-	Kubectl               string
-	KubernetesAPIHealthz  string
+	CalicoCNI                    string
+	CalicoKubeControllers        string
+	CalicoNode                   string
+	Etcd                         string
+	Hyperkube                    string
+	Kubectl                      string
+	KubernetesAPIHealthz         string
+	KubernetesNetworkSetupDocker string
 }
 
 type Hyperkube struct {

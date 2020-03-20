@@ -149,8 +149,7 @@ systemd:
       [Service]
       Type=oneshot
       TimeoutStartSec=0
-      # TODO: What's up with this?
-      Environment="IMAGE={{.Cluster.Kubernetes.NetworkSetup.Docker.Image}}"
+      Environment="IMAGE={{ .Images.KubernetesNetworkSetupDocker }}"
       Environment="NAME=%p.service"
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
       ExecStartPre=/usr/bin/docker pull $IMAGE
