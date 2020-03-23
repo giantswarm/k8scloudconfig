@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Extract images and versions out from k8scloudconfig and make them templatable by importer.
 
+### Added
+
+- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
+
 ## [v5.2.0]
 
 ### Changed
@@ -60,6 +64,11 @@ version directory, and  then changes are introduced.
 - Add Deny All as default Network Policy in `kube-system` and `giantswarm namespaces.
 
 ## [v4.9.1] - 2020-03-10
+
+### Added
+
+- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
+
 
 ## [v4.9.0] - 2019-10-17
 
