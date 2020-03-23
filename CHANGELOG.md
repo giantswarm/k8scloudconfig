@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Extract images and versions out from k8scloudconfig and make them templatable by importer.
 
+### Added
+
+- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
+
 ## [v5.2.0]
 
 ### Changed
@@ -23,10 +27,6 @@ version directory, and  then changes are introduced.
 - Make provisioning idempotent by generating `/boot/coreos/first_boot` file on every boot.
 - Use [AWS VPC CNI](https://github.com/aws/amazon-vpc-cni-k8s) for pod networking and Calico for ensuring network policies.
 - Enable ':9393/metrics' prometheus endpoint in docker daemon.
-
-### Added
-
-- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
 
 ## [v5.1.1] - Unreleased
 
