@@ -33,6 +33,11 @@ func DefaultParams() Params {
 	return Params{
 		EtcdPort:                  etcdPort,
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
+		RegistryDomain:            "quay.io",
+		Versions: Versions{
+			Calico:   "1.0.0",
+			CRITools: "1.0.0",
+		},
 	}
 }
 

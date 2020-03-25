@@ -33,6 +33,10 @@ func DefaultParams() Params {
 	return Params{
 		EtcdPort:                  etcdPort,
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
+		Versions: Versions{
+			Calico:   "1.0.0",
+			CRITools: "1.0.0",
+		},
 	}
 }
 

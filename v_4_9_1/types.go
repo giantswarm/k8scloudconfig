@@ -44,6 +44,7 @@ type Params struct {
 	Images       Images
 	Node         v1alpha1.ClusterNode
 	SSOPublicKey string
+	Versions     Versions
 }
 
 func (p *Params) Validate() error {
