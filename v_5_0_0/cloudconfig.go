@@ -4,10 +4,12 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/base64"
+	"log"
 	"text/template"
 
-	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 	"github.com/giantswarm/microerror"
+
+	ignition "github.com/giantswarm/k8scloudconfig/ignition/v_2_2_0"
 )
 
 const (
@@ -92,8 +94,16 @@ func (c *CloudConfig) Base64() string {
 
 	var b bytes.Buffer
 	w := gzip.NewWriter(&b)
-	w.Write(cloudConfigBytes)
-	w.Close()
+	_, err := w.Write(cloudConfigBytes)
+	if err != nil {
+		log.Printf("failed to write gzip, reason: %#q", err.Error())
+		return ""
+	}
+	err = w.Close()
+	if err != nil {
+		log.Printf("failed to close gzip, reason: %#q", err.Error())
+		return ""
+	}
 
 	return base64.StdEncoding.EncodeToString(b.Bytes())
 }

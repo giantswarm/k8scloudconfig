@@ -36,7 +36,10 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 				return microerror.Mask(err)
 			}
 			var data bytes.Buffer
-			tmpl.Execute(&data, ctx)
+			err = tmpl.Execute(&data, ctx)
+			if err != nil {
+				return microerror.Mask(err)
+			}
 
 			relativePath, err := filepath.Rel(filesdir, path)
 			if err != nil {
