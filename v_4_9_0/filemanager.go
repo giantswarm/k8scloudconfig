@@ -33,7 +33,7 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 		if f.Mode().IsRegular() {
 			tmpl, err := template.ParseFiles(path)
 			if err != nil {
-				return microerror.Maskf(err, "failed to parse file %#q", path)
+				return microerror.Mask(err)
 			}
 			var data bytes.Buffer
 			tmpl.Execute(&data, ctx)
@@ -66,7 +66,7 @@ func GetIgnitionPath(ignitionDir string) string {
 func GetPackagePath() (string, error) {
 	_, filename, _, ok := runtime.Caller(0)
 	if !ok {
-		return "", microerror.New("failed to retrieve runtime information")
+		return "", microerror.Mask(retrieveRuntimeError)
 	}
 
 	return filepath.Dir(filepath.Dir(filename)), nil

@@ -19,3 +19,12 @@ var invalidConfigError = &microerror.Error{
 func IsInvalidConfig(err error) bool {
 	return microerror.Cause(err) == invalidConfigError
 }
+
+var retrieveRuntimeError = &microerror.Error{
+	Kind: "retrieveRuntimeError",
+}
+
+// IsRetrieveRuntimeError asserts retrieveRuntimeError.
+func IsRetrieveRuntimeError(err error) bool {
+	return microerror.Cause(err) == retrieveRuntimeError
+}
