@@ -2,6 +2,7 @@ package ignition
 
 import (
 	"encoding/json"
+
 	"gopkg.in/yaml.v2"
 
 	"github.com/giantswarm/microerror"
