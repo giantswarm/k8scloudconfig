@@ -13,7 +13,8 @@ version directory, and  then changes are introduced.
 
 ### Changed
 
-- Switch from dep to go modules
+- Switch from dep to go modules.
+- Use architect orb.
 
 ## [v6.0.0]
 
