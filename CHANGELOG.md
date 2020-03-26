@@ -13,6 +13,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+
+
+## [v6.0.1]
+
 ### Fixed
 
 - Fix go module.
@@ -540,9 +544,13 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...HEAD
+
+[v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
 
 [v6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
+
+
 
 [v5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
 [v5.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
