@@ -13,6 +13,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix go module.
+
 
 
 ## [v6.0.0]
