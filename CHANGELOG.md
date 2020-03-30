@@ -61,6 +61,14 @@ version directory, and  then changes are introduced.
 
 ## [v4.9.1] - 2020-03-10
 
+### Added
+
+- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
+
+### Removed
+
+- Remove resource limits from calico-node init container.
+
 ## [v4.9.0] - 2019-10-17
 
 ### Changed
