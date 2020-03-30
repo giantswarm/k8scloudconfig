@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Extract images and versions out from k8scloudconfig and make them templatable by importer.
 
+### Added
+
+- Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
+
 ## [v5.2.0]
 
 ### Changed
