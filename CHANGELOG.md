@@ -69,6 +69,9 @@ version directory, and  then changes are introduced.
 
 - Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
 
+### Removed
+
+- Remove resource limits from calico-node init container.
 
 ## [v4.9.0] - 2019-10-17
 
