@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Extract images and versions out from k8scloudconfig and make them templatable by importer.
+- Add persistent volume node limit for AWS.
 
 ### Added
 
