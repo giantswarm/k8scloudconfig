@@ -30,6 +30,7 @@ version directory, and  then changes are introduced.
 - Extract images and versions out from k8scloudconfig and make them templatable by importer.
 - Switch from dep to go modules.
 - Use architect orb.
+- Add persistent volume node limit for AWS.
 
 ### Added
 
