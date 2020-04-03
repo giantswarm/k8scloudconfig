@@ -13,6 +13,12 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [v6.0.2]
+
+### Changed
+- Remove init limits from calico-node
+- Limit PV per node on AWS
+- Hardcode registry domain AWS
 
 
 ## [v6.0.1]
@@ -548,8 +554,9 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...HEAD
 
+[v6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
 
 [v6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
