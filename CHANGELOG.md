@@ -558,6 +558,7 @@ chart-operator).
 
 [v6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
+
 [v6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
 
 
