@@ -59,7 +59,7 @@ func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 // GetIgnitionPath returns path for the ignition assets based on
 // base ignition directory and package subdirectory with assets.
 func GetIgnitionPath(ignitionDir string) string {
-	return filepath.Join(ignitionDir, version, filesDir)
+	return filepath.Join(ignitionDir, filesDir)
 }
 
 // GetPackagePath returns top package path for the current runtime file.
@@ -72,5 +72,5 @@ func GetPackagePath() (string, error) {
 		return "", microerror.Mask(retrieveRuntimeError)
 	}
 
-	return filepath.Dir(filepath.Dir(filename)), nil
+	return filepath.Dir(filepath.Dir(filepath.Dir(filename))), nil
 }
