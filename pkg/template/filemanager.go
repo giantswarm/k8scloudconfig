@@ -12,7 +12,6 @@ import (
 )
 
 const (
-	version  = "v_6_0_0"
 	filesDir = "files"
 )
 
