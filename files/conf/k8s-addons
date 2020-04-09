@@ -88,7 +88,7 @@ $KUBECTL delete pods -l k8s-app=kube-proxy -n kube-system
 
 {{ if not .DisableCalico -}}
 
-{{ if eq .Cluster.Kubernetes.CloudProvider "aws" -}}
+{{ if .EnableAWSCNI -}}
 ## Apply AWS VPC CNI and Calico for ensuring network policies (only on AWS)
 CNI_FILE="aws-cni.yaml calico-policy-only.yaml"
 {{ else -}}
@@ -107,7 +107,7 @@ do
     done
 done
 
-{{ if eq .Cluster.Kubernetes.CloudProvider "aws" -}}
+{{ if .EnableAWSCNI -}}
 echo "Waiting for aws-node to be ready..."
 $KUBECTL -n kube-system -l k8s-app=aws-node wait --for=condition=Ready --timeout=10m pods
 {{ end -}}
