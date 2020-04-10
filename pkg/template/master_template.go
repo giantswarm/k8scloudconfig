@@ -397,7 +397,7 @@ storage:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     {{- if not .DisableCalico }}
-    {{- if .EnableAWSCNI }}
+    {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
     - path: /srv/aws-cni.yaml
       filesystem: root
       mode: 0644
