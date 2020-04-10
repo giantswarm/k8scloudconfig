@@ -3,7 +3,6 @@ package template
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"os"
 	"path/filepath"
 	"runtime"
@@ -29,11 +28,7 @@ type Files map[string]string
 func RenderFiles(filesdir string, ctx interface{}) (Files, error) {
 	files := Files{}
 
-	fmt.Println("rendering files in", filesdir)
 	err := filepath.Walk(filesdir, func(path string, f os.FileInfo, err error) error {
-		if err != nil {
-			return microerror.Mask(err)
-		}
 		if f.Mode().IsRegular() {
 			tmpl, err := template.ParseFiles(path)
 			if err != nil {
