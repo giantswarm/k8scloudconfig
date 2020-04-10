@@ -91,10 +91,10 @@ $KUBECTL delete pods -l k8s-app=kube-proxy -n kube-system
 {{ if eq .Cluster.Kubernetes.CloudProvider "aws" -}}
 ## Apply AWS VPC CNI and Calico for ensuring network policies (only on AWS)
 CNI_FILE="aws-cni.yaml calico-policy-only.yaml"
-{{else}}
+{{ else -}}
 ## Apply Calico with all its components
 CNI_FILE="calico-all.yaml"
-{{end}}
+{{ end -}}
 
 for manifest in ${CNI_FILE}
 do
