@@ -4,6 +4,8 @@ metadata:
   name: k8s-scheduler
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: scheduler
+    giantswarm.io/service-type: system
     k8s-app: scheduler
     tier: control-plane
   annotations:
