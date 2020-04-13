@@ -13,6 +13,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- A new template variable `EnableAWSCNI` which should be set to `true` to get AWS CNI specific files/config.
+
+
 ## [v6.0.2]
 
 ### Changed
