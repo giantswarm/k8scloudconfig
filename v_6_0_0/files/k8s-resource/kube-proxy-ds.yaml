@@ -4,7 +4,6 @@ metadata:
   name: kube-proxy
   namespace: kube-system
   labels:
-    component: kube-proxy
     k8s-app: kube-proxy
     kubernetes.io/cluster-service: "true"
 spec:
@@ -18,7 +17,6 @@ spec:
   template:
     metadata:
       labels:
-        component: kube-proxy
         k8s-app: kube-proxy
         kubernetes.io/cluster-service: "true"
       annotations:
