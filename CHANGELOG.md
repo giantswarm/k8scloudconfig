@@ -13,9 +13,20 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Flatten directory structure. Only the most recent version lives in this repo now.
+  Go module version becomes synonymous with cloudconfig version.
+
+### Removed
+
+- All cloudconfig versions prior to v6.0.0.
+
+
 ## [v6.0.2]
 
 ### Changed
+
 - Remove init limits from calico-node
 - Limit PV per node on AWS
 - Hardcode registry domain AWS
