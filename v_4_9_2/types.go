@@ -52,22 +52,24 @@ func (p *Params) Validate() error {
 }
 
 type Versions struct {
-	Calico               string
-	CRITools             string
-	Etcd                 string
-	Kubectl              string
-	Kubernetes           string
-	KubernetesAPIHealthz string
+	Calico                       string
+	CRITools                     string
+	Etcd                         string
+	Kubectl                      string
+	Kubernetes                   string
+	KubernetesAPIHealthz         string
+	KubernetesNetworkSetupDocker string
 }
 
 type Images struct {
-	CalicoCNI             string
-	CalicoKubeControllers string
-	CalicoNode            string
-	Etcd                  string
-	Hyperkube             string
-	Kubectl               string
-	KubernetesAPIHealthz  string
+	CalicoCNI                    string
+	CalicoKubeControllers        string
+	CalicoNode                   string
+	Etcd                         string
+	Hyperkube                    string
+	Kubectl                      string
+	KubernetesAPIHealthz         string
+	KubernetesNetworkSetupDocker string
 }
 
 type Hyperkube struct {
