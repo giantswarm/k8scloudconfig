@@ -19,6 +19,7 @@ spec:
     - kube-scheduler
     - --feature-gates=TTLAfterFinished=true
     - --config=/etc/kubernetes/config/scheduler.yaml
+    - --profiling=false
     - --v=2
     resources:
       requests:
