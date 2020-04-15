@@ -7,6 +7,8 @@ metadata:
   name: nginx-ingress-controller
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: nginx-ingress-controller
+    giantswarm.io/service-type: managed
     k8s-app: nginx-ingress-controller
 spec:
   type: NodePort
@@ -22,4 +24,4 @@ spec:
     protocol: TCP
     targetPort: 443
   selector:
-    k8s-app: nginx-ingress-controller
+    app.kubernetes.io/name: nginx-ingress-controller
