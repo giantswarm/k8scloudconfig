@@ -86,6 +86,12 @@ version directory, and  then changes are introduced.
 - Add eviction hard setting for image file system in kubelet.
 - Add Deny All as default Network Policy in `kube-system` and `giantswarm namespaces.
 
+## [v4.9.12 - 2020-04-15
+
+### Added
+
+- Remove debug profiling from Controller Manager and Scheduler
+
 ## [v4.9.1] - 2020-03-10
 
 ### Added
