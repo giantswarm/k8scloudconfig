@@ -67,6 +67,7 @@ metadata:
   name: calico-typha
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: calico-typha
     k8s-app: calico-typha
 spec:
   ports:
@@ -75,7 +76,7 @@ spec:
       targetPort: calico-typha
       name: calico-typha
   selector:
-    k8s-app: calico-typha
+    app.kubernetes.io/name: calico-typha
 
 ---
 
@@ -87,6 +88,7 @@ metadata:
   name: calico-typha
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: calico-typha
     k8s-app: calico-typha
 spec:
   # Number of Typha replicas.  To enable Typha, set this to a non-zero value *and* set the
@@ -100,6 +102,7 @@ spec:
   template:
     metadata:
       labels:
+        app.kubernetes.io/name: calico-typha
         k8s-app: calico-typha
       annotations:
         # This, along with the CriticalAddonsOnly toleration below, marks the pod as a critical
@@ -386,11 +389,13 @@ metadata:
   name: calico-node
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: calico-node
+    giantswarm.io/service-type: managed
     k8s-app: calico-node
 spec:
   selector:
     matchLabels:
-      k8s-app: calico-node
+      app.kubernetes.io/name: calico-node
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -398,6 +403,8 @@ spec:
   template:
     metadata:
       labels:
+        app.kubernetes.io/name: calico-node
+        giantswarm.io/service-type: managed
         k8s-app: calico-node
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,

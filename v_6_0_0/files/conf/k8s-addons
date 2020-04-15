@@ -84,7 +84,7 @@ done
 echo "kube-proxy successfully installed"
 
 # restart ds to apply config from configmap
-$KUBECTL delete pods -l k8s-app=kube-proxy -n kube-system
+$KUBECTL delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 
 {{ if not .DisableCalico -}}
 
@@ -109,11 +109,11 @@ done
 
 {{ if eq .Cluster.Kubernetes.CloudProvider "aws" -}}
 echo "Waiting for aws-node to be ready..."
-$KUBECTL -n kube-system -l k8s-app=aws-node wait --for=condition=Ready --timeout=10m pods
+$KUBECTL -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=10m pods
 {{ end -}}
 
 echo "Waiting for calico-node to be ready..."
-$KUBECTL -n kube-system -l k8s-app=calico-node wait --for=condition=Ready --timeout=10m pods
+$KUBECTL -n kube-system -l app.kubernetes.io/name=calico-node wait --for=condition=Ready --timeout=10m pods
 
 {{ end -}}
 

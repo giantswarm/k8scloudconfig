@@ -4,6 +4,8 @@ metadata:
   name: k8s-controller-manager
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: controller-manager
+    giantswarm.io/service-type: system
     k8s-app: controller-manager
     tier: control-plane
   annotations:
