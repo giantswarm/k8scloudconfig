@@ -5,10 +5,10 @@
 # Extra changes:
 #  - Added resource limits to calico-node and calico-kube-controller.
 #  - Added resource limits to install-cni.
-#  - Added 'priorityClassName: system-node-critical' to calico daemonset.
+#  - Added 'priorityClassName: system-cluster-critical' to calico daemonset.
 #
-# Originally inteded for Calico version v3.10.1
-# https://docs.projectcalico.org/v3.10/release-notes/
+# Originally intended for Calico version v3.9.1
+# https://docs.projectcalico.org/v3.9/release-notes/
 #
 # This ConfigMap is used to configure a self-hosted Calico installation.
 kind: ConfigMap
@@ -66,7 +66,6 @@ data:
         }
       ]
     }
-
 ---
 # Source: calico/templates/kdd-crds.yaml
 apiVersion: apiextensions.k8s.io/v1beta1
@@ -262,21 +261,6 @@ spec:
     singular: networkpolicy
 
 ---
-
-apiVersion: apiextensions.k8s.io/v1beta1
-kind: CustomResourceDefinition
-metadata:
-  name: networksets.crd.projectcalico.org
-spec:
-  scope: Namespaced
-  group: crd.projectcalico.org
-  version: v1
-  names:
-    kind: NetworkSet
-    plural: networksets
-    singular: networkset
-
----
 # This manifest installs the calico-node container, as well
 # as the CNI plugins and network config on
 # each master and worker node in a Kubernetes cluster.
@@ -286,13 +270,12 @@ metadata:
   name: calico-node
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: calico-node
     giantswarm.io/service-type: managed
     k8s-app: calico-node
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: calico-node
+      k8s-app: calico-node
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -300,9 +283,8 @@ spec:
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: calico-node
-        giantswarm.io/service-type: managed
         k8s-app: calico-node
+        giantswarm.io/service-type: managed
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
         # marks the pod as a critical add-on, ensuring it gets
@@ -326,7 +308,7 @@ spec:
       # Minimize downtime during a rolling upgrade or deletion; tell Kubernetes to do a "force
       # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
       terminationGracePeriodSeconds: 0
-      priorityClassName: system-node-critical
+      priorityClassName: system-cluster-critical
       initContainers:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
@@ -360,9 +342,6 @@ spec:
               value: "false"
           resources:
             requests:
-              cpu: 50m
-              memory: 100Mi
-            limits:
               cpu: 50m
               memory: 100Mi
           volumeMounts:
@@ -484,9 +463,8 @@ spec:
             - mountPath: /var/lib/calico
               name: var-lib-calico
               readOnly: false
-            - name: etcd-certs
-              mountPath: /calico-secrets
-              readOnly: true
+            - mountPath: /calico-secrets
+              name: etcd-certs
       volumes:
         # Used by calico-node.
         - name: lib-modules
@@ -531,7 +509,6 @@ metadata:
   name: calico-kube-controllers
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: calico-kube-controllers
     giantswarm.io/service-type: managed
     k8s-app: calico-kube-controllers
   annotations:
@@ -541,7 +518,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: calico-kube-controllers
+      k8s-app: calico-kube-controllers
   strategy:
     type: Recreate
   template:
@@ -549,13 +526,12 @@ spec:
       name: calico-kube-controllers
       namespace: kube-system
       labels:
-        app.kubernetes.io/name: calico-kube-controllers
         k8s-app: calico-kube-controllers
         giantswarm.io/service-type: managed
     spec:
       nodeSelector:
         kubernetes.io/os: linux
-        node.kubernetes.io/master: ''
+        kubernetes.io/role: master
       # The controllers must run in the host network namespace so that
       # it isn't governed by policy that would prevent it from working.
       hostNetwork: true
@@ -629,6 +605,7 @@ metadata:
   name: calico-kube-controllers
   namespace: kube-system
 ---
+---
 # Include a clusterrole for the kube-controllers component,
 # and bind it to the calico-kube-controllers serviceaccount.
 kind: ClusterRole
@@ -636,47 +613,51 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: calico-kube-controllers
 rules:
-- apiGroups: [""]
+- apiGroups:
+  - ""
   resources:
-    - nodes
-    - pods
-    - namespaces
-    - serviceaccounts
+  - nodes
+  - pods
+  - namespaces
+  - serviceaccounts
   verbs:
-    - watch
-    - list
-    - get
-- apiGroups: ["networking.k8s.io"]
+  - watch
+  - list
+  - get
+- apiGroups:
+  - networking.k8s.io
   resources:
-    - networkpolicies
+  - networkpolicies
   verbs:
-    - watch
-    - list
-# IPAM resources are manipulated when nodes are deleted.
-- apiGroups: ["crd.projectcalico.org"]
+  - watch
+  - list
+  # IPAM resources are manipulated when nodes are deleted.
+- apiGroups:
+  - crd.projectcalico.org
   resources:
-    - ippools
+  - ippools
   verbs:
-    - list
-- apiGroups: ["crd.projectcalico.org"]
+  - list
+- apiGroups:
+  - crd.projectcalico.org
   resources:
-    - blockaffinities
-    - ipamblocks
-    - ipamhandles
+  - blockaffinities
+  - ipamblocks
+  - ipamhandles
   verbs:
-    - get
-    - list
-    - create
-    - update
-    - delete
-# Needs access to update clusterinformations.
-- apiGroups: ["crd.projectcalico.org"]
+  - get
+  - list
+  - create
+  - update
+  - delete
+- apiGroups:
+  - crd.projectcalico.org
   resources:
-    - clusterinformations
+  - clusterinformations
   verbs:
-    - get
-    - create
-    - update
+  - get
+  - create
+  - update
 ---
 kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1

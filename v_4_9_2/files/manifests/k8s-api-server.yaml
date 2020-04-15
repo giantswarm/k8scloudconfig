@@ -4,8 +4,6 @@ metadata:
   name: k8s-api-server
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: api-server
-    giantswarm.io/service-type: system
     k8s-app: api-server
     tier: control-plane
   annotations:

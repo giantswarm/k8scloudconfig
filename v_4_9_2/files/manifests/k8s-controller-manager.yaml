@@ -4,8 +4,6 @@ metadata:
   name: k8s-controller-manager
   namespace: kube-system
   labels:
-    app.kubernetes.io/name: controller-manager
-    giantswarm.io/service-type: system
     k8s-app: controller-manager
     tier: control-plane
   annotations:
@@ -29,6 +27,7 @@ spec:
     - --use-service-account-credentials=true
     - --kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     - --feature-gates=TTLAfterFinished=true
+    - --profiling=false
     - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
     - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
     resources:
