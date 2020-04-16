@@ -9,18 +9,20 @@ The latest version is considered WIP and it is a subject of change. All other
 versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
-
 ## [Unreleased]
 
-### Changed
+## [v6.0.3] 2020-04-16
+
+### Added
 
 - A new template variable `EnableAWSCNI` which should be set to `true` to get AWS CNI specific files/config.
-- Disable profiling for Controller Manager and Scheduler
+- Disable profiling for Controller Manager and Scheduler.
 
 
 ## [v6.0.2]
 
 ### Changed
+
 - Remove init limits from calico-node
 - Limit PV per node on AWS
 - Hardcode registry domain AWS
@@ -565,15 +567,11 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...HEAD
-
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...HEAD
+[v6.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...v6.0.3
 [v6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
-
 [v6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
-
-
-
 [v5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
 [v5.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
 [v5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_0
