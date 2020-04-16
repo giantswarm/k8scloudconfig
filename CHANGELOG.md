@@ -11,16 +11,18 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
-## [v6.0.3] 2020-04-15
+## [v6.0.3] 2020-04-16
 
 ### Added
 
 - A new template variable `EnableAWSCNI` which should be set to `true` to get AWS CNI specific files/config.
+- Disable profiling for Controller Manager and Scheduler.
 
 
 ## [v6.0.2]
 
 ### Changed
+
 - Remove init limits from calico-node
 - Limit PV per node on AWS
 - Hardcode registry domain AWS
