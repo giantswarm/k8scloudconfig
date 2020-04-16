@@ -12,6 +12,9 @@ type Params struct {
 	Cluster                v1alpha1.Cluster
 	// Debug options
 	Debug Debug
+	// EnableAWSCNI flag. When set to true will use AWS CNI for pod networking
+	// and Calico only for network policies.
+	EnableAWSCNI bool
 	// DisableCalico flag. When set removes all calico related Kubernetes
 	// manifests from the cloud config together with their initialization.
 	DisableCalico bool
