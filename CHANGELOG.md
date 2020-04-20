@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Remove IC performance improvements from OS provisioning.
+
 ## [v6.0.3] 2020-04-16
 
 ### Added
