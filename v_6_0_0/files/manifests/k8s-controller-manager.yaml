@@ -17,7 +17,7 @@ spec:
   - name: k8s-controller-manager
     image: {{ .Images.Hyperkube }}
     command:
-    - kube-controller-manager
+    - /kube-controller-manager
     {{ range .Hyperkube.ControllerManager.Pod.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}

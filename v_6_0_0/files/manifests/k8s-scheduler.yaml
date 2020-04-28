@@ -17,7 +17,7 @@ spec:
   - name: k8s-scheduler
     image: {{ .Images.Hyperkube }}
     command:
-    - kube-scheduler
+    - /kube-scheduler
     - --feature-gates=TTLAfterFinished=true{{ if eq .Cluster.Kubernetes.CloudProvider "aws" }},AttachVolumeLimit=false{{end}}
     - --config=/etc/kubernetes/config/scheduler.yaml
     - --profiling=false

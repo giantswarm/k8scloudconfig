@@ -22,7 +22,7 @@ spec:
         fieldRef:
           fieldPath: status.podIP
     command:
-    - kube-apiserver
+    - /kube-apiserver
     {{ range .Hyperkube.Apiserver.Pod.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
