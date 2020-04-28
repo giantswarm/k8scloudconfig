@@ -167,8 +167,8 @@ systemd:
       Environment="IMAGE={{ .Images.Hyperkube }}"
       Environment="NAME=%p.service"
       ExecStartPre=/bin/bash -c "/usr/bin/docker create --name $NAME $IMAGE"
-      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
-      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubectl /opt/bin/kubectl"
+      ExecStartPre=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
+      ExecStartPre=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubectl /opt/bin/kubectl"
       ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubelet /opt/bin/kubelet"
       ExecStartPost=/bin/bash -c "/usr/bin/docker rm $NAME"
       [Install]
