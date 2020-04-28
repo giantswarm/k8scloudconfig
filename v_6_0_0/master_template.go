@@ -299,7 +299,7 @@ systemd:
       Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem"
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem"
       EnvironmentFile=/etc/network-environment
-      ExecStart=/opt/bin/hyperkube kubelet \
+      ExecStart=/opt/bin/kubelet \
         {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
         {{ . }} \
         {{ end -}}
@@ -348,7 +348,7 @@ systemd:
       [Service]
       Type=oneshot
       RemainAfterExit=yes
-      Environment="KUBECTL=/opt/bin/hyperkube kubectl --kubeconfig /etc/kubernetes/kubeconfig/kubelet.yaml"
+      Environment="KUBECTL=/opt/bin/kubectl --kubeconfig /etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
         while [ "$($KUBECTL get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
         $KUBECTL label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
