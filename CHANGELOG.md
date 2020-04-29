@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Remove IC performance improvements from OS provisioning.
+- Use Local as NGINX NodePort Service external traffic policy.
 
 ## [v6.0.3] 2020-04-16
 
@@ -21,7 +22,6 @@ version directory, and  then changes are introduced.
 
 - A new template variable `EnableAWSCNI` which should be set to `true` to get AWS CNI specific files/config.
 - Disable profiling for Controller Manager and Scheduler.
-
 
 ## [v6.0.2]
 
@@ -31,14 +31,11 @@ version directory, and  then changes are introduced.
 - Limit PV per node on AWS
 - Hardcode registry domain AWS
 
-
 ## [v6.0.1]
 
 ### Fixed
 
 - Fix go module.
-
-
 
 ## [v6.0.0]
 
