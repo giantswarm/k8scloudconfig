@@ -87,6 +87,7 @@ type Images struct {
 type Hyperkube struct {
 	Apiserver         HyperkubeApiserver
 	ControllerManager HyperkubeControllerManager
+	IsWrapper         bool
 	Kubelet           HyperkubeKubelet
 }
 

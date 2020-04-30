@@ -167,9 +167,14 @@ systemd:
       Environment="IMAGE={{ .Images.Hyperkube }}"
       Environment="NAME=%p.service"
       ExecStartPre=/bin/bash -c "/usr/bin/docker create --name $NAME $IMAGE"
-      ExecStartPre=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
-      ExecStartPre=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubectl /opt/bin/kubectl"
-      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubelet /opt/bin/kubelet"
+      {{- if .Hyperkube.IsWrapper }}
+      ExecStartPre=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubelet /opt/bin/kubelet"
+      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/usr/local/bin/kubectl /opt/bin/kubectl"
+      {{- else }}
+      ExecStartPre=/bin/bash -c "echo 'echo hyperkube kubelet "${@}"' > /opt/bin/kubelet && chmod +x /opt/bin/kubelet"
+      ExecStartPre=/bin/bash -c "echo 'echo hyperkube kubectl "${@}"' > /opt/bin/kube-scheduler && chmod +x /opt/bin/kube-scheduler"
+      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
+      {{- end }}
       ExecStartPost=/bin/bash -c "/usr/bin/docker rm $NAME"
       [Install]
       WantedBy=multi-user.target
