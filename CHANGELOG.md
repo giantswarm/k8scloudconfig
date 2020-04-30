@@ -19,7 +19,7 @@ version directory, and  then changes are introduced.
 ### Removed
 
 - All cloudconfig versions prior to v6.0.0.
-
+- Remove IC performance improvements from OS provisioning.
 
 ## [v6.0.3] 2020-04-16
 
