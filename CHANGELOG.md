@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [v7.0.0] 2020-05-01
+
 ### Changed
 
 - Flatten directory structure. Only the most recent version lives in this repo now.

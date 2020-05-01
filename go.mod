@@ -1,6 +1,6 @@
-module github.com/giantswarm/k8scloudconfig/v6
+module github.com/giantswarm/k8scloudconfig/v7
 
-go 1.13
+go 1.14
 
 require (
 	github.com/Masterminds/semver v1.5.0
