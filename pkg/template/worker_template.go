@@ -188,7 +188,7 @@ systemd:
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/client-key.pem"
       EnvironmentFile=/etc/network-environment
       ExecStart=/opt/bin/kubelet \
-        {{ range .Kubernetes.Kubelet.Docker.CommandExtraArgs -}}
+        {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \
         {{ end -}}
         --node-ip=${DEFAULT_IPV4} \

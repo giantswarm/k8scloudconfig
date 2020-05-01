@@ -23,7 +23,7 @@ spec:
           fieldPath: status.podIP
     command:
     - kube-apiserver
-    {{ range .Kubernetes.Apiserver.Pod.CommandExtraArgs -}}
+    {{ range .Kubernetes.Apiserver.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
     - --allow-privileged=true
