@@ -25,10 +25,10 @@ type Params struct {
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.
 	DisableIngressControllerService bool
-	// Hyperkube allows to pass extra `docker run` and `command` arguments
-	// to hyperkube image commands. This allows to e.g. add cloud provider
-	// extensions.
-	Hyperkube Hyperkube
+	// Kubernetes components allow the passing of extra `docker run` and
+	// `command` arguments to image commands. This allows, for example,
+	// the addition of cloud provider extensions.
+	Kubernetes Kubernetes
 	// EtcdPort allows the Etcd port to be specified.
 	// aws-operator sets this to the Etcd listening port so Calico on the
 	// worker nodes can access via a CNAME record to the master.
@@ -78,41 +78,32 @@ type Images struct {
 	CalicoKubeControllers        string
 	CalicoNode                   string
 	Etcd                         string
-	Hyperkube                    string
+	KubeApiserver                string
+	KubeControllerManager        string
+	KubeScheduler                string
+	KubeProxy                    string
 	Kubectl                      string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
 }
 
-type Hyperkube struct {
-	Apiserver         HyperkubeApiserver
-	ControllerManager HyperkubeControllerManager
-	Kubelet           HyperkubeKubelet
+type Kubernetes struct {
+	Apiserver         KubernetesPodOptions
+	ControllerManager KubernetesPodOptions
+	Kubelet           KubernetesDockerOptions
 }
 
-type HyperkubeApiserver struct {
-	Pod HyperkubePod
-}
-
-type HyperkubeControllerManager struct {
-	Pod HyperkubePod
-}
-
-type HyperkubeKubelet struct {
-	Docker HyperkubeDocker
-}
-
-type HyperkubeDocker struct {
+type KubernetesDockerOptions struct {
 	RunExtraArgs     []string
 	CommandExtraArgs []string
 }
 
-type HyperkubePod struct {
-	HyperkubePodHostExtraMounts []HyperkubePodHostMount
-	CommandExtraArgs            []string
+type KubernetesPodOptions struct {
+	HostExtraMounts  []KubernetesPodOptionsHostMount
+	CommandExtraArgs []string
 }
 
-type HyperkubePodHostMount struct {
+type KubernetesPodOptionsHostMount struct {
 	Name     string
 	Path     string
 	ReadOnly bool

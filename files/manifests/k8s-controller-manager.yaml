@@ -15,11 +15,10 @@ spec:
   priorityClassName: system-node-critical
   containers:
   - name: k8s-controller-manager
-    image: {{ .Images.Hyperkube }}
+    image: {{ .Images.KubeControllerManager }}
     command:
-    - /hyperkube
     - kube-controller-manager
-    {{ range .Hyperkube.ControllerManager.Pod.CommandExtraArgs -}}
+    {{ range .Kubernetes.ControllerManager.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
     - --logtostderr=true
@@ -44,7 +43,7 @@ spec:
       initialDelaySeconds: 15
       timeoutSeconds: 15
     volumeMounts:
-    {{ range .Hyperkube.ControllerManager.Pod.HyperkubePodHostExtraMounts -}}
+    {{ range .Kubernetes.ControllerManager.HostExtraMounts -}}
     - mountPath: {{ .Path }}
       name: {{ .Name }}
       readOnly: {{ .ReadOnly }}
@@ -62,7 +61,7 @@ spec:
       name: ssl-certs-kubernetes
       readOnly: true
   volumes:
-  {{ range .Hyperkube.ControllerManager.Pod.HyperkubePodHostExtraMounts -}}
+  {{ range .Kubernetes.ControllerManager.HostExtraMounts -}}
   - hostPath:
       path: {{ .Path }}
     name: {{ .Name }}
