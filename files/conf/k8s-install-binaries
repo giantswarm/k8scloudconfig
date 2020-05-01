@@ -2,11 +2,18 @@
 set -euo pipefail
 
 registry=$1
+version=$2
+
+semver=( ${version//./ } )
+minor="${semver[1]}"
 
 declare -a binaries=(kubectl kubelet)
 
 for binary in "${binaries[@]}"; do
-  docker create --name "$binary" "$registry"/giantswarm/"$binary"
+  docker create --name "$binary" "$registry"/giantswarm/"$binary":"$version"
+  if [ "$minor" -lt "17" ]; then
+    docker cp "$binary":/usr/local/bin/hyperkube /opt/bin/hyperkube
+  fi
   docker cp "$binary":/usr/local/bin/"$binary" /opt/bin/"$binary"
   docker rm "$binary"
 done
