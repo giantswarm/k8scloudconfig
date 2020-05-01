@@ -3,7 +3,7 @@ package ignition
 import (
 	"encoding/json"
 
-	"gopkg.in/yaml.v2"
+	"sigs.k8s.io/yaml"
 
 	"github.com/giantswarm/microerror"
 )
