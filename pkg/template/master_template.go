@@ -266,7 +266,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStart=/opt/install-k8s-binaries {{ .Images.Hyperkube }} {{ .Versions.Kubernetes }}
+      ExecStart=/opt/k8s-install-binaries {{ .Images.Hyperkube }} {{ .Versions.Kubernetes }}
       [Install]
       WantedBy=multi-user.target
   - name: k8s-kubelet.service

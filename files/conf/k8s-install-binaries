@@ -16,7 +16,7 @@ fi
 for binary in "${binaries[@]}"; do
   if [ "$minor" -lt "17" ]; then
     echo "hyperkube $binary "'"$@"' > /opt/bin/"$binary"
-    chmod +x ./"$binary"
+    chmod +x /opt/bin/"$binary"
   else
     docker cp hyperkube:/usr/local/bin/"$binary" /opt/bin/"$binary"
   fi
