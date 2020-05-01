@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-registry=$1
+image=$1
 version=$2
 
 semver=( ${version//./ } )
@@ -9,11 +9,16 @@ minor="${semver[1]}"
 
 declare -a binaries=(kubectl kubelet)
 
+docker create --name hyperkube "$image"
+if [ "$minor" -lt "17" ]; then
+  docker cp hyperkube:/hyperkube /opt/bin/hyperkube
+fi
 for binary in "${binaries[@]}"; do
-  docker create --name "$binary" "$registry"/giantswarm/"$binary":"$version"
   if [ "$minor" -lt "17" ]; then
-    docker cp "$binary":/usr/local/bin/hyperkube /opt/bin/hyperkube
+    echo "hyperkube $binary "'"$@"' > /opt/bin/"$binary"
+    chmod +x ./"$binary"
+  else
+    docker cp hyperkube:/usr/local/bin/"$binary" /opt/bin/"$binary"
   fi
-  docker cp "$binary":/usr/local/bin/"$binary" /opt/bin/"$binary"
-  docker rm "$binary"
 done
+docker rm hyperkube

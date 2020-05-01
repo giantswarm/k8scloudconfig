@@ -61,7 +61,6 @@ type Versions struct {
 	Calico                       string
 	CRITools                     string
 	Etcd                         string
-	Kubectl                      string
 	Kubernetes                   string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
@@ -78,6 +77,7 @@ type Images struct {
 	CalicoKubeControllers        string
 	CalicoNode                   string
 	Etcd                         string
+	Hyperkube                    string
 	KubeApiserver                string
 	KubeControllerManager        string
 	KubeScheduler                string
