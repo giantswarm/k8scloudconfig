@@ -15,6 +15,7 @@ version directory, and  then changes are introduced.
 
 - Flatten directory structure. Only the most recent version lives in this repo now.
   Go module version becomes synonymous with cloudconfig version.
+- Use Local as NGINX NodePort Service external traffic policy.
 
 ### Removed
 
@@ -28,7 +29,6 @@ version directory, and  then changes are introduced.
 - A new template variable `EnableAWSCNI` which should be set to `true` to get AWS CNI specific files/config.
 - Disable profiling for Controller Manager and Scheduler.
 
-
 ## [v6.0.2]
 
 ### Changed
@@ -37,14 +37,11 @@ version directory, and  then changes are introduced.
 - Limit PV per node on AWS
 - Hardcode registry domain AWS
 
-
 ## [v6.0.1]
 
 ### Fixed
 
 - Fix go module.
-
-
 
 ## [v6.0.0]
 
