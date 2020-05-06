@@ -60,6 +60,9 @@ spec:
     - mountPath: /etc/kubernetes/ssl/
       name: ssl-certs-kubernetes
       readOnly: true
+    - mountPath: /etc/ssl/certs
+      name: ssl-certs-host
+      readOnly: true
   volumes:
   {{ range .Kubernetes.ControllerManager.HostExtraMounts -}}
   - hostPath:
@@ -78,3 +81,6 @@ spec:
   - hostPath:
       path: /etc/kubernetes/ssl
     name: ssl-certs-kubernetes
+  - hostPath:
+      path: /usr/share/ca-certificates
+    name: ssl-certs-host

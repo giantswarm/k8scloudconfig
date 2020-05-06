@@ -289,6 +289,7 @@ systemd:
       Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem"
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem"
       EnvironmentFile=/etc/network-environment
+      Environment="PATH=/usr/bin:/opt/bin:$PATH"
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \
@@ -354,6 +355,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
+      Environment="PATH=/usr/bin:/opt/bin:$PATH"
       ExecStart=/opt/k8s-addons
       # https://github.com/kubernetes/kubernetes/issues/71078
       ExecStartPost=/usr/bin/systemctl restart k8s-kubelet.service

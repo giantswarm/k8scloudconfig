@@ -164,6 +164,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
+      Environment="PATH=/usr/bin:/opt/bin:$PATH"
       ExecStart=/opt/bin/k8s-install-binaries
       [Install]
       WantedBy=multi-user.target
