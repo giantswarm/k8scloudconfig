@@ -11,8 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [v6.1.0] 2020-05-06
+
 ### Changed
 
+- Fix conntrack configuration structure for `kube-proxy`.
 - Flatten directory structure. Only the most recent version lives in this repo now.
   Go module version becomes synonymous with cloudconfig version.
 
@@ -577,7 +580,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...HEAD
+[v6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
 [v6.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...v6.0.3
 [v6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
 [v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
