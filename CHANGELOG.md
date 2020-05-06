@@ -13,6 +13,7 @@ version directory, and  then changes are introduced.
 
 ### Changed
 
+- Fix conntrack configuration structure for `kube-proxy`.
 - Flatten directory structure. Only the most recent version lives in this repo now.
   Go module version becomes synonymous with cloudconfig version.
 
