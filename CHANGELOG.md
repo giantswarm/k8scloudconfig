@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+- Revert changes to deployment label selectors causing k8s-addons to fail.
+
 ## [v6.1.0] 2020-05-06
 
 ### Changed
