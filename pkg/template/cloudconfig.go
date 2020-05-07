@@ -34,6 +34,10 @@ func DefaultParams() Params {
 		EtcdPort:                  etcdPort,
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
 		RegistryDomain:            "quay.io",
+		MultiMasters: MultiMastersSpec{
+			Enabled:            false,
+			EtcdInitialCluster: "",
+		},
 		Versions: Versions{
 			Calico:   "1.0.0",
 			CRITools: "1.0.0",
