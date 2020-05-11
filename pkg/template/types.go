@@ -48,7 +48,7 @@ type Params struct {
 	// Container images used in the cloud-config templates
 	Images Images
 	// MultiMaster spec
-	MultiMasters   MultiMastersSpec
+	MultiMasters   MultiMasters
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
