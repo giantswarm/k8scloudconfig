@@ -47,7 +47,6 @@ type Params struct {
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images Images
-	// MultiMaster spec
 	MultiMasters   MultiMasters
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
