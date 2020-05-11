@@ -120,7 +120,7 @@ type HyperkubePodHostMount struct {
 	ReadOnly bool
 }
 
-type MultiMastersSpec struct {
+type MultiMasters struct {
 	// If set to true, k8scloduconfig will render master template for cluster of 3 masters.
 	// Defaults to false.
 	Enabled bool
