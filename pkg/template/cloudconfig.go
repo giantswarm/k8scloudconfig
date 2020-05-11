@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"compress/gzip"
 	"encoding/base64"
+	"fmt"
 	"log"
 	"text/template"
 
@@ -58,7 +59,9 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
-
+	if config.Params.MultiMasters.Enabled && config.Params.MultiMasters.EtcdInitialCluster == "" {
+		config.Params.MultiMasters.EtcdInitialCluster = defaultEtcdMultiCluster(config.Params.BaseDomain)
+	}
 	c := &CloudConfig{
 		config:   "",
 		params:   config.Params,
@@ -111,4 +114,8 @@ func (c *CloudConfig) Base64() string {
 
 func (c *CloudConfig) String() string {
 	return c.config
+}
+
+func defaultEtcdMultiCluster(baseDomain string) string {
+	return fmt.Sprintf("etcd1=etcd1.%s,etcd2=etcd2.%s,etcd3=etcd3.%s", baseDomain, baseDomain, baseDomain)
 }
