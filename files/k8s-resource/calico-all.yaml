@@ -292,7 +292,7 @@ metadata:
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: calico-node
+      k8s-app: calico-node
   updateStrategy:
     type: RollingUpdate
     rollingUpdate:
@@ -541,7 +541,7 @@ spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: calico-kube-controllers
+      k8s-app: calico-kube-controllers
   strategy:
     type: Recreate
   template:
