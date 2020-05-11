@@ -35,7 +35,7 @@ func DefaultParams() Params {
 		EtcdPort:                  etcdPort,
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
 		RegistryDomain:            "quay.io",
-		MultiMasters: MultiMastersSpec{
+		MultiMasters: MultiMasters{
 			Enabled:            false,
 			EtcdInitialCluster: "",
 		},
