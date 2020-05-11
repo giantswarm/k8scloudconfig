@@ -121,7 +121,7 @@ type HyperkubePodHostMount struct {
 }
 
 type MultiMasters struct {
-	// If set to true, k8scloduconfig will render master template for cluster of 3 masters.
+	// Enabled when set to true will cause rendering master template for cluster of 3 masters. Single master otherwise.
 	// Defaults to false.
 	Enabled bool
 	// EtcdInitialCluster is config which define which etcd are members of the cluster.
