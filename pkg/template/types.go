@@ -46,7 +46,7 @@ type Params struct {
 	// cancelled if no progress has been made.
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
-	Images Images
+	Images         Images
 	MultiMasters   MultiMasters
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
