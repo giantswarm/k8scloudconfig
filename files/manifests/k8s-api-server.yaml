@@ -27,6 +27,9 @@ spec:
     {{ range .Hyperkube.Apiserver.Pod.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
+    {{- if .MultiMasters.Enabled }}
+    - --apiserver-count=3
+    {{- end }}
     - --allow-privileged=true
     - --anonymous-auth=false
     - --insecure-port=0

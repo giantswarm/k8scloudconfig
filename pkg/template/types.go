@@ -47,6 +47,7 @@ type Params struct {
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images         Images
+	MultiMasters   MultiMasters
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
@@ -116,6 +117,16 @@ type HyperkubePodHostMount struct {
 	Name     string
 	Path     string
 	ReadOnly bool
+}
+
+type MultiMasters struct {
+	// Enabled when set to true will cause rendering master template for cluster of 3 masters. Single master otherwise.
+	// Defaults to false.
+	Enabled bool
+	// EtcdInitialCluster is config which define which etcd are members of the cluster.
+	// The format look like to this: `etcd0=https://10.1.1.1:2380,etcd1=https://10.1.1.2:2380,etcd2=https://10.1.1.3:2380`
+	// Where 10.1.1.1, 10.1.1.2, 10.1.1.3 can be either IP or DNS  of master machine where is etcd listening.
+	EtcdInitialCluster string
 }
 
 type FileMetadata struct {
