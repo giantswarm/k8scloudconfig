@@ -194,7 +194,7 @@ systemd:
           --name $NAME \
           $IMAGE \
           etcd \
-          --name etcd0 \
+          --name etcd{{ .MultiMasters.MasterID }} \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\

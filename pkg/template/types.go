@@ -124,9 +124,12 @@ type MultiMasters struct {
 	// Defaults to false.
 	Enabled bool
 	// EtcdInitialCluster is config which define which etcd are members of the cluster.
-	// The format look like to this: `etcd0=https://10.1.1.1:2380,etcd1=https://10.1.1.2:2380,etcd2=https://10.1.1.3:2380`
+	// The format look like to this: `etcd1=https://10.1.1.1:2380,etcd2=https://10.1.1.2:2380,etcd3=https://10.1.1.3:2380`
 	// Where 10.1.1.1, 10.1.1.2, 10.1.1.3 can be either IP or DNS  of master machine where is etcd listening.
 	EtcdInitialCluster string
+	// MasterID will be used for creating identification etcd name in the cluster.
+	// MasterID should have values to match EtcdInitialCluster settings.
+	MasterID int
 }
 
 type FileMetadata struct {
