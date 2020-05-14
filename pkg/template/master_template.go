@@ -194,7 +194,7 @@ systemd:
           --name $NAME \
           $IMAGE \
           etcd \
-          --name etcd0 \
+          --name {{ .Cluster.Etcd.NodeID }} \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
@@ -203,16 +203,12 @@ systemd:
           --peer-cert-file /etc/etcd/server-crt.pem \
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
-          --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }} \
+          --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
           --initial-advertise-peer-urls=https://{{ .Cluster.Etcd.Domain }}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
-          {{- if .MultiMasters.Enabled }}
-          --initial-cluster {{ .MultiMastersSpec.EtcdInitialCluster}} \
-          {{- else }}
-          --initial-cluster etcd0=https://{{ .Cluster.Etcd.Domain }}:2380 \
-          {{- end }}
+          --initial-cluster {{ .Etcd.InitialCluster }} \
           --initial-cluster-state new \
           --data-dir=/var/lib/etcd \
           --enable-v2

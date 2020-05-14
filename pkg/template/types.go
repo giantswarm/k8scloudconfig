@@ -29,11 +29,8 @@ type Params struct {
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
 	Kubernetes Kubernetes
-	// EtcdPort allows the Etcd port to be specified.
-	// aws-operator sets this to the Etcd listening port so Calico on the
-	// worker nodes can access via a CNAME record to the master.
-	EtcdPort  int
-	Extension Extension
+	Etcd       Etcd
+	Extension  Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.
@@ -47,7 +44,6 @@ type Params struct {
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images         Images
-	MultiMasters   MultiMasters
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
@@ -111,14 +107,21 @@ type KubernetesPodOptionsHostMount struct {
 	ReadOnly bool
 }
 
-type MultiMasters struct {
+type Etcd struct {
+	// ClientPort allows the port for clients to be specified.
+	// aws-operator sets this to the Etcd listening port so Calico on the
+	// worker nodes can access via a CNAME record to the master.
+	ClientPort int
 	// Enabled when set to true will cause rendering master template for cluster of 3 masters. Single master otherwise.
 	// Defaults to false.
-	Enabled bool
-	// EtcdInitialCluster is config which define which etcd are members of the cluster.
-	// The format look like to this: `etcd0=https://10.1.1.1:2380,etcd1=https://10.1.1.2:2380,etcd2=https://10.1.1.3:2380`
-	// Where 10.1.1.1, 10.1.1.2, 10.1.1.3 can be either IP or DNS  of master machine where is etcd listening.
-	EtcdInitialCluster string
+	HighAvailability bool
+	// InitialCluster is config which define which etcd are members of the cluster.
+	// The format should look like this: `etcd0=https://etcd1.example.com:2380,etcd1=https://etcd2.example.com:2380,etcd2=https://etcd3.example.com:2380`
+	// Where etcd1.example.com, etcd2.example.com, and etcd3.example.com can be either the IP or DNS of the master machine
+	// where is etcd listening.
+	InitialCluster string
+	// NodeName is the name of the current etcd cluster node.
+	NodeName string
 }
 
 type FileMetadata struct {
