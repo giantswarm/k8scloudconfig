@@ -204,8 +204,8 @@ systemd:
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }} \
-          {(- if .MultiMasters.Enabled }}
-          --initial-advertise-peer-urls=https://etcd{{.MultiMasters.MasterID}}.{{ .BaseDomain }}:2380 \
+          {{- if .MultiMasters.Enabled }}
+          --initial-advertise-peer-urls=https://etcd{{ .MultiMasters.MasterID }}.{{ .BaseDomain }}:2380 \
           {{- else }}
           --initial-advertise-peer-urls=https://{{ .Cluster.Etcd.Domain }}:2380 \
           {{- end }}
@@ -213,7 +213,7 @@ systemd:
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
           {{- if .MultiMasters.Enabled }}
-          --initial-cluster {{ .MultiMasters.EtcdInitialCluster}} \
+          --initial-cluster {{ .MultiMasters.EtcdInitialCluster }} \
           {{- else }}
           --initial-cluster etcd{{ .MultiMasters.MasterID }}=https://127.0.0.1:2380 \
           {{- end }}
