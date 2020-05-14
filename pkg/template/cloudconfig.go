@@ -118,5 +118,5 @@ func (c *CloudConfig) String() string {
 }
 
 func defaultEtcdMultiCluster(baseDomain string) string {
-	return fmt.Sprintf("etcd1=etcd1.%s:2380,etcd2=etcd2.%s:2380,etcd3=etcd3.%s:2380", baseDomain, baseDomain, baseDomain)
+	return fmt.Sprintf("etcd1=https://etcd1.%s:2380,etcd2=https://etcd2.%s:2380,etcd3=https://etcd3.%s:2380", baseDomain, baseDomain, baseDomain)
 }
