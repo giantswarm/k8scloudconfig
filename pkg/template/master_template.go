@@ -209,7 +209,7 @@ systemd:
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
           {{- if .MultiMasters.Enabled }}
-          --initial-cluster {{ .MultiMastersSpec.EtcdInitialCluster}} \
+          --initial-cluster {{ .MultiMasters.EtcdInitialCluster}} \
           {{- else }}
           --initial-cluster etcd0=https://127.0.0.1:2380 \
           {{- end }}

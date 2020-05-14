@@ -38,6 +38,7 @@ func DefaultParams() Params {
 		MultiMasters: MultiMasters{
 			Enabled:            false,
 			EtcdInitialCluster: "",
+			MasterID:           0,
 		},
 		Versions: Versions{
 			Calico:   "1.0.0",
