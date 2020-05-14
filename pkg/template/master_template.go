@@ -204,7 +204,7 @@ systemd:
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }} \
-          --initial-advertise-peer-urls=https://{{ .Cluster.Etcd.Domain }}:2380 \
+          --initial-advertise-peer-urls=https://127.0.0.1:2380,https://{{ .Cluster.Etcd.Domain }}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
