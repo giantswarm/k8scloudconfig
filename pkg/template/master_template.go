@@ -214,6 +214,7 @@ systemd:
           --initial-cluster-token k8s-etcd-cluster \
           {{- if .MultiMasters.Enabled }}
           --initial-cluster {{ .MultiMasters.EtcdInitialCluster }} \
+          --experimental-peer-skip-client-san-verification=true \
           {{- else }}
           --initial-cluster etcd{{ .MultiMasters.MasterID }}=https://127.0.0.1:2380 \
           {{- end }}
