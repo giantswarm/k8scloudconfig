@@ -27,7 +27,7 @@ spec:
     {{ range .Hyperkube.Apiserver.Pod.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
-    {{- if .MultiMasters.Enabled }}
+    {{- if .Etcd.HighAvailability }}
     - --apiserver-count=3
     {{- end }}
     - --allow-privileged=true
