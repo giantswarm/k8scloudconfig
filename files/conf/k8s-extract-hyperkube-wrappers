@@ -3,7 +3,7 @@ set -euo pipefail
 
 container=$1
 
-docker cp "$container":/usr/local/bin/hyperkube /opt/bin/hyperkube
+docker cp "$container":/hyperkube /opt/bin/hyperkube
 for binary in kubelet kubectl; do
   cat > /opt/bin/"$binary" <<EOF
 #!/bin/bash
