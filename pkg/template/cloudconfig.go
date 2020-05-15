@@ -41,8 +41,8 @@ func DefaultParams() Params {
 			HighAvailability: false,
 		},
 		Versions: Versions{
-			Calico:   "1.0.0",
-			CRITools: "1.0.0",
+			Calico:     "1.0.0",
+			CRITools:   "1.0.0",
 			Kubernetes: "v1.17.5",
 		},
 	}
