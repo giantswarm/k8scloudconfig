@@ -255,26 +255,33 @@ systemd:
       OnCalendar=*-*-* 03:30:00 UTC
       [Install]
       WantedBy=multi-user.target
-  - name: k8s-install-binaries.service
+  - name: k8s-extract.service
     enabled: true
     contents: |
       [Unit]
-      Description=k8s-install-binaries Service
+      Description=k8s-extract Service
       After=docker.service
       Requires=docker.service
       [Service]
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStart=/opt/k8s-install-binaries {{ .Images.Hyperkube }} {{ .Versions.Kubernetes }}
+      Environment=IMAGE={{ .Images.Hyperkube }}
+      Environment=CONTAINER_NAME=%p.service
+      ExecStartPre=/usr/bin/mkdir -p /opt/bin/
+      ExecStartPre=/usr/bin/docker pull $IMAGE
+      ExecStartPre=-/usr/bin/docker rm $CONTAINER_NAME
+      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME
+      ExecStart=/opt/k8s-extract $CONTAINER_NAME
+      ExecStopPost=-/usr/bin/docker rm $CONTAINER_NAME
       [Install]
       WantedBy=multi-user.target
   - name: k8s-kubelet.service
     enabled: true
     contents: |
       [Unit]
-      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-install-binaries.service
-      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-install-binaries.service
+      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service
+      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service
       Description=k8s-kubelet
       StartLimitIntervalSec=0
       [Service]
@@ -501,11 +508,19 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-addons" }}"
 
-    - path: /opt/k8s-install-binaries
+{{ if .Kubernetes.HyperkubeWrappers }}
+    - path: /opt/k8s-extract
       filesystem: root
       mode: 0544
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-install-binaries" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-hyperkube-wrappers" }}"
+{{ else }}
+    - path: /opt/k8s-extract
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-binaries" }}"
+{{ end }}
 
     - path: /opt/bin/setup-kubelet-environment
       filesystem: root
