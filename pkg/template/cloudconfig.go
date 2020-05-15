@@ -143,7 +143,7 @@ func defaultEtcdMultiCluster(baseDomain string, count int) string {
 	var cluster string
 	for i := 1; i < count+1; i++ {
 		id := nodeName(i)
-		cluster = fmt.Sprintf("%s,%s=%s.%s:2380", cluster, id, id, baseDomain)
+		cluster = fmt.Sprintf("%s,%s=https://%s.%s:2380", cluster, id, id, baseDomain)
 	}
 	return strings.TrimPrefix(cluster, ",")
 }
