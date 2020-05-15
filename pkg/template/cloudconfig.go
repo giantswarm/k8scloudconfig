@@ -59,6 +59,14 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
+	if config.Params.Etcd.NodeName == "" {
+		if config.Params.Etcd.HighAvailability {
+			return nil, microerror.Maskf(invalidConfigError,
+				"config.%T must be specified for HA etcd",
+				config.Params.Etcd.NodeName)
+		}
+		config.Params.Etcd.NodeName = nodeName(1)
+	}
 	if config.Params.Etcd.InitialCluster == "" {
 		etcdClusterSize := 1
 		if config.Params.Etcd.HighAvailability {
