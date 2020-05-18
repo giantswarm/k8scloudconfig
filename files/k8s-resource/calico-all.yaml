@@ -18,7 +18,7 @@ metadata:
   namespace: kube-system
 data:
   # Configure this with the location of your etcd cluster.
-  etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .EtcdPort }}"
+  etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }}"
 
   # If you're using TLS enabled etcd uncomment the following.
   # You must also populate the Secret below with these files.

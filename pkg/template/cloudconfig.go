@@ -6,6 +6,7 @@ import (
 	"encoding/base64"
 	"fmt"
 	"log"
+	"strings"
 	"text/template"
 
 	"github.com/giantswarm/microerror"
@@ -32,13 +33,11 @@ func DefaultCloudConfigConfig() CloudConfigConfig {
 
 func DefaultParams() Params {
 	return Params{
-		EtcdPort:                  etcdPort,
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
 		RegistryDomain:            "quay.io",
-		MultiMasters: MultiMasters{
-			Enabled:            false,
-			EtcdInitialCluster: "",
-			MasterID:           1,
+		Etcd: Etcd{
+			ClientPort:       etcdPort,
+			HighAvailability: false,
 		},
 		Versions: Versions{
 			Calico:   "1.0.0",
@@ -60,9 +59,28 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
-	if config.Params.MultiMasters.Enabled && config.Params.MultiMasters.EtcdInitialCluster == "" {
-		config.Params.MultiMasters.EtcdInitialCluster = defaultEtcdMultiCluster(config.Params.BaseDomain)
+	if config.Params.Etcd.NodeName == "" {
+		if config.Params.Etcd.HighAvailability {
+			return nil, microerror.Maskf(invalidConfigError,
+				"config.%T must be specified for HA etcd",
+				config.Params.Etcd.NodeName)
+		}
+		config.Params.Etcd.NodeName = nodeName(1)
 	}
+	if config.Params.Etcd.InitialCluster == "" {
+		etcdClusterSize := 1
+		if config.Params.Etcd.HighAvailability {
+			etcdClusterSize = 3
+		}
+		config.Params.Etcd.InitialCluster = defaultEtcdMultiCluster(config.Params.BaseDomain, etcdClusterSize)
+	}
+	if !strings.Contains(config.Params.Etcd.InitialCluster, fmt.Sprintf("%s=", config.Params.Etcd.NodeName)) {
+		return nil, microerror.Maskf(invalidConfigError,
+			"initial cluster, %s, must contain node ID, %s",
+			config.Params.Etcd.InitialCluster,
+			config.Params.Etcd.NodeName)
+	}
+
 	c := &CloudConfig{
 		config:   "",
 		params:   config.Params,
@@ -117,6 +135,15 @@ func (c *CloudConfig) String() string {
 	return c.config
 }
 
-func defaultEtcdMultiCluster(baseDomain string) string {
-	return fmt.Sprintf("etcd1=https://etcd1.%s:2380,etcd2=https://etcd2.%s:2380,etcd3=https://etcd3.%s:2380", baseDomain, baseDomain, baseDomain)
+func nodeName(index int) string {
+	return fmt.Sprintf("etcd%d", index)
+}
+
+func defaultEtcdMultiCluster(baseDomain string, count int) string {
+	var cluster string
+	for i := 1; i < count+1; i++ {
+		id := nodeName(i)
+		cluster = fmt.Sprintf("%s,%s=https://%s.%s:2380", cluster, id, id, baseDomain)
+	}
+	return strings.TrimPrefix(cluster, ",")
 }
