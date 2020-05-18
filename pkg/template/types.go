@@ -25,8 +25,8 @@ type Params struct {
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.
 	DisableIngressControllerService bool
-	Etcd       Etcd
-	Extension  Extension
+	Etcd                            Etcd
+	Extension                       Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.
@@ -39,11 +39,11 @@ type Params struct {
 	// cancelled if no progress has been made.
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
-	Images         Images
+	Images Images
 	// Kubernetes components allow the passing of extra `docker run` and
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
-	Kubernetes Kubernetes
+	Kubernetes     Kubernetes
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
