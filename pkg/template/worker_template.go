@@ -221,6 +221,7 @@ systemd:
       [Service]
       Type=oneshot
       RemainAfterExit=yes
+      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
         while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \

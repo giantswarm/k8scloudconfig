@@ -79,8 +79,6 @@ type Images struct {
 	KubeControllerManager        string
 	KubeScheduler                string
 	KubeProxy                    string
-	Kubectl                      string
-	Kubelet                      string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
 }

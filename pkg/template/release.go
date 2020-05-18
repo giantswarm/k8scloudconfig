@@ -18,8 +18,6 @@ func BuildImages(registryDomain string, versions Versions) Images {
 		KubeControllerManager:        buildImage(registryDomain, "giantswarm/kube-controller-manager", versions.Kubernetes),
 		KubeProxy:                    buildImage(registryDomain, "giantswarm/kube-proxy", versions.Kubernetes),
 		KubeScheduler:                buildImage(registryDomain, "giantswarm/kube-scheduler", versions.Kubernetes),
-		Kubectl:                      buildImage(registryDomain, "giantswarm/kubectl", versions.Kubernetes),
-		Kubelet:                      buildImage(registryDomain, "giantswarm/kubelet", versions.Kubernetes),
 		KubernetesAPIHealthz:         buildImage(registryDomain, "giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz),
 		KubernetesNetworkSetupDocker: buildImage(registryDomain, "giantswarm/k8s-setup-network-environment", versions.KubernetesNetworkSetupDocker),
 	}
