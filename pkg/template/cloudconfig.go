@@ -61,21 +61,19 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
 	}
+
 	if config.Params.Etcd.NodeName == "" {
 		if config.Params.Etcd.HighAvailability {
+			// We can't guess the node name in this case so must return an error
 			return nil, microerror.Maskf(invalidConfigError,
 				"config.%T must be specified for HA etcd",
 				config.Params.Etcd.NodeName)
 		}
-		config.Params.Etcd.NodeName = nodeName(1)
+		config.Params.Etcd.NodeName = etcdNodeName(1, 1)
 	}
 
 	if config.Params.Etcd.InitialCluster == "" {
-		etcdClusterSize := 1
-		if config.Params.Etcd.HighAvailability {
-			etcdClusterSize = 3
-		}
-		config.Params.Etcd.InitialCluster = defaultEtcdMultiCluster(config.Params.BaseDomain, etcdClusterSize)
+		config.Params.Etcd.InitialCluster = etcdInitialCluster(config.Params.BaseDomain, config.Params.Etcd.HighAvailability)
 	}
 
 	if !strings.Contains(config.Params.Etcd.InitialCluster, fmt.Sprintf("%s=", config.Params.Etcd.NodeName)) {
@@ -92,7 +90,7 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 		}
 		// Before Kubernetes 1.17, the hyperkube image only contained the hyperkube
 		// binary which itself provided all of the constituent Kubernetes components
-		// such as kubelet through subcommands like `hyperkube kubelet`. In 17, hyperkube
+		// such as kubelet through subcommands like `hyperkube kubelet`. In 1.17, hyperkube
 		// began to become unsupported becoming a wrapper which simply called binaries
 		// bundled into the docker image. For 1.16, we need to copy hyperkube out and
 		// create wrappers, for 1.17+, we need to just copy binaries out.
@@ -153,15 +151,26 @@ func (c *CloudConfig) String() string {
 	return c.config
 }
 
-func nodeName(index int) string {
-	return fmt.Sprintf("etcd%d", index)
+func etcdClusterSize(highAvailability bool) int {
+	if highAvailability {
+		return 3
+	}
+	return 1
 }
 
-func defaultEtcdMultiCluster(baseDomain string, count int) string {
+func etcdInitialCluster(baseDomain string, highAvailability bool) string {
 	var cluster string
-	for i := 1; i < count+1; i++ {
-		id := nodeName(i)
+	clusterSize := etcdClusterSize(highAvailability)
+	for i := 1; i < clusterSize+1; i++ {
+		id := etcdNodeName(i, clusterSize)
 		cluster = fmt.Sprintf("%s,%s=https://%s.%s:2380", cluster, id, id, baseDomain)
 	}
 	return strings.TrimPrefix(cluster, ",")
+}
+
+func etcdNodeName(index int, clusterSize int) string {
+	if clusterSize == 1 {
+		return "etcd" // skip suffix for non-HA clusters for backwards compatibility
+	}
+	return fmt.Sprintf("etcd%d", index)
 }

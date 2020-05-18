@@ -204,12 +204,13 @@ systemd:
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
-          --initial-advertise-peer-urls=https://{{ .Cluster.Etcd.Domain }}:2380 \
+          --initial-advertise-peer-urls=https://{{ .Etcd.NodeName }}.{{ .BaseDomain }}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
           --initial-cluster {{ .Etcd.InitialCluster }} \
           --initial-cluster-state new \
+          --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2
       [Install]

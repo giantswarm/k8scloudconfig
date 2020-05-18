@@ -25,10 +25,6 @@ type Params struct {
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.
 	DisableIngressControllerService bool
-	// Kubernetes components allow the passing of extra `docker run` and
-	// `command` arguments to image commands. This allows, for example,
-	// the addition of cloud provider extensions.
-	Kubernetes Kubernetes
 	Etcd       Etcd
 	Extension  Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
@@ -44,6 +40,10 @@ type Params struct {
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images         Images
+	// Kubernetes components allow the passing of extra `docker run` and
+	// `command` arguments to image commands. This allows, for example,
+	// the addition of cloud provider extensions.
+	Kubernetes Kubernetes
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
@@ -115,7 +115,7 @@ type Etcd struct {
 	// Defaults to false.
 	HighAvailability bool
 	// InitialCluster is config which define which etcd are members of the cluster.
-	// The format should look like this: `etcd0=https://etcd1.example.com:2380,etcd1=https://etcd2.example.com:2380,etcd2=https://etcd3.example.com:2380`
+	// The format should look like this: `etcd1=https://etcd1.example.com:2380,etcd2=https://etcd2.example.com:2380,etcd3=https://etcd3.example.com:2380`
 	// Where etcd1.example.com, etcd2.example.com, and etcd3.example.com can be either the IP or DNS of the master machine
 	// where is etcd listening.
 	InitialCluster string
