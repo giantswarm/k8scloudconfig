@@ -210,6 +210,7 @@ systemd:
           --initial-cluster-token k8s-etcd-cluster \
           --initial-cluster {{ .Etcd.InitialCluster }} \
           --initial-cluster-state new \
+          --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2
       [Install]
