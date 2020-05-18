@@ -43,7 +43,7 @@ func TestCloudConfig(t *testing.T) {
 		tc.params.Extension = nopExtension{}
 
 		if tc.customEtcdPort != 0 {
-			tc.params.EtcdPort = tc.customEtcdPort
+			tc.params.Etcd.ClientPort = tc.customEtcdPort
 		}
 
 		packagePath, err := GetPackagePath()
@@ -65,8 +65,8 @@ func TestCloudConfig(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if cloudConfig.params.EtcdPort != tc.expectedEtcdPort {
-			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.EtcdPort)
+		if cloudConfig.params.Etcd.ClientPort != tc.expectedEtcdPort {
+			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.Etcd.ClientPort)
 		}
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatal(err)
