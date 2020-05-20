@@ -11,9 +11,17 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
-- Remove limits to calico-kube-controller
+### Added
+
+- Support for highly available etcd clusters.
+
+### Removed
+
+- Remove limits from calico-kube-controllers.
 
 ## [v6.1.1] 2020-05-07
+
+### Fixed
 
 - Revert changes to deployment label selectors causing k8s-addons to fail.
 
