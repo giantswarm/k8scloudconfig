@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Support for highly available etcd clusters.
+- Kubernetes 1.17 compatibility.
 
 ### Removed
 
