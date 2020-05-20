@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Support for highly available etcd clusters.
 
+### Removed
+
+- Remove limits from calico-kube-controllers.
+
 ## [v6.1.1] 2020-05-07
 
 ### Fixed
