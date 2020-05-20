@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [v6.2.0] 2020-05-20
+
 ### Added
 
 - Support for highly available etcd clusters.
@@ -595,7 +597,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...HEAD
+[v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
 [v6.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...v6.1.1
 [v6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
 [v6.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...v6.0.3
