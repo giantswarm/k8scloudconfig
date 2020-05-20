@@ -2,18 +2,17 @@
 
 export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
-export KUBECTL="/opt/bin/hyperkube kubectl"
 
 # wait for healthy master
-while [ "$($KUBECTL get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
+while [ "$(kubectl get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
 
 # label namespaces (required for network egress policies)
 NAMESPACES="default kube-system" 
 for namespace in ${NAMESPACES}
 do
-    if ! $KUBECTL get namespaces -l name=${namespace} | grep ${namespace}; then
+    if ! kubectl get namespaces -l name=${namespace} | grep ${namespace}; then
         while
-            $KUBECTL label namespace ${namespace} name=${namespace} --overwrite=true
+            kubectl label namespace ${namespace} name=${namespace} --overwrite=true
             [ "$?" -ne "0" ]
         do
             echo "failed to label namespace ${namespace}, retrying in 5 sec"
@@ -33,7 +32,7 @@ SECURITY_FILES="${SECURITY_FILES} psp_binding.yaml"
 for manifest in $SECURITY_FILES
 do
     while
-        $KUBECTL apply -f /srv/$manifest
+        kubectl apply -f /srv/$manifest
         [ "$?" -ne "0" ]
     do
         echo "failed to apply /srv/$manifest, retrying in 5 sec"
@@ -43,10 +42,10 @@ done
 
 # check for other master and remove it
 THIS_MACHINE=$HOSTNAME
-for master in $($KUBECTL get nodes --no-headers=true --selector role=master | awk '{print $1}')
+for master in $(kubectl get nodes --no-headers=true --selector role=master | awk '{print $1}')
 do
     if [ "$master" != "$THIS_MACHINE" ]; then
-        $KUBECTL delete node $master
+        kubectl delete node $master
     fi
 done
 
@@ -62,7 +61,7 @@ done
 
 # create kube-proxy configmap
 while
-    $KUBECTL create configmap kube-proxy --from-file=kube-proxy.yaml=/srv/kube-proxy-config.yaml -o yaml --dry-run | $KUBECTL apply -n kube-system -f -
+    kubectl create configmap kube-proxy --from-file=kube-proxy.yaml=/srv/kube-proxy-config.yaml -o yaml --dry-run | kubectl apply -n kube-system -f -
     [ "$?" -ne "0" ]
 do
     echo "failed to configure kube-proxy from /srv/kube-proxy-config.yaml, retrying in 5 sec"
@@ -74,7 +73,7 @@ PROXY_MANIFESTS="kube-proxy-sa.yaml kube-proxy-ds.yaml"
 for manifest in $PROXY_MANIFESTS
 do
     while
-        $KUBECTL apply -f /srv/$manifest
+        kubectl apply -f /srv/$manifest
         [ "$?" -ne "0" ]
     do
         echo "failed to apply /srv/$manifest, retrying in 5 sec"
@@ -84,7 +83,7 @@ done
 echo "kube-proxy successfully installed"
 
 # restart ds to apply config from configmap
-$KUBECTL delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
+kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 
 {{ if not .DisableCalico -}}
 
@@ -99,7 +98,7 @@ CNI_FILE="calico-all.yaml"
 for manifest in ${CNI_FILE}
 do
     while
-        $KUBECTL apply -f /srv/$manifest
+        kubectl apply -f /srv/$manifest
         [ "$?" -ne "0" ]
     do
         echo "failed to apply /srv/$manifest, retrying in 5 sec"
@@ -109,18 +108,18 @@ done
 
 {{ if .EnableAWSCNI -}}
 echo "Waiting for aws-node to be ready..."
-$KUBECTL -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=10m pods
+kubectl -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=10m pods
 {{ end -}}
 
 echo "Waiting for calico-node to be ready..."
-$KUBECTL -n kube-system -l app.kubernetes.io/name=calico-node wait --for=condition=Ready --timeout=10m pods
+kubectl -n kube-system -l app.kubernetes.io/name=calico-node wait --for=condition=Ready --timeout=10m pods
 
 {{ end -}}
 
 # apply default storage class
 if [ -f /srv/default-storage-class.yaml ]; then
     while
-        $KUBECTL apply -f /srv/default-storage-class.yaml
+        kubectl apply -f /srv/default-storage-class.yaml
         [ "$?" -ne "0" ]
     do
         echo "failed to apply /srv/default-storage-class.yaml, retrying in 5 sec"
@@ -134,7 +133,7 @@ fi
 PRIORITY_CLASSES_FILE="priority_classes.yaml"
 
 while
-    $KUBECTL apply -f /srv/$PRIORITY_CLASSES_FILE
+    kubectl apply -f /srv/$PRIORITY_CLASSES_FILE
     [ "$?" -ne "0" ]
 do
     echo "failed to apply /srv/$PRIORITY_CLASSES_FILE, retrying in 5 sec"
@@ -146,7 +145,7 @@ NETWORK_POLICIES_FILE="network_policies.yaml"
 NAMESPACES="kube-system giantswarm"
 for namespace in ${NAMESPACES}; do
     while
-      $KUBECTL apply -f /srv/$NETWORK_POLICIES_FILE -n $namespace
+      kubectl apply -f /srv/$NETWORK_POLICIES_FILE -n $namespace
       [ "$?" -ne "0" ]
     do
       echo "failed to apply /srv/$NETWORK_POLICIES_FILE, retrying in 5 sec"
@@ -166,7 +165,7 @@ MANIFESTS="${MANIFESTS} ingress-controller-svc.yaml"
 for manifest in $MANIFESTS
 do
     while
-        $KUBECTL apply -f /srv/$manifest
+        kubectl apply -f /srv/$manifest
         [ "$?" -ne "0" ]
     do
         echo "failed to apply /srv/$manifest, retrying in 5 sec"

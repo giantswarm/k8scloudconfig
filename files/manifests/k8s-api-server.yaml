@@ -15,16 +15,15 @@ spec:
   priorityClassName: system-node-critical
   containers:
   - name: k8s-api-server
-    image: {{ .Images.Hyperkube }}
+    image: {{ .Images.KubeApiserver }}
     env:
     - name: HOST_IP
       valueFrom:
         fieldRef:
           fieldPath: status.podIP
     command:
-    - /hyperkube
     - kube-apiserver
-    {{ range .Hyperkube.Apiserver.Pod.CommandExtraArgs -}}
+    {{ range .Kubernetes.Apiserver.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
     {{- if .Etcd.HighAvailability }}
@@ -83,7 +82,7 @@ spec:
       hostPort: {{.Cluster.Kubernetes.API.SecurePort}}
       name: https
     volumeMounts:
-    {{ range .Hyperkube.Apiserver.Pod.HyperkubePodHostExtraMounts -}}
+    {{ range .Kubernetes.Apiserver.HostExtraMounts -}}
     - mountPath: {{ .Path }}
       name: {{ .Name }}
       readOnly: {{ .ReadOnly }}
@@ -106,7 +105,7 @@ spec:
       name: ssl-certs-kubernetes
       readOnly: true
   volumes:
-  {{ range .Hyperkube.Apiserver.Pod.HyperkubePodHostExtraMounts -}}
+  {{ range .Kubernetes.Apiserver.HostExtraMounts -}}
   - hostPath:
       path: {{ .Path }}
     name: {{ .Name }}

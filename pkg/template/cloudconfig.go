@@ -9,6 +9,7 @@ import (
 	"strings"
 	"text/template"
 
+	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 
 	"github.com/giantswarm/k8scloudconfig/v6/pkg/ignition"
@@ -40,8 +41,9 @@ func DefaultParams() Params {
 			HighAvailability: false,
 		},
 		Versions: Versions{
-			Calico:   "1.0.0",
-			CRITools: "1.0.0",
+			Calico:     "1.0.0",
+			CRITools:   "1.0.0",
+			Kubernetes: "v1.17.5",
 		},
 	}
 }
@@ -79,6 +81,20 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 			"initial cluster, %s, must contain node ID, %s",
 			config.Params.Etcd.InitialCluster,
 			config.Params.Etcd.NodeName)
+	}
+
+	{
+		kubernetesVersion, err := semver.NewVersion(config.Params.Versions.Kubernetes)
+		if err != nil {
+			return nil, microerror.Mask(err)
+		}
+		// Before Kubernetes 1.17, the hyperkube image only contained the hyperkube
+		// binary which itself provided all of the constituent Kubernetes components
+		// such as kubelet through subcommands like `hyperkube kubelet`. In 1.17, hyperkube
+		// began to become unsupported becoming a wrapper which simply called binaries
+		// bundled into the docker image. For 1.16, we need to copy hyperkube out and
+		// create wrappers, for 1.17+, we need to just copy binaries out.
+		config.Params.Kubernetes.HyperkubeWrappers = kubernetesVersion.Minor() < 17
 	}
 
 	c := &CloudConfig{

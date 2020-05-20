@@ -256,30 +256,33 @@ systemd:
       OnCalendar=*-*-* 03:30:00 UTC
       [Install]
       WantedBy=multi-user.target
-  - name: k8s-setup-download-hyperkube.service
+  - name: k8s-extract.service
     enabled: true
     contents: |
       [Unit]
-      Description=Pulls hyperkube binary from image to local FS
+      Description=k8s-extract Service
       After=docker.service
       Requires=docker.service
       [Service]
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      Environment="IMAGE={{ .Images.Hyperkube }}"
-      Environment="NAME=%p.service"
-      ExecStartPre=/bin/bash -c "/usr/bin/docker create --name $NAME $IMAGE"
-      ExecStart=/bin/bash -c "/usr/bin/docker cp $NAME:/hyperkube /opt/bin/hyperkube"
-      ExecStartPost=/bin/bash -c "/usr/bin/docker rm $NAME"
+      Environment=IMAGE={{ .Images.Hyperkube }}
+      Environment=CONTAINER_NAME=%p.service
+      ExecStartPre=/usr/bin/mkdir -p /opt/bin/
+      ExecStartPre=/usr/bin/docker pull $IMAGE
+      ExecStartPre=-/usr/bin/docker rm $CONTAINER_NAME
+      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME $IMAGE
+      ExecStart=/opt/k8s-extract $CONTAINER_NAME
+      ExecStopPost=-/usr/bin/docker rm $CONTAINER_NAME
       [Install]
       WantedBy=multi-user.target
   - name: k8s-kubelet.service
     enabled: true
     contents: |
       [Unit]
-      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-setup-download-hyperkube.service
-      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-setup-download-hyperkube.service
+      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service
+      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service
       Description=k8s-kubelet
       StartLimitIntervalSec=0
       [Service]
@@ -294,8 +297,9 @@ systemd:
       Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem"
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem"
       EnvironmentFile=/etc/network-environment
-      ExecStart=/opt/bin/hyperkube kubelet \
-        {{ range .Hyperkube.Kubelet.Docker.CommandExtraArgs -}}
+      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
+      ExecStart=/opt/bin/kubelet \
+        {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \
         {{ end -}}
         --node-ip=${DEFAULT_IPV4} \
@@ -343,11 +347,12 @@ systemd:
       [Service]
       Type=oneshot
       RemainAfterExit=yes
-      Environment="KUBECTL=/opt/bin/hyperkube kubectl --kubeconfig /etc/kubernetes/kubeconfig/kubelet.yaml"
+      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
+      Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
-        while [ "$($KUBECTL get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
-        $KUBECTL label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
-        $KUBECTL label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=master'
+        while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
+        kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
+        kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=master'
       [Install]
       WantedBy=multi-user.target
   - name: k8s-addons.service
@@ -359,6 +364,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
+      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       ExecStart=/opt/k8s-addons
       # https://github.com/kubernetes/kubernetes/issues/71078
       ExecStartPost=/usr/bin/systemctl restart k8s-kubelet.service
@@ -503,6 +509,21 @@ storage:
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-addons" }}"
+
+{{ if .Kubernetes.HyperkubeWrappers }}
+    - path: /opt/k8s-extract
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-hyperkube-wrappers" }}"
+{{ else }}
+    - path: /opt/k8s-extract
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-binaries" }}"
+{{ end }}
+
     - path: /opt/bin/setup-kubelet-environment
       filesystem: root
       mode: 0544

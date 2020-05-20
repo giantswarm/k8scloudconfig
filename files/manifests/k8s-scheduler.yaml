@@ -15,9 +15,8 @@ spec:
   priorityClassName: system-node-critical
   containers:
   - name: k8s-scheduler
-    image: {{ .Images.Hyperkube }}
+    image: {{ .Images.KubeScheduler }}
     command:
-    - /hyperkube
     - kube-scheduler
     - --feature-gates=TTLAfterFinished=true{{ if eq .Cluster.Kubernetes.CloudProvider "aws" }},AttachVolumeLimit=false{{end}}
     - --config=/etc/kubernetes/config/scheduler.yaml

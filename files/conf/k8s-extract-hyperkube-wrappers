@@ -1,0 +1,13 @@
+#!/bin/bash
+set -euo pipefail
+
+container=$1
+
+docker cp "$container":/hyperkube /opt/bin/hyperkube
+for binary in kubelet kubectl; do
+  cat > /opt/bin/"$binary" <<EOF
+#!/bin/bash
+/opt/bin/hyperkube $binary "\$@"
+EOF
+  chmod +x /opt/bin/"$binary"
+done

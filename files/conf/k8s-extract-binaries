@@ -1,0 +1,7 @@
+#!/bin/bash
+set -euo pipefail
+
+container=$1
+
+docker cp "$container":/usr/local/bin/kubelet /opt/bin/kubelet
+docker cp "$container":/usr/local/bin/kubectl /opt/bin/kubectl

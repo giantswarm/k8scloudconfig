@@ -25,12 +25,8 @@ type Params struct {
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.
 	DisableIngressControllerService bool
-	// Hyperkube allows to pass extra `docker run` and `command` arguments
-	// to hyperkube image commands. This allows to e.g. add cloud provider
-	// extensions.
-	Hyperkube Hyperkube
-	Etcd      Etcd
-	Extension Extension
+	Etcd                            Etcd
+	Extension                       Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.
@@ -43,7 +39,11 @@ type Params struct {
 	// cancelled if no progress has been made.
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
-	Images         Images
+	Images Images
+	// Kubernetes components allow the passing of extra `docker run` and
+	// `command` arguments to image commands. This allows, for example,
+	// the addition of cloud provider extensions.
+	Kubernetes     Kubernetes
 	Node           v1alpha1.ClusterNode
 	RegistryDomain string
 	SSOPublicKey   string
@@ -58,7 +58,6 @@ type Versions struct {
 	Calico                       string
 	CRITools                     string
 	Etcd                         string
-	Kubectl                      string
 	Kubernetes                   string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
@@ -76,40 +75,32 @@ type Images struct {
 	CalicoNode                   string
 	Etcd                         string
 	Hyperkube                    string
-	Kubectl                      string
+	KubeApiserver                string
+	KubeControllerManager        string
+	KubeScheduler                string
+	KubeProxy                    string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
 }
 
-type Hyperkube struct {
-	Apiserver         HyperkubeApiserver
-	ControllerManager HyperkubeControllerManager
-	Kubelet           HyperkubeKubelet
+type Kubernetes struct {
+	Apiserver         KubernetesPodOptions
+	ControllerManager KubernetesPodOptions
+	HyperkubeWrappers bool
+	Kubelet           KubernetesDockerOptions
 }
 
-type HyperkubeApiserver struct {
-	Pod HyperkubePod
-}
-
-type HyperkubeControllerManager struct {
-	Pod HyperkubePod
-}
-
-type HyperkubeKubelet struct {
-	Docker HyperkubeDocker
-}
-
-type HyperkubeDocker struct {
+type KubernetesDockerOptions struct {
 	RunExtraArgs     []string
 	CommandExtraArgs []string
 }
 
-type HyperkubePod struct {
-	HyperkubePodHostExtraMounts []HyperkubePodHostMount
-	CommandExtraArgs            []string
+type KubernetesPodOptions struct {
+	HostExtraMounts  []KubernetesPodOptionsHostMount
+	CommandExtraArgs []string
 }
 
-type HyperkubePodHostMount struct {
+type KubernetesPodOptionsHostMount struct {
 	Name     string
 	Path     string
 	ReadOnly bool
@@ -124,7 +115,7 @@ type Etcd struct {
 	// Defaults to false.
 	HighAvailability bool
 	// InitialCluster is config which define which etcd are members of the cluster.
-	// The format should look like this: `etcd0=https://etcd1.example.com:2380,etcd1=https://etcd2.example.com:2380,etcd2=https://etcd3.example.com:2380`
+	// The format should look like this: `etcd1=https://etcd1.example.com:2380,etcd2=https://etcd2.example.com:2380,etcd3=https://etcd3.example.com:2380`
 	// Where etcd1.example.com, etcd2.example.com, and etcd3.example.com can be either the IP or DNS of the master machine
 	// where is etcd listening.
 	InitialCluster string

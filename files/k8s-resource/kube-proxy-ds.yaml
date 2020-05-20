@@ -37,9 +37,8 @@ spec:
       serviceAccountName: kube-proxy
       containers:
         - name: kube-proxy
-          image: {{ .Images.Hyperkube }}
+          image: {{ .Images.KubeProxy }}
           command:
-          - /hyperkube
           - kube-proxy
           - --config=/etc/kubernetes/config/proxy-config.yml
           - --v=2
