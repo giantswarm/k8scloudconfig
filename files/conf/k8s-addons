@@ -40,6 +40,7 @@ do
     done
 done
 
+{{- if not .Etcd.HighAvailability }}
 # check for other master and remove it
 THIS_MACHINE=$HOSTNAME
 for master in $(kubectl get nodes --no-headers=true --selector role=master | awk '{print $1}')
@@ -48,7 +49,7 @@ do
         kubectl delete node $master
     fi
 done
-
+{{- end -}}
 # wait for etcd dns (return code 35 is bad certificate which is good enough here)
 while
     curl "https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }}" -k 2>/dev/null >/dev/null
