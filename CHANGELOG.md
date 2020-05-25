@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- RBAC permissions allowing calico node to get configmaps.
+
 ## [v6.2.0] 2020-05-20
 
 ### Added
