@@ -11,13 +11,13 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [v6.2.1] 2020-05-26
+
 ### Added
 
 - Add `bird-live` flag to calico node liveness probe.
-
-### Changed
-
 - RBAC permissions allowing calico node to get configmaps.
+- Parameter to disable deletion of master nodes for HA masters.
 
 ## [v6.2.0] 2020-05-20
 
@@ -605,7 +605,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...HEAD
+[v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
 [v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
 [v6.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...v6.1.1
 [v6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
