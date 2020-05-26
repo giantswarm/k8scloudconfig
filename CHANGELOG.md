@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Explicitly set TLS cipher suites
+
 ## [v6.2.1] 2020-05-26
 
 ### Added
