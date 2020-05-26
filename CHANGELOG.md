@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Added
+
+- Add `bird-live` flag to calico node liveness probe.
+
 ### Changed
 
 - RBAC permissions allowing calico node to get configmaps.
@@ -125,7 +129,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Add eviction hard setting for image file system in kubelet.
-- Add Deny All as default Network Policy in `kube-system` and `giantswarm namespaces.
+- Add Deny All as default Network Policy in `kube-system` and `giantswarm` namespaces.
 
 ## [v4.9.2] - 2020-04-15
 
