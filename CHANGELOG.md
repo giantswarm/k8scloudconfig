@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Add `bird-live` flag to calico node liveness probe.
 
+### Changed
+
+- RBAC permissions allowing calico node to get configmaps.
+
 ## [v6.2.0] 2020-05-20
 
 ### Added
