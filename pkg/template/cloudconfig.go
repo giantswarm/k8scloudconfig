@@ -43,7 +43,7 @@ func DefaultParams() Params {
 		Versions: Versions{
 			Calico:     "1.0.0",
 			CRITools:   "1.0.0",
-			Kubernetes: "v1.17.5",
+			Kubernetes: "v1.16.10",
 		},
 	}
 }
