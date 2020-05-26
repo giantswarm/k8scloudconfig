@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Fixed
+
+- Regression in kubelet installation for 1.16 clusters.
+
 ## [v6.2.1] 2020-05-26
 
 ### Added
