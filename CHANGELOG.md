@@ -13,7 +13,7 @@ version directory, and  then changes are introduced.
 
 ### Fixed
 
-- Regression in kubelet installation systemd unit for 1.16 clusters.
+- Fix regression in kubelet installation systemd unit for 1.16 clusters.
 
 ## [v6.2.1] 2020-05-26
 
