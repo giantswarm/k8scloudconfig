@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Specify zap logger for etcd as capnslog is deprecated in v3.4.
+
 ### Fixed
 
 - Fix regression in kubelet installation systemd unit for 1.16 clusters.
