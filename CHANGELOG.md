@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Fixed
 
 - Fix regression in kubelet installation systemd unit for 1.16 clusters.
+- Fix runtime cgroups configuration for kubelet.
 
 ## [v6.2.1] 2020-05-26
 
