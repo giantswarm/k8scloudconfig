@@ -15,6 +15,10 @@ version directory, and  then changes are introduced.
 
 - Fix regression in kubelet installation systemd unit for 1.16 clusters.
 
+### Removed
+
+- Remove `resourceContainer` from `kube-proxy` configuration file.
+
 ## [v6.2.1] 2020-05-26
 
 ### Added
