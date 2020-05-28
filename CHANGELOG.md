@@ -13,6 +13,7 @@ version directory, and  then changes are introduced.
 
 ### Fixed
 
+- Fix `rpc-statd.service` not running before kubelet.
 - Fix regression in kubelet installation systemd unit for 1.16 clusters.
 
 ### Removed
