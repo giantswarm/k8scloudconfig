@@ -212,7 +212,8 @@ systemd:
           --initial-cluster-state new \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
-          --enable-v2
+          --enable-v2 \
+          --logger=zap
       [Install]
       WantedBy=multi-user.target
   - name: etcd3-defragmentation.service
