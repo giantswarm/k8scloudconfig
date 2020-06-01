@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Explicitly set TLS cipher suites
+
 ### Fixed
 
 - Fix `rpc-statd.service` not running before kubelet.
