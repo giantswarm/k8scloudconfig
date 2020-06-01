@@ -5,3 +5,8 @@ container=$1
 
 docker cp "$container":/usr/local/bin/kubelet /opt/bin/kubelet
 docker cp "$container":/usr/local/bin/kubectl /opt/bin/kubectl
+
+docker cp "$container":/usr/sbin/conntrack /opt/bin/conntrack
+docker cp "$container":/usr/lib/x86_64-linux-gnu/libnetfilter_conntrack.so.3.6.0 /opt/lib/libnetfilter_conntrack.so.3
+docker cp "$container":/lib/x86_64-linux-gnu/libmnl.so.0.2.0 /opt/lib/libmnl.so.0
+docker cp "$container":/usr/lib/x86_64-linux-gnu/libnfnetlink.so.0.2.0 /opt/lib/libnfnetlink.so.0

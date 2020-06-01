@@ -293,11 +293,12 @@ systemd:
       Slice=kubereserved.slice
       CPUAccounting=true
       MemoryAccounting=true
+      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
+      Environment="LD_LIBRARY_PATH=/opt/lib"
       Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/server-ca.pem"
       Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem"
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem"
       EnvironmentFile=/etc/network-environment
-      Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \
