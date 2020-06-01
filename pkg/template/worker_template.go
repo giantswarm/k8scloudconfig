@@ -208,7 +208,8 @@ systemd:
         --register-node=true \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/worker,role=worker,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
-        --v=2
+        --v=2 \
+        --runtime-cgroups=/kubereserved.slice
       [Install]
       WantedBy=multi-user.target
   - name: k8s-label-node.service
