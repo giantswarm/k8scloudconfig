@@ -11,8 +11,13 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Explicitly set TLS cipher suites
+
 ### Fixed
 
+- Fix `rpc-statd.service` not running before kubelet.
 - Fix regression in kubelet installation systemd unit for 1.16 clusters.
 
 ## [v6.2.1] 2020-05-26
