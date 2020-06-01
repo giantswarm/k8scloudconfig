@@ -13,7 +13,8 @@ version directory, and  then changes are introduced.
 
 ### Changed
 
-- Explicitly set TLS cipher suites
+- Explicitly set TLS cipher suites.
+- Specify zap logger for etcd as capnslog is deprecated in v3.4.
 
 ### Fixed
 
