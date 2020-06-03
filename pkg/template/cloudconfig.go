@@ -18,6 +18,9 @@ import (
 const (
 	defaultImagePullProgressDeadline = "1m"
 	etcdPort                         = 443
+
+	InitialClusterStateNew      = "new"
+	InitialClusterStateExisting = "existing"
 )
 
 type CloudConfigConfig struct {
@@ -37,8 +40,9 @@ func DefaultParams() Params {
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
 		RegistryDomain:            "quay.io",
 		Etcd: Etcd{
-			ClientPort:       etcdPort,
-			HighAvailability: false,
+			ClientPort:          etcdPort,
+			HighAvailability:    false,
+			InitialClusterState: InitialClusterStateNew,
 		},
 		Versions: Versions{
 			Calico:     "1.0.0",

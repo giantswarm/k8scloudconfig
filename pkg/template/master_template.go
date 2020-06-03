@@ -209,7 +209,7 @@ systemd:
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
           --initial-cluster {{ .Etcd.InitialCluster }} \
-          --initial-cluster-state new \
+          --initial-cluster-state {{ .Etcd.InitialClusterState }} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \
