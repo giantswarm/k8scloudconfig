@@ -11,6 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+
+## [v6.2.2] 2020-06-04
+### Added
+- Add option to set etcd initial state to 'new' or 'existing'.
+
 ### Changed
 
 - Explicitly set TLS cipher suites.
@@ -620,8 +625,9 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...HEAD
-[v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...HEAD
+[v6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
+[v6.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
 [v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
 [v6.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...v6.1.1
 [v6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
