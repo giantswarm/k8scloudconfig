@@ -119,6 +119,8 @@ type Etcd struct {
 	// Where etcd1.example.com, etcd2.example.com, and etcd3.example.com can be either the IP or DNS of the master machine
 	// where is etcd listening.
 	InitialCluster string
+	// Initial cluster state for the etcd cluster. Should have values either `new` or `existing`.
+	InitialClusterState string
 	// NodeName is the name of the current etcd cluster node.
 	NodeName string
 }
