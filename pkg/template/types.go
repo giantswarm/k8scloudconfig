@@ -21,6 +21,9 @@ type Params struct {
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud
 	// config related to Kubernetes encryption at REST.
 	DisableEncryptionAtREST bool
+	// DisableHyperthreading flag. When set removes hyperthreading from
+	// all nodes.
+	DisableHyperthreading bool
 	// DisableIngressControllerService flag. When set removes the manifest for
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.

@@ -119,6 +119,23 @@ systemd:
           CPUAccounting=true
           MemoryAccounting=true
           Slice=kubereserved.slice
+{{ if .DisableHyperthreading }}
+  - name: disable-hyperthreading.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Disable Hyperthreading on first boot
+      DefaultDependencies=no
+      Before=sysinit.target shutdown.target
+      Conflicts=shutdown.target
+
+      [Service]
+      Type=oneshot
+      ExecStart=/bin/bash -c 'active="$(cat /sys/devices/system/cpu/smt/active)" && if [[ "$active" != 0 ]]; then echo "Disabling Hyperthreading." && echo off > /sys/devices/system/cpu/smt/control; fi'
+
+      [Install]
+      WantedBy=sysinit.target
+{{ end }}
   - name: docker.service
     enabled: true
     contents: |
