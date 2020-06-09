@@ -179,13 +179,18 @@ systemd:
       Slice=kubereserved.slice
       Environment=IMAGE={{ .Images.Etcd }}
       Environment=NAME=%p.service
+      Environment=ETCD_NAME={{ .Etcd.NodeName }}
+      Environment=ETCD_INITIAL_CLUSTER={{ .Etcd.InitialCluster }}
+      Environment=ETCD_INITIAL_CLUSTER_STATE={{ .Etcd.InitialClusterState }}
       EnvironmentFile=/etc/network-environment
+      EnvironmentFile=/etc/etcd-cluster-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
       ExecStartPre=-/usr/bin/docker rm  $NAME
       ExecStartPre=-/usr/bin/docker pull $IMAGE
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-crt.pem to be written' && sleep 1; done"
       ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
+      ExecStartPre=/bin/bash -c "while [ ! -f /etc/etcd-cluster-environment ]; do echo 'Waiting for /etc/etcd-cluster-environment to be written' && sleep 1; done"
       ExecStart=/usr/bin/docker run \
           -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
           -v /etc/kubernetes/ssl/etcd/:/etc/etcd \
@@ -194,7 +199,7 @@ systemd:
           --name $NAME \
           $IMAGE \
           etcd \
-          --name {{ .Etcd.NodeName }} \
+          --name ${ETCD_NAME} \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
@@ -204,12 +209,12 @@ systemd:
           --peer-key-file /etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
-          --initial-advertise-peer-urls=https://{{ .Etcd.NodeName }}.{{ .BaseDomain }}:2380 \
+          --initial-advertise-peer-urls=http://${DEFAULT_IPV4}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
-          --initial-cluster {{ .Etcd.InitialCluster }} \
-          --initial-cluster-state {{ .Etcd.InitialClusterState }} \
+          --initial-cluster=${ETCD_INITIAL_CLUSTER} \
+          --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \
