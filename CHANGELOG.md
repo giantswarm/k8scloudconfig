@@ -10,7 +10,11 @@ versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
 ## [Unreleased]
+### Changed
+- Enable felix metrics for calico policy-only manifest.
 
+### Removed
+- Remove typha deployment for calico policy-only manifest.
 
 ## [v6.2.2] 2020-06-04
 ### Added
