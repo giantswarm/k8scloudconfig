@@ -80,93 +80,6 @@ spec:
 
 ---
 
-# This manifest creates a Deployment of Typha to back the above service.
-
-apiVersion: apps/v1beta1
-kind: Deployment
-metadata:
-  name: calico-typha
-  namespace: kube-system
-  labels:
-    app.kubernetes.io/name: calico-typha
-    k8s-app: calico-typha
-spec:
-  # Number of Typha replicas.  To enable Typha, set this to a non-zero value *and* set the
-  # typha_service_name variable in the calico-config ConfigMap above.
-  #
-  # We recommend using Typha if you have more than 50 nodes.  Above 100 nodes it is essential
-  # (when using the Kubernetes datastore).  Use one replica for every 100-200 nodes.  In
-  # production, we recommend running at least 3 replicas to reduce the impact of rolling upgrade.
-  replicas: 0
-  revisionHistoryLimit: 2
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: calico-typha
-        k8s-app: calico-typha
-      annotations:
-        # This, along with the CriticalAddonsOnly toleration below, marks the pod as a critical
-        # add-on, ensuring it gets priority scheduling and that its resources are reserved
-        # if it ever gets evicted.
-        scheduler.alpha.kubernetes.io/critical-pod: ''
-    spec:
-      hostNetwork: true
-      tolerations:
-        # Mark the pod as a critical add-on for rescheduling.
-        - key: CriticalAddonsOnly
-          operator: Exists
-      # Since Calico can't network a pod until Typha is up, we need to run Typha itself
-      # as a host-networked pod.
-      serviceAccountName: calico-node
-      priorityClassName: system-node-critical
-      containers:
-        - image: {{ .RegistryDomain }}/giantswarm/typha:v3.10.1
-          name: calico-typha
-          ports:
-            - containerPort: 5473
-              name: calico-typha
-              protocol: TCP
-          env:
-            # Enable "info" logging by default.  Can be set to "debug" to increase verbosity.
-            - name: TYPHA_LOGSEVERITYSCREEN
-              value: "info"
-            # Disable logging to file and syslog since those don't make sense in Kubernetes.
-            - name: TYPHA_LOGFILEPATH
-              value: "none"
-            - name: TYPHA_LOGSEVERITYSYS
-              value: "none"
-            # Monitor the Kubernetes API to find the number of running instances and rebalance
-            # connections.
-            - name: TYPHA_CONNECTIONREBALANCINGMODE
-              value: "kubernetes"
-            - name: TYPHA_DATASTORETYPE
-              value: "kubernetes"
-            - name: TYPHA_HEALTHENABLED
-              value: "true"
-            # Uncomment these lines to enable prometheus metrics.  Since Typha is host-networked,
-            # this opens a port on the host, which may need to be secured.
-            #- name: TYPHA_PROMETHEUSMETRICSENABLED
-            #  value: "true"
-            #- name: TYPHA_PROMETHEUSMETRICSPORT
-            #  value: "9093"
-          livenessProbe:
-            exec:
-              command:
-                - calico-typha
-                - check
-                - liveness
-            periodSeconds: 30
-            initialDelaySeconds: 30
-          readinessProbe:
-            exec:
-              command:
-                - calico-typha
-                - check
-                - readiness
-            periodSeconds: 10
-
----
-
 # Create all the CustomResourceDefinitions needed for
 # Calico policy-only mode.
 
@@ -434,7 +347,7 @@ spec:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: {{ .RegistryDomain }}/giantswarm/cni:v3.10.1
+          image: {{ .Images.CalicoCNI }}
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
@@ -468,7 +381,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: {{ .RegistryDomain }}/giantswarm/node:v3.10.1
+          image: {{ .Images.CalicoNode }}
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
@@ -510,6 +423,8 @@ spec:
             - name: FELIX_LOGSEVERITYSCREEN
               value: "info"
             - name: FELIX_HEALTHENABLED
+              value: "true"
+            - name: FELIX_PROMETHEUSMETRICSENABLED
               value: "true"
           securityContext:
             privileged: true
