@@ -10,6 +10,8 @@ versions are frozen. To freeze current version all files are copied to a new
 version directory, and  then changes are introduced.
 
 ## [Unreleased]
+
+## [v6.2.3] 2020-06-09
 ### Changed
 - Enable felix metrics for calico policy-only manifest.
 
@@ -629,7 +631,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...HEAD
+[v6.2.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...v6.2.3
 [v6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
 [v6.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
 [v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
