@@ -406,14 +406,8 @@ storage:
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
-    {{- if not .DisableCalico }}
-    {{- if .EnableAWSCNI }}
-    - path: /srv/aws-cni.yaml
-      filesystem: root
-      mode: 0644
-      contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/aws-cni.yaml" }}"
-    - path: /srv/calico-policy-only.yaml
+    {{- if .CalicoPolicyOnly }}
+	- path: /srv/calico-policy-only.yaml
       filesystem: root
       mode: 0644
       contents:
@@ -425,6 +419,13 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-all.yaml" }}"
     {{- end }}
+
+    {{- if .EnableAWSCNI }}
+    - path: /srv/aws-cni.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/aws-cni.yaml" }}"
     {{- end }}
 
     {{- if not .DisableIngressControllerService }}

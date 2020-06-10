@@ -15,9 +15,8 @@ type Params struct {
 	// EnableAWSCNI flag. When set to true will use AWS CNI for pod networking
 	// and Calico only for network policies.
 	EnableAWSCNI bool
-	// DisableCalico flag. When set removes all calico related Kubernetes
-	// manifests from the cloud config together with their initialization.
-	DisableCalico bool
+	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
+	CalicoPolicyOnly bool
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud
 	// config related to Kubernetes encryption at REST.
 	DisableEncryptionAtREST bool
