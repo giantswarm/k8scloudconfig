@@ -211,9 +211,9 @@ systemd:
           --initial-advertise-peer-urls=http://${DEFAULT_IPV4}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
-          --initial-cluster-token k8s-etcd-cluster \
+          --initial-cluster-token=k8s-etcd-cluster \
           --initial-cluster=${ETCD_INITIAL_CLUSTER} \
-          --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
+          --initial-cluster-state=${ETCD_INITIAL_CLUSTER_STATE} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \
