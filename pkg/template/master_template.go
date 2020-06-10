@@ -199,13 +199,13 @@ systemd:
           $IMAGE \
           etcd \
           --name ${ETCD_NAME} \
-          --trusted-ca-file /etc/etcd/server-ca.pem \
-          --cert-file /etc/etcd/server-crt.pem \
-          --key-file /etc/etcd/server-key.pem\
+          --trusted-ca-file=/etc/etcd/server-ca.pem \
+          --cert-file=/etc/etcd/server-crt.pem \
+          --key-file=/etc/etcd/server-key.pem\
           --client-cert-auth=true \
-          --peer-trusted-ca-file /etc/etcd/server-ca.pem \
-          --peer-cert-file /etc/etcd/server-crt.pem \
-          --peer-key-file /etc/etcd/server-key.pem \
+          --peer-trusted-ca-file=/etc/etcd/server-ca.pem \
+          --peer-cert-file=/etc/etcd/server-crt.pem \
+          --peer-key-file=/etc/etcd/server-key.pem \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
           --initial-advertise-peer-urls=http://0.0.0.0:2380 \
