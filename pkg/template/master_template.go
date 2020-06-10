@@ -407,7 +407,7 @@ storage:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     {{- if .CalicoPolicyOnly }}
-	- path: /srv/calico-policy-only.yaml
+    - path: /srv/calico-policy-only.yaml
       filesystem: root
       mode: 0644
       contents:
