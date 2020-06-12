@@ -1,6 +1,5 @@
 {
     "registry-mirrors": [
-        "https://quay.io",
-        "registry-intl.cn-shanghai.aliyuncs.com"
+        "https://quay.io"
     ]
 }
