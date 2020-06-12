@@ -12,7 +12,7 @@ version directory, and  then changes are introduced.
 ## [Unreleased]
 
 ### Added
-- Add quay.io as docker.io mirror in dockerd config
+- Add quay.io and aliyun.com as docker.io mirrors in dockerd config
 
 ### Fixed
 
