@@ -11,6 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix worker's `$IMAGE` k8s-setup-network-env systemd unit to pick up value
+  from `.Images` instead of `.Cluster`.
+
 ## [v6.2.3] 2020-06-09
 ### Changed
 - Enable felix metrics for calico policy-only manifest.
