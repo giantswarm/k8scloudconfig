@@ -11,6 +11,9 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Added
+- Add quay.io as docker.io mirror in dockerd config
+
 ### Fixed
 
 - Fix worker's `$IMAGE` k8s-setup-network-env systemd unit to pick up value
