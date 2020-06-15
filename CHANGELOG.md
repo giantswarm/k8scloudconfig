@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Changed
+
+- Drop `clusterCIDR` from `kube-proxy` config on Azure.
+
 ### Fixed
 
 - Fix worker's `$IMAGE` k8s-setup-network-env systemd unit to pick up value
