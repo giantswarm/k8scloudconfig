@@ -637,7 +637,7 @@ storage:
 
     - path: /etc/docker/daemon.json
       filesystem: root
-      mode: 0600
+      mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/docker-daemon.json" }}"
 
