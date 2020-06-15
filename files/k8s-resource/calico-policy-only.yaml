@@ -307,6 +307,7 @@ metadata:
   name: calico-node
   namespace: kube-system
   labels:
+    giantswarm.io/service-type: managed
     k8s-app: calico-node
 spec:
   selector:
@@ -319,6 +320,7 @@ spec:
   template:
     metadata:
       labels:
+        giantswarm.io/service-type: managed
         k8s-app: calico-node
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
@@ -371,7 +373,7 @@ spec:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
         - name: install-cni
-          image: calico/cni:v3.14.1
+          image: {{ .Images.CalicoCNI }}
           command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
@@ -422,7 +424,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: calico/node:v3.14.1
+          image: {{ .Images.CalicoCNI }}
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
