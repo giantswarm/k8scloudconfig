@@ -424,7 +424,7 @@ spec:
         # container programs network policy and routes on each
         # host.
         - name: calico-node
-          image: {{ .Images.CalicoCNI }}
+          image: {{ .Images.CalicoNode }}
           env:
             # Use Kubernetes API as the backing datastore.
             - name: DATASTORE_TYPE
