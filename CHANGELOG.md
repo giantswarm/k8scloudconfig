@@ -11,6 +11,9 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+
+## [v6.2.4] 2020-06-16
+
 ### Changed
 
 - Drop `clusterCIDR` from `kube-proxy` config on Azure.
@@ -21,14 +24,19 @@ version directory, and  then changes are introduced.
   from `.Images` instead of `.Cluster`.
 
 ## [v6.2.3] 2020-06-09
+
 ### Changed
+
 - Enable felix metrics for calico policy-only manifest.
 
 ### Removed
+
 - Remove typha deployment for calico policy-only manifest.
 
 ## [v6.2.2] 2020-06-04
+
 ### Added
+
 - Add option to set etcd initial state to 'new' or 'existing'.
 
 ### Changed
