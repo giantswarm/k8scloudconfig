@@ -18,6 +18,7 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Use templated registry domain value for docker registry mirror
+- Use `giantswarm/pause:3.1` container as pod infra container instead of default container, hosted on gcr.
 
 ### Removed
 
