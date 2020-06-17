@@ -17,11 +17,11 @@ version directory, and  then changes are introduced.
 
 ### Changed
 
-- Replaced `quay.io` with `registry.hub.docker.com` in `wait-for-domains` script.
+- Use templated registry domain value for docker registry mirror
 
 ### Removed
 
-- `RegistryDomain` field from cloudconfig parameters.
+- Remove registry domain availability as we have no failover
 
 ## [v6.2.4] 2020-06-16
 
