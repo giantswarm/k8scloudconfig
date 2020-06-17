@@ -38,6 +38,7 @@ func DefaultCloudConfigConfig() CloudConfigConfig {
 func DefaultParams() Params {
 	return Params{
 		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
+		RegistryDomain:            "quay.io",
 		Etcd: Etcd{
 			ClientPort:          etcdPort,
 			HighAvailability:    false,

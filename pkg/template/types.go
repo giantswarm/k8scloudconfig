@@ -43,10 +43,11 @@ type Params struct {
 	// Kubernetes components allow the passing of extra `docker run` and
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
-	Kubernetes   Kubernetes
-	Node         v1alpha1.ClusterNode
-	SSOPublicKey string
-	Versions     Versions
+	Kubernetes     Kubernetes
+	Node           v1alpha1.ClusterNode
+	RegistryDomain string
+	SSOPublicKey   string
+	Versions       Versions
 }
 
 func (p *Params) Validate() error {
