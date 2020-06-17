@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Added
+- Add quay.io as docker.io mirror in dockerd config
 
 ## [v6.2.4] 2020-06-16
 
