@@ -12,7 +12,16 @@ version directory, and  then changes are introduced.
 ## [Unreleased]
 
 ### Added
+
 - Add quay.io as docker.io mirror in dockerd config
+
+### Changed
+
+- Replaced `quay.io` with `registry.hub.docker.com` in `wait-for-domains` script.
+
+### Removed
+
+- `RegistryDomain` field from cloudconfig parameters.
 
 ## [v6.2.4] 2020-06-16
 
