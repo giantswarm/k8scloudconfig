@@ -1,5 +1,5 @@
 {
     "registry-mirrors": [
-        "https://quay.io"
+        "https://{{ .RegistryDomain }}"
     ]
 }
