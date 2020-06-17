@@ -203,6 +203,7 @@ systemd:
         --enable-server \
         --logtostderr=true \
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
+        --pod-infra-container-image=giantswarm/pause:3.1 \
         --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
         --network-plugin=cni \
         --register-node=true \
