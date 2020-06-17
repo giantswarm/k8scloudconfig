@@ -12,7 +12,16 @@ version directory, and  then changes are introduced.
 ## [Unreleased]
 
 ### Added
+
 - Add quay.io as docker.io mirror in dockerd config
+
+### Changed
+
+- Use templated registry domain value for docker registry mirror
+
+### Removed
+
+- Remove registry domain availability as we have no failover
 
 ## [v6.2.4] 2020-06-16
 
