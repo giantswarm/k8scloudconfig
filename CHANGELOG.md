@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [6.2.5] - 2020-06-18
+
 ### Added
 
 - Add quay.io as docker.io mirror in dockerd config
@@ -661,7 +663,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...HEAD
+[6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...v6.2.5
 [v6.2.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...v6.2.3
 [v6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
 [v6.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
