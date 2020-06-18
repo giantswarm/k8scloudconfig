@@ -410,11 +410,11 @@ spec:
                   fieldPath: spec.nodeName
             # Don't enable BGP.
             - name: CALICO_NETWORKING_BACKEND
-              value: none
+              value: "none"
             # Cluster type to identify the deployment type
             - name: CLUSTER_TYPE
               value: "k8s,ecs"
-            # Disable file logging so `kubectl logs` works.
+            # Disable file logging so kubectl logs works.
             - name: CALICO_DISABLE_FILE_LOGGING
               value: "true"
             # Set Felix endpoint to host default action to ACCEPT.
@@ -447,7 +447,6 @@ spec:
               command:
                 - /bin/calico-node
                 - -felix-live
-                - -bird-live
             periodSeconds: 10
             initialDelaySeconds: 10
             failureThreshold: 6
@@ -456,23 +455,17 @@ spec:
               command:
                 - /bin/calico-node
                 - -felix-ready
-                - -bird-ready
             periodSeconds: 10
           volumeMounts:
             - mountPath: /lib/modules
               name: lib-modules
               readOnly: true
-            - mountPath: /run/xtables.lock
-              name: xtables-lock
-              readOnly: false
             - mountPath: /var/run/calico
               name: var-run-calico
               readOnly: false
             - mountPath: /var/lib/calico
               name: var-lib-calico
               readOnly: false
-            - name: policysync
-              mountPath: /var/run/nodeagent
       volumes:
         # Used by calico-node.
         - name: lib-modules
@@ -484,10 +477,6 @@ spec:
         - name: var-lib-calico
           hostPath:
             path: /var/lib/calico
-        - name: xtables-lock
-          hostPath:
-            path: /run/xtables.lock
-            type: FileOrCreate
         # Used to install CNI.
         - name: cni-bin-dir
           hostPath:
@@ -501,11 +490,6 @@ spec:
         - name: host-local-net-dir
           hostPath:
             path: /var/lib/cni/networks
-        # Used to create per-pod Unix Domain Sockets
-        - name: policysync
-          hostPath:
-            type: DirectoryOrCreate
-            path: /var/run/nodeagent
         # Used to install Flex Volume Driver
         - name: flexvol-driver-host
           hostPath:
