@@ -408,41 +408,12 @@ spec:
               valueFrom:
                 fieldRef:
                   fieldPath: spec.nodeName
-            # Choose the backend to use.
+            # Don't enable BGP.
             - name: CALICO_NETWORKING_BACKEND
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: calico_backend
+              value: none
             # Cluster type to identify the deployment type
             - name: CLUSTER_TYPE
-              value: "k8s,bgp"
-            # Auto-detect the BGP IP address.
-            - name: IP
-              value: "autodetect"
-            # Enable IPIP
-            - name: CALICO_IPV4POOL_IPIP
-              value: "Always"
-            # Enable or Disable VXLAN on the default IP pool.
-            - name: CALICO_IPV4POOL_VXLAN
-              value: "Never"
-            # Set MTU for tunnel device used if ipip is enabled
-            - name: FELIX_IPINIPMTU
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: veth_mtu
-            # Set MTU for the VXLAN tunnel device.
-            - name: FELIX_VXLANMTU
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: veth_mtu
-            # The default IPv4 pool to create on startup if none exists. Pod IPs will be
-            # chosen from this range. Changing this value after installation will have
-            # no effect. This should fall within `--cluster-cidr`.
-            # - name: CALICO_IPV4POOL_CIDR
-            #   value: "192.168.0.0/16"
+              value: "k8s,ecs"
             # Disable file logging so `kubectl logs` works.
             - name: CALICO_DISABLE_FILE_LOGGING
               value: "true"
