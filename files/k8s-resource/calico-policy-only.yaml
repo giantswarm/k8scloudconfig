@@ -381,15 +381,6 @@ spec:
               name: cni-net-dir
           securityContext:
             privileged: true
-        # Adds a Flex Volume Driver that creates a per-pod Unix Domain Socket to allow Dikastes
-        # to communicate with Felix over the Policy Sync API.
-        - name: flexvol-driver
-          image: calico/pod2daemon-flexvol:v3.14.1
-          volumeMounts:
-            - name: flexvol-driver-host
-              mountPath: /host/driver
-          securityContext:
-            privileged: true
       containers:
         # Runs calico-node container on each Kubernetes node.  This
         # container programs network policy and routes on each
@@ -490,17 +481,6 @@ spec:
         - name: cni-net-dir
           hostPath:
             path: /etc/cni/net.d
-        # Mount in the directory for host-local IPAM allocations. This is
-        # used when upgrading from host-local to calico-ipam, and can be removed
-        # if not using the upgrade-ipam init container.
-        - name: host-local-net-dir
-          hostPath:
-            path: /var/lib/cni/networks
-        # Used to install Flex Volume Driver
-        - name: flexvol-driver-host
-          hostPath:
-            type: DirectoryOrCreate
-            path: /usr/libexec/kubernetes/kubelet-plugins/volume/exec/nodeagent~uds
 ---
 
 apiVersion: v1
