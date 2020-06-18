@@ -19,6 +19,7 @@ version directory, and  then changes are introduced.
 
 - Use templated registry domain value for docker registry mirror
 - Use `giantswarm/pause:3.1` container as pod infra container instead of default container, hosted on gcr.
+- Bind kubelet health check endpoint to all IPv4 addresses.
 
 ### Removed
 
