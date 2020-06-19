@@ -11,6 +11,8 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## [revert-registry-mirrors] - 2020-06-19
+
 ### Removed
 
 - Remove quay.io as registry mirror over security concerns
@@ -667,7 +669,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/vrevert-registry-mirrors...HEAD
+[revert-registry-mirrors]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...vrevert-registry-mirrors
 [6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...v6.2.5
 [v6.2.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...v6.2.3
 [v6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
