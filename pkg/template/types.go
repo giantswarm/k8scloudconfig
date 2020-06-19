@@ -17,6 +17,10 @@ type Params struct {
 	EnableAWSCNI bool
 	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
 	CalicoPolicyOnly bool
+	// The default IPv4 pool to create on startup if none exists. Pod IPs will be
+	// chosen from this range. Changing this value after installation will have
+	// no effect. This should fall within --cluster-cidr.
+	CalicoIPV4PoolCIDR string
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud
 	// config related to Kubernetes encryption at REST.
 	DisableEncryptionAtREST bool
