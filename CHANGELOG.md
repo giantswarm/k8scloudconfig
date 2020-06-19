@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Removed
+
+- Remove quay.io as registry mirror over security concerns
+
 ## [6.2.5] - 2020-06-18
 
 ### Added
