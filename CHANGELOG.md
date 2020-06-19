@@ -11,6 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+## Changed
+
+- Upgrade calico to 3.14.1
+- Slightly changed the configuration interface for Calico
+
 ## [6.2.6] - 2020-06-19
 
 ### Removed
