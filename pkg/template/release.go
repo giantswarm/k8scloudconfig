@@ -9,17 +9,17 @@ import (
 
 func BuildImages(registryDomain string, versions Versions) Images {
 	return Images{
-		CalicoCNI:                    buildImage("giantswarm/cni", versions.Calico),
-		CalicoKubeControllers:        buildImage("giantswarm/kube-controllers", versions.Calico),
-		CalicoNode:                   buildImage("giantswarm/node", versions.Calico),
-		Etcd:                         buildImage("giantswarm/etcd", versions.Etcd),
-		Hyperkube:                    buildImage("giantswarm/hyperkube", versions.Kubernetes),
-		KubeApiserver:                buildImage("giantswarm/kube-apiserver", versions.Kubernetes),
-		KubeControllerManager:        buildImage("giantswarm/kube-controller-manager", versions.Kubernetes),
-		KubeProxy:                    buildImage("giantswarm/kube-proxy", versions.Kubernetes),
-		KubeScheduler:                buildImage("giantswarm/kube-scheduler", versions.Kubernetes),
-		KubernetesAPIHealthz:         buildImage("giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz),
-		KubernetesNetworkSetupDocker: buildImage("giantswarm/k8s-setup-network-environment", versions.KubernetesNetworkSetupDocker),
+		CalicoCNI:                    buildImage("giantswarm/cni", versions.Calico, ""),
+		CalicoKubeControllers:        buildImage("giantswarm/kube-controllers", versions.Calico, ""),
+		CalicoNode:                   buildImage("giantswarm/node", versions.Calico, ""),
+		Etcd:                         buildImage("giantswarm/etcd", versions.Etcd, ""),
+		Hyperkube:                    buildImage("giantswarm/hyperkube", versions.Kubernetes, ""),
+		KubeApiserver:                buildImage("giantswarm/kube-apiserver", versions.Kubernetes, "-giantswarm"),
+		KubeControllerManager:        buildImage("giantswarm/kube-controller-manager", versions.Kubernetes, ""),
+		KubeProxy:                    buildImage("giantswarm/kube-proxy", versions.Kubernetes, ""),
+		KubeScheduler:                buildImage("giantswarm/kube-scheduler", versions.Kubernetes, ""),
+		KubernetesAPIHealthz:         buildImage("giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz, ""),
+		KubernetesNetworkSetupDocker: buildImage("giantswarm/k8s-setup-network-environment", versions.KubernetesNetworkSetupDocker, ""),
 	}
 }
 
@@ -59,8 +59,8 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 	return versions, nil
 }
 
-func buildImage(repo string, tag string) string {
-	return fmt.Sprintf("%s:%s", repo, tag)
+func buildImage(repo string, tag string, suffix string) string {
+	return fmt.Sprintf("%s:%s%s", repo, tag, suffix)
 }
 
 func findComponent(releaseComponents []v1alpha1.ReleaseSpecComponent, name string) (*v1alpha1.ReleaseSpecComponent, error) {
