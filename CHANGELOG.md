@@ -13,6 +13,7 @@ version directory, and  then changes are introduced.
 
 ## Changed
 
+- Change `kube-apiserver` image to include certs
 - Upgrade calico to 3.14.1
 - Slightly changed the configuration interface for Calico
 
