@@ -1,5 +1,8 @@
 #!/bin/bash
-domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}}"
+
+# example.com is there to mitigate AWS DNS issues which at startup is able to
+# resolve internal AWS DNS names but not public DNS.
+domains="{{.Cluster.Etcd.Domain}} {{.Cluster.Kubernetes.API.Domain}} example.com"
 
 for domain in $domains; do
 until nslookup $domain; do
