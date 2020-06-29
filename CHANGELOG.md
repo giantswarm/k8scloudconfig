@@ -11,6 +11,11 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Added
+
+- Add back registry domain configuration as it is going to be used in AWS CN
+  regions.
+
 ## Changed
 
 - Upgrade calico to 3.14.1
