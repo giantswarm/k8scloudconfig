@@ -5,11 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-The latest version is considered WIP and it is a subject of change. All other
-versions are frozen. To freeze current version all files are copied to a new
-version directory, and  then changes are introduced.
-
 ## [Unreleased]
+
+## Changed
+
+- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false` when upgrading from
+clusters using k8scloudconfig v6.0.3/v6.1.0 so that upgrades can continue.
 
 ## [6.3.0] - 2020-06-22
 
