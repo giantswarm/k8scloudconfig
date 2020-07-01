@@ -11,9 +11,21 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
-## Changed
+### Added
+
+- Add back registry domain configuration as it is going to be used in AWS CN
+  regions.
+- Allow short (Docker Hub compatible) images when registry domain is an empty
+  string.
+
+### Changed
 
 - Change `kube-apiserver` image to include certs
+
+## [6.3.0] - 2020-06-22
+
+## Changed
+
 - Upgrade calico to 3.14.1
 - Slightly changed the configuration interface for Calico
 
@@ -675,7 +687,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...HEAD
+[6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
 [v6.2.6]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...v6.2.6
 [v6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.4...v6.2.5
 [v6.2.4]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...v6.2.4
