@@ -7,10 +7,18 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add back registry domain configuration as it is going to be used in AWS CN
+  regions.
+- Allow short (Docker Hub compatible) images when registry domain is an empty
+  string.
+
 ## Changed
 
-- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false` when upgrading from
-clusters using k8scloudconfig v6.0.3/v6.1.0 so that upgrades can continue.
+- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false` 
+when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that 
+upgrades can continue without manual intervention.
 
 ## [6.3.0] - 2020-06-22
 
