@@ -14,6 +14,7 @@ version directory, and  then changes are introduced.
 ### Added
 
 - Add back registry domain configuration.
+- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
 
 ## [6.3.0] - 2020-06-22
 

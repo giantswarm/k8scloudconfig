@@ -352,6 +352,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/10-docker.rules" }}"
 
+    - path: /etc/docker/daemon.json
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/docker-daemon.json" }}"
+
     - path: /etc/modules-load.d/ip_vs.conf
       filesystem: root
       mode: 0600
