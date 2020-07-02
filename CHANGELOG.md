@@ -20,7 +20,7 @@ version directory, and  then changes are introduced.
 
 ### Changed
 
-- Change `kube-apiserver` image to include certs
+- Change `kube-apiserver` image to include certs.
 
 ## [6.3.0] - 2020-06-22
 
