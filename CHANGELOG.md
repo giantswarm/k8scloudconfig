@@ -13,10 +13,7 @@ version directory, and  then changes are introduced.
 
 ### Added
 
-- Add back registry domain configuration as it is going to be used in AWS CN
-  regions.
-- Allow short (Docker Hub compatible) images when registry domain is an empty
-  string.
+- Add back registry domain configuration.
 
 ## [6.3.0] - 2020-06-22
 

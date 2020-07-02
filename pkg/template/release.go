@@ -60,12 +60,7 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 }
 
 func buildImage(registryDomain, repo, tag string) string {
-	name := repo
-	if registryDomain != "" {
-		name = registryDomain + "/" + repo
-	}
-
-	return name + ":" + tag
+	return registryDomain + "/" + repo + ":" + tag
 }
 
 func findComponent(releaseComponents []v1alpha1.ReleaseSpecComponent, name string) (*v1alpha1.ReleaseSpecComponent, error) {
