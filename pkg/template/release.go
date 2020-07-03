@@ -1,10 +1,13 @@
 package template
 
 import (
+	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 func BuildImages(registryDomain string, versions Versions) Images {
@@ -20,7 +23,7 @@ func BuildImages(registryDomain string, versions Versions) Images {
 		KubeScheduler:                buildImage(registryDomain, "giantswarm/kube-scheduler", versions.Kubernetes, ""),
 		KubernetesAPIHealthz:         buildImage(registryDomain, "giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz, ""),
 		KubernetesNetworkSetupDocker: buildImage(registryDomain, "giantswarm/k8s-setup-network-environment", versions.KubernetesNetworkSetupDocker, ""),
-		Pause:                        buildImage(registryDomain, "giantswarm/pause", "3.1", ""),
+		Pause:                        buildImage(registryDomain, "giantswarm/pause", "3.2", ""),
 	}
 }
 
@@ -71,4 +74,27 @@ func findComponent(releaseComponents []v1alpha1.ReleaseSpecComponent, name strin
 		}
 	}
 	return nil, componentNotFoundError
+}
+
+func validateImagesRegsitry(images Images, registry string) error {
+	data, err := json.Marshal(images)
+	if err != nil {
+		return microerror.Mask(err)
+	}
+
+	var m map[string]string
+	err = json.Unmarshal(data, &m)
+	if err != nil {
+		return microerror.Mask(err)
+	}
+
+	for k, image := range m {
+		split := strings.Split(image, "/")
+		r := split[0]
+		if r != registry {
+			return microerror.Maskf(invalidConfigError, "%T.%s image %#q should have registry set to %#q", images, k, image, registry)
+		}
+	}
+
+	return nil
 }

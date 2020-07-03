@@ -58,6 +58,9 @@ func (p *Params) Validate() error {
 	if len(p.RegistryMirrors) > 0 && p.RegistryDomain != "docker.io" {
 		return microerror.Maskf(invalidConfigError, "%T.RegistryMirrors can be set only for %T.RegistryDomain = %#q", p, p, "docker.io")
 	}
+	if err := validateImagesRegsitry(p.Images, p.RegistryDomain); err != nil {
+		return microerror.Mask(err)
+	}
 
 	return nil
 }

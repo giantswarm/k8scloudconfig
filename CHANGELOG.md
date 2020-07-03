@@ -19,6 +19,7 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Change `kube-apiserver` image to include certs.
+- Fail if all images do not have the same registry.
 
 ## [6.3.0] - 2020-06-22
 
