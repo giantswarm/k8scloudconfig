@@ -20,7 +20,7 @@ func BuildImages(registryDomain string, versions Versions) Images {
 		KubeScheduler:                buildImage(registryDomain, "giantswarm/kube-scheduler", versions.Kubernetes, ""),
 		KubernetesAPIHealthz:         buildImage(registryDomain, "giantswarm/k8s-api-healthz", versions.KubernetesAPIHealthz, ""),
 		KubernetesNetworkSetupDocker: buildImage(registryDomain, "giantswarm/k8s-setup-network-environment", versions.KubernetesNetworkSetupDocker, ""),
-		Pause:                        buildImage(registryDomain, "giantswarm/pause", "3.1"),
+		Pause:                        buildImage(registryDomain, "giantswarm/pause", "3.1", ""),
 	}
 }
 
