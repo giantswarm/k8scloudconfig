@@ -315,5 +315,4 @@ fi
 MAX_PODS=110
 {{ end -}}
 
-rm -f ${env_file}
 echo "MAX_PODS=${MAX_PODS}" >> ${env_file}
