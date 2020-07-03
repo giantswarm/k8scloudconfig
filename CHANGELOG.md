@@ -19,6 +19,10 @@ version directory, and  then changes are introduced.
 
 - Change `kube-apiserver` image to include certs.
 
+### Removed
+
+- Remove `RegistryDomain` template parameter.
+
 ## [6.3.0] - 2020-06-22
 
 ## Changed
