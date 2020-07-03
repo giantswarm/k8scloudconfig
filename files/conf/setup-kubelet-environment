@@ -12,9 +12,14 @@ instance_size=$(curl http://169.254.169.254/latest/meta-data/instance-type 2>/de
 
 if [[ "${instance_size}" =~ ^(4xlarge|8xlarge|9xlarge|12xlarge|16xlarge|18xlarge|24xlarge)$ ]]; then
 	MAX_PODS=110
-else 
-	MAX_PODS=40
+elif [[ "${instance_size}" =~ ^(xlarge|2xlarge)$ ]]; then
+	MAX_PODS=44
+elif [[ "${instance_size}" =~ ^(large)$ ]]; then
+	MAX_PODS=20
+else
+  MAX_PODS=40
 fi
+
 {{ else -}}
 MAX_PODS=110
 {{ end -}}
