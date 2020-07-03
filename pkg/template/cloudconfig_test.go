@@ -56,7 +56,7 @@ func TestCloudConfig(t *testing.T) {
 			t.Errorf("failed to render ignition files, %v:", err)
 		}
 		tc.params.Files = files
-		tc.params.Images = BuildImages(tc.params.RegistryDomain, Versions{})
+		tc.params.Images = BuildImages("docker.io", Versions{})
 
 		c.Params = tc.params
 		c.Template = tc.template

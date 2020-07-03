@@ -7,31 +7,36 @@ import (
 
 func Test_validateImagesRegsitry(t *testing.T) {
 	testCases := []struct {
-		name          string
-		inputImages   Images
-		inputRegistry string
-		errorMatcher  func(err error) bool
+		name         string
+		inputImages  Images
+		inputMirrors []string
+		errorMatcher func(err error) bool
 	}{
 		{
-			name:          "case 0: ok",
-			inputImages:   BuildImages("docker.io", Versions{}),
-			inputRegistry: "docker.io",
-			errorMatcher:  nil,
+			name:         "case 0: ok",
+			inputImages:  BuildImages("docker.io", Versions{}),
+			inputMirrors: []string{"giantswarm.azurecr.io"},
+			errorMatcher: nil,
 		},
 		{
-			name:          "case 1: different registry",
-			inputImages:   BuildImages("docker.io", Versions{}),
-			inputRegistry: "quay.io",
-			errorMatcher:  IsInvalidConfig,
+			name:         "case 1: ok - no mirrors",
+			inputImages:  BuildImages("quay.io", Versions{}),
+			inputMirrors: nil,
+			errorMatcher: nil,
 		},
 		{
-			name:          "case 2: empty Images",
-			inputImages:   Images{},
-			inputRegistry: "quay.io",
-			errorMatcher:  IsInvalidConfig,
+			name:         "case 2: non-docker registry when mirrors are set",
+			inputImages:  BuildImages("quay.io", Versions{}),
+			inputMirrors: []string{"giantswarm.azurecr.io"},
+			errorMatcher: IsInvalidConfig,
 		},
 		{
-			name: "case 3: manually set images",
+			name:         "case 3: empty Images",
+			inputImages:  Images{},
+			errorMatcher: IsInvalidConfig,
+		},
+		{
+			name: "case 4: manually set images",
 			inputImages: Images{
 				CalicoCNI:                    "docker.io/giantswarm/image:1.2.3",
 				CalicoKubeControllers:        "docker.io/giantswarm/image:1.2.3",
@@ -46,11 +51,10 @@ func Test_validateImagesRegsitry(t *testing.T) {
 				KubernetesNetworkSetupDocker: "docker.io/giantswarm/image:1.2.3",
 				Pause:                        "docker.io/giantswarm/image:1.2.3",
 			},
-			inputRegistry: "docker.io",
-			errorMatcher:  nil,
+			errorMatcher: nil,
 		},
 		{
-			name: "case 4: manually set images - one is wrong",
+			name: "case 5: manually set images - one is wrong",
 			inputImages: Images{
 				CalicoCNI:                    "docker.io/giantswarm/image:1.2.3",
 				CalicoKubeControllers:        "docker.io/giantswarm/image:1.2.3",
@@ -65,11 +69,10 @@ func Test_validateImagesRegsitry(t *testing.T) {
 				KubernetesNetworkSetupDocker: "docker.io/giantswarm/image:1.2.3",
 				Pause:                        "docker.io/giantswarm/image:1.2.3",
 			},
-			inputRegistry: "docker.io",
-			errorMatcher:  IsInvalidConfig,
+			errorMatcher: IsInvalidConfig,
 		},
 		{
-			name: "case 5: manually set images - one is empty",
+			name: "case 6: manually set images - one is empty",
 			inputImages: Images{
 				CalicoCNI:                    "docker.io/giantswarm/image:1.2.3",
 				CalicoKubeControllers:        "docker.io/giantswarm/image:1.2.3",
@@ -84,8 +87,7 @@ func Test_validateImagesRegsitry(t *testing.T) {
 				KubernetesNetworkSetupDocker: "docker.io/giantswarm/image:1.2.3",
 				Pause:                        "docker.io/giantswarm/image:1.2.3",
 			},
-			inputRegistry: "docker.io",
-			errorMatcher:  IsInvalidConfig,
+			errorMatcher: IsInvalidConfig,
 		},
 	}
 
@@ -93,7 +95,7 @@ func Test_validateImagesRegsitry(t *testing.T) {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Log(tc.name)
 
-			err := validateImagesRegsitry(tc.inputImages, tc.inputRegistry)
+			err := validateImagesRegsitry(tc.inputImages, tc.inputMirrors)
 
 			switch {
 			case err == nil && tc.errorMatcher == nil:
