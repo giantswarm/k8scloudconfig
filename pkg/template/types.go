@@ -80,6 +80,7 @@ type Images struct {
 	KubeProxy                    string
 	KubernetesAPIHealthz         string
 	KubernetesNetworkSetupDocker string
+	Pause                        string
 }
 
 type Kubernetes struct {
