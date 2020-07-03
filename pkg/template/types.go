@@ -2,6 +2,7 @@ package template
 
 import (
 	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 type Params struct {
@@ -50,6 +51,13 @@ type Params struct {
 }
 
 func (p *Params) Validate() error {
+	if p.RegistryDomain == "" {
+		return microerror.Maskf(invalidConfigError, "%T.RegistryDomain must not be empty", p)
+	}
+	if err := validateImagesRegsitry(p.Images, p.RegistryDomain); err != nil {
+		return microerror.Mask(err)
+	}
+
 	return nil
 }
 
