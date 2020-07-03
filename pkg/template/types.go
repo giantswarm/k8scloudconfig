@@ -2,6 +2,7 @@ package template
 
 import (
 	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 type Params struct {
@@ -51,6 +52,13 @@ type Params struct {
 }
 
 func (p *Params) Validate() error {
+	if p.RegistryDomain == "" {
+		return microerror.Maskf(invalidConfigError, "%T.RegistryDomain must not be empty", p)
+	}
+	if len(p.RegistryMirrors) > 0 && p.RegistryDomain != "docker.io" {
+		return microerror.Maskf(invalidConfigError, "%T.RegistryMirrors can be set only for %T.RegistryDomain = %#q", p, p, "docker.io")
+	}
+
 	return nil
 }
 

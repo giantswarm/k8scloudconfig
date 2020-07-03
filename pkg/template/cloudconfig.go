@@ -60,7 +60,7 @@ type CloudConfig struct {
 
 func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 	if err := config.Params.Validate(); err != nil {
-		return nil, microerror.Maskf(invalidConfigError, "config.Params.%s", err)
+		return nil, microerror.Maskf(invalidConfigError, "%T.%s", config, err)
 	}
 	if config.Template == "" {
 		return nil, microerror.Maskf(invalidConfigError, "config.Template must not be empty")
