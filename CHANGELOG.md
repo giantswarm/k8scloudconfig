@@ -9,10 +9,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Added
 
-- Add back registry domain configuration as it is going to be used in AWS CN
-  regions.
-- Allow short (Docker Hub compatible) images when registry domain is an empty
-  string.
+- Add back registry domain configuration.
+
+### Changed
+
+- Change `kube-apiserver` image to include certs.
 
 ## Changed
 
