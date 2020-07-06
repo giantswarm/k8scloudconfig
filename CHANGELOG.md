@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [6.4.0] - 2020-07-06
+
 ### Added
 
 - Add back registry domain configuration.
@@ -683,7 +685,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...HEAD
+[6.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...v6.4.0
 [6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
 [6.2.6]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...v6.2.6
 [6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.4...v6.2.5
