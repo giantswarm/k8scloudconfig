@@ -70,6 +70,18 @@ do
     sleep 5s
 done
 
+# The k8s-app selector was changed to app.kubernetes.io/name in k8scloudconfig v6.0.3/v6.1.0.
+# This change was reverted in k8scloudconfig v6.1.1+.
+# matchLabels is immutable in apps/v1 so `kubectl apply -f kube-proxy-ds.yaml` will fail
+# when upgrading clusters using k8scloudconfig v6.0.3/v6.1.0.
+# To mitigate this without causing downtime, we can orphan the existing pods with `kubectl delete --cascade=false`
+# The pods will continue to run and the new daemonset will inherit the pods so they can be
+# upgraded if needed in a graceful manner.
+if [[ $(kubectl get ds -n kube-system kube-proxy -o jsonpath='{.spec.selector.matchLabels}') == "map[app.kubernetes.io/name:kube-proxy]" ]]; then
+  echo "Orphaning kube-proxy pods to be inherited by new deployment"
+  kubectl delete ds -n kube-system kube-proxy --cascade=false
+fi
+
 # install kube-proxy
 PROXY_MANIFESTS="kube-proxy-sa.yaml kube-proxy-ds.yaml"
 for manifest in $PROXY_MANIFESTS
@@ -87,6 +99,12 @@ echo "kube-proxy successfully installed"
 # restart ds to apply config from configmap
 kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 
+# See kube-proxy comment above for an explanation
+if [[ $(kubectl get ds -n kube-system calico-node -o jsonpath='{.spec.selector.matchLabels}') == "map[app.kubernetes.io/name:calico-node]" ]]; then
+  echo "Orphaning calico-node pods to be inherited by new deployment"
+  kubectl delete ds -n kube-system calico-node --cascade=false
+fi
+
 {{ if .CalicoPolicyOnly -}}
 ## Apply Calico with network policy features only
 CNI_FILE="calico-policy-only.yaml"
@@ -97,6 +115,11 @@ CNI_FILE="${CNI_FILE} aws-cni.yaml"
 {{ else -}}
 ## Apply Calico with all its components
 CNI_FILE="calico-all.yaml"
+# See kube-proxy comment above for an explanation
+if [[ $(kubectl get deploy -n kube-system calico-kube-controllers -o jsonpath='{.spec.selector.matchLabels}') == "map[app.kubernetes.io/name:calico-kube-controllers]" ]]; then
+  echo "Orphaning calico-kube-controllers pods to be inherited by new deployment"
+  kubectl delete deploy -n kube-system calico-kube-controllers --cascade=false
+fi
 {{ end -}}
 
 for manifest in ${CNI_FILE}
