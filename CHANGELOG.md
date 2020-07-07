@@ -9,12 +9,19 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [7.0.0] - 2020-07-07
 
+### Added
+
+- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
+
+### Changed
+
+- Fail if all images do not have the same registry.
+
 ## [6.4.0] - 2020-07-06
 
 ### Added
 
 - Add back registry domain configuration.
-- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
 
 ### Changed
 
@@ -22,7 +29,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false`
   when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that
   upgrades can continue without manual intervention.
-- Fail if all images do not have the same registry.
 
 ### Removed
 
