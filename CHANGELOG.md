@@ -20,6 +20,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that 
 upgrades can continue without manual intervention.
 
+### Removed
+
+- Remove `RegistryDomain` template parameter.
+
 ## [6.3.0] - 2020-06-22
 
 ## Changed
