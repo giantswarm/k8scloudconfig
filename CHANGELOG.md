@@ -26,10 +26,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Remove `RegistryDomain` template parameter.
 
-### Removed
-
-- Remove `RegistryDomain` template parameter.
-
 ## [6.3.0] - 2020-06-22
 
 ## Changed
