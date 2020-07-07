@@ -1,10 +1,13 @@
 package template
 
 import (
+	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/apiextensions/pkg/apis/release/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 func BuildImages(registryDomain string, versions Versions) Images {
@@ -71,4 +74,45 @@ func findComponent(releaseComponents []v1alpha1.ReleaseSpecComponent, name strin
 		}
 	}
 	return nil, componentNotFoundError
+}
+
+func validateImagesRegsitry(images Images, mirrors []string) error {
+	data, err := json.Marshal(images)
+	if err != nil {
+		return microerror.Mask(err)
+	}
+
+	var m map[string]string
+	err = json.Unmarshal(data, &m)
+	if err != nil {
+		return microerror.Mask(err)
+	}
+
+	var firstImage string
+	var firstKey string
+	var firstRegistry string
+
+	for k, image := range m {
+		split := strings.Split(image, "/")
+		r := split[0]
+		if firstImage == "" {
+			firstImage = image
+			firstKey = k
+			firstRegistry = r
+		}
+
+		if r == "" {
+			return microerror.Maskf(invalidConfigError, "%T.%s image %#q registry domain must not be empty", images, k, image)
+		}
+
+		if len(mirrors) > 0 && r != "docker.io" {
+			return microerror.Maskf(invalidConfigError, "%T.%s image %#q registry domain must be %#q when mirrors are set", images, k, image, "docker.io")
+		}
+
+		if r != firstRegistry {
+			return microerror.Maskf(invalidConfigError, "%T.%s image %#q and %T.%s image %#q have different registries domains", images, firstKey, firstImage, images, k, image)
+		}
+	}
+
+	return nil
 }

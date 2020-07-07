@@ -2,6 +2,7 @@ package template
 
 import (
 	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 type Params struct {
@@ -42,13 +43,21 @@ type Params struct {
 	// Kubernetes components allow the passing of extra `docker run` and
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
-	Kubernetes   Kubernetes
-	Node         v1alpha1.ClusterNode
-	SSOPublicKey string
-	Versions     Versions
+	Kubernetes Kubernetes
+	Node       v1alpha1.ClusterNode
+	// RegistryMirrors to be configured for docker daemon. It should be
+	// domain names only without the protocol prefix, e.g.:
+	// ["giantswarm.azurecr.io"].
+	RegistryMirrors []string
+	SSOPublicKey    string
+	Versions        Versions
 }
 
 func (p *Params) Validate() error {
+	if err := validateImagesRegsitry(p.Images, p.RegistryMirrors); err != nil {
+		return microerror.Mask(err)
+	}
+
 	return nil
 }
 

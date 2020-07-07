@@ -1,0 +1,7 @@
+{
+    "registry-mirrors": [
+        {{- range $i, $e := .RegistryMirrors }}
+        {{- if ne $i 0 }},{{ end }}{{ "\n" }}        "https://{{ $e }}"
+        {{- end }}
+    ]
+}

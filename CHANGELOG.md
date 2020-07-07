@@ -12,13 +12,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Added
 
 - Add back registry domain configuration.
+- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
 
 ### Changed
 
 - Change `kube-apiserver` image to include certs.
-- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false` 
-when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that 
-upgrades can continue without manual intervention.
+- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false`
+  when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that
+  upgrades can continue without manual intervention.
+- Fail if all images do not have the same registry.
 
 ### Removed
 
