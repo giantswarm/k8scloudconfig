@@ -5,11 +5,9 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
-The latest version is considered WIP and it is a subject of change. All other
-versions are frozen. To freeze current version all files are copied to a new
-version directory, and  then changes are introduced.
-
 ## [Unreleased]
+
+## [6.4.0] - 2020-07-06
 
 ### Added
 
@@ -19,6 +17,9 @@ version directory, and  then changes are introduced.
 ### Changed
 
 - Change `kube-apiserver` image to include certs.
+- Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false`
+  when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that
+  upgrades can continue without manual intervention.
 - Fail if all images do not have the same registry.
 
 ### Removed
@@ -54,7 +55,7 @@ version directory, and  then changes are introduced.
 
 - Remove registry domain availability as we have no failover
 
-## [v6.2.4] 2020-06-16
+## [6.2.4] 2020-06-16
 
 ### Changed
 
@@ -65,7 +66,7 @@ version directory, and  then changes are introduced.
 - Fix worker's `$IMAGE` k8s-setup-network-env systemd unit to pick up value
   from `.Images` instead of `.Cluster`.
 
-## [v6.2.3] 2020-06-09
+## [6.2.3] 2020-06-09
 
 ### Changed
 
@@ -75,7 +76,7 @@ version directory, and  then changes are introduced.
 
 - Remove typha deployment for calico policy-only manifest.
 
-## [v6.2.2] 2020-06-04
+## [6.2.2] 2020-06-04
 
 ### Added
 
@@ -96,7 +97,7 @@ version directory, and  then changes are introduced.
 
 - Remove `resourceContainer` from `kube-proxy` configuration file.
 
-## [v6.2.1] 2020-05-26
+## [6.2.1] 2020-05-26
 
 ### Added
 
@@ -104,7 +105,7 @@ version directory, and  then changes are introduced.
 - RBAC permissions allowing calico node to get configmaps.
 - Parameter to disable deletion of master nodes for HA masters.
 
-## [v6.2.0] 2020-05-20
+## [6.2.0] 2020-05-20
 
 ### Added
 
@@ -115,13 +116,13 @@ version directory, and  then changes are introduced.
 
 - Remove limits from calico-kube-controllers.
 
-## [v6.1.1] 2020-05-07
+## [6.1.1] 2020-05-07
 
 ### Fixed
 
 - Revert changes to deployment label selectors causing k8s-addons to fail.
 
-## [v6.1.0] 2020-05-06
+## [6.1.0] 2020-05-06
 
 ### Changed
 
@@ -134,7 +135,7 @@ version directory, and  then changes are introduced.
 - All cloudconfig versions prior to v6.0.0.
 - Remove IC performance improvements from OS provisioning.
 
-## [v6.0.3] 2020-04-16
+## [6.0.3] 2020-04-16
 
 ### Added
 
@@ -142,7 +143,7 @@ version directory, and  then changes are introduced.
 - Disable profiling for Controller Manager and Scheduler.
 
 
-## [v6.0.2]
+## [6.0.2]
 
 ### Changed
 
@@ -151,7 +152,7 @@ version directory, and  then changes are introduced.
 - Hardcode registry domain AWS
 
 
-## [v6.0.1]
+## [6.0.1]
 
 ### Fixed
 
@@ -159,7 +160,7 @@ version directory, and  then changes are introduced.
 
 
 
-## [v6.0.0]
+## [6.0.0]
 
 ### Changed
 
@@ -172,7 +173,7 @@ version directory, and  then changes are introduced.
 
 - Add `conntrackMaxPerCore` parameter in `kube-proxy` manifest.
 
-## [v5.2.0]
+## [5.2.0]
 
 ### Changed
 
@@ -181,20 +182,20 @@ version directory, and  then changes are introduced.
 - Use [AWS VPC CNI](https://github.com/aws/amazon-vpc-cni-k8s) for pod networking and Calico for ensuring network policies.
 - Enable ':9393/metrics' prometheus endpoint in docker daemon.
 
-## [v5.1.1] - Unreleased
+## [5.1.1] - Unreleased
 
 ### Changed
 
 - Update Kubernetes to `1.16.7`.
 
-## [v5.1.0] - 2020-01-21
+## [5.1.0] - 2020-01-21
 
 ### Changed
 
 - Lowercase $(hostname) to match k8s node name e.g. when using with kubectl.
 - Extend ignition with debug options.
 
-## [v5.0.0] - 2020-01-02
+## [5.0.0] - 2020-01-02
 
 ### Changed
 
@@ -216,13 +217,13 @@ version directory, and  then changes are introduced.
 - Add eviction hard setting for image file system in kubelet.
 - Add Deny All as default Network Policy in `kube-system` and `giantswarm` namespaces.
 
-## [v4.9.2] - 2020-04-15
+## [4.9.2] - 2020-04-15
 
 ### Changed
 
 - Remove debug profiling from Controller Manager and Scheduler
 
-## [v4.9.1] - 2020-03-10
+## [4.9.1] - 2020-03-10
 
 ### Added
 
@@ -232,7 +233,7 @@ version directory, and  then changes are introduced.
 
 -  Remove limit of calico node init container.
 
-## [v4.9.0] - 2019-10-17
+## [4.9.0] - 2019-10-17
 
 ### Changed
 
@@ -248,21 +249,21 @@ version directory, and  then changes are introduced.
 - Use `/bin/calico-node -felix-live` for `calico-node` liveness probe instead of `httpGet`.
 - Generally minimize differences between [Calico v3.9 yaml](https://docs.projectcalico.org/v3.9/manifests/calico.yaml) and `calico-all.yaml`.
 
-## [v4.8.1] - 2019-12-31
+## [4.8.1] - 2019-12-31
 
 ### Changed
 
 - Update Kubernetes to 1.14.10, includes fixes for CVE-2019-11253 and some Azure fixes.
 - Increase `fs.inotify.max_user_instances` to 8192.
 
-## [v4.8.0]
+## [4.8.0]
 
 ### Added
 
 - Add k8s-api-healthz service to master node to enable proper LB health checks to api and etcd.
 - Set api-server listen address to 0.0.0.0.
 
-## [v4.7.0]
+## [4.7.0]
 
 ### Added
 
@@ -273,7 +274,7 @@ version directory, and  then changes are introduced.
 - Update kubernetes to 1.14.6, includes fixes for CVE-2019-9512, CVE-2019-9514
 - Update calico to 3.8.2
 
-## [v4.6.0]
+## [4.6.0]
 
 ### Added
 
@@ -291,20 +292,20 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 
 - Update `giantswarm-critical` priority class manifest to use `v1` stable.
 
-## [v4.5.1]
+## [4.5.1]
 
 ### Changed
 
 - Update kubernetes to 1.14.5 CVE-2019-1002101, CVE-2019-11246
 
-## [v4.5.0]
+## [4.5.0]
 
 ### Changed
 
 - Add configuration necessery for generic support of rbd storage.
 - Add `name` label for `kube-system` and `default` namespaces.
 
-## [v4.4.0]
+## [4.4.0]
 
 ### Changed
 
@@ -316,7 +317,7 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 - Update etcd to 3.3.13.
 
 
-## [v4.3.0]
+## [4.3.0]
 
 ### Changed
 - Update kubernetes to 1.14.1
@@ -325,7 +326,7 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 - Update kube-proxy and calico to tolerate every taint effects and CriticalAddonsOnly
 - Add managed giantswarm label to calico daemonset
 
-## [v4.2.0]
+## [4.2.0]
 
 ### Changed
 - Fix race condition issue with systemd units.
@@ -334,18 +335,18 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 
 - Remove `UsePrivilegeSeparation` option from sshd configuration.
 
-## [v4.1.2]
+## [4.1.2]
 ### Changed
 - Pin calico-kube-controllers to master.
 - Fix calico-node felix severity log level.
 - Enable `serviceaccount` controller in calico-kube-controller.
 - Remove 'staticPodPath' from worker kubelet configuration.
 
-## [v4.1.1]
+## [4.1.1]
 ### Changed
 - Update kubernetes to 1.13.4 CVE-2019-1002100
 
-## [v4.1.0]
+## [4.1.0]
 ### Changed
 - Intall calicoctl, crictl and configure etcctl tooling in masters.
 - Update kubernetes to 1.13.3.
@@ -353,14 +354,14 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 - Update calico to 3.5.1.
 - Add fine-grained Audit Policy
 
-## [v4.0.1]
+## [4.0.1]
 ### Changed
 - Update kubernetes to 1.12.6 CVE-2019-1002100
 
-## [v3.8.0] WIP
+## [3.8.0] WIP
 - Update kubernetes to 1.12.6 CVE-2019-1002100
 
-## [v4.0.0]
+## [4.0.0]
 
 ### Changed
 - Switched from cloudinit to ignition.
@@ -374,10 +375,10 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 - Ingress Controller and CoreDNS manifests. Now migrated to chart-operator.
 - Removed nodename_file_optional from calico configmap.
 
-## [v3.7.5]
+## [3.7.5]
 - Update kubernetes to 1.12.6 CVE-2019-1002100
 
-## [v3.7.4]
+## [3.7.4]
 
 ### Changed
 - Double the inotify watches.
@@ -385,44 +386,44 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 ### Removed
 - Removed nodename_file_optional from calico configmap.
 
-## [v3.7.3]
+## [3.7.3]
 
 ### Changed
 - update kubernetes to 1.12.3 (CVE-2018-1002105)
 
-## [v3.6.4]
+## [3.6.4]
 
 ### Changed
 - Update `libreadline` version
 
-## [v3.6.3]
+## [3.6.3]
 - update kubernetes to 1.11.5 (CVE-2018-1002105)
 
 ### Changed
 - update kubernetes to 1.10.11 (CVE-2018-1002105)
 
-## [v3.5.3]
+## [3.5.3]
 
 ### Changed
 - Update `libreadline` version
 
-## [v3.5.2]
+## [3.5.2]
 
 ### Changed
 
-## [v3.7.2]
+## [3.7.2]
 
 ### Changed
 - Remove the old master from the k8s api before upgrading calico (k8s-addons)
 - Wait until etcd DNS is resolvable before upgrading calico. Networking pods crashlooping isn't fun!
 
-## [v3.7.1]
+## [3.7.1]
 
 ### Changed
 - The pod priority class for calico got lost. We found it again!
 - kube-proxy is now installed before calico during cluster creation and upgrades.
 
-## [v3.7.0]
+## [3.7.0]
 
 ### Changed
 - Updated Kubernetes to 1.12.2
@@ -435,19 +436,19 @@ duration can be used in AWS China regions to mitigate slow image pulls.
 - Remove readonly port from kubelet
 - Add DBUS socket and ClusterCIDR to kube-proxy
 
-## [v3.6.2]
+## [3.6.2]
 
 ### Changed
 - Updated Calico to 3.2.3
 - Updated Calico manifest with resource limits to get QoS policy guaranteed.
 - Enabled admission plugins: DefaultTolerationSeconds, MutatingAdmissionWebhook, ValidatingAdmissionWebhook.
 
-## [v3.6.1]
+## [3.6.1]
 
 ### Changed
 - Use patched GiantSwarm build of Kubernetes (`hyperkube:v1.11.1-cec4fb8023db783fbf26fb056bf6c76abfcd96cf-giantswarm`).
 
-## [v3.6.0]
+## [3.6.0]
 
 ### Added
 - Added template flag for removing CoreDNS resources (will be managed by
@@ -460,10 +461,10 @@ chart-operator).
 ### Removed
 
 
-## [v3.5.1]
+## [3.5.1]
 
 
-## [v3.5.0]
+## [3.5.0]
 
 ### Changed
 - Disabled HSTS headers in nginx-ingress-controller.
@@ -472,7 +473,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.4.0]
+## [3.4.0]
 
 ### Added
 - Added SSO public key into ssh trusted CA.
@@ -490,7 +491,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.3.4]
+## [3.3.4]
 
 ### Changed
 - Added parameter for disabling Ingress Controller related components.
@@ -499,7 +500,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.3.3]
+## [3.3.3]
 
 ### Changed
 
@@ -509,7 +510,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.3.2]
+## [3.3.2]
 
 ### Changed
 - Updated hyperkube to version 1.10.2 due to regression in 1.10.3 with configmaps.
@@ -517,7 +518,7 @@ chart-operator).
 ### Removed
 - Removed node-exporter related components (will be managed by chart-operator).
 
-## [v3.3.1]
+## [3.3.1]
 
 ### Changed
 - Changed some remaining images to be pulled from Giant Swarm's registry.
@@ -528,7 +529,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.3.0]
+## [3.3.0]
 
 ### Changed
 - Updated hyperkube to version 1.10.2.
@@ -538,7 +539,7 @@ chart-operator).
 chart-operator).
 
 
-## [v3.2.6]
+## [3.2.6]
 
 ### Changed
 - Changed node-exporter to have named ports.
@@ -549,7 +550,7 @@ chart-operator).
 ### Removed
 
 
-## [v3.2.5]
+## [3.2.5]
 
 ### Changed
 - Updated kube-state-metrics to version 1.3.1.
@@ -570,7 +571,7 @@ chart-operator).
 - Removed calico-ipip-pinger.
 
 
-## [v3.2.4]
+## [3.2.4]
 
 ### Changed
 - Masked systemd-networkd-wait-online unit.
@@ -579,7 +580,7 @@ chart-operator).
 
 
 
-## [v3.2.3]
+## [3.2.3]
 
 ### Changed
 - Updated Kubernetes with version 1.9.5.
@@ -590,14 +591,14 @@ chart-operator).
 
 
 
-## [v3.2.2]
+## [3.2.2]
 
 ### Removed
 - Removed set-ownership-etcd-data-dir.service.
 
 
 
-## [v3.2.1]
+## [3.2.1]
 
 ### Added
 - Added priority classes core-components, critical-pods and important pods.
@@ -607,7 +608,7 @@ chart-operator).
 - Enabled aggregation layer in Kubernetes API server.
 - Ordered Kubernetes cluster components scheduling process by assigning PriorityClass to pods.
 
-## [v3.1.1]
+## [3.1.1]
 
 ### Added
 - Added calico-ipip-pinger.
@@ -622,13 +623,13 @@ chart-operator).
 - Updated nginx-ingress-controller to 0.11.0.
 - Updated coredns to 1.0.6.
 
-## [v3.1.0]
+## [3.1.0]
 
 ### Changed
 - Systemd units for Kubernetes components (api-server, scheduler and controller-manager)
   replaced with self-hosted pods.
 
-## [v3.0.0]
+## [3.0.0]
 
 ### Added
 - Add encryption config template for API etcd data encryption experimental
@@ -654,17 +655,17 @@ chart-operator).
 - Remove calico-ipip-pinger.
 - Remove calico-node-controller.
 
-## [v2.0.2]
+## [2.0.2]
 
 ### Added
 - Add fix for scaled workers to ensure they have a kube-proxy.
 
-## [v2.0.1]
+## [2.0.1]
 
 ### Changed
 - Fix audit logging.
 
-## [v2.0.0]
+## [2.0.0]
 
 ### Added
 - Disable API etcd data encryption experimental feature.
@@ -676,83 +677,91 @@ chart-operator).
 - Removed calico-ipip-pinger.
 - Removed calico-node-controller.
 
-## [v1.1.0]
+## [1.1.0]
 
 ### Added
 - Use Cluster type from https://github.com/giantswarm/apiextensions.
 
-## [v1.0.0]
+## [1.0.0]
 
 ### Removed
 - Disable API etcd data encryption experimental feature.
 
-## [v0.1.0]
+## [0.1.0]
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...HEAD
+[6.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...v6.4.0
 [6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
-[v6.2.6]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...v6.2.6
-[v6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.4...v6.2.5
-[v6.2.4]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...v6.2.4
-[v6.2.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...v6.2.3
-[v6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
-[v6.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
-[v6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
-[v6.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...v6.1.1
-[v6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
-[v6.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...v6.0.3
-[v6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
-[v6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
-[v6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
-[v5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
-[v5.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
-[v5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_0
-[v5.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_0_0
-[v4.9.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_1
-[v4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
-[v4.8.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_1
-[v4.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_0
-[v4.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_7_0
-[v4.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_6_0
-[v4.5.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_1
-[v4.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_0
-[v4.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_4_0
-[v4.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_3_0
-[v4.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_2_0
-[v4.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_1_0
-[v4.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_0
-[v3.7.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_4
-[v3.7.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_3
-[v3.6.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_4
-[v3.6.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_3
-[v3.5.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_2
-[v3.7.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_2
-[v3.7.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_1
-[v3.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_0
-[v3.6.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_2
-[v3.6.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_1
-[v3.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_0
-[v3.5.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_3
-[v3.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_0
-[v3.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_4_0
-[v3.3.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_4
-[v3.3.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_3
-[v3.3.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_2
-[v3.3.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_1
-[v3.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_0
-[v3.2.6]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_6
-[v3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
-[v3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
-[v3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
-[v3.2.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_2
-[v3.2.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_1
-[v3.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_1
-[v3.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_0
-[v3.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_0_0
-[v2.0.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_2
-[v2.0.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_1
-[v2.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v2
-[v1.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1_1
-[v1.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1
-[v0.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_0_1_0
+[6.2.6]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...v6.2.6
+[6.2.5]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.4...v6.2.5
+[6.2.4]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.3...v6.2.4
+[6.2.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.2...v6.2.3
+[6.2.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.1...v6.2.2
+[6.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.0...v6.2.1
+[6.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.1...v6.2.0
+[6.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.1.0...v6.1.1
+[6.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.3...v6.1.0
+[6.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.2...v6.0.3
+[6.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.1...v6.0.2
+[6.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v6.0.0...v6.0.1
+[6.0.0]: https://github.com/giantswarm/k8scloudconfig/releases/tag/v6.0.0
+[5.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_2_0
+[5.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_1
+[5.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_1_0
+[5.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_5_0_0
+[4.9.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_2
+[4.9.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_1
+[4.9.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_9_0
+[4.8.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_1
+[4.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_8_0
+[4.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_7_0
+[4.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_6_0
+[4.5.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_1
+[4.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_5_0
+[4.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_4_0
+[4.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_3_0
+[4.2.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_2_0
+[4.1.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_1_2
+[4.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_1_1
+[4.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_1_0
+[4.0.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_1
+[4.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_4_0_0
+[3.8.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_8_0
+[3.7.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_5
+[3.7.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_4
+[3.7.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_3
+[3.6.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_4
+[3.6.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_3
+[3.5.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_2
+[3.7.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_2
+[3.7.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_1
+[3.7.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_7_0
+[3.6.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_2
+[3.6.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_1
+[3.6.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_6_0
+[3.5.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_3
+[3.5.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_1
+[3.5.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_5_0
+[3.4.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_4_0
+[3.3.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_4
+[3.3.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_3
+[3.3.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_2
+[3.3.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_1
+[3.3.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_3_0
+[3.2.6]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_6
+[3.2.5]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_5
+[3.2.4]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_4
+[3.2.3]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_3
+[3.2.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_2
+[3.2.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_2_1
+[3.1.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_1
+[3.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_1_0
+[3.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_3_0_0
+[2.0.2]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_2
+[2.0.1]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_2_0_1
+[2.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v2
+[1.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1_1
+[1.0.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v1
+[0.1.0]: https://github.com/giantswarm/k8scloudconfig/commits/master/v_0_1_0
