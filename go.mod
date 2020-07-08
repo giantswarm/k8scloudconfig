@@ -5,6 +5,7 @@ go 1.13
 require (
 	github.com/Masterminds/semver/v3 v3.1.0
 	github.com/giantswarm/apiextensions v0.3.4
+	github.com/giantswarm/k8scloudconfig/v6 v6.4.0
 	github.com/giantswarm/microerror v0.2.0
 	github.com/stretchr/testify v1.5.0
 	sigs.k8s.io/yaml v1.2.0
