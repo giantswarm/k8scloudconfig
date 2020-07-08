@@ -7,12 +7,21 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.0.0] - 2020-07-07
+
+### Added
+
+- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
+
+### Changed
+
+- Fail if all images do not have the same registry.
+
 ## [6.4.0] - 2020-07-06
 
 ### Added
 
 - Add back registry domain configuration.
-- Add `Params.RegistryMirrors` allowing to configure docker registry mirrors.
 
 ### Changed
 
@@ -20,7 +29,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Delete kube-proxy and Calico DaemonSets/Deployments with `--cascade=false`
   when upgrading from clusters using k8scloudconfig v6.0.3/v6.1.0 so that
   upgrades can continue without manual intervention.
-- Fail if all images do not have the same registry.
 
 ### Removed
 
@@ -691,7 +699,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...HEAD
+[7.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...v7.0.0
 [6.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...v6.4.0
 [6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
 [6.2.6]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.5...v6.2.6
