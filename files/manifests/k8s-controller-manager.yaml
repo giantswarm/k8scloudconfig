@@ -10,6 +10,11 @@ metadata:
     tier: control-plane
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
+    prometheus.io/scrape: "true"
+    prometheus.io/port: "10251"
+    giantswarm.io/monitoring: "true"
+    giantswarm.io/monitoring-path: "/metrics"
+    giantswarm.io/monitoring-port: "10251"
 spec:
   hostNetwork: true
   priorityClassName: system-node-critical

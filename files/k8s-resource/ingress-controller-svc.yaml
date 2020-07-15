@@ -4,6 +4,9 @@ metadata:
   annotations:
     prometheus.io/port: "10254"
     prometheus.io/scrape: "true"
+    giantswarm.io/monitoring: "true"
+    giantswarm.io/monitoring-path: "/metrics"
+    giantswarm.io/monitoring-port: "10254"
   name: nginx-ingress-controller
   namespace: kube-system
   labels:

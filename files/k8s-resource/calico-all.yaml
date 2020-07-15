@@ -309,6 +309,11 @@ spec:
         # priority scheduling and that its resources are reserved
         # if it ever gets evicted.
         scheduler.alpha.kubernetes.io/critical-pod: ''
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        giantswarm.io/monitoring: "true"
+        giantswarm.io/monitoring-path: "/metrics"
+        giantswarm.io/monitoring-port: "9091"
     spec:
       nodeSelector:
         kubernetes.io/os: linux
