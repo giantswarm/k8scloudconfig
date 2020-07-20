@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.0.1] - 2020-07-20
+
 ### Changed
 
 - Changed wrong v6 reference to use the latest v7 module.
@@ -703,7 +705,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.1...HEAD
+[7.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...v7.0.0
 [6.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...v6.4.0
 [6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
