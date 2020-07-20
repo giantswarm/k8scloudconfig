@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Changed wrong v6 reference to use the latest v7 module.
+
 ## [7.0.0] - 2020-07-07
 
 ### Added
