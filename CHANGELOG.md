@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+### Removed
+- Removed PV node limits for AWS as the feature gate is no longer supported in 1.17+.
 
 ## [7.0.1] - 2020-07-20
 
