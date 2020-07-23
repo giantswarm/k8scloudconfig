@@ -9,9 +9,9 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [7.0.3] - 2020-07-23
 
-### Changed
+### Fixed
 
-- Change etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
+- Set etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
 
 ## [7.0.2] - 2020-07-22
 ### Removed
