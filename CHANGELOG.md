@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Change etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
+
 ## [7.0.2] - 2020-07-22
 ### Removed
 - Removed PV node limits for AWS as the feature gate is no longer supported in 1.17+.
