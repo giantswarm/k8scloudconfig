@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.0.3] - 2020-07-23
+
 ### Changed
 
 - Change etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
@@ -713,7 +715,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...HEAD
+[7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.1...v7.0.2
 [7.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...v7.0.0
