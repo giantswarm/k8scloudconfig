@@ -7,6 +7,22 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.0.3] - 2020-07-23
+
+### Fixed
+
+- Set etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
+
+## [7.0.2] - 2020-07-22
+### Removed
+- Removed PV node limits for AWS as the feature gate is no longer supported in 1.17+.
+
+## [7.0.1] - 2020-07-20
+
+### Changed
+
+- Changed wrong v6 reference to use the latest v7 module.
+
 ## [7.0.0] - 2020-07-07
 
 ### Added
@@ -699,7 +715,10 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...HEAD
+[7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3
+[7.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.1...v7.0.2
+[7.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...v7.0.1
 [7.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.4.0...v7.0.0
 [6.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.3.0...v6.4.0
 [6.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v6.2.6...v6.3.0
