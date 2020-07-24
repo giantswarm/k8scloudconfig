@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+- Adjust MAX_PODS for master and worker nodes to max IP's per ENI when using aws-cni
+
 ## [7.0.3] - 2020-07-23
 
 ### Fixed
