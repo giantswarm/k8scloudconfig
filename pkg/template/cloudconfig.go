@@ -44,8 +44,9 @@ func DefaultParams() Params {
 			InitialClusterState: InitialClusterStateNew,
 		},
 		Versions: Versions{
-			Calico:     "1.0.0",
-			CRITools:   "1.0.0",
+			Calico:     "v3.14.0",
+			CRITools:   "v1.0.0",
+			Etcd:       "v3.4.9",
 			Kubernetes: "v1.16.10",
 		},
 	}
