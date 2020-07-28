@@ -26,7 +26,7 @@ else
   hostnetwork_pods=5
 fi
 
-# Formula for max amount of pods in AWS CNI is (enis-1)*(ips_eni-1)+host_network_pods
+# Formula for max amount of pods in AWS CNI is (enis-$reserved_enis)*(ips_eni-1)+$host_network_pods
 # As host network pods reuse the ip of the node, it doesn't count against the AWS CNI quota.
 
 case $instance_type in
