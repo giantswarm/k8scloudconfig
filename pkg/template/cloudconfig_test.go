@@ -10,40 +10,43 @@ import (
 
 func TestCloudConfig(t *testing.T) {
 	tests := []struct {
-		name             string
-		template         string
-		params           Params
-		customEtcdPort   int
-		expectedEtcdPort int
+		name     string
+		template string
+		params   Params
 	}{
 		{
-			name:             "master",
-			template:         MasterTemplate,
-			params:           DefaultParams(),
-			expectedEtcdPort: 443,
+			name:     "master",
+			template: MasterTemplate,
+			params: Params{
+				Etcd: Etcd{
+					ClientPort: 443,
+				},
+			},
 		},
 		{
-			name:             "worker",
-			template:         WorkerTemplate,
-			params:           DefaultParams(),
-			expectedEtcdPort: 443,
+			name:     "worker",
+			template: WorkerTemplate,
+			params: Params{
+				Etcd: Etcd{
+					ClientPort: 443,
+				},
+			},
 		},
 		{
-			name:             "worker",
-			template:         WorkerTemplate,
-			params:           DefaultParams(),
-			customEtcdPort:   2379,
-			expectedEtcdPort: 2379,
+			name:     "worker",
+			template: WorkerTemplate,
+			params: Params{
+				Etcd: Etcd{
+					ClientPort: 2379,
+				},
+			},
 		},
 	}
 
 	for _, tc := range tests {
-		c := DefaultCloudConfigConfig()
-
-		tc.params.Extension = nopExtension{}
-
-		if tc.customEtcdPort != 0 {
-			tc.params.Etcd.ClientPort = tc.customEtcdPort
+		c := CloudConfigConfig{
+			Params:   tc.params,
+			Template: "",
 		}
 
 		packagePath, err := GetPackagePath()
@@ -55,8 +58,17 @@ func TestCloudConfig(t *testing.T) {
 		if err != nil {
 			t.Errorf("failed to render ignition files, %v:", err)
 		}
+		tc.params.Extension = nopExtension{}
 		tc.params.Files = files
-		tc.params.Images = BuildImages("docker.io", Versions{})
+		tc.params.Versions = Versions{
+			Calico:                       "3.14.1",
+			CRITools:                     "1.17.0",
+			Etcd:                         "3.4.9",
+			Kubernetes:                   "1.17.7",
+			KubernetesAPIHealthz:         "0.1.1",
+			KubernetesNetworkSetupDocker: "0.2.0",
+		}
+		tc.params.Images = BuildImages("docker.io", tc.params.Versions)
 
 		c.Params = tc.params
 		c.Template = tc.template
@@ -66,9 +78,6 @@ func TestCloudConfig(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		if cloudConfig.params.Etcd.ClientPort != tc.expectedEtcdPort {
-			t.Errorf("expected etcd port %q, got %q", tc.expectedEtcdPort, cloudConfig.params.Etcd.ClientPort)
-		}
 		if err := cloudConfig.ExecuteTemplate(); err != nil {
 			t.Fatal(err)
 		}

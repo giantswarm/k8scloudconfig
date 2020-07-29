@@ -1,19 +1,37 @@
 package template
 
 import (
+	"errors"
+	"reflect"
+	"strconv"
 	"testing"
+
+	"github.com/Masterminds/semver/v3"
 )
 
-const (
-	kubernetesVersionGood = "1.17.6"
-	kubernetesVersionBad  = "1.20.0"
+var releaseVersionsAWS_11_5_0 = Versions{
+	Calico:                       "3.10.4",
+	CRITools:                     "1.16.0",
+	Etcd:                         "3.4.9",
+	Kubernetes:                   "1.16.13",
+	KubernetesAPIHealthz:         "0.1.1",
+	KubernetesNetworkSetupDocker: "0.2.0",
+}
 
-	calicoVersionGood = "3.14.1"
-	calicoVersionBad  = "3.15.0"
-
-	etcdVersionGood = "3.4.9"
-	etcdVersionBad  = "3.3.17"
-)
+func editVersions(versions Versions, fieldName string, version string) Versions {
+	entityType := reflect.TypeOf(versions)
+	for i := 0; i < entityType.NumField(); i++ {
+		structField := entityType.Field(i)
+		if fieldName != structField.Name {
+			continue
+		}
+		field := reflect.ValueOf(&versions).Elem().Field(i)
+		if field.CanSet() {
+			field.SetString(version)
+		}
+	}
+	return versions
+}
 
 func Test_Params_Validation(t *testing.T) {
 	nilErrorMatcher := func(t *testing.T, err error) {
@@ -26,6 +44,11 @@ func Test_Params_Validation(t *testing.T) {
 			t.Fatal(err)
 		}
 	}
+	invalidVersionMatcher := func(t *testing.T, err error) {
+		if !errors.Is(err, semver.ErrInvalidSemVer) {
+			t.Fatal(err)
+		}
+	}
 	testCases := []struct {
 		errorMatcher func(t *testing.T, err error)
 		name         string
@@ -33,32 +56,24 @@ func Test_Params_Validation(t *testing.T) {
 	}{
 		{
 			errorMatcher: nilErrorMatcher,
-			name:         "case 0: normal versions are valid",
-			versions: Versions{
-				Calico:                       calicoVersionGood,
-				CRITools:                     "",
-				Etcd:                         etcdVersionGood,
-				Kubernetes:                   kubernetesVersionGood,
-				KubernetesAPIHealthz:         "",
-				KubernetesNetworkSetupDocker: "",
-			},
+			name:         "case 0: aws release 11.5.0 versions are valid",
+			versions:     releaseVersionsAWS_11_5_0,
+		},
+		{
+			errorMatcher: invalidVersionMatcher,
+			name:         "case 1: empty kubernetes version is invalid",
+			versions:     editVersions(releaseVersionsAWS_11_5_0, "Kubernetes", ""),
 		},
 		{
 			errorMatcher: invalidConfigErrorMatcher,
-			name:         "case 1: unsupported versions are invalid",
-			versions: Versions{
-				Calico:                       calicoVersionBad,
-				CRITools:                     "",
-				Etcd:                         etcdVersionBad,
-				Kubernetes:                   kubernetesVersionBad,
-				KubernetesAPIHealthz:         "",
-				KubernetesNetworkSetupDocker: "",
-			},
+			name:         "case 2: old kubernetes version is invalid",
+			versions:     editVersions(releaseVersionsAWS_11_5_0, "Kubernetes", "1.15.0"),
 		},
 	}
 
-	for _, tc := range testCases {
-		t.Run(tc.name, func(t *testing.T) {
+	for i, tc := range testCases {
+		t.Run(strconv.Itoa(i), func(t *testing.T) {
+			t.Log(tc.name)
 			params := Params{
 				Images:   BuildImages("quay.io", tc.versions),
 				Versions: tc.versions,

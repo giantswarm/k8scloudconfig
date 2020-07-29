@@ -28,30 +28,6 @@ type CloudConfigConfig struct {
 	Template string
 }
 
-func DefaultCloudConfigConfig() CloudConfigConfig {
-	return CloudConfigConfig{
-		Params:   Params{},
-		Template: "",
-	}
-}
-
-func DefaultParams() Params {
-	return Params{
-		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
-		Etcd: Etcd{
-			ClientPort:          etcdPort,
-			HighAvailability:    false,
-			InitialClusterState: InitialClusterStateNew,
-		},
-		Versions: Versions{
-			Calico:     "v3.14.0",
-			CRITools:   "v1.0.0",
-			Etcd:       "v3.4.9",
-			Kubernetes: "v1.16.10",
-		},
-	}
-}
-
 type CloudConfig struct {
 	config   string
 	params   Params
