@@ -90,7 +90,7 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      ExecStart=/opt/bin/setup-kubelet-environment
+      ExecStart=/opt/bin/setup-kubelet-environment worker
       [Install]
       WantedBy=multi-user.target
   - name: k8s-setup-kubelet-config.service
