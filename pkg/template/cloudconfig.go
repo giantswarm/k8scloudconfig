@@ -16,9 +16,6 @@ import (
 )
 
 const (
-	defaultImagePullProgressDeadline = "1m"
-	etcdPort                         = 443
-
 	InitialClusterStateNew      = "new"
 	InitialClusterStateExisting = "existing"
 )
