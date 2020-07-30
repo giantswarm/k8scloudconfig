@@ -60,14 +60,7 @@ func TestCloudConfig(t *testing.T) {
 		}
 		tc.params.Extension = nopExtension{}
 		tc.params.Files = files
-		tc.params.Versions = Versions{
-			Calico:                       "3.14.1",
-			CRITools:                     "1.17.0",
-			Etcd:                         "3.4.9",
-			Kubernetes:                   "1.17.7",
-			KubernetesAPIHealthz:         "0.1.1",
-			KubernetesNetworkSetupDocker: "0.2.0",
-		}
+		tc.params.Versions = releaseVersionsAWS1150
 		tc.params.Images = BuildImages("docker.io", tc.params.Versions)
 
 		c.Params = tc.params

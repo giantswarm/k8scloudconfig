@@ -11,7 +11,7 @@ import (
 
 var releaseVersionsAWS1150 = Versions{
 	Calico:                       "3.10.4",
-	CRITools:                     "1.16.0",
+	CRITools:                     "1.16.1",
 	Etcd:                         "3.4.9",
 	Kubernetes:                   "1.16.13",
 	KubernetesAPIHealthz:         "0.1.1",
