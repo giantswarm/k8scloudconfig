@@ -23,7 +23,7 @@ else
   # 1 ENI for the node
   reserved_eni=1
   # Only counting daemonsets, as they are mandatory in all nodes
-  hostnetwork_pods=5
+  hostnetwork_pods=6
 fi
 
 # Formula for max amount of pods in AWS CNI is (enis-$reserved_enis)*(ips_eni-1)+$host_network_pods

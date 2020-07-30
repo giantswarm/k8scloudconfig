@@ -17,6 +17,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Removed `DefaultParams` and `DefaultCloudConfigConfig` functions from the `template` package. Defaults should be 
   established by the consumer of the library instead. 
 
+## [7.0.5] - 2020-07-30
+
+### Changed
+
+- Adjusted number of host network pods on worker node for aws-cni.
+
 ## [7.0.4] - 2020-07-29
 
 ### Changed
@@ -732,7 +738,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...HEAD
+[7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.1...v7.0.2
