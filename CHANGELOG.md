@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Adjust number of host network pods on worker node for aws-cni
+
 ## [7.0.4] - 2020-07-29
 
 - Adjust MAX_PODS for master and worker nodes to max IP's per ENI when using aws-cni
