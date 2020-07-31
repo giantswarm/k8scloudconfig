@@ -28,3 +28,12 @@ var retrieveRuntimeError = &microerror.Error{
 func IsRetrieveRuntimeError(err error) bool {
 	return microerror.Cause(err) == retrieveRuntimeError
 }
+
+var validationError = &microerror.Error{
+	Kind: "validationError",
+}
+
+// IsValidationError asserts validationError.
+func IsValidationError(err error) bool {
+	return microerror.Cause(err) == validationError
+}
