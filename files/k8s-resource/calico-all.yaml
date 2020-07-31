@@ -642,6 +642,7 @@ rules:
     - pods
     - namespaces
     - serviceaccounts
+    - configmaps
   verbs:
     - watch
     - list
