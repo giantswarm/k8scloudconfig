@@ -16,9 +16,6 @@ import (
 )
 
 const (
-	defaultImagePullProgressDeadline = "1m"
-	etcdPort                         = 443
-
 	InitialClusterStateNew      = "new"
 	InitialClusterStateExisting = "existing"
 )
@@ -26,29 +23,6 @@ const (
 type CloudConfigConfig struct {
 	Params   Params
 	Template string
-}
-
-func DefaultCloudConfigConfig() CloudConfigConfig {
-	return CloudConfigConfig{
-		Params:   Params{},
-		Template: "",
-	}
-}
-
-func DefaultParams() Params {
-	return Params{
-		ImagePullProgressDeadline: defaultImagePullProgressDeadline,
-		Etcd: Etcd{
-			ClientPort:          etcdPort,
-			HighAvailability:    false,
-			InitialClusterState: InitialClusterStateNew,
-		},
-		Versions: Versions{
-			Calico:     "1.0.0",
-			CRITools:   "1.0.0",
-			Kubernetes: "v1.16.10",
-		},
-	}
 }
 
 type CloudConfig struct {
