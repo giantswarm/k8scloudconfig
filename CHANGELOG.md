@@ -17,10 +17,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Added validation of versions in the cloud config Params struct. Versions outside of supported ranges will cause an
   error to be returned from cloud config-related functions.
+<<<<<<< HEAD
   
 ### Changed
 
 - Updated backward incompatible Kubernetes dependencies to v1.18.5.
+=======
+- Add monitoring annotations `prometheus.io/*` and `giantswarm.io/monitoring*` to kube-proxy, k8s-scheduler, k8s-controller-manager and calico.
+>>>>>>> 18c862e... add-missing-monitoring-annotation-to-changelog
 
 ### Removed
 
