@@ -8,11 +8,11 @@ metadata:
     giantswarm.io/service-type: system
     k8s-app: scheduler
     tier: control-plane
+    giantswarm.io/monitoring: "true"
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
     prometheus.io/scrape: "true"
     prometheus.io/port: "10251"
-    giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-path: "/metrics"
     giantswarm.io/monitoring-port: "10251"
 spec:

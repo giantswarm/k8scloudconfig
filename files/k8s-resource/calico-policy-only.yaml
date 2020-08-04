@@ -322,6 +322,7 @@ spec:
       labels:
         giantswarm.io/service-type: managed
         k8s-app: calico-node
+        giantswarm.io/monitoring: "true"
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
         # marks the pod as a critical add-on, ensuring it gets
@@ -330,7 +331,6 @@ spec:
         scheduler.alpha.kubernetes.io/critical-pod: ''
         prometheus.io/scrape: "true"
         prometheus.io/port: "9091"
-        giantswarm.io/monitoring: "true"
         giantswarm.io/monitoring-path: "/metrics"
         giantswarm.io/monitoring-port: "9091"
     spec:

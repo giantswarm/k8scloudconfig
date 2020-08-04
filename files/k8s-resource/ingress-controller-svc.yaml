@@ -4,7 +4,6 @@ metadata:
   annotations:
     prometheus.io/port: "10254"
     prometheus.io/scrape: "true"
-    giantswarm.io/monitoring: "true"
     giantswarm.io/monitoring-path: "/metrics"
     giantswarm.io/monitoring-port: "10254"
   name: nginx-ingress-controller
@@ -13,6 +12,7 @@ metadata:
     app.kubernetes.io/name: nginx-ingress-controller
     giantswarm.io/service-type: managed
     k8s-app: nginx-ingress-controller
+    giantswarm.io/monitoring: "true"
 spec:
   type: NodePort
   ports:
