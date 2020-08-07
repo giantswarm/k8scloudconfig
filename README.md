@@ -17,11 +17,9 @@ Examples:
 - "New field `DisableCalico` added to `Params` struct" is a major version upgrade.
 - "Kubelet configuration changed to prevent stuck in terminating state pods" is a patch version upgrade.
 
-## Branches
+## Component Versions
 
-- `legacy`
-    - All versions matching ~0.1.0.
-    - For dep-based operators.
-- `master`
-    - From version v6.0.0.
-    - For operators using go modules.
+Versions for core components such as Kubernetes are passed in to templates via `Params` at runtime. Certain versions
+require changes to templates to function correctly so versions are validated when generating the cloud config. If you
+see a validation error in operator logs, check `pkg/key/key.go` for the current version constraints and edit the
+component version or constraints (after testing/adjusting templates) as needed.

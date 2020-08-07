@@ -7,6 +7,28 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Added validation of versions in the cloud config Params struct. Versions outside of supported ranges will cause an
+  error to be returned from cloud config-related functions.
+
+### Removed
+
+- Removed `DefaultParams` and `DefaultCloudConfigConfig` functions from the `template` package. Defaults should be 
+  established by the consumer of the library instead. 
+
+## [7.0.5] - 2020-07-30
+
+### Changed
+
+- Adjusted number of host network pods on worker node for aws-cni.
+
+## [7.0.4] - 2020-07-29
+
+### Changed
+
+- Adjusted `MAX_PODS` for master and worker nodes to max IP's per ENI when using AWS CNI.
+
 ## [7.0.3] - 2020-07-23
 
 ### Fixed
@@ -14,6 +36,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Set etcd data dir permission to `0700` to comply with etcd 3.10.4 requirements.
 
 ## [7.0.2] - 2020-07-22
+
 ### Removed
 - Removed PV node limits for AWS as the feature gate is no longer supported in 1.17+.
 
@@ -715,7 +738,9 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...HEAD
+[7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
+[7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3
 [7.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.1...v7.0.2
 [7.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.0...v7.0.1
