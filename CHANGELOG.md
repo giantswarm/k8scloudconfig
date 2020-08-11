@@ -14,7 +14,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
   
 ### Changed
 
-- Update Kubernetes dependencies to v1.18.5.
+- Updated backward incompatible Kubernetes dependencies to v1.18.5.
 
 ### Removed
 
