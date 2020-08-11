@@ -11,6 +11,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Added validation of versions in the cloud config Params struct. Versions outside of supported ranges will cause an
   error to be returned from cloud config-related functions.
+  
+### Changed
+
+- Update Kubernetes dependencies to v1.18.5.
 
 ### Removed
 
