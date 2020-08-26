@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add monitoring annotations `prometheus.io/*` and `giantswarm.io/monitoring*` to kube-proxy, k8s-scheduler, k8s-controller-manager and calico.
+
 ## [8.0.0] - 2020-08-11
 
 ### Added
