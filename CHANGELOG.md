@@ -11,6 +11,10 @@ version directory, and  then changes are introduced.
 
 ## [Unreleased]
 
+### Removed
+
+- Remove memory and CPU limits from calico-kube-controllers.
+
 ## [v6.1.2] 2020-06-31
 
 ### Fixed
