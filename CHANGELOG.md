@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.1.0] - 2020-08-31
+
 ### Changed
 
 - Changed the path of the ETCD certificate files used in the etcdctl alias.
@@ -730,7 +732,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.1.0...HEAD
+[7.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v7.1.0
 [7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3
