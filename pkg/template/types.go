@@ -1,7 +1,7 @@
 package template
 
 import (
-	"github.com/giantswarm/apiextensions/v2/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
 )
 
 type Params struct {
