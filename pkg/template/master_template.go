@@ -178,6 +178,12 @@ systemd:
       Slice=kubereserved.slice
       Environment=IMAGE={{ .Images.Etcd }}
       Environment=NAME=%p.service
+      Environment=ETCD_NAME={{ .Etcd.NodeName }}
+      Environment=ETCD_INITIAL_CLUSTER={{ .Etcd.InitialCluster }}
+      Environment=ETCD_INITIAL_CLUSTER_STATE={{ .Etcd.InitialClusterState }}
+      Environment=ETCD_PEER_CA_PATH=/etc/etcd/server-ca.pem
+      Environment=ETCD_PEER_CERT_PATH=/etc/etcd/server-crt.pem
+      Environment=ETCD_PEER_KEY_PATH=/etc/etcd/server-key.pem
       EnvironmentFile=/etc/network-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
       ExecStartPre=-/usr/bin/docker rm  $NAME
@@ -194,22 +200,22 @@ systemd:
           --name $NAME \
           $IMAGE \
           etcd \
-          --name {{ .Etcd.NodeName }} \
+          --name ${ETCD_NAME} \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
           --client-cert-auth=true \
-          --peer-trusted-ca-file /etc/etcd/server-ca.pem \
-          --peer-cert-file /etc/etcd/server-crt.pem \
-          --peer-key-file /etc/etcd/server-key.pem \
+          --peer-trusted-ca-file ${ETCD_PEER_CA_PATH} \
+          --peer-cert-file ${ETCD_PEER_CERT_PATH} \
+          --peer-key-file ${ETCD_PEER_KEY_PATH} \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
-          --initial-advertise-peer-urls=https://{{ .Etcd.NodeName }}.{{ .BaseDomain }}:2380 \
+          --initial-advertise-peer-urls=https://${ETCD_NAME}.{{ .BaseDomain }}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
-          --initial-cluster {{ .Etcd.InitialCluster }} \
-          --initial-cluster-state {{ .Etcd.InitialClusterState }} \
+          --initial-cluster ${ETCD_INITIAL_CLUSTER} \
+          --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \

@@ -14,6 +14,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Changed the path of the ETCD certificate files used in the etcdctl alias.
+- Exposed some of the etcd3.service systemd unit settings via environment variables to make customizations in the configuration easier. 
 
 ## [8.0.0] - 2020-08-11
 
