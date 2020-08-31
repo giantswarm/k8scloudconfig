@@ -2,6 +2,7 @@ package template
 
 import (
 	"github.com/giantswarm/apiextensions/pkg/apis/provider/v1alpha1"
+	"github.com/giantswarm/microerror"
 )
 
 type Params struct {
@@ -50,6 +51,14 @@ type Params struct {
 	RegistryMirrors []string
 	SSOPublicKey    string
 	Versions        Versions
+}
+
+func (p *Params) Validate() error {
+	if err := validateImagesRegsitry(p.Images, p.RegistryMirrors); err != nil {
+		return microerror.Mask(err)
+	}
+
+	return nil
 }
 
 type Versions struct {
