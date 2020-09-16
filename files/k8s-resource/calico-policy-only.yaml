@@ -388,6 +388,7 @@ spec:
           securityContext:
             privileged: true
 {{ end -}}
+
       containers:
         # Runs calico-node container on each Kubernetes node.  This
         # container programs network policy and routes on each
