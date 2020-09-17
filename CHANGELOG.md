@@ -7,12 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+- Prevent calico from installing CNI binaries if AWS CNI is enabled
+
 ## [7.1.0] - 2020-08-31
 
 ### Changed
 
 - Changed the path of the ETCD certificate files used in the etcdctl alias.
-- Exposed some of the etcd3.service systemd unit settings via environment variables to make customizations in the configuration easier. 
+- Exposed some of the etcd3.service systemd unit settings via environment variables to make customizations in the configuration easier.
 
 ## [7.0.5] - 2020-07-30
 

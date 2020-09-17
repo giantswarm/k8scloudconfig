@@ -322,12 +322,17 @@ spec:
       labels:
         giantswarm.io/service-type: managed
         k8s-app: calico-node
+        giantswarm.io/monitoring: "true"
       annotations:
         # This, along with the CriticalAddonsOnly toleration below,
         # marks the pod as a critical add-on, ensuring it gets
         # priority scheduling and that its resources are reserved
         # if it ever gets evicted.
         scheduler.alpha.kubernetes.io/critical-pod: ''
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "9091"
+        giantswarm.io/monitoring-path: "/metrics"
+        giantswarm.io/monitoring-port: "9091"
     spec:
       nodeSelector:
         kubernetes.io/os: linux
@@ -346,6 +351,7 @@ spec:
       # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
       terminationGracePeriodSeconds: 0
       priorityClassName: system-node-critical
+      {{ if not .EnableAWSCNI -}}
       initContainers:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
@@ -381,6 +387,7 @@ spec:
               name: cni-net-dir
           securityContext:
             privileged: true
+      {{ end -}}
       containers:
         # Runs calico-node container on each Kubernetes node.  This
         # container programs network policy and routes on each
