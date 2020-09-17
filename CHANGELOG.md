@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.0.1] - 2020-09-17
+
 ### Removed
 
 - When calico is used only for Network Policies it will not install the CNI binaries. The CNI in each provider will take care of installing the required binaries.
@@ -757,7 +759,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...HEAD
+[8.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...v8.0.1
 [8.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v8.0.0
 [7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
