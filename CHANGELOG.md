@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [7.1.0] - 2020-09-17
+
 - Prevent calico from installing CNI binaries if AWS CNI is enabled
 - Enables metric scraping in calico
 
@@ -736,6 +738,7 @@ chart-operator).
 
 
 [Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.1.0...HEAD
+[7.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.1.0...v7.1.0
 [7.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v7.1.0
 [7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
