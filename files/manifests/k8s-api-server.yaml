@@ -26,9 +26,9 @@ spec:
     {{ range .Kubernetes.Apiserver.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
-    {{- if .Etcd.HighAvailability }}
+    {{- if .Etcd.HighAvailability -}}
     - --apiserver-count=3
-    {{- end }}
+    {{ end -}}
     - --allow-privileged=true
     - --anonymous-auth=false
     - --insecure-port=0
