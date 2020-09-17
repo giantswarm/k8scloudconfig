@@ -351,6 +351,7 @@ spec:
       # deletion": https://kubernetes.io/docs/concepts/workloads/pods/pod/#termination-of-pods.
       terminationGracePeriodSeconds: 0
       priorityClassName: system-node-critical
+      {{ if not .EnableAWSCNI -}}
       initContainers:
         # This container installs the CNI binaries
         # and CNI network config file on each node.
@@ -386,6 +387,7 @@ spec:
               name: cni-net-dir
           securityContext:
             privileged: true
+      {{ end -}}
       containers:
         # Runs calico-node container on each Kubernetes node.  This
         # container programs network policy and routes on each
