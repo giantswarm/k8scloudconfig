@@ -8,6 +8,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ## [Unreleased]
 
 - Prevent calico from installing CNI binaries if AWS CNI is enabled
+- Enables metric scraping in calico
 
 ## [7.1.0] - 2020-08-31
 
