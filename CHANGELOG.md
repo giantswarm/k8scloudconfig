@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Removed extra line break when setting k8s api server arguments.
+
 ## [8.0.1] - 2020-09-17
 
 ### Removed
