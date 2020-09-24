@@ -22,9 +22,9 @@ data:
 
   # If you're using TLS enabled etcd uncomment the following.
   # You must also populate the Secret below with these files.
-  etcd_ca: "/calico-secrets/client-ca.pem"
-  etcd_cert: "/calico-secrets/client-crt.pem"
-  etcd_key: "/calico-secrets/client-key.pem"
+  etcd_ca: "/calico-secrets/etcd-ca"
+  etcd_cert: "/calico-secrets/etcd-cert"
+  etcd_key: "/calico-secrets/etcd-key"
   # Typha is disabled.
   typha_service_name: "none"
   # Configure the backend to use.
