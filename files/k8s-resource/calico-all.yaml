@@ -519,7 +519,7 @@ spec:
         # See https://kubernetes.io/docs/concepts/configuration/secret/
         - name: etcd-certs
           hostPath:
-            path: /etc/kubernetes/ssl/etcd
+            path: /etc/kubernetes/ssl/calico
 ---
 
 apiVersion: v1
@@ -622,7 +622,7 @@ spec:
         # See https://kubernetes.io/docs/concepts/configuration/secret/
         - name: etcd-certs
           hostPath:
-            path: /etc/kubernetes/ssl/etcd
+            path: /etc/kubernetes/ssl/calico
 
 ---
 
