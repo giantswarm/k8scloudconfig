@@ -11,6 +11,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Removed extra line break when setting k8s api server arguments.
 
+### Changed
+
+- Allow parallel download of images in kubelet templates
+
 ## [8.0.1] - 2020-09-17
 
 ### Removed
