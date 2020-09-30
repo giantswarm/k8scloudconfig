@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.0.2] - 2020-09-30
+
 ### Fixed
 
 - Removed extra line break when setting k8s api server arguments.
@@ -767,7 +769,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...HEAD
+[8.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...v8.0.2
 [8.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...v8.0.1
 [8.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v8.0.0
 [7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
