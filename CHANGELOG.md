@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Allow parallel download of images in kubelet templates
+
 ## [7.1.1] - 2020-09-21
 
 - Prevent calico from installing CNI binaries if AWS CNI is enabled
