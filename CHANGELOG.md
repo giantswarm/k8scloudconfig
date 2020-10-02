@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add timer to run `k8s-label-node.service` every hour to ensure core labels are present.
+
 ## [8.0.2] - 2020-09-30
 
 ### Fixed
