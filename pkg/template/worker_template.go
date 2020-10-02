@@ -230,6 +230,15 @@ systemd:
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=worker'
       [Install]
       WantedBy=multi-user.target
+  - name: k8s-label-node.timer
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Execute k8s-label-node every hour
+      [Timer]
+      OnCalendar=*-*-* *:00:00
+      [Install]
+      WantedBy=multi-user.target
   - name: etcd2.service
     enabled: false
     mask: true
