@@ -355,7 +355,6 @@ systemd:
       Wants=k8s-kubelet.service
       [Service]
       Type=oneshot
-      RemainAfterExit=yes
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
