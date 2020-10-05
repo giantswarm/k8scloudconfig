@@ -355,13 +355,21 @@ systemd:
       Wants=k8s-kubelet.service
       [Service]
       Type=oneshot
-      RemainAfterExit=yes
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
         while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=master'
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-label-node.timer
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Execute k8s-label-node every hour
+      [Timer]
+      OnCalendar=hourly
       [Install]
       WantedBy=multi-user.target
   - name: k8s-addons.service
