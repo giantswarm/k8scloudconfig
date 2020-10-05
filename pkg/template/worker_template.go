@@ -236,7 +236,7 @@ systemd:
       [Unit]
       Description=Execute k8s-label-node every hour
       [Timer]
-      OnCalendar=*-*-* *:00:00
+      OnCalendar=hourly
       [Install]
       WantedBy=multi-user.target
   - name: etcd2.service
