@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.0.3] - 2020-10-05
+
 ### Added
 
 - Add timer to run `k8s-label-node.service` every hour to ensure core labels are present.
@@ -773,7 +775,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...HEAD
+[8.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...v8.0.3
 [8.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...v8.0.2
 [8.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...v8.0.1
 [8.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v8.0.0
