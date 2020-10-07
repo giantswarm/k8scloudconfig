@@ -162,70 +162,70 @@ systemd:
   - name: mariadb.service
     enabled: true
     contents: |
-			[Unit]
-			Description=mariadb
-			Wants=k8s-setup-network-env.service
-			After=k8s-setup-network-env.service
-			StartLimitIntervalSec=0
-			[Service]
-			Restart=always
-			RestartSec=0
-			TimeoutStopSec=10
-			LimitNOFILE=40000
-			CPUAccounting=true
-			MemoryAccounting=true
-			Slice=kubereserved.slice
-			Environment=IMAGE=mariadb:10.5.5
-			Environment=NAME=%p.service
-			EnvironmentFile=/etc/network-environment
-			ExecStartPre=-/usr/bin/docker stop  $NAME
-			ExecStartPre=-/usr/bin/docker rm  $NAME
-			ExecStartPre=-/usr/bin/docker pull $IMAGE
-			ExecStartPre=/bin/bash -c "chmod 0700 /var/lib/mariadb/"
-			ExecStartPre=/bin/bash -c "mkdir –m777 /var/run/mysqld"
-			ExecStartPre=/bin/bash -c "chown 999:render /var/run/mysqld/"
-			ExecStart=/usr/bin/docker run \
-			-v /etc/mariadb/conf.d:/etc/mysql/conf.d \
-			-v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
-			-v /etc/kubernetes/ssl/mariadb/:/etc/mariadb \
-			-v /var/lib/mariadb:/var/lib/mysql \
-			-v /var/run/mysqld:/var/run/mysqld \
-			-e MYSQL_RANDOM_ROOT_PASSWORD=1 \
-			-e MYSQL_DATABASE=kine \
-			--name $NAME \
-			$IMAGE
-			[Install]
-			WantedBy=multi-user.target
+            [Unit]
+            Description=mariadb
+            Wants=k8s-setup-network-env.service
+            After=k8s-setup-network-env.service
+            StartLimitIntervalSec=0
+            [Service]
+            Restart=always
+            RestartSec=0
+            TimeoutStopSec=10
+            LimitNOFILE=40000
+            CPUAccounting=true
+            MemoryAccounting=true
+            Slice=kubereserved.slice
+            Environment=IMAGE=mariadb:10.5.5
+            Environment=NAME=%p.service
+            EnvironmentFile=/etc/network-environment
+            ExecStartPre=-/usr/bin/docker stop  $NAME
+            ExecStartPre=-/usr/bin/docker rm  $NAME
+            ExecStartPre=-/usr/bin/docker pull $IMAGE
+            ExecStartPre=/bin/bash -c "chmod 0700 /var/lib/mariadb/"
+            ExecStartPre=/bin/bash -c "mkdir –m777 /var/run/mysqld"
+            ExecStartPre=/bin/bash -c "chown 999:render /var/run/mysqld/"
+            ExecStart=/usr/bin/docker run \
+            -v /etc/mariadb/conf.d:/etc/mysql/conf.d \
+            -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
+            -v /etc/kubernetes/ssl/mariadb/:/etc/mariadb \
+            -v /var/lib/mariadb:/var/lib/mysql \
+            -v /var/run/mysqld:/var/run/mysqld \
+            -e MYSQL_RANDOM_ROOT_PASSWORD=1 \
+            -e MYSQL_DATABASE=kine \
+            --name $NAME \
+            $IMAGE
+            [Install]
+            WantedBy=multi-user.target
   - name: etcd3.service
     enabled: true
     contents: |
-			[Unit]
-			Description=kine etcd shim
-			Wants=k8s-setup-network-env.service
-			After=k8s-setup-network-env.service
-			StartLimitIntervalSec=0
-			[Service]
-			Restart=always
-			RestartSec=0
-			TimeoutStopSec=10
-			LimitNOFILE=40000
-			CPUAccounting=true
-			MemoryAccounting=true
-			Slice=kubereserved.slice
-			Environment=IMAGE=quay.io/giantswarm/kine:0.4.0-142979458a46ef371cd9915e884aa5bd3d5417e9
-			Environment=NAME=%p.service
-			EnvironmentFile=/etc/network-environment
-			ExecStartPre=-/usr/bin/docker stop  $NAME
-			ExecStartPre=-/usr/bin/docker rm  $NAME
-			ExecStartPre=-/usr/bin/docker pull $IMAGE
-			ExecStart=/usr/bin/docker run \
-			-v /var/run/mysqld:/var/run/mysqld
-			-p 2379:2379
-			--debug
-			--listen-address=tcp://0.0.0.0:2379
-			--endpoint "mysql://root@unix(/var/run/mysqld/mysqld.sock)/kine"
-			[Install]
-			WantedBy=multi-user.target
+             [Unit]
+             Description=kine etcd shim
+             Wants=k8s-setup-network-env.service
+             After=k8s-setup-network-env.service
+             StartLimitIntervalSec=0
+             [Service]
+             Restart=always
+             RestartSec=0
+             TimeoutStopSec=10
+             LimitNOFILE=40000
+             CPUAccounting=true
+             MemoryAccounting=true
+             Slice=kubereserved.slice
+             Environment=IMAGE=quay.io/giantswarm/kine:0.4.0-142979458a46ef371cd9915e884aa5bd3d5417e9
+             Environment=NAME=%p.service
+             EnvironmentFile=/etc/network-environment
+             ExecStartPre=-/usr/bin/docker stop  $NAME
+             ExecStartPre=-/usr/bin/docker rm  $NAME
+             ExecStartPre=-/usr/bin/docker pull $IMAGE
+             ExecStart=/usr/bin/docker run \
+             -v /var/run/mysqld:/var/run/mysqld
+             -p 2379:2379
+             --debug
+             --listen-address=tcp://0.0.0.0:2379
+             --endpoint "mysql://root@unix(/var/run/mysqld/mysqld.sock)/kine"
+             [Install]
+             WantedBy=multi-user.target
   - name: k8s-extract.service
     enabled: true
     contents: |
