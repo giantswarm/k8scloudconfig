@@ -159,110 +159,73 @@ systemd:
       ExecStopPost=-/usr/bin/docker rm -f $NAME
       [Install]
       WantedBy=multi-user.target
+  - name: mariadb.service
+    enabled: true
+    contents: |
+			[Unit]
+			Description=mariadb
+			Wants=k8s-setup-network-env.service
+			After=k8s-setup-network-env.service
+			StartLimitIntervalSec=0
+			[Service]
+			Restart=always
+			RestartSec=0
+			TimeoutStopSec=10
+			LimitNOFILE=40000
+			CPUAccounting=true
+			MemoryAccounting=true
+			Slice=kubereserved.slice
+			Environment=IMAGE=mariadb:10.5.5
+			Environment=NAME=%p.service
+			EnvironmentFile=/etc/network-environment
+			ExecStartPre=-/usr/bin/docker stop  $NAME
+			ExecStartPre=-/usr/bin/docker rm  $NAME
+			ExecStartPre=-/usr/bin/docker pull $IMAGE
+			ExecStartPre=/bin/bash -c "chmod 0700 /var/lib/mariadb/"
+			ExecStartPre=/bin/bash -c "mkdir –m777 /var/run/mysqld"
+			ExecStartPre=/bin/bash -c "chown 999:render /var/run/mysqld/"
+			ExecStart=/usr/bin/docker run \
+			-v /etc/mariadb/conf.d:/etc/mysql/conf.d \
+			-v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
+			-v /etc/kubernetes/ssl/mariadb/:/etc/mariadb \
+			-v /var/lib/mariadb:/var/lib/mysql \
+			-v /var/run/mysqld:/var/run/mysqld \
+			-e MYSQL_RANDOM_ROOT_PASSWORD=1 \
+			-e MYSQL_DATABASE=kine \
+			--name $NAME \
+			$IMAGE
+			[Install]
+			WantedBy=multi-user.target
   - name: etcd3.service
     enabled: true
     contents: |
-      [Unit]
-      Description=etcd3
-      Wants=k8s-setup-network-env.service
-      After=k8s-setup-network-env.service
-      Conflicts=etcd.service etcd2.service
-      StartLimitIntervalSec=0
-      [Service]
-      Restart=always
-      RestartSec=0
-      TimeoutStopSec=10
-      LimitNOFILE=40000
-      CPUAccounting=true
-      MemoryAccounting=true
-      Slice=kubereserved.slice
-      Environment=IMAGE={{ .Images.Etcd }}
-      Environment=NAME=%p.service
-      Environment=ETCD_NAME={{ .Etcd.NodeName }}
-      Environment=ETCD_INITIAL_CLUSTER={{ .Etcd.InitialCluster }}
-      Environment=ETCD_INITIAL_CLUSTER_STATE={{ .Etcd.InitialClusterState }}
-      Environment=ETCD_PEER_CA_PATH=/etc/etcd/server-ca.pem
-      Environment=ETCD_PEER_CERT_PATH=/etc/etcd/server-crt.pem
-      Environment=ETCD_PEER_KEY_PATH=/etc/etcd/server-key.pem
-      EnvironmentFile=/etc/network-environment
-      ExecStartPre=-/usr/bin/docker stop  $NAME
-      ExecStartPre=-/usr/bin/docker rm  $NAME
-      ExecStartPre=-/usr/bin/docker pull $IMAGE
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-ca.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-ca.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-crt.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-crt.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/ssl/etcd/server-key.pem ]; do echo 'Waiting for /etc/kubernetes/ssl/etcd/server-key.pem to be written' && sleep 1; done"
-      ExecStartPre=/bin/bash -c "chmod 0700 /var/lib/etcd/"
-      ExecStart=/usr/bin/docker run \
-          -v /etc/ssl/certs/ca-certificates.crt:/etc/ssl/certs/ca-certificates.crt \
-          -v /etc/kubernetes/ssl/etcd/:/etc/etcd \
-          -v /var/lib/etcd/:/var/lib/etcd  \
-          --net=host  \
-          --name $NAME \
-          $IMAGE \
-          etcd \
-          --name ${ETCD_NAME} \
-          --trusted-ca-file /etc/etcd/server-ca.pem \
-          --cert-file /etc/etcd/server-crt.pem \
-          --key-file /etc/etcd/server-key.pem\
-          --client-cert-auth=true \
-          --peer-trusted-ca-file ${ETCD_PEER_CA_PATH} \
-          --peer-cert-file ${ETCD_PEER_CERT_PATH} \
-          --peer-key-file ${ETCD_PEER_KEY_PATH} \
-          --peer-client-cert-auth=true \
-          --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
-          --initial-advertise-peer-urls=https://${ETCD_NAME}.{{ .BaseDomain }}:2380 \
-          --listen-client-urls=https://0.0.0.0:2379 \
-          --listen-peer-urls=https://0.0.0.0:2380 \
-          --initial-cluster-token k8s-etcd-cluster \
-          --initial-cluster ${ETCD_INITIAL_CLUSTER} \
-          --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
-          --experimental-peer-skip-client-san-verification=true \
-          --data-dir=/var/lib/etcd \
-          --enable-v2 \
-          --logger=zap
-      [Install]
-      WantedBy=multi-user.target
-  - name: etcd3-defragmentation.service
-    enabled: false
-    contents: |
-      [Unit]
-      Description=etcd defragmentation job
-      After=docker.service etcd3.service
-      Requires=docker.service etcd3.service
-      [Service]
-      Type=oneshot
-      EnvironmentFile=/etc/network-environment
-      Environment=IMAGE={{ .Images.Etcd }}
-      Environment=NAME=%p.service
-      ExecStartPre=-/usr/bin/docker stop  $NAME
-      ExecStartPre=-/usr/bin/docker rm  $NAME
-      ExecStartPre=-/usr/bin/docker pull $IMAGE
-      ExecStart=/usr/bin/docker run \
-        -v /etc/kubernetes/ssl/etcd/:/etc/etcd \
-        --net=host  \
-        -e ETCDCTL_API=3 \
-        --name $NAME \
-        $IMAGE \
-        etcdctl \
-        --endpoints https://127.0.0.1:2379 \
-        --cacert /etc/etcd/server-ca.pem \
-        --cert /etc/etcd/server-crt.pem \
-        --key /etc/etcd/server-key.pem \
-        defrag \
-        --command-timeout=60s \
-        --dial-timeout=60s \
-        --keepalive-timeout=25s
-      [Install]
-      WantedBy=multi-user.target
-  - name: etcd3-defragmentation.timer
-    enabled: true
-    contents: |
-      [Unit]
-      Description=Execute etcd3-defragmentation every day at 3.30AM UTC
-      [Timer]
-      OnCalendar=*-*-* 03:30:00 UTC
-      [Install]
-      WantedBy=multi-user.target
+			[Unit]
+			Description=kine etcd shim
+			Wants=k8s-setup-network-env.service
+			After=k8s-setup-network-env.service
+			StartLimitIntervalSec=0
+			[Service]
+			Restart=always
+			RestartSec=0
+			TimeoutStopSec=10
+			LimitNOFILE=40000
+			CPUAccounting=true
+			MemoryAccounting=true
+			Slice=kubereserved.slice
+			Environment=IMAGE=quay.io/giantswarm/kine:0.4.0-142979458a46ef371cd9915e884aa5bd3d5417e9
+			Environment=NAME=%p.service
+			EnvironmentFile=/etc/network-environment
+			ExecStartPre=-/usr/bin/docker stop  $NAME
+			ExecStartPre=-/usr/bin/docker rm  $NAME
+			ExecStartPre=-/usr/bin/docker pull $IMAGE
+			ExecStart=/usr/bin/docker run \
+			-v /var/run/mysqld:/var/run/mysqld
+			-p 2379:2379
+			--debug
+			--listen-address=tcp://0.0.0.0:2379
+			--endpoint "mysql://root@unix(/var/run/mysqld/mysqld.sock)/kine"
+			[Install]
+			WantedBy=multi-user.target
   - name: k8s-extract.service
     enabled: true
     contents: |
