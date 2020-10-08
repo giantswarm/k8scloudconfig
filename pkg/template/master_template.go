@@ -219,10 +219,10 @@ systemd:
              ExecStartPre=-/usr/bin/docker rm  $NAME
              ExecStartPre=-/usr/bin/docker pull $IMAGE
              ExecStart=/usr/bin/docker run \
-             -v /var/run/mysqld:/var/run/mysqld
-             -p 2379:2379
-             --debug
-             --listen-address=tcp://0.0.0.0:2379
+             -v /var/run/mysqld:/var/run/mysqld \
+             -p 2379:2379 \
+             --debug \
+             --listen-address=tcp://0.0.0.0:2379 \
              --endpoint "mysql://root@unix(/var/run/mysqld/mysqld.sock)/kine"
              [Install]
              WantedBy=multi-user.target
