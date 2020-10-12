@@ -60,7 +60,7 @@ func TestCloudConfig(t *testing.T) {
 		}
 		tc.params.Extension = nopExtension{}
 		tc.params.Files = files
-		tc.params.Versions = releaseVersionsKVM1220
+		tc.params.Versions = releaseVersionsCurrent
 		tc.params.Images = BuildImages("docker.io", tc.params.Versions)
 
 		c.Params = tc.params
