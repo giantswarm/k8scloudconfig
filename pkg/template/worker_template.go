@@ -189,9 +189,9 @@ systemd:
       Slice=kubereserved.slice
       CPUAccounting=true
       MemoryAccounting=true
-      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem"
-      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/client-crt.pem"
-      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/client-key.pem"
+      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-ca"
+      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-cert"
+      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/etcd-key"
       EnvironmentFile=/etc/network-environment
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
@@ -371,19 +371,11 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
-{{ if .Kubernetes.HyperkubeWrappers }}
-    - path: /opt/k8s-extract
-      filesystem: root
-      mode: 0544
-      contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-hyperkube-wrappers" }}"
-{{ else }}
     - path: /opt/k8s-extract
       filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-binaries" }}"
-{{ end }}
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
