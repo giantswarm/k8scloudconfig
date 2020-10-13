@@ -9,13 +9,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Adjusted location of Calico etcd certs to match github.com/giantswarm/certs@v3.1.0.
-- Updated calico-all.yaml for Calico 3.16 compatibility. The new minimum supported version is now 3.16.0.
-- Upgraded Calico CRDs to v1.
+- Adjust location of Calico etcd certs to match github.com/giantswarm/certs@v3.1.0.
+- Update calico-all.yaml for Calico 3.16 compatibility. The new minimum supported version is now 3.16.0.
+- Upgrade Calico CRDs to v1.
 
 ### Removed
 
-- Removed Kubernetes 1.16 compatibility. The new minimum supported version is now 1.17.0.
+- Remove Kubernetes 1.16 compatibility. The new minimum supported version is now 1.17.0.
 
 ## [8.0.3] - 2020-10-05
 
