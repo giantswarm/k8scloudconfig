@@ -34,7 +34,6 @@ spec:
     - --insecure-port=0
     - --kubelet-https=true
     - --kubelet-preferred-address-types=InternalIP
-    - --read-only-port=0
     - --secure-port={{.Cluster.Kubernetes.API.SecurePort}}
     - --bind-address=0.0.0.0
     - --etcd-prefix={{.Cluster.Etcd.Prefix}}
