@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.0.4] - 2020-10-21
+
 ### Changed
 
 - Updated certificates used by kubelet for Calico etcd datastore to match new location in certs@v3 library.
@@ -779,7 +781,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...HEAD
+[8.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...v8.0.4
 [8.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...v8.0.3
 [8.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...v8.0.2
 [8.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...v8.0.1
