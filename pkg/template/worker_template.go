@@ -54,7 +54,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
-      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs -i  sh -c 'chown root:giantswarm {} && chmod 640 {}'"
+      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -type f -print | xargs -i  sh -c 'chown root:giantswarm {} && chmod 640 {}'"
       [Install]
       WantedBy=multi-user.target
   - name: wait-for-domains.service
@@ -189,9 +189,9 @@ systemd:
       Slice=kubereserved.slice
       CPUAccounting=true
       MemoryAccounting=true
-      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/client-ca.pem"
-      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/client-crt.pem"
-      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/client-key.pem"
+      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-ca"
+      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-cert"
+      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/etcd-key"
       EnvironmentFile=/etc/network-environment
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
@@ -221,13 +221,21 @@ systemd:
       Wants=k8s-kubelet.service
       [Service]
       Type=oneshot
-      RemainAfterExit=yes
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
         while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/worker=""; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=worker'
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-label-node.timer
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Execute k8s-label-node every hour
+      [Timer]
+      OnCalendar=hourly
       [Install]
       WantedBy=multi-user.target
   - name: etcd2.service

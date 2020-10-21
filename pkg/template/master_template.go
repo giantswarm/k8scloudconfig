@@ -61,7 +61,7 @@ systemd:
       After=k8s-kubelet.service k8s-setup-network-env.service
       [Service]
       Type=oneshot
-      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -name '*.pem' -print | xargs -i  sh -c 'chown root:giantswarm {} && chmod 640 {}'"
+      ExecStart=/bin/sh -c "find /etc/kubernetes/ssl -type f -print | xargs -i  sh -c 'chown root:giantswarm {} && chmod 640 {}'"
       [Install]
       WantedBy=multi-user.target
   - name: wait-for-domains.service
@@ -178,6 +178,12 @@ systemd:
       Slice=kubereserved.slice
       Environment=IMAGE={{ .Images.Etcd }}
       Environment=NAME=%p.service
+      Environment=ETCD_NAME={{ .Etcd.NodeName }}
+      Environment=ETCD_INITIAL_CLUSTER={{ .Etcd.InitialCluster }}
+      Environment=ETCD_INITIAL_CLUSTER_STATE={{ .Etcd.InitialClusterState }}
+      Environment=ETCD_PEER_CA_PATH=/etc/etcd/server-ca.pem
+      Environment=ETCD_PEER_CERT_PATH=/etc/etcd/server-crt.pem
+      Environment=ETCD_PEER_KEY_PATH=/etc/etcd/server-key.pem
       EnvironmentFile=/etc/network-environment
       ExecStartPre=-/usr/bin/docker stop  $NAME
       ExecStartPre=-/usr/bin/docker rm  $NAME
@@ -194,22 +200,22 @@ systemd:
           --name $NAME \
           $IMAGE \
           etcd \
-          --name {{ .Etcd.NodeName }} \
+          --name ${ETCD_NAME} \
           --trusted-ca-file /etc/etcd/server-ca.pem \
           --cert-file /etc/etcd/server-crt.pem \
           --key-file /etc/etcd/server-key.pem\
           --client-cert-auth=true \
-          --peer-trusted-ca-file /etc/etcd/server-ca.pem \
-          --peer-cert-file /etc/etcd/server-crt.pem \
-          --peer-key-file /etc/etcd/server-key.pem \
+          --peer-trusted-ca-file ${ETCD_PEER_CA_PATH} \
+          --peer-cert-file ${ETCD_PEER_CERT_PATH} \
+          --peer-key-file ${ETCD_PEER_KEY_PATH} \
           --peer-client-cert-auth=true \
           --advertise-client-urls=https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }} \
-          --initial-advertise-peer-urls=https://{{ .Etcd.NodeName }}.{{ .BaseDomain }}:2380 \
+          --initial-advertise-peer-urls=https://${ETCD_NAME}.{{ .BaseDomain }}:2380 \
           --listen-client-urls=https://0.0.0.0:2379 \
           --listen-peer-urls=https://0.0.0.0:2380 \
           --initial-cluster-token k8s-etcd-cluster \
-          --initial-cluster {{ .Etcd.InitialCluster }} \
-          --initial-cluster-state {{ .Etcd.InitialClusterState }} \
+          --initial-cluster ${ETCD_INITIAL_CLUSTER} \
+          --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \
@@ -294,9 +300,9 @@ systemd:
       Slice=kubereserved.slice
       CPUAccounting=true
       MemoryAccounting=true
-      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/etcd/server-ca.pem"
-      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/etcd/server-crt.pem"
-      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/etcd/server-key.pem"
+      Environment="ETCD_CA_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-ca"
+      Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-cert"
+      Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/etcd-key"
       EnvironmentFile=/etc/network-environment
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       ExecStart=/opt/bin/kubelet \
@@ -349,13 +355,21 @@ systemd:
       Wants=k8s-kubelet.service
       [Service]
       Type=oneshot
-      RemainAfterExit=yes
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       Environment="KUBECONFIG=/etc/kubernetes/kubeconfig/kubelet.yaml"
       ExecStart=/bin/sh -c '\
         while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=master'
+      [Install]
+      WantedBy=multi-user.target
+  - name: k8s-label-node.timer
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Execute k8s-label-node every hour
+      [Timer]
+      OnCalendar=hourly
       [Install]
       WantedBy=multi-user.target
   - name: k8s-addons.service

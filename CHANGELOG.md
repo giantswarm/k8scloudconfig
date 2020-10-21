@@ -7,15 +7,58 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.0.4] - 2020-10-21
+
+### Changed
+
+- Updated certificates used by kubelet for Calico etcd datastore to match new location in certs@v3 library.
+
+## [8.0.3] - 2020-10-05
+
+### Added
+
+- Add timer to run `k8s-label-node.service` every hour to ensure core labels are present.
+
+## [8.0.2] - 2020-09-30
+
+### Fixed
+
+- Removed extra line break when setting k8s api server arguments.
+
+### Changed
+
+- Allow parallel download of images in kubelet templates
+
+## [8.0.1] - 2020-09-17
+
+### Removed
+
+- When calico is used only for Network Policies it will not install the CNI binaries. The CNI in each provider will take care of installing the required binaries.
+
+### Added
+
+- Add monitoring annotations `prometheus.io/*` and `giantswarm.io/monitoring*` to kube-proxy, k8s-scheduler, k8s-controller-manager and calico.
+
+### Changed
+
+- Changed the path of the ETCD certificate files used in the etcdctl alias.
+- Exposed some of the etcd3.service systemd unit settings via environment variables to make customizations in the configuration easier.
+
+## [8.0.0] - 2020-08-11
+
 ### Added
 
 - Added validation of versions in the cloud config Params struct. Versions outside of supported ranges will cause an
   error to be returned from cloud config-related functions.
 
+### Changed
+
+- Updated backward incompatible Kubernetes dependencies to v1.18.5.
+
 ### Removed
 
-- Removed `DefaultParams` and `DefaultCloudConfigConfig` functions from the `template` package. Defaults should be 
-  established by the consumer of the library instead. 
+- Removed `DefaultParams` and `DefaultCloudConfigConfig` functions from the `template` package. Defaults should be
+  established by the consumer of the library instead.
 
 ## [7.0.5] - 2020-07-30
 
@@ -738,7 +781,12 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...HEAD
+[8.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...v8.0.4
+[8.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...v8.0.3
+[8.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...v8.0.2
+[8.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.0...v8.0.1
+[8.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.5...v8.0.0
 [7.0.5]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.4...v7.0.5
 [7.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.3...v7.0.4
 [7.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v7.0.2...v7.0.3

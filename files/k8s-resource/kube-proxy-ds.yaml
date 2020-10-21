@@ -23,8 +23,13 @@ spec:
         giantswarm.io/service-type: system
         k8s-app: kube-proxy
         kubernetes.io/cluster-service: "true"
+        giantswarm.io/monitoring: "true"
       annotations:
         scheduler.alpha.kubernetes.io/critical-pod: ''
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "10249"
+        giantswarm.io/monitoring-path: "/metrics"
+        giantswarm.io/monitoring-port: "10249"
     spec:
       tolerations:
       # Mark the pod as a critical add-on for rescheduling.
