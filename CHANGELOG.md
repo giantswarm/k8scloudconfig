@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Updated certificates used by kubelet for Calico etcd datastore to match new location in certs@v3 library.
+
 ## [8.0.3] - 2020-10-05
 
 ### Added
