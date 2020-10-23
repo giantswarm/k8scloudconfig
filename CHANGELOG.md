@@ -7,6 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Enable `kubelet` flag to protect kernel defaults
+- Set `scheduler` address to local address `127.0.0.1`
+
+### Removed
+
+- Disable `kubelet` read-only port
+
 ## [8.0.4] - 2020-10-21
 
 ### Changed
