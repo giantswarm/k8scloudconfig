@@ -23,6 +23,7 @@ spec:
     image: {{ .Images.KubeScheduler }}
     command:
     - kube-scheduler
+    - --address=127.0.0.1
     - --feature-gates=TTLAfterFinished=true
     - --config=/etc/kubernetes/config/scheduler.yaml
     - --profiling=false
