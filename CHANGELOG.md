@@ -11,6 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Enable `kubelet` flag to protect kernel defaults
 - Set `scheduler` address to local address `127.0.0.1`
+- Update Calico etcd certs and hostPath mount corresponding to previous release (v8.0.4) in calico-all.yaml (KVM-only).
 
 ### Removed
 
