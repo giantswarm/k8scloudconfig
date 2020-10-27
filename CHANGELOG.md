@@ -11,6 +11,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Enable `kubelet` flag to protect kernel defaults
 - Set `scheduler` address to local address `127.0.0.1`
+- Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
+- Prepare module v9.
 
 ### Removed
 
