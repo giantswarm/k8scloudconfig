@@ -41,6 +41,20 @@ func TestCloudConfig(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:     "master",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
+		{
+			name:     "worker",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
 	}
 
 	for _, tc := range tests {
