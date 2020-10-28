@@ -25,8 +25,11 @@ type Params struct {
 	// the Ingress Controller service. This allows us to migrate providers to
 	// chart-operator independently.
 	DisableIngressControllerService bool
-	Etcd                            Etcd
-	Extension                       Extension
+	// DockerhubToken is an auth token used by kubelet to
+	// authenticate/authorize against https://index.docker.io/v1/.
+	DockerhubToken string
+	Etcd           Etcd
+	Extension      Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.
