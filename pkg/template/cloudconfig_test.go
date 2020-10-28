@@ -35,6 +35,20 @@ func TestCloudConfig(t *testing.T) {
 			customEtcdPort:   2379,
 			expectedEtcdPort: 2379,
 		},
+		{
+			name:     "master",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
+		{
+			name:     "worker",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
 	}
 
 	for _, tc := range tests {
