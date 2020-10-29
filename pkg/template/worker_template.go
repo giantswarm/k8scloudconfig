@@ -365,6 +365,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/docker-daemon.json" }}"
 
+    - path: /root/.docker/config.json
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kubelet-docker-config.json" }}"
+
     - path: /etc/modules-load.d/ip_vs.conf
       filesystem: root
       mode: 0600

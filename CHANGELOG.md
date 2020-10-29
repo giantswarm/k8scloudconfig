@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Add dockerhub authentication for `kubelet`.
+
 ## [8.0.4] - 2020-10-21
 
 ### Changed
