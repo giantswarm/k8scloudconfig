@@ -49,6 +49,13 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 		config.Params.Etcd.NodeName = etcdNodeName(1, 1)
 	}
 
+	if config.Params.DockerhubToken == "" {
+		return nil, microerror.Maskf(
+			invalidConfigError,
+			"config.Params.DockerhubToken must not be empty",
+		)
+	}
+
 	if config.Params.Etcd.InitialCluster == "" {
 		config.Params.Etcd.InitialCluster = etcdInitialCluster(config.Params.BaseDomain, config.Params.Etcd.HighAvailability)
 	}

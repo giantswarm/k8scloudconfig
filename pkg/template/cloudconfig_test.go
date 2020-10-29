@@ -18,6 +18,7 @@ func TestCloudConfig(t *testing.T) {
 			name:     "master",
 			template: MasterTemplate,
 			params: Params{
+				DockerhubToken: "token",
 				Etcd: Etcd{
 					ClientPort: 443,
 				},
@@ -27,6 +28,7 @@ func TestCloudConfig(t *testing.T) {
 			name:     "worker",
 			template: WorkerTemplate,
 			params: Params{
+				DockerhubToken: "token",
 				Etcd: Etcd{
 					ClientPort: 443,
 				},
@@ -36,6 +38,7 @@ func TestCloudConfig(t *testing.T) {
 			name:     "worker",
 			template: WorkerTemplate,
 			params: Params{
+				DockerhubToken: "token",
 				Etcd: Etcd{
 					ClientPort: 2379,
 				},
