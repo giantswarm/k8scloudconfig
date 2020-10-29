@@ -12,7 +12,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 
-	"github.com/giantswarm/k8scloudconfig/v9/pkg/ignition"
+	"github.com/giantswarm/k8scloudconfig/v8/pkg/ignition"
 )
 
 const (
