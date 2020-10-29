@@ -41,6 +41,7 @@ func TestCloudConfig(t *testing.T) {
 		c := DefaultCloudConfigConfig()
 
 		tc.params.Extension = nopExtension{}
+		tc.params.DockerhubToken = "token"
 
 		if tc.customEtcdPort != 0 {
 			tc.params.Etcd.ClientPort = tc.customEtcdPort
