@@ -60,6 +60,13 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 			config.Params.Etcd.NodeName)
 	}
 
+	if config.Params.DockerhubToken == "" {
+		return nil, microerror.Maskf(
+			invalidConfigError,
+			"config.Params.DockerhubToken must be specified",
+		)
+	}
+
 	{
 		kubernetesVersion, err := semver.NewVersion(config.Params.Versions.Kubernetes)
 		if err != nil {
