@@ -182,6 +182,7 @@ systemd:
       Description=k8s-kubelet
       StartLimitIntervalSec=0
       [Service]
+      User=root
       TimeoutStartSec=300
       Restart=always
       RestartSec=0
