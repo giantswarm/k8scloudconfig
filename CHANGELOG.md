@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.1.0] - 2020-10-30
+
 ### Added
 
 - Add dockerhub authentication for kubelet.
@@ -786,7 +788,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.1.0...HEAD
+[8.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...v8.1.0
 [8.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...v8.0.4
 [8.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...v8.0.3
 [8.0.2]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.1...v8.0.2
