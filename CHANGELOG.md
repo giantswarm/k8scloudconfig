@@ -20,6 +20,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Set `scheduler` address to local address `127.0.0.1`
 - Update apiextensions to v3 and replace CAPI with Giant Swarm fork.
 - Prepare module v9.
+- (KVM only) Update Calico etcd certs and hostPath mounts corresponding to changes in v8.0.4.
 
 ### Removed
 
