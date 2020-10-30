@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Added
 
 - Add dockerhub authentication for `kubelet`.
+- Use explicitly user `root` for kubelet systemd unit.
 
 ## [7.1.2] - 2020-09-30
 
