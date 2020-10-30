@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing `kubelet-docker-config.json` file.
+
 ## [8.1.0] - 2020-10-30
 
 ### Added
