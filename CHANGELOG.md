@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [8.1.1] - 2020-10-30
+
 ### Fixed
 
 - Add missing `kubelet-docker-config.json` file.
@@ -792,7 +794,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v8.1.1...HEAD
+[8.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v8.1.0...v8.1.1
 [8.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...v8.1.0
 [8.0.4]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.3...v8.0.4
 [8.0.3]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.2...v8.0.3
