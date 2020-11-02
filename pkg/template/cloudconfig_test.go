@@ -5,7 +5,7 @@ import (
 	"path"
 	"testing"
 
-	"github.com/giantswarm/k8scloudconfig/v8/pkg/ignition"
+	"github.com/giantswarm/k8scloudconfig/v9/pkg/ignition"
 )
 
 func TestCloudConfig(t *testing.T) {
@@ -41,6 +41,20 @@ func TestCloudConfig(t *testing.T) {
 				},
 			},
 		},
+		{
+			name:     "master",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
+		{
+			name:     "worker",
+			template: WorkerTemplate,
+			params: Params{
+				DockerhubToken: "token",
+			},
+		},
 	}
 
 	for _, tc := range tests {
@@ -62,6 +76,7 @@ func TestCloudConfig(t *testing.T) {
 		tc.params.Files = files
 		tc.params.Versions = releaseVersionsAWS1150
 		tc.params.Images = BuildImages("docker.io", tc.params.Versions)
+		tc.params.DockerhubToken = "token"
 
 		c.Params = tc.params
 		c.Template = tc.template

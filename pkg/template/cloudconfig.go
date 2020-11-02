@@ -12,7 +12,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 
-	"github.com/giantswarm/k8scloudconfig/v8/pkg/ignition"
+	"github.com/giantswarm/k8scloudconfig/v9/pkg/ignition"
 )
 
 const (
@@ -58,6 +58,13 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 			"initial cluster, %s, must contain node ID, %s",
 			config.Params.Etcd.InitialCluster,
 			config.Params.Etcd.NodeName)
+	}
+
+	if config.Params.DockerhubToken == "" {
+		return nil, microerror.Maskf(
+			invalidConfigError,
+			"config.Params.DockerhubToken must be specified",
+		)
 	}
 
 	{
