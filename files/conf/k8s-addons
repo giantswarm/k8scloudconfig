@@ -134,12 +134,22 @@ do
 done
 
 {{ if .EnableAWSCNI -}}
-echo "Waiting for aws-node to be ready..."
-kubectl -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=10m pods
+while
+    echo "Waiting for aws-node to be ready..."
+    kubectl -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=1m pods
+    [ "$?" -ne "0" ]
+do
+    echo "aws-node was not ready after 1 minute"
+done
 {{ end -}}
 
-echo "Waiting for calico-node to be ready..."
-kubectl -n kube-system -l app.kubernetes.io/name=calico-node wait --for=condition=Ready --timeout=10m pods
+while
+    echo "Waiting for calico-node to be ready..."
+    kubectl -n kube-system -l app.kubernetes.io/name=calico-node wait --for=condition=Ready --timeout=1m pods
+    [ "$?" -ne "0" ]
+do
+    echo "calico-node was not ready after 1 minute"
+done
 
 # apply default storage class
 if [ -f /srv/default-storage-class.yaml ]; then
