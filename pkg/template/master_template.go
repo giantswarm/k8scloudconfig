@@ -362,9 +362,9 @@ systemd:
         while [ "$(kubectl get nodes $(hostname | tr '[:upper:]' '[:lower:]')| wc -l)" -lt "1" ]; do echo "Waiting for healthy k8s" && sleep 20s;done; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') node-role.kubernetes.io/master=""; \
         kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') kubernetes.io/role=master'; \
-		for l in $(echo {{.Cluster.Kubernetes.Kubelet.Labels}} | tr ',' ' '); do \
-			kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') $l; \
-		done'
+        for l in $(echo {{.Cluster.Kubernetes.Kubelet.Labels}} | tr ',' ' '); do \
+            kubectl label nodes --overwrite $(hostname | tr '[:upper:]' '[:lower:]') $l; \
+        done'
       [Install]
       WantedBy=multi-user.target
   - name: k8s-label-node.timer
