@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Set configurable labels with `k8s-label-node` unit as well to update old labels when node identity doesn't change on upgrade.
+
 ## [9.1.0] - 2020-10-29
 
 ### Added
