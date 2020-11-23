@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [9.1.2] - 2020-11-23
+
+### Changed
+
+- AWS - decrease `hostnetworkpod` count for calculating pod limit due `cert-exporter`  running without host network since `v1.3.0`.
+
 ## [9.1.1] - 2020-11-09
 
 ### Added
@@ -808,7 +814,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...HEAD
+[9.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...v9.1.2
 [9.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.0...v9.1.1
 [9.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.0.0...v9.1.0
 [9.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...v9.0.0
