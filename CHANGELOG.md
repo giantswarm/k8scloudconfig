@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Shorten `calico-node` and `aws-node` wait timeout in `k8s-addons` and add retry for faster cluster initialization.
+- Synchronize `calico-node` pod template labels between `calico-all.yaml` and `calico-policy-only.yaml`.
 
 ## [9.1.2] - 2020-11-23
 
