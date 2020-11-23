@@ -18,12 +18,12 @@ if [ $1 == "master" ]; then
   # 1 ENI for the node, 1 for ETCD
   reserved_eni=2
   # Only counting daemonsets, as they are mandatory in all nodes
-  hostnetwork_pods=9
+  hostnetwork_pods=8
 else
   # 1 ENI for the node
   reserved_eni=1
   # Only counting daemonsets, as they are mandatory in all nodes
-  hostnetwork_pods=6
+  hostnetwork_pods=5
 fi
 
 # Formula for max amount of pods in AWS CNI is (enis-$reserved_enis)*(ips_eni-1)+$host_network_pods
