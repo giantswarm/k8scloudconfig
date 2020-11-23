@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- AWS - decrease `hostnetworkpod` count for calculating pod limit due `cert-exporter`  running without host network since `v1.3.0`.
+
 ## [9.1.1] - 2020-11-09
 
 ### Added
