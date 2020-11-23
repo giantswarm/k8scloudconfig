@@ -21,6 +21,8 @@ kubeReserved:
   cpu: 350m
   memory: 1280Mi
   ephemeral-storage: 1024Mi
+cgroupRoot: /
+kubeletCgroup: /kubereserved.slice
 kubeReservedCgroup: /kubereserved.slice
 maxPods: ${MAX_PODS}
 protectKernelDefaults: true

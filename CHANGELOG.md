@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Configure `kubeletCgroup` and `cgroupRoot` in kubelet config to avoid warnings in logs. *Note:* This prevents kubelet
+  log messages from being associated with `k8s-kubelet.service` after it starts. Logs can instead be viewed with
+  `journalctl -u kubereserved.slice`. 
+
 ## [9.1.2] - 2020-11-23
 
 ### Changed
