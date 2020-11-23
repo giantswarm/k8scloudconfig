@@ -136,7 +136,7 @@ done
 {{ if .EnableAWSCNI -}}
 while
     echo "Waiting for aws-node to be ready..."
-    kubectl -n kube-system -l app.kubernetes.io/name=aws-node wait --for=condition=Ready --timeout=1m pods
+    kubectl -n kube-system -l k8s-app=aws-node wait --for=condition=Ready --timeout=1m pods
     [ "$?" -ne "0" ]
 do
     echo "aws-node was not ready after 1 minute"
