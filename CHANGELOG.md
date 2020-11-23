@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Shorten `calico-node` and `aws-node` wait timeout in `k8s-addons` and add retry for faster cluster initialization.
+
 ## [9.1.2] - 2020-11-23
 
 ### Changed
