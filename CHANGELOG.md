@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Remove unused Kubernetes scheduler configuration fields preventing strict YAML unmarshalling.
+
 ## [9.1.2] - 2020-11-23
 
 ### Changed
