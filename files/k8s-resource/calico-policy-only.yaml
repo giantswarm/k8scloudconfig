@@ -307,6 +307,7 @@ metadata:
   name: calico-node
   namespace: kube-system
   labels:
+    app.kubernetes.io/name: calico-node
     giantswarm.io/service-type: managed
     k8s-app: calico-node
 spec:
@@ -320,6 +321,7 @@ spec:
   template:
     metadata:
       labels:
+        app.kubernetes.io/name: calico-node
         giantswarm.io/service-type: managed
         k8s-app: calico-node
         giantswarm.io/monitoring: "true"
