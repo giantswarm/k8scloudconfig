@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [9.1.3] - 2020-11-24
+
 ### Changed
 
 - Shorten `calico-node` wait timeout in `k8s-addons` and add retry for faster cluster initialization.
@@ -821,7 +823,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...HEAD
+[9.1.3]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...v9.1.3
 [9.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...v9.1.2
 [9.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.0...v9.1.1
 [9.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.0.0...v9.1.0
