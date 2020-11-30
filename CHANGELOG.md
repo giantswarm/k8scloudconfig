@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Remove `QPS` limits and default back to upstream settings.
+- Remove explicit registry pull limits defaulting to less restrictive upstream settings.
 
 ## [9.1.3] - 2020-11-24
 
