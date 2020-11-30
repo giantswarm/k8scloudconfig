@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Remove `QPS` limits and default back to upstream settings.
+
 ## [9.1.3] - 2020-11-24
 
 ### Changed
