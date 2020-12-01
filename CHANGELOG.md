@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [9.2.0] - 2020-12-01
+
 ### Changed
 
 - Remove explicit registry pull limits defaulting to less restrictive upstream settings.
@@ -828,7 +830,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.2.0...HEAD
+[9.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...v9.2.0
 [9.1.3]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...v9.1.3
 [9.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...v9.1.2
 [9.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.0...v9.1.1
