@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Remove explicit registry pull limits defaulting to less restrictive upstream settings.
+- Change `runtime-cgroup` kubelet flag
 
 ## [9.1.3] - 2020-11-24
 
