@@ -322,8 +322,7 @@ systemd:
         --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
-        --v=2 \
-        --runtime-cgroups=/kubereserved.slice/docker.service
+        --v=2
       [Install]
       WantedBy=multi-user.target
   - name: etcd2.service
