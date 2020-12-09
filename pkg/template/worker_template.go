@@ -168,7 +168,7 @@ systemd:
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker rm $CONTAINER_NAME
-      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME $IMAGE
+      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME $IMAGE /kubectl
       ExecStart=/opt/k8s-extract $CONTAINER_NAME
       ExecStopPost=-/usr/bin/docker rm $CONTAINER_NAME
       [Install]
