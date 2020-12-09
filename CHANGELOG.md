@@ -7,9 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Drop support for Kubernetes 1.16-1.18.
+
 ### Changed
 
-- Move scheduler config from v1alpha1 to v1beta1.
+- Move scheduler config from `v1alpha1` to `v1beta1`.
+- Rename module from `github.com/giantswarm/k8scloudconfig/v9` to `github.com/giantswarm/k8scloudconfig/v10`.
 
 ## [9.3.0] - 2020-12-07
 
