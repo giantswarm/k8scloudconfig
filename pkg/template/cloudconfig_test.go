@@ -74,7 +74,7 @@ func TestCloudConfig(t *testing.T) {
 		}
 		tc.params.Extension = nopExtension{}
 		tc.params.Files = files
-		tc.params.Versions = releaseVersionsAWS1150
+		tc.params.Versions = releaseVersionsValid
 		tc.params.Images = BuildImages("docker.io", tc.params.Versions)
 		tc.params.DockerhubToken = "token"
 
