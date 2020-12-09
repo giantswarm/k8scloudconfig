@@ -380,19 +380,11 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
-{{ if .Kubernetes.HyperkubeWrappers }}
     - path: /opt/k8s-extract
       filesystem: root
       mode: 0544
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-hyperkube-wrappers" }}"
-{{ else }}
-    - path: /opt/k8s-extract
-      filesystem: root
-      mode: 0544
-      contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-binaries" }}"
-{{ end }}
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
