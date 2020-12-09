@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Move scheduler config from v1alpha1 to v1beta1.
+
 ## [9.3.0] - 2020-12-07
 
 ## [9.2.0] - 2020-12-01
