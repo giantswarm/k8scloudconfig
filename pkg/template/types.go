@@ -88,7 +88,6 @@ type Images struct {
 type Kubernetes struct {
 	Apiserver         KubernetesPodOptions
 	ControllerManager KubernetesPodOptions
-	HyperkubeWrappers bool
 	Kubelet           KubernetesDockerOptions
 }
 
