@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.0.0] - 2020-12-10
+
 ### Removed
 
 - Drop support for Kubernetes 1.16-1.18.
@@ -846,7 +848,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...HEAD
+[10.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.3.0...v10.0.0
 [9.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.2.0...v9.3.0
 [9.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...v9.2.0
 [9.1.3]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...v9.1.3
