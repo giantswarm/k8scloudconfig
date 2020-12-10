@@ -105,16 +105,18 @@ if [[ $(kubectl get ds -n kube-system calico-node -o jsonpath='{.spec.selector.m
   kubectl delete ds -n kube-system calico-node --cascade=false
 fi
 
+CNI_FILE="calico-crds.yaml"
+
 {{ if .CalicoPolicyOnly -}}
 ## Apply Calico with network policy features only
-CNI_FILE="calico-policy-only.yaml"
+CNI_FILE="${CNI_FILE} calico-policy-only.yaml"
 {{ if .EnableAWSCNI -}}
 ## Apply AWS VPC CNI
 CNI_FILE="${CNI_FILE} aws-cni.yaml"
 {{ end -}}
 {{ else -}}
 ## Apply Calico with all its components
-CNI_FILE="calico-all.yaml"
+CNI_FILE="${CNI_FILE} calico-all.yaml"
 # See kube-proxy comment above for an explanation
 if [[ $(kubectl get deploy -n kube-system calico-kube-controllers -o jsonpath='{.spec.selector.matchLabels}') == "map[app.kubernetes.io/name:calico-kube-controllers]" ]]; then
   echo "Orphaning calico-kube-controllers pods to be inherited by new deployment"
