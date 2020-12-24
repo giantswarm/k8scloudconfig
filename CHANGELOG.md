@@ -814,7 +814,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1-fix...HEAD
+[9.1.1-fix]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...v9.1.1-fix
 [9.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.0...v9.1.1
 [9.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.0.0...v9.1.0
 [9.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v8.0.4...v9.0.0
