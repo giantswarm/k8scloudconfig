@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [9.1.1-fix] - 2020-12-24
+
 ### Changed
 
 - Remove explicit registry pull limits defaulting to less restrictive upstream settings.
