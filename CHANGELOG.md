@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Move Calico (full and policy-only) CRDs into a separate file (`/srv/calico-crds.yaml`) and upgrade to CRD v1 API.
+
 ## [9.3.0] - 2020-12-07
 
 ## [9.2.0] - 2020-12-01
