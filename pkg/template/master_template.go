@@ -427,7 +427,7 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        source: "s3://thomas-test-ignition/calico-crds.yaml"
+        source: "s3://gs-tc-crds/calico/v3.16.5/crds.yaml"
 
     {{- if .CalicoPolicyOnly }}
     - path: /srv/calico-policy-only.yaml
