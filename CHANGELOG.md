@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Move Calico (full and policy-only) CRDs into a separate file (`/srv/calico-crds.yaml`) and upgrade to CRD v1 API.
+- Set streamingConnectionIdleTimeout to 1hr (was previously unset, default is 4h).
 
 ## [10.0.0] - 2020-12-10
 
