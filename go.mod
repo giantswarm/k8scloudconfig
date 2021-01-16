@@ -6,7 +6,7 @@ require (
 	github.com/Masterminds/semver/v3 v3.1.1
 	github.com/giantswarm/apiextensions/v3 v3.13.0
 	github.com/giantswarm/microerror v0.3.0
-	github.com/stretchr/testify v1.6.1
+	github.com/stretchr/testify v1.7.0
 	sigs.k8s.io/yaml v1.2.0
 )
 
