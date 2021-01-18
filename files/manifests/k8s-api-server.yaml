@@ -62,6 +62,7 @@ spec:
     - --audit-log-maxsize=100
     - --audit-policy-file=/etc/kubernetes/policies/audit-policy.yaml
     - --encryption-provider-config=/etc/kubernetes/encryption/k8s-encryption-config.yaml
+    - --request-timeout=1m
     - --requestheader-client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
     - --requestheader-allowed-names=aggregator,{{.Cluster.Kubernetes.API.Domain}},{{.Cluster.Kubernetes.Kubelet.Domain}}
     - --requestheader-extra-headers-prefix=X-Remote-Extra-
