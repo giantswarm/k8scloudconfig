@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added	
+
+- Added flag `DisableDockerdSelinuxEnabled` to disable the selinux-enabled flag on dockerd
+	
 ### Changed
 
 - Move Calico (full and policy-only) CRDs into a separate file (`/srv/calico-crds.yaml`) and upgrade to CRD v1 API.
