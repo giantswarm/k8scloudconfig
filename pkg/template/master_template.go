@@ -138,6 +138,9 @@ systemd:
           Slice=kubereserved.slice
           Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --cgroup-parent=/kubereserved.slice --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
           Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+          {{ if .DisableDockerdSelinuxEnabled }}
+          Environment="DOCKER_SELINUX=--selinux-enabled=false"
+          {{ end }}
   - name: k8s-setup-network-env.service
     enabled: true
     contents: |
