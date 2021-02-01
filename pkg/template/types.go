@@ -15,7 +15,7 @@ type Params struct {
 	// DockerdSelinuxEnabled flag. By default --selinux-enabled is set to true in docker 
 	// service.
 	// This flag sets the dockerd flag to false in the docker service
-	DisableDockerdSelinuxEnabled bool
+	DockerdSelinuxEnabled bool
 	// EnableAWSCNI flag. When set to true will use AWS CNI for pod networking
 	// and Calico only for network policies.
 	EnableAWSCNI bool
