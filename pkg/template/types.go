@@ -15,6 +15,8 @@ type Params struct {
 	// EnableAWSCNI flag. When set to true will use AWS CNI for pod networking
 	// and Calico only for network policies.
 	EnableAWSCNI bool
+	// EnableAWSCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
+	EnableCSIMigrationAWS bool
 	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
 	CalicoPolicyOnly bool
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud
