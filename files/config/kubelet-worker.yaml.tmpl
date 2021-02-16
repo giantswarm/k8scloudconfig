@@ -36,7 +36,7 @@ authorization:
   mode: AlwaysAllow # Defaults to webhook as of 1.10
 featureGates:
   TTLAfterFinished: true
-{{ if .EnableCSIMigrationAWS -}}
+  {{ if .EnableCSIMigrationAWS -}}
   CSIMigrationAWS: true
 {{ end -}}
 tlsCipherSuites:
