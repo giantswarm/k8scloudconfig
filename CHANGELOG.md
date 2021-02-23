@@ -13,6 +13,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Set `streamingConnectionIdleTimeout` to 1hr (was previously unset, default is 4h).
 - Set `api-server` request timeout to 1 minute (previously unset, default is 1 minute).
 
+### Removed
+
+- Drop bgppeer KeepOriginalNextHop default field.
+
 ## [10.0.0] - 2020-12-10
 
 ### Removed
