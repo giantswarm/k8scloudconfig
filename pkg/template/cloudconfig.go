@@ -18,6 +18,8 @@ import (
 const (
 	InitialClusterStateNew      = "new"
 	InitialClusterStateExisting = "existing"
+
+	DefaultAPILBListenPort = 443
 )
 
 type CloudConfigConfig struct {
@@ -65,6 +67,11 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 			invalidConfigError,
 			"config.Params.DockerhubToken must be specified",
 		)
+	}
+
+	// keep  backward compatibility
+	if config.Params.APILBPortListen == 0 {
+		config.Params.APILBPortListen = DefaultAPILBListenPort
 	}
 
 	{
