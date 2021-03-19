@@ -9,16 +9,16 @@ import (
 	"github.com/Masterminds/semver/v3"
 )
 
-var releaseVersionsAWS1150 = Versions{
-	Calico:                       "3.10.4",
-	CRITools:                     "1.16.1",
-	Etcd:                         "3.4.9",
-	Kubernetes:                   "1.16.13",
+var releaseVersionsValid = Versions{
+	Calico:                       "3.15.3",
+	CRITools:                     "1.19.0",
+	Etcd:                         "3.4.14",
+	Kubernetes:                   "1.19.4",
 	KubernetesAPIHealthz:         "0.1.1",
 	KubernetesNetworkSetupDocker: "0.2.0",
 }
 
-var releaseVersionsAWS900 = Versions{
+var releaseVersionsInvalid = Versions{
 	Calico:                       "3.9.1",
 	CRITools:                     "1.15.0",
 	Etcd:                         "3.3.15",
@@ -66,47 +66,48 @@ func Test_Params_Validation(t *testing.T) {
 	}{
 		{
 			errorMatcher: nilErrorMatcher,
-			name:         "case 0: aws release 11.5.0 versions are valid",
-			versions:     releaseVersionsAWS1150,
+			name:         "case 0: valid release versions are valid",
+			versions:     releaseVersionsValid,
 		},
 		{
 			errorMatcher: invalidVersionMatcher,
 			name:         "case 1: empty kubernetes version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "Kubernetes", ""),
+			versions:     editVersions(releaseVersionsValid, "Kubernetes", ""),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 2: old kubernetes version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "Kubernetes", releaseVersionsAWS900.Kubernetes),
+			versions:     editVersions(releaseVersionsValid, "Kubernetes", releaseVersionsInvalid.Kubernetes),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 3: old calico version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "Calico", releaseVersionsAWS900.Calico),
+			versions:     editVersions(releaseVersionsValid, "Calico", releaseVersionsInvalid.Calico),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 4: old etcd version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "Etcd", releaseVersionsAWS900.Etcd),
+			versions:     editVersions(releaseVersionsValid, "Etcd", releaseVersionsInvalid.Etcd),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 5: old critools version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "CRITools", releaseVersionsAWS900.CRITools),
+			versions:     editVersions(releaseVersionsValid, "CRITools", releaseVersionsInvalid.CRITools),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 6: old api healthz version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "KubernetesAPIHealthz", releaseVersionsAWS900.KubernetesAPIHealthz),
+			versions:     editVersions(releaseVersionsValid, "KubernetesAPIHealthz", releaseVersionsInvalid.KubernetesAPIHealthz),
 		},
 		{
 			errorMatcher: validationErrorMatcher,
 			name:         "case 7: old network setup version is invalid",
-			versions:     editVersions(releaseVersionsAWS1150, "KubernetesNetworkSetupDocker", releaseVersionsAWS900.KubernetesNetworkSetupDocker),
+			versions:     editVersions(releaseVersionsValid, "KubernetesNetworkSetupDocker", releaseVersionsInvalid.KubernetesNetworkSetupDocker),
 		},
 	}
 
 	for i, tc := range testCases {
+		tc := tc
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Log(tc.name)
 			params := Params{

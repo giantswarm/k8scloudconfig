@@ -7,6 +7,39 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.2.0] - 2021-03-19
+
+### Changed
+
+- Enable `anonymous-auth` in API server to comply with CAPI (needed by `kubeadm`).
+
+## [10.1.0] - 2021-02-23
+
+### Changed
+
+- Move Calico (full and policy-only) CRDs into a separate file (`/srv/calico-crds.yaml`) and upgrade to CRD v1 API.
+- Set `streamingConnectionIdleTimeout` to 1hr (was previously unset, default is 4h).
+- Set `api-server` request timeout to 1 minute (previously unset, default is 1 minute).
+
+### Removed
+
+- Drop bgppeer KeepOriginalNextHop default field.
+
+## [10.0.0] - 2020-12-10
+
+### Removed
+
+- Drop support for Kubernetes 1.16-1.18.
+- Replace `k8s-extract-hyperkube-wrappers` and `k8s-extract-binaries` scripts with `k8s-extract`.
+
+### Changed
+
+- Move scheduler config from `v1alpha1` to `v1beta1`.
+- Rename module from `github.com/giantswarm/k8scloudconfig/v9` to `github.com/giantswarm/k8scloudconfig/v10`.
+- Trim "v" prefix from hyperkube image to match new image tag format.
+
+## [9.3.0] - 2020-12-07
+
 ## [9.2.0] - 2020-12-01
 
 ### Changed
@@ -833,7 +866,11 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v9.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...HEAD
+[10.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.1.0...v10.2.0
+[10.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...v10.1.0
+[10.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.3.0...v10.0.0
+[9.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.2.0...v9.3.0
 [9.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...v9.2.0
 [9.1.3]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.2...v9.1.3
 [9.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.1...v9.1.2

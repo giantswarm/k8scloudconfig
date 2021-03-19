@@ -9,10 +9,9 @@ import (
 	"strings"
 	"text/template"
 
-	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 
-	"github.com/giantswarm/k8scloudconfig/v9/pkg/ignition"
+	"github.com/giantswarm/k8scloudconfig/v10/pkg/ignition"
 )
 
 const (
@@ -74,21 +73,7 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 		config.Params.APILBPortListen = DefaultAPILBListenPort
 	}
 
-	{
-		kubernetesVersion, err := semver.NewVersion(config.Params.Versions.Kubernetes)
-		if err != nil {
-			return nil, microerror.Mask(err)
-		}
-		// Before Kubernetes 1.17, the hyperkube image only contained the hyperkube
-		// binary which itself provided all of the constituent Kubernetes components
-		// such as kubelet through subcommands like `hyperkube kubelet`. In 1.17, hyperkube
-		// began to become unsupported becoming a wrapper which simply called binaries
-		// bundled into the docker image. For 1.16, we need to copy hyperkube out and
-		// create wrappers, for 1.17+, we need to just copy binaries out.
-		config.Params.Kubernetes.HyperkubeWrappers = kubernetesVersion.Minor() < 17
-	}
-
-	c := &CloudConfig{
+  c := &CloudConfig{
 		config:   "",
 		params:   config.Params,
 		template: config.Template,

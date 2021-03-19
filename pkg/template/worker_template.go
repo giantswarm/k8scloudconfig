@@ -168,7 +168,7 @@ systemd:
       ExecStartPre=/usr/bin/mkdir -p /opt/bin/
       ExecStartPre=/usr/bin/docker pull $IMAGE
       ExecStartPre=-/usr/bin/docker rm $CONTAINER_NAME
-      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME $IMAGE
+      ExecStartPre=-/usr/bin/docker create --name $CONTAINER_NAME $IMAGE /kubectl
       ExecStart=/opt/k8s-extract $CONTAINER_NAME
       ExecStopPost=-/usr/bin/docker rm $CONTAINER_NAME
       [Install]
@@ -380,19 +380,11 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
-{{ if .Kubernetes.HyperkubeWrappers }}
     - path: /opt/k8s-extract
       filesystem: root
       mode: 0544
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-hyperkube-wrappers" }}"
-{{ else }}
-    - path: /opt/k8s-extract
-      filesystem: root
-      mode: 0544
-      contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract-binaries" }}"
-{{ end }}
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
