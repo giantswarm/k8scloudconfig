@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Enable `anonymous-auth` in API server to comply with CAPI (needed by `kubeadm`).
+
 ## [10.1.0] - 2021-02-23
 
 ### Changed

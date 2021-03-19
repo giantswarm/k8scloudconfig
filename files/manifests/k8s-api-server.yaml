@@ -30,7 +30,7 @@ spec:
     - --apiserver-count=3
     {{ end -}}
     - --allow-privileged=true
-    - --anonymous-auth=false
+    - --anonymous-auth=true
     - --insecure-port=0
     - --kubelet-https=true
     - --kubelet-preferred-address-types=InternalIP
