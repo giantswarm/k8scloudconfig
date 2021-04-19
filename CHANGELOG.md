@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Retrieve Calico CRDs using HTTPS rather than base64 embedded in the ignition to fix an issue with slow startup times.
+
 ## [10.2.0] - 2021-03-19
 
 ### Changed
