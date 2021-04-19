@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.2.1] - 2021-04-19
+
 ### Changed
 
 - Retrieve Calico CRDs using HTTPS rather than base64 embedded in the ignition to fix an issue with slow startup times.
@@ -870,7 +872,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.1...HEAD
+[10.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...v10.2.1
 [10.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.1.0...v10.2.0
 [10.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...v10.1.0
 [10.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.3.0...v10.0.0
