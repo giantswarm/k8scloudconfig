@@ -427,7 +427,8 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crds.yaml" }}"
+        source: "https://raw.githubusercontent.com/giantswarm/k8scloudconfig/v10.2.0/files/k8s-resource/calico-crds.yaml"
+
     {{- if .CalicoPolicyOnly }}
     - path: /srv/calico-policy-only.yaml
       filesystem: root
