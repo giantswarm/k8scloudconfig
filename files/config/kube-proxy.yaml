@@ -11,3 +11,4 @@ conntrack:
   maxPerCore: {{ .Cluster.Kubernetes.NetworkSetup.KubeProxy.ConntrackMaxPerCore }}
 {{- end }}
 metricsBindAddress: 0.0.0.0:10249
+bind-address-hard-fail: true

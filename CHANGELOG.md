@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add `--bind-address-hard-fail` flag to kubeproxy to hard fail on bind failure
+
 ## [10.2.1] - 2021-04-19
 
 ### Changed
