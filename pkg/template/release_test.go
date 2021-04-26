@@ -39,6 +39,7 @@ func Test_validateImagesRegistry(t *testing.T) {
 			name: "case 4: manually set images",
 			inputImages: Images{
 				CalicoCNI:                    "docker.io/giantswarm/image:1.2.3",
+				CalicoCRDInstaller:           "docker.io/giantswarm/image:1.2.3",
 				CalicoKubeControllers:        "docker.io/giantswarm/image:1.2.3",
 				CalicoNode:                   "docker.io/giantswarm/image:1.2.3",
 				Etcd:                         "docker.io/giantswarm/image:1.2.3",
