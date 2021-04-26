@@ -423,11 +423,11 @@ storage:
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
-    - path: /srv/calico-crds.yaml
+    - path: /srv/calico-crd-installer.yaml
       filesystem: root
       mode: 0644
       contents:
-        source: "https://raw.githubusercontent.com/giantswarm/k8scloudconfig/v10.2.0/files/k8s-resource/calico-crds.yaml"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crd-installer.yaml" }}"
 
     {{- if .CalicoPolicyOnly }}
     - path: /srv/calico-policy-only.yaml
