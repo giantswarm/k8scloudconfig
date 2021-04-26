@@ -30,7 +30,7 @@ func validateComponentVersion(name, versionString, constraintString string) erro
 }
 
 func (p *Params) Validate() error {
-	if err := validateImagesRegsitry(p.Images, p.RegistryMirrors); err != nil {
+	if err := validateImagesRegistry(p.Images, p.RegistryMirrors); err != nil {
 		return microerror.Mask(err)
 	}
 

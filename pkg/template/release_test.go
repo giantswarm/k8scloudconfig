@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_validateImagesRegsitry(t *testing.T) {
+func Test_validateImagesRegistry(t *testing.T) {
 	testCases := []struct {
 		name         string
 		inputImages  Images
@@ -95,7 +95,7 @@ func Test_validateImagesRegsitry(t *testing.T) {
 		t.Run(strconv.Itoa(i), func(t *testing.T) {
 			t.Log(tc.name)
 
-			err := validateImagesRegsitry(tc.inputImages, tc.inputMirrors)
+			err := validateImagesRegistry(tc.inputImages, tc.inputMirrors)
 
 			switch {
 			case err == nil && tc.errorMatcher == nil:
