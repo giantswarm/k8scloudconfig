@@ -128,7 +128,7 @@ spec:
         # and CNI network config file on each node.
         - name: install-cni
           image: {{ .Images.CalicoCNI }}
-          command: ["/opt/cni/bin/install"]
+          command: ["/install-cni.sh"]
           env:
             # Name of the CNI config file to create.
             - name: CNI_CONF_NAME
