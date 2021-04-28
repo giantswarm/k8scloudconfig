@@ -1,5 +1,10 @@
 #!/bin/bash
 
+# vaclav showcase changes
+#
+echo hello
+
+
 export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
 
