@@ -61,7 +61,7 @@ spec:
     spec:
       containers:
         - name: crd-installer
-          image: {{ .Images.CalicoCRDInstaller }}-test
+          image: {{ .Images.CalicoCRDInstaller }}
       hostNetwork: true
       tolerations:
         - key: CriticalAddonsOnly
