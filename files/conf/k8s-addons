@@ -105,7 +105,7 @@ if [[ $(kubectl get ds -n kube-system calico-node -o jsonpath='{.spec.selector.m
   kubectl delete ds -n kube-system calico-node --cascade=false
 fi
 
-CNI_FILE="calico-crds.yaml"
+CNI_FILE="calico-crd-installer.yaml"
 
 {{ if .CalicoPolicyOnly -}}
 ## Apply Calico with network policy features only

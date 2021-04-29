@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Install Calico CRDs using a separate app, `calico-crd-installer`.
+
 ## [10.2.1] - 2021-04-19
 
 ### Changed

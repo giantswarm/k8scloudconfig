@@ -72,6 +72,7 @@ type Debug struct {
 
 type Images struct {
 	CalicoCNI                    string
+	CalicoCRDInstaller           string
 	CalicoKubeControllers        string
 	CalicoNode                   string
 	Etcd                         string
