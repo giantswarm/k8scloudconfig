@@ -11,6 +11,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Add `--bind-address-hard-fail` flag to kubeproxy to hard fail on bind failure
 
+## [10.3.0] - 2021-04-29
+
+### Changed
+
+- Install Calico CRDs using a separate app, `calico-crd-installer`.
+
 ## [10.2.1] - 2021-04-19
 
 ### Changed
@@ -876,7 +882,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.3.0...HEAD
+[10.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.1...v10.3.0
 [10.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...v10.2.1
 [10.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.1.0...v10.2.0
 [10.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...v10.1.0
