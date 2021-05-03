@@ -11,6 +11,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Add `--bind-address-hard-fail` flag to kubeproxy to hard fail on bind failure
 
+### Fixed
+
+- Wait for hostname to be set before running k8s-addons.
+
 ## [10.3.0] - 2021-04-29
 
 ### Changed
