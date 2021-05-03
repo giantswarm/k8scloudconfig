@@ -1,6 +1,13 @@
 #!/bin/bash
 
 export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
+while [ $HOSTNAME == "localhost" ]
+do
+  echo "Hostname is still localhost, waiting for bootstrap to be completed."
+  export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
+  sleep 5
+done
+
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
 
 # wait for healthy master
