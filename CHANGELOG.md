@@ -7,6 +7,36 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.4.0] - 2021-05-03
+
+### Added
+
+- Add `--bind-address-hard-fail` flag to kubeproxy to hard fail on bind failure
+
+### Fixed
+
+- Wait for hostname to be set before running k8s-addons.
+
+## [10.3.0] - 2021-04-29
+
+### Changed
+
+- Install Calico CRDs using a separate app, `calico-crd-installer`.
+
+## [10.2.1] - 2021-04-19
+
+### Changed
+
+- Retrieve Calico CRDs using HTTPS rather than base64 embedded in the ignition to fix an issue with slow startup times.
+
+## [10.2.0] - 2021-03-19
+
+### Changed
+
+- Enable `anonymous-auth` in API server to comply with CAPI (needed by `kubeadm`).
+
+## [10.1.0] - 2021-02-23
+
 ### Changed
 
 - Move Calico (full and policy-only) CRDs into a separate file (`/srv/calico-crds.yaml`) and upgrade to CRD v1 API.
@@ -858,7 +888,12 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.4.0...HEAD
+[10.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.3.0...v10.4.0
+[10.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.1...v10.3.0
+[10.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...v10.2.1
+[10.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.1.0...v10.2.0
+[10.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.0.0...v10.1.0
 [10.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.3.0...v10.0.0
 [9.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.2.0...v9.3.0
 [9.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v9.1.3...v9.2.0

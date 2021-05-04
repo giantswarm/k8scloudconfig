@@ -1,10 +1,11 @@
 #!/bin/bash
 
 export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
+
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
 
 # wait for healthy master
-while [ "$(kubectl get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do sleep 1 && echo 'Waiting for healthy k8s'; done
+while [ "$(kubectl get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]') && sleep 1 && echo 'Waiting for healthy k8s'; done
 
 # label namespaces (required for network egress policies)
 NAMESPACES="default kube-system" 
@@ -105,7 +106,7 @@ if [[ $(kubectl get ds -n kube-system calico-node -o jsonpath='{.spec.selector.m
   kubectl delete ds -n kube-system calico-node --cascade=false
 fi
 
-CNI_FILE="calico-crds.yaml"
+CNI_FILE="calico-crd-installer.yaml"
 
 {{ if .CalicoPolicyOnly -}}
 ## Apply Calico with network policy features only

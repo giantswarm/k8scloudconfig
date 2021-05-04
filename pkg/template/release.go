@@ -13,6 +13,7 @@ import (
 func BuildImages(registryDomain string, versions Versions) Images {
 	return Images{
 		CalicoCNI:                    buildImage(registryDomain, "giantswarm/cni", versions.Calico, ""),
+		CalicoCRDInstaller:           buildImage(registryDomain, "giantswarm/calico-crd-installer", versions.Calico, ""),
 		CalicoKubeControllers:        buildImage(registryDomain, "giantswarm/kube-controllers", versions.Calico, ""),
 		CalicoNode:                   buildImage(registryDomain, "giantswarm/node", versions.Calico, ""),
 		Etcd:                         buildImage(registryDomain, "giantswarm/etcd", versions.Etcd, ""),
@@ -76,7 +77,7 @@ func findComponent(releaseComponents []v1alpha1.ReleaseSpecComponent, name strin
 	return nil, componentNotFoundError
 }
 
-func validateImagesRegsitry(images Images, mirrors []string) error {
+func validateImagesRegistry(images Images, mirrors []string) error {
 	data, err := json.Marshal(images)
 	if err != nil {
 		return microerror.Mask(err)
