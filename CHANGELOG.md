@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Added `serviceAccountIssuer`, `serviceAccountKeyFile` and `serviceAccountSigningKeyFile` flags for k8s-api-server. Required in k8s v1.20
+
 ## [10.4.0] - 2021-05-03
 
 ### Added
