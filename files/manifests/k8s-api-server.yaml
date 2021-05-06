@@ -69,7 +69,7 @@ spec:
     - --requestheader-group-headers=X-Remote-Group
     - --requestheader-username-headers=X-Remote-User
     - --service-account-issuer=https://{{.Cluster.Kubernetes.API.Domain}}
-    - --service-account-key-kile=/etc/kubernetes/ssl/service-account-key.pem
+    - --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --service-account-private-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --service-account-signing-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --proxy-client-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
