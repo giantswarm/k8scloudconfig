@@ -312,7 +312,6 @@ systemd:
         {{ end -}}
         --node-ip=${DEFAULT_IPV4} \
         --config=/etc/kubernetes/config/kubelet.yaml \
-        --enable-server \
         --logtostderr=true \
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         --pod-infra-container-image={{ .Images.Pause }} \
