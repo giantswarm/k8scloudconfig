@@ -7,6 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Removed
+
+- Removed deprecated kubelet flag `--kubelet-https`
+- Removed deprecated kubelet flag `--insecure-port`
+
 ## [10.4.0] - 2021-05-03
 
 ### Added
