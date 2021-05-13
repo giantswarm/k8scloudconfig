@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Changed
+
+- Change deprecated `--dry-run` kubectl flag to `--dry-run=client` in k8s-addons script
+
 ## [10.5.0] - 2021-05-12
 
 ### Added
