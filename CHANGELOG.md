@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## Added
 
-- Added `enableServer` config in master kubelet config file
+- Added `enableServer` config in kubelet config file
 
 ## Removed
 
