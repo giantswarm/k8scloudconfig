@@ -13,6 +13,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## Removed
 
+- Removed deprecated kubernetes api-server flag `--kubelet-https`
+- Removed deprecated kubernetes api-server flag `--insecure-port`
 - Removed `--enable-server` kubelet flag since it is now deprecated
 
 ## [10.5.0] - 2021-05-12
