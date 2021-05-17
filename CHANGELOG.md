@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Added
+
+- Added `enableServer` config in kubelet config file
+
+## Removed
+
+- Removed `--enable-server` kubelet flag since it is now deprecated
+
 ## [10.5.0] - 2021-05-12
 
 ### Added
