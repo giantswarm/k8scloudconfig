@@ -7,9 +7,19 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Added
+
+- Added `enableServer` config in kubelet config file
+
 ## Changed
 
 - Change deprecated `--dry-run` kubectl flag to `--dry-run=client` in k8s-addons script
+
+## Removed
+
+- Removed deprecated kubernetes api-server flag `--kubelet-https`
+- Removed deprecated kubernetes api-server flag `--insecure-port`
+- Removed `--enable-server` kubelet flag since it is now deprecated
 
 ## [10.5.0] - 2021-05-12
 
