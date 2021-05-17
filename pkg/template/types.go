@@ -47,12 +47,18 @@ type Params struct {
 	// the addition of cloud provider extensions.
 	Kubernetes Kubernetes
 	Node       v1alpha1.ClusterNode
+	Proxy      Proxy
 	// RegistryMirrors to be configured for docker daemon. It should be
 	// domain names only without the protocol prefix, e.g.:
 	// ["giantswarm.azurecr.io"].
 	RegistryMirrors []string
 	SSOPublicKey    string
 	Versions        Versions
+}
+
+type Proxy struct {
+	HTTP  string
+	HTTPS string
 }
 
 type Versions struct {
