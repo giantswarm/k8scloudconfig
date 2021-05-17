@@ -57,8 +57,9 @@ type Params struct {
 }
 
 type Proxy struct {
-	HTTP  string
-	HTTPS string
+	HTTP    string
+	HTTPS   string
+	NoProxy string
 }
 
 type Versions struct {
