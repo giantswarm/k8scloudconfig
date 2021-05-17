@@ -12,6 +12,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Removed deprecated kubernetes api-server flag `--kubelet-https`
 - Removed deprecated kubernetes api-server flag `--insecure-port`
 
+## [10.5.0] - 2021-05-12
+
+### Added
+
+- Added `serviceAccountIssuer`, `serviceAccountKeyFile` and `serviceAccountSigningKeyFile` flags for k8s-api-server. Required in k8s v1.20
+
 ## [10.4.0] - 2021-05-03
 
 ### Added
@@ -893,7 +899,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.5.0...HEAD
+[10.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.4.0...v10.5.0
 [10.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.3.0...v10.4.0
 [10.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.1...v10.3.0
 [10.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.2.0...v10.2.1

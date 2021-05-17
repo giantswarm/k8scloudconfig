@@ -53,7 +53,6 @@ spec:
     - --tls-private-key-file=/etc/kubernetes/ssl/apiserver-key.pem
     - --tls-cipher-suites=TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_ECDSA_WITH_CHACHA20_POLY1305,TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256,TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384,TLS_ECDHE_RSA_WITH_CHACHA20_POLY1305,TLS_RSA_WITH_AES_256_GCM_SHA384,TLS_RSA_WITH_AES_128_GCM_SHA256
     - --client-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
-    - --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --audit-log-path=/var/log/apiserver/audit.log
     - --audit-log-maxage=30
     - --audit-log-maxbackup=30
@@ -66,6 +65,9 @@ spec:
     - --requestheader-extra-headers-prefix=X-Remote-Extra-
     - --requestheader-group-headers=X-Remote-Group
     - --requestheader-username-headers=X-Remote-User
+    - --service-account-issuer=https://{{.Cluster.Kubernetes.API.Domain}}
+    - --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
+    - --service-account-signing-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --proxy-client-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
     - --proxy-client-key-file=/etc/kubernetes/ssl/apiserver-key.pem
     resources:
