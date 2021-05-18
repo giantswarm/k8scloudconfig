@@ -208,6 +208,8 @@ systemd:
         --register-node=true \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/worker,role=worker,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
+        --container-runtime=remote \
+        --container-runtime-endpoint=unix:///run/containerd/containerd.sock \ 
         --v=2
       [Install]
       WantedBy=multi-user.target
