@@ -13,6 +13,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## Changed
 
+- Changed kubelet to use `containerd` cri instead of the `dockershim` cri
 - Change deprecated `--dry-run` kubectl flag to `--dry-run=client` in k8s-addons script
 
 ## Removed
