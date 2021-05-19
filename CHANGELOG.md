@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Propagate proxy environments to the node templates.
+
 ## [10.5.0] - 2021-05-12
 
 ### Added

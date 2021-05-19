@@ -47,7 +47,8 @@ type Params struct {
 	// the addition of cloud provider extensions.
 	Kubernetes Kubernetes
 	Node       v1alpha1.ClusterNode
-	Proxy      Proxy
+	// Proxy environment to be configured for systemd units (docker).
+	Proxy Proxy
 	// RegistryMirrors to be configured for docker daemon. It should be
 	// domain names only without the protocol prefix, e.g.:
 	// ["giantswarm.azurecr.io"].
