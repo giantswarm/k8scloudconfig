@@ -46,7 +46,7 @@ type Params struct {
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
 	Kubernetes           Kubernetes
-	KVMWorkerHostVolumes v1alpha1.KVMConfigSpecKVMNodeHostVolumes
+	KVMWorkerHostVolumes []v1alpha1.KVMConfigSpecKVMNodeHostVolumes
 	Node                 v1alpha1.ClusterNode
 	// Proxy environment to be configured for systemd units (docker).
 	Proxy Proxy
