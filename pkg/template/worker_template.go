@@ -45,14 +45,14 @@ systemd:
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
-  {{ range .KVMWorkerHostVolumes }}
-  - name: data-{{ .MountTag }}.mount
+  {{ range .KVMWorkerMountTags }}
+  - name: data-{{ . }}.mount
 	enabled: true
 	contents: |
-      Description=Guest mount for {{ .MountTag }} host volume
+      Description=Guest mount for {{ . }} host volume
       [Mount]
-      What={{ .MountTag }}
-      Where=/data/{{ .MountTag }}
+      What={{ . }}
+      Where=/data/{{ . }}
       Options=trans=virtio,version=9p2000.L,cache=mmap
       Type=9p
       [Install]
