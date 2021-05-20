@@ -45,6 +45,19 @@ systemd:
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  {{ range .KVMWorkerMountTags }}
+  - name: data-{{ . }}.mount
+	enabled: true
+	contents: |
+      Description=Guest mount for {{ . }} host volume
+      [Mount]
+      What={{ . }}
+      Where=/data/{{ . }}
+      Options=trans=virtio,version=9p2000.L,cache=mmap
+      Type=9p
+      [Install]
+      WantedBy=multi-user.target
+  {{ end }}
   - name: set-certs-group-owner-permission-giantswarm.service
     enabled: true
     contents: |
