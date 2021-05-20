@@ -45,9 +45,9 @@ type Params struct {
 	// Kubernetes components allow the passing of extra `docker run` and
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
-	Kubernetes           Kubernetes
-	KVMWorkerMountTags   []string
-	Node                 v1alpha1.ClusterNode
+	Kubernetes         Kubernetes
+	KVMWorkerMountTags []string
+	Node               v1alpha1.ClusterNode
 	// Proxy environment to be configured for systemd units (docker).
 	Proxy Proxy
 	// RegistryMirrors to be configured for docker daemon. It should be
