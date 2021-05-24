@@ -7,13 +7,17 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-## [10.7.0] - 2021-05-20
+## Fixed
 
-## [10.6.0] - 2021-05-20
+- Fix tags in Worker Ignition
+
+## [10.7.0] - 2021-05-20
 
 ## Added
 
 - Added `KVMWorkerHostVolumes` in worker template.
+
+## [10.6.0] - 2021-05-20
 
 ## Added
 
