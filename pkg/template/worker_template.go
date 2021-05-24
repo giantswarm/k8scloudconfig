@@ -47,8 +47,8 @@ systemd:
       {{end}}{{end}}
   {{ range .KVMWorkerMountTags }}
   - name: data-{{ . }}.mount
-	enabled: true
-	contents: |
+    enabled: true
+    contents: |
       Description=Guest mount for {{ . }} host volume
       [Mount]
       What={{ . }}
