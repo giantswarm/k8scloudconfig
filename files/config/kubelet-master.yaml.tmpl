@@ -38,6 +38,12 @@ authorization:
   mode: AlwaysAllow # Defaults to webhook as of 1.10
 featureGates:
   TTLAfterFinished: true
+  {{- if .EnableCSIMigrationAWS }}
+  CSIMigrationAWS: true
+  {{- end }}
+  {{- if .EnableCSIMigrationAWSComplete }}
+  CSIMigrationAWSComplete: true
+  {{- end }}
 tlsCipherSuites:
   - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
   - TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384
