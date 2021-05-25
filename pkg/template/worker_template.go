@@ -45,6 +45,19 @@ systemd:
     contents: |
       {{range .Content}}{{.}}
       {{end}}{{end}}
+  {{ range .KVMWorkerMountTags }}
+  - name: data-{{ . }}.mount
+    enabled: true
+    contents: |
+      Description=Guest mount for {{ . }} host volume
+      [Mount]
+      What={{ . }}
+      Where=/data/{{ . }}
+      Options=trans=virtio,version=9p2000.L,cache=mmap
+      Type=9p
+      [Install]
+      WantedBy=multi-user.target
+  {{ end }}
   - name: set-certs-group-owner-permission-giantswarm.service
     enabled: true
     contents: |
@@ -131,6 +144,15 @@ systemd:
           Slice=kubereserved.slice
           Environment="DOCKER_CGROUPS=--exec-opt native.cgroupdriver=cgroupfs --cgroup-parent=/kubereserved.slice --log-opt max-size=25m --log-opt max-file=2 --log-opt labels=io.kubernetes.container.hash,io.kubernetes.container.name,io.kubernetes.pod.name,io.kubernetes.pod.namespace,io.kubernetes.pod.uid"
           Environment="DOCKER_OPT_BIP=--bip={{.Cluster.Docker.Daemon.CIDR}}"
+          {{- if .Proxy.HTTP }}
+          Environment="HTTP_PROXY={{ .Proxy.HTTP }}"
+          {{- end }}
+          {{- if .Proxy.HTTPS }}
+          Environment="HTTPS_PROXY={{ .Proxy.HTTPS }}"
+          {{- end }}
+          {{- if .Proxy.NoProxy }}
+          Environment="NO_PROXY={{ .Proxy.NoProxy }}"
+          {{- end }}
   - name: k8s-setup-network-env.service
     enabled: true
     contents: |
@@ -200,7 +222,6 @@ systemd:
         {{ end -}}
         --node-ip=${DEFAULT_IPV4} \
         --config=/etc/kubernetes/config/kubelet.yaml \
-        --enable-server \
         --logtostderr=true \
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         --pod-infra-container-image={{ .Images.Pause }} \
