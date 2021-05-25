@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Changed
+
+- Enable AWS CSI migration.
+
 ## [10.7.1] - 2021-05-24
 
 ## Fixed
