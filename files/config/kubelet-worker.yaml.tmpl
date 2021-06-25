@@ -9,6 +9,7 @@ healthzPort: 10248
 clusterDNS:
   - {{.Cluster.Kubernetes.DNS.IP}}
 clusterDomain: {{.Cluster.Kubernetes.Domain}}
+kernelMemcgNotification: true
 evictionSoft:
   memory.available: "500Mi"
 evictionHard:
