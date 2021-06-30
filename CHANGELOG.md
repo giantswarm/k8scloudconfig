@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Added
+
+- Set `kernelMemcgNotification` kubelet configuration to true
+
 ## [10.8.0] - 2021-05-25
 
 ## Changed

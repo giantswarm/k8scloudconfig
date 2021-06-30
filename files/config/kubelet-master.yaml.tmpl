@@ -10,6 +10,7 @@ clusterDNS:
   - {{.Cluster.Kubernetes.DNS.IP}}
 clusterDomain: {{.Cluster.Kubernetes.Domain}}
 staticPodPath: /etc/kubernetes/manifests
+kernelMemcgNotification: true
 evictionSoft:
   memory.available: "500Mi"
 evictionHard:
