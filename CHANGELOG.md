@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.8.1] - 2021-07-01
+
 ## Added
 
 - Set `kernelMemcgNotification` kubelet configuration to true
@@ -933,7 +935,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...HEAD
+[10.8.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...v10.8.1
 [10.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.1...v10.8.0
 [10.7.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.0...v10.7.1
 [10.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.6.0...v10.7.0
