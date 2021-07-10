@@ -17,6 +17,8 @@ import (
 const (
 	InitialClusterStateNew      = "new"
 	InitialClusterStateExisting = "existing"
+
+	DefaultAPILBListenPort = 443
 )
 
 type CloudConfigConfig struct {
@@ -66,7 +68,12 @@ func NewCloudConfig(config CloudConfigConfig) (*CloudConfig, error) {
 		)
 	}
 
-	c := &CloudConfig{
+	// keep  backward compatibility
+	if config.Params.APILBPortListen == 0 {
+		config.Params.APILBPortListen = DefaultAPILBListenPort
+	}
+
+  c := &CloudConfig{
 		config:   "",
 		params:   config.Params,
 		template: config.Template,

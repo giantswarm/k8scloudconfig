@@ -8,6 +8,7 @@ type Params struct {
 	// APIServerEncryptionKey is AES-CBC with PKCS#7 padding key to encrypt API
 	// etcd data.
 	APIServerEncryptionKey string
+	APILBPortListen        int
 	BaseDomain             string
 	Cluster                v1alpha1.Cluster
 	// Debug options
