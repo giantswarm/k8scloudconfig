@@ -193,10 +193,10 @@ spec:
           resources:
             requests:
               cpu: 50m
-              memory: 100Mi
+              memory: 200Mi
             limits:
               cpu: 50m
-              memory: 100Mi
+              memory: 200Mi
           volumeMounts:
             - mountPath: /host/opt/cni/bin
               name: cni-bin-dir
