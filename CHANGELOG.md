@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Removed
+
+- Remove `EnableCSIMigrationAWSComplete` feature gate flag 
+
 ## [10.8.1] - 2021-07-01
 
 ## Added
