@@ -534,18 +534,23 @@ metadata:
   name: calico-kube-controllers
 rules:
   # Nodes are watched to monitor for deletions.
+  # Pods are watched to check for existence as part of IPAM controller.
   - apiGroups: [""]
     resources:
       - nodes
+      - pods
+      - namespaces
+      - serviceaccounts
     verbs:
       - watch
       - list
       - get
-  # Pods are queried to check for existence.
-  - apiGroups: [""]
+  - apiGroups: ["networking.k8s.io"]
     resources:
-      - pods
+      - networkpolicies
     verbs:
+      - watch
+      - list
       - get
   # IPAM resources are manipulated when nodes are deleted.
   - apiGroups: ["crd.projectcalico.org"]
