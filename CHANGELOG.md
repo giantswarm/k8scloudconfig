@@ -7,9 +7,9 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-## Removed
+## Change
 
-- Remove `EnableCSIMigrationAWSComplete` feature gate flag 
+- Replace `EnableCSIMigrationAWSComplete` feature gate flag with `InTreePluginAWSUnregister`
 
 ## [10.8.1] - 2021-07-01
 
