@@ -299,7 +299,7 @@ spec:
               value: "false"
             # Set Felix logging to "info"
             - name: FELIX_LOGSEVERITYSCREEN
-              value: "Debug"
+              value: "Warning"
             - name: FELIX_HEALTHENABLED
               value: "true"
             - name: FELIX_PROMETHEUSMETRICSENABLED
