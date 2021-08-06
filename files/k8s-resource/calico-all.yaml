@@ -304,8 +304,8 @@ spec:
               value: "true"
             - name: FELIX_PROMETHEUSMETRICSENABLED
               value: "true"
-            - name: IP_AUTODETECTION_METHOD
-              value: "interface=eth.*"
+            - name: FELIX_LOGSEVERITYFILE
+              value: "Debug"
           securityContext:
             privileged: true
           resources:
