@@ -2,6 +2,7 @@
 #  - Added resource limits to calico-node and calico-kube-controller.
 #  - Added resource limits to install-cni.
 #  - Added 'priorityClassName: system-node-critical' to calico daemonset.
+#  - Added `runAsUser: 0` to calico-kube-controllers deployment.
 
 # Source: calico/templates/calico-config.yaml
 # This ConfigMap is used to configure a self-hosted Calico installation.
