@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Added
+
+- Set `service-account-jwks-uri` api server value to align with `service-account-issuer` value
+
 ## Change
 
 - Replace `EnableCSIMigrationAWSComplete` feature gate flag with `InTreePluginAWSUnregister`
