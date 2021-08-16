@@ -17,8 +17,8 @@ type Params struct {
 	EnableAWSCNI bool
 	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
 	EnableCSIMigrationAWS bool
-	// EnableCSIMigrationAWSComplete flag. When set to true all EBS volumes have been migrated to CSI.
-	EnableCSIMigrationAWSComplete bool
+	// InTreePluginAWSUnregister flag. Disables the AWS EBS in-tree driver
+	InTreePluginAWSUnregister bool
 	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
 	CalicoPolicyOnly bool
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud

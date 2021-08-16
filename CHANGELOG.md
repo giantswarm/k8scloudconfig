@@ -7,6 +7,16 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.9.0] - 2021-08-16
+
+## Added
+
+- Set `service-account-jwks-uri` api server value to align with `service-account-issuer` value
+
+## Change
+
+- Replace `EnableCSIMigrationAWSComplete` feature gate flag with `InTreePluginAWSUnregister`
+
 ## [10.8.1] - 2021-07-01
 
 ## Added
@@ -935,7 +945,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...HEAD
+[10.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...v10.9.0
 [10.8.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...v10.8.1
 [10.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.1...v10.8.0
 [10.7.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.0...v10.7.1
