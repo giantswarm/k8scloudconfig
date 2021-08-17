@@ -38,7 +38,12 @@ func (p *Params) Validate() error {
 		return microerror.Mask(err)
 	}
 
-	if err := validateComponentVersion("Calico", p.Versions.Calico, key.CalicoVersionConstraint); err != nil {
+	calicoVersionConstraint := key.CalicoVersionConstraint
+	if p.CalicoPolicyOnly {
+		calicoVersionConstraint = key.CalicoPolicyOnlyVersionConstraint
+	}
+
+	if err := validateComponentVersion("Calico", p.Versions.Calico, calicoVersionConstraint); err != nil {
 		return microerror.Mask(err)
 	}
 
