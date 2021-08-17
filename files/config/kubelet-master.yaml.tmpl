@@ -42,8 +42,8 @@ featureGates:
   {{- if .EnableCSIMigrationAWS }}
   CSIMigrationAWS: true
   {{- end }}
-  {{- if .EnableCSIMigrationAWSComplete }}
-  CSIMigrationAWSComplete: true
+  {{- if .InTreePluginAWSUnregister }}
+  InTreePluginAWSUnregister: true
   {{- end }}
 tlsCipherSuites:
   - TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256
