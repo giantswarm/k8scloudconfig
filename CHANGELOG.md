@@ -9,7 +9,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Disable IPIP encapsulation for Calico in overlay mode.
 - Update manifests for Calico 3.19 compatibility.
 - Separate Calico version constraint for policy-only deployment.
 
