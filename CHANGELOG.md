@@ -13,6 +13,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Update manifests for Calico 3.19 compatibility.
 - Separate Calico version constraint for policy-only deployment.
 
+## [10.9.1] - 2021-08-20
+
+### Changed
+
+- Add check to only include `InTreePluginAWSUnregister` flag if set to true.
+
 ## [10.9.0] - 2021-08-16
 
 ### Added
@@ -951,7 +957,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...HEAD
+[10.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...v10.9.1
 [10.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...v10.9.0
 [10.8.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...v10.8.1
 [10.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.1...v10.8.0
