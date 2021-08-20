@@ -11,7 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
-- Add check to only include `EnableCSIMigrationAWSComplete` flag if set to true.
+- Add check to only include `InTreePluginAWSUnregister` flag if set to true.
 
 ## [10.9.0] - 2021-08-16
 
