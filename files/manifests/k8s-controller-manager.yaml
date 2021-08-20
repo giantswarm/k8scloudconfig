@@ -33,7 +33,7 @@ spec:
     - --use-service-account-credentials=true
     - --kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     {{ if .InTreePluginAWSUnregister }}
-    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},InTreePluginAWSUnregister={{ .InTreePluginAWSUnregister }}
+    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},InTreePluginAWSUnregister=true
     {{ else }}
     - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }}
     {{ end }}
