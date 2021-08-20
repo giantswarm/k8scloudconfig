@@ -23,15 +23,6 @@ data:
   # You can override auto-detection by providing a non-zero value.
   veth_mtu: "{{.Cluster.Calico.MTU}}"
 
-  # Configure this with the location of your etcd cluster.
-  etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }}"
-
-  # If you're using TLS enabled etcd uncomment the following.
-  # You must also populate the Secret below with these files.
-  etcd_ca: "/calico-secrets/etcd-ca"
-  etcd_cert: "/calico-secrets/etcd-cert"
-  etcd_key: "/calico-secrets/etcd-key"
-
   # The CNI network configuration to install on each node.  The special
   # values in this config will be automatically populated.
   cni_network_config: |-
@@ -42,11 +33,8 @@ data:
         {
           "type": "calico",
           "log_level": "info",
+          "datastore_type": "kubernetes",
           "nodename": "__KUBERNETES_NODE_NAME__",
-          "etcd_endpoints": "__ETCD_ENDPOINTS__",
-          "etcd_key_file": "__ETCD_KEY_FILE__",
-          "etcd_cert_file": "__ETCD_CERT_FILE__",
-          "etcd_ca_cert_file": "__ETCD_CA_CERT_FILE__",
           "mtu": __CNI_MTU__,
           "ipam": {
               "type": "calico-ipam"
@@ -176,12 +164,11 @@ spec:
                 configMapKeyRef:
                   name: calico-config
                   key: cni_network_config
-            # The location of the Calico etcd cluster.
-            - name: ETCD_ENDPOINTS
+            # Set the hostname based on the k8s node name.
+            - name: KUBERNETES_NODE_NAME
               valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_endpoints
+                fieldRef:
+                  fieldPath: spec.nodeName
             # CNI MTU Config variable
             - name: CNI_MTU
               valueFrom:
@@ -203,8 +190,6 @@ spec:
               name: cni-bin-dir
             - mountPath: /host/etc/cni/net.d
               name: cni-net-dir
-            - mountPath: /calico-secrets
-              name: etcd-certs
           securityContext:
             privileged: true
       containers:
@@ -219,6 +204,9 @@ spec:
                 name: kubernetes-services-endpoint
                 optional: true
           env:
+            # Use Kubernetes API as the backing datastore.
+            - name: DATASTORE_TYPE
+              value: "kubernetes"
             # Wait for the datastore.
             - name: WAIT_FOR_DATASTORE
               value: "true"
@@ -233,30 +221,6 @@ spec:
                 configMapKeyRef:
                   name: calico-config
                   key: calico_backend
-            # The location of the Calico etcd cluster.
-            - name: ETCD_ENDPOINTS
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_endpoints
-            # Location of the CA certificate for etcd.
-            - name: ETCD_CA_CERT_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_ca
-            # Location of the client key for etcd.
-            - name: ETCD_KEY_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_key
-            # Location of the client certificate for etcd.
-            - name: ETCD_CERT_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_cert
             # Cluster type to identify the deployment type
             - name: CLUSTER_TYPE
               value: "k8s,bgp"
@@ -266,6 +230,9 @@ spec:
             # Enable IPIP
             - name: CALICO_IPV4POOL_IPIP
               value: "Always"
+            # Enable or Disable VXLAN on the default IP pool.
+            - name: CALICO_IPV4POOL_VXLAN
+              value: "Never"
             # Set MTU for tunnel device used if ipip is enabled
             - name: FELIX_IPINIPMTU
               valueFrom:
@@ -340,9 +307,6 @@ spec:
             - mountPath: /var/lib/calico
               name: var-lib-calico
               readOnly: false
-            - name: etcd-certs
-              mountPath: /calico-secrets
-              readOnly: true
             - name: policysync
               mountPath: /var/run/nodeagent
             # For eBPF mode, we need to be able to mount the BPF filesystem at /sys/fs/bpf so we mount in the
@@ -396,11 +360,6 @@ spec:
           hostPath:
             type: DirectoryOrCreate
             path: /var/run/nodeagent
-        # Mount in the etcd TLS secrets.
-        # See https://kubernetes.io/docs/concepts/configuration/secret/
-        - name: etcd-certs
-          hostPath:
-            path: /etc/kubernetes/ssl/calico
 ---
 
 apiVersion: v1
@@ -458,37 +417,11 @@ spec:
         - name: calico-kube-controllers
           image: {{.Images.CalicoKubeControllers}}
           env:
-            # The location of the Calico etcd cluster.
-            - name: ETCD_ENDPOINTS
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_endpoints
-            # Location of the CA certificate for etcd.
-            - name: ETCD_CA_CERT_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_ca
-            # Location of the client key for etcd.
-            - name: ETCD_KEY_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_key
-            # Location of the client certificate for etcd.
-            - name: ETCD_CERT_FILE
-              valueFrom:
-                configMapKeyRef:
-                  name: calico-config
-                  key: etcd_cert
             # Choose which controllers to run.
             - name: ENABLED_CONTROLLERS
               value: policy,profile,workloadendpoint,node,serviceaccount
-          volumeMounts:
-            # Mount in the etcd TLS secrets.
-            - mountPath: /calico-secrets
-              name: etcd-certs
+            - name: DATASTORE_TYPE
+              value: kubernetes
           securityContext:
             runAsUser: 0
           resources:
@@ -503,18 +436,13 @@ spec:
             periodSeconds: 10
             initialDelaySeconds: 10
             failureThreshold: 6
+            timeoutSeconds: 10
           readinessProbe:
             exec:
               command:
                 - /usr/bin/check-status
                 - -r
             periodSeconds: 10
-      volumes:
-        # Mount in the etcd TLS secrets with mode 400.
-        # See https://kubernetes.io/docs/concepts/configuration/secret/
-        - name: etcd-certs
-          hostPath:
-            path: /etc/kubernetes/ssl/calico
 
 ---
 
