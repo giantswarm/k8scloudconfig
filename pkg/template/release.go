@@ -14,6 +14,7 @@ func BuildImages(registryDomain string, versions Versions) Images {
 	return Images{
 		CalicoCNI:                    buildImage(registryDomain, "giantswarm/cni", versions.Calico, ""),
 		CalicoCRDInstaller:           buildImage(registryDomain, "giantswarm/calico-crd-installer", versions.Calico, ""),
+		Calicoctl:                    buildImage(registryDomain, "calico/ctl", versions.Calico, ""),
 		CalicoKubeControllers:        buildImage(registryDomain, "giantswarm/kube-controllers", versions.Calico, ""),
 		CalicoNode:                   buildImage(registryDomain, "giantswarm/node", versions.Calico, ""),
 		Etcd:                         buildImage(registryDomain, "giantswarm/etcd", versions.Etcd, ""),

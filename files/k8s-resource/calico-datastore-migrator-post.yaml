@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app.kubernetes.io/name: calico-datastore-migrator-post
+  name: calico-datastore-migrator-post
+  namespace: kube-system
+spec:
+  ttlSecondsAfterFinished: 600
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: calico-datastore-migrator-post
+    spec:
+      containers:
+        - name: calicoctl
+          image: {{ .Images.Calicoctl }}
+          command:
+            - /bin/sh
+            - -c
+          args:
+            - calicoctl datastore migrate unlock
+          env:
+            - name: DATASTORE_TYPE
+              value: kubernetes
+            - name: KUBECONFIG
+              value: /etc/kubernetes/kubeconfig/addons.yaml
+          volumeMounts:
+            - mountPath: /etc/kubernetes/ssl
+              name: certs
+              readOnly: true
+            - mountPath: /etc/kubernetes/kubeconfig/addons.yaml
+              name: kubeconfig
+              readOnly: true
+              subPath: addons.yaml
+      volumes:
+        - name: certs
+          hostPath:
+            path: /etc/kubernetes/ssl
+        - name: kubeconfig
+          hostPath:
+            path: /etc/kubernetes/kubeconfig
+      hostNetwork: true
+      nodeSelector:
+        kubernetes.io/role: master
+      tolerations:
+        - key: CriticalAddonsOnly
+          operator: Exists
+        - key: node-role.kubernetes.io/master
+          effect: NoSchedule
+      restartPolicy: Never
+  backoffLimit: 4
