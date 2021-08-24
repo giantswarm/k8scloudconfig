@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Temporarily re-enable ssh-rsa in sshd until it is removed
+
 ## [10.9.1] - 2021-08-20
 
 ### Changed
