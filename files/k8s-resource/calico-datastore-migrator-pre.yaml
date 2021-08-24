@@ -60,4 +60,5 @@ spec:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
       restartPolicy: Never
+      serviceAccountName: calico-init
   backoffLimit: 4
