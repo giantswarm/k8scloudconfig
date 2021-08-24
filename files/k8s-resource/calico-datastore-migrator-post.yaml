@@ -16,10 +16,11 @@ spec:
         - name: calicoctl
           image: {{ .Images.Calicoctl }}
           command:
-            - /bin/sh
-            - -c
+            - calicoctl
           args:
-            - calicoctl datastore migrate unlock
+            - datastore
+            - migrate
+            - unlock
           env:
             - name: DATASTORE_TYPE
               value: kubernetes
@@ -49,4 +50,5 @@ spec:
         - key: node-role.kubernetes.io/master
           effect: NoSchedule
       restartPolicy: Never
+      serviceAccountName: calico-init
   backoffLimit: 4

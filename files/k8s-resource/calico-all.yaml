@@ -13,6 +13,9 @@ metadata:
   name: calico-config
   namespace: kube-system
 data:
+  # TODO: remove once all clusters have been migrated to kubernetes datastore
+  etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }}"
+
   # Typha is disabled.
   typha_service_name: "none"
   # Configure the backend to use.
