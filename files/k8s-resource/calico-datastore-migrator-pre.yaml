@@ -19,23 +19,30 @@ spec:
             - /bin/sh
             - -c
           args:
-            - DATASTORE_TYPE=etcdv3 calicoctl datastore migrate lock &&
+            - if [ $DATASTORE_TYPE != "kubernetes" ]; then exit 0; fi
+              DATASTORE_TYPE=etcdv3 calicoctl datastore migrate lock &&
               DATASTORE_TYPE=etcdv3 calicoctl datastore migrate export > etcd-data &&
               DATASTORE_TYPE=kubernetes calicoctl datastore migrate import -f etcd-data
           env:
-          - name: ETCD_ENDPOINTS
-            valueFrom:
-              configMapKeyRef:
-                key: etcd_endpoints
-                name: calico-config
-          - name: ETCD_CA_CERT_FILE
-            value: /etc/kubernetes/ssl/calico/etcd-ca
-          - name: ETCD_KEY_FILE
-            value: /etc/kubernetes/ssl/calico/etcd-key
-          - name: ETCD_CERT_FILE
-            value: /etc/kubernetes/ssl/calico/etcd-cert
-          - name: KUBECONFIG
-            value: /etc/kubernetes/kubeconfig/addons.yaml
+            - name: DATASTORE_TYPE
+              valueFrom:
+                configMapKeyRef:
+                  key: datastore_type
+                  name: calico-config
+                  optional: true
+            - name: ETCD_ENDPOINTS
+              valueFrom:
+                configMapKeyRef:
+                  key: etcd_endpoints
+                  name: calico-config
+            - name: ETCD_CA_CERT_FILE
+              value: /etc/kubernetes/ssl/calico/etcd-ca
+            - name: ETCD_KEY_FILE
+              value: /etc/kubernetes/ssl/calico/etcd-key
+            - name: ETCD_CERT_FILE
+              value: /etc/kubernetes/ssl/calico/etcd-cert
+            - name: KUBECONFIG
+              value: /etc/kubernetes/kubeconfig/addons.yaml
           volumeMounts:
             - mountPath: /etc/kubernetes/ssl
               name: certs

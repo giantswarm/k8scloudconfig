@@ -16,14 +16,18 @@ spec:
         - name: calicoctl
           image: {{ .Images.Calicoctl }}
           command:
-            - calicoctl
+            - /bin/sh
+            - -c
           args:
-            - datastore
-            - migrate
-            - unlock
+            - if [ $DATASTORE_TYPE != "kubernetes" ]; then exit 0; fi;
+              calicoctl datastore migrate unlock
           env:
             - name: DATASTORE_TYPE
-              value: kubernetes
+              valueFrom:
+                configMapKeyRef:
+                  key: datastore_type
+                  name: calico-config
+                  optional: true
             - name: KUBECONFIG
               value: /etc/kubernetes/kubeconfig/addons.yaml
           volumeMounts:
