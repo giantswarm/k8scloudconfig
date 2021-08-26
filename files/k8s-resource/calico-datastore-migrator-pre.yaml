@@ -19,7 +19,7 @@ spec:
             - /bin/sh
             - -c
           args:
-            - if [ $DATASTORE_TYPE != "kubernetes" ]; then exit 0; fi;
+            - if [ $DATASTORE_TYPE == "kubernetes" ]; then echo "Already migrated"; exit 0; fi;
               DATASTORE_TYPE=etcdv3 calicoctl datastore migrate lock &&
               DATASTORE_TYPE=etcdv3 calicoctl datastore migrate export > etcd-data &&
               DATASTORE_TYPE=kubernetes calicoctl datastore migrate import -f etcd-data

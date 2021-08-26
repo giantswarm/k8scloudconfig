@@ -19,8 +19,7 @@ spec:
             - /bin/sh
             - -c
           args:
-            - if [ $DATASTORE_TYPE != "kubernetes" ]; then exit 0; fi;
-              calicoctl datastore migrate unlock
+            - calicoctl datastore migrate unlock
           env:
             - name: DATASTORE_TYPE
               valueFrom:
