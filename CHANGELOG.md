@@ -11,6 +11,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Update manifests for Calico 3.19 compatibility.
 - Separate Calico version constraint for policy-only deployment.
+- Migrate Calico datastore from etcd to Kubernetes (KVM-only).
+
+## [10.10.0] - 2021-08-25
+
+### Changed
+
+- Temporarily re-enable `ssh-rsa` `CASignatureAlgorithm` in sshd until it is fully removed
 
 ## [10.9.1] - 2021-08-20
 
@@ -956,7 +963,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...HEAD
+[10.10.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...v10.10.0
 [10.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...v10.9.1
 [10.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...v10.9.0
 [10.8.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...v10.8.1
