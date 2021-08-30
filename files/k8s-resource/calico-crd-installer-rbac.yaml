@@ -44,7 +44,7 @@ rules:
     verbs:
     - "*"
   - apiGroups:
-    - extensions
+    - policy
     resources:
     - podsecuritypolicies
     resourceNames:
