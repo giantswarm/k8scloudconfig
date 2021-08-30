@@ -1,3 +1,26 @@
+apiVersion: policy/v1beta1
+kind: PodSecurityPolicy
+metadata:
+  name: calico-init
+spec:
+  allowedHostPaths:
+    - pathPrefix: /etc/kubernetes
+      readOnly: true
+  fsGroup:
+    rule: RunAsAny
+  hostNetwork: true
+  privileged: false
+  seLinux:
+    rule: RunAsAny
+  supplementalGroups:
+    rule: RunAsAny
+  runAsUser:
+    rule: RunAsAny
+  volumes:
+    - hostPath
+    - secret
+---
+
 apiVersion: v1
 kind: ServiceAccount
 metadata:
@@ -20,6 +43,14 @@ rules:
     - customresourcedefinitions
     verbs:
     - "*"
+  - apiGroups:
+    - extensions
+    resources:
+    - podsecuritypolicies
+    resourceNames:
+    - calico-init
+    verbs:
+    - use
 ---
 
 apiVersion: rbac.authorization.k8s.io/v1
