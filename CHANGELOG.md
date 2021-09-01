@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.11.0] - 2021-09-01
+
 ### Changed
 
 - Update manifests for Calico 3.19 compatibility.
@@ -963,7 +965,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...HEAD
+[10.11.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...v10.11.0
 [10.10.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...v10.10.0
 [10.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...v10.9.1
 [10.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...v10.9.0
