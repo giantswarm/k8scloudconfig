@@ -42,6 +42,7 @@ func Test_validateImagesRegistry(t *testing.T) {
 				CalicoCRDInstaller:           "docker.io/giantswarm/image:1.2.3",
 				CalicoKubeControllers:        "docker.io/giantswarm/image:1.2.3",
 				CalicoNode:                   "docker.io/giantswarm/image:1.2.3",
+				Calicoctl:                    "docker.io/giantswarm/image:1.2.3",
 				Etcd:                         "docker.io/giantswarm/image:1.2.3",
 				Hyperkube:                    "docker.io/giantswarm/image:1.2.3",
 				KubeApiserver:                "docker.io/giantswarm/image:1.2.3",
