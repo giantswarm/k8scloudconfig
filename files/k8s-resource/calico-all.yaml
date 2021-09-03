@@ -485,6 +485,13 @@ rules:
       - list
   - apiGroups: ["crd.projectcalico.org"]
     resources:
+      - networkpolicies
+    verbs:
+      - create
+      - get
+      - list
+  - apiGroups: ["crd.projectcalico.org"]
+    resources:
       - blockaffinities
       - ipamblocks
       - ipamhandles
