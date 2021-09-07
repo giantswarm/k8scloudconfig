@@ -439,6 +439,24 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crd-installer.yaml" }}"
 
+    - path: /srv/calico-crd-installer-rbac.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crd-installer-rbac.yaml" }}"
+
+    - path: /srv/calico-datastore-migrator-pre.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-datastore-migrator-pre.yaml" }}"
+
+    - path: /srv/calico-datastore-migrator-post.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-datastore-migrator-post.yaml" }}"
+
     {{- if .CalicoPolicyOnly }}
     - path: /srv/calico-policy-only.yaml
       filesystem: root

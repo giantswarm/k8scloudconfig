@@ -7,51 +7,73 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-## Added
+## [10.11.0] - 2021-09-01
+
+### Changed
+
+- Update manifests for Calico 3.19 compatibility.
+- Separate Calico version constraint for policy-only deployment.
+- Migrate Calico datastore from etcd to Kubernetes (KVM-only).
+
+## [10.10.0] - 2021-08-25
+
+### Changed
+
+- Temporarily re-enable `ssh-rsa` `CASignatureAlgorithm` in sshd until it is fully removed
+
+## [10.9.1] - 2021-08-20
+
+### Changed
+
+- Add check to only include `InTreePluginAWSUnregister` flag if set to true.
+
+## [10.9.0] - 2021-08-16
+
+### Added
 
 - Set `service-account-jwks-uri` api server value to align with `service-account-issuer` value
 
-## Change
+### Change
 
 - Replace `EnableCSIMigrationAWSComplete` feature gate flag with `InTreePluginAWSUnregister`
 
 ## [10.8.1] - 2021-07-01
 
-## Added
+### Added
 
 - Set `kernelMemcgNotification` kubelet configuration to true
 
 ## [10.8.0] - 2021-05-25
 
-## Changed
+### Changed
 
 - Enable AWS CSI migration.
 
 ## [10.7.1] - 2021-05-24
 
-## Fixed
+### Fixed
 
 - Fix tags in Worker Ignition
 
 ## [10.7.0] - 2021-05-20
 
-## Added
+### Added
 
 - Added `KVMWorkerHostVolumes` in worker template.
 
 ## [10.6.0] - 2021-05-20
 
-## Added
+### Added
 
 - Added `enableServer` config in kubelet config file
 - Propagate proxy environments to the node templates.
 
-## Changed
+### Changed
 
 - Changed kubelet to use `containerd` cri instead of the `dockershim` cri
 - Change deprecated `--dry-run` kubectl flag to `--dry-run=client` in k8s-addons script
 
-## Removed
+### Removed
 
 - Removed deprecated kubernetes api-server flag `--kubelet-https`
 - Removed deprecated kubernetes api-server flag `--insecure-port`
@@ -944,7 +966,11 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...HEAD
+[10.11.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...v10.11.0
+[10.10.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...v10.10.0
+[10.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...v10.9.1
+[10.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.1...v10.9.0
 [10.8.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.8.0...v10.8.1
 [10.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.1...v10.8.0
 [10.7.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.7.0...v10.7.1
