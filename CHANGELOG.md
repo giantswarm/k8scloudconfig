@@ -7,6 +7,11 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add access to networkpolicies to calico-kube-controllers service account.
+
+
 ## [10.11.0] - 2021-09-01
 
 ### Changed
