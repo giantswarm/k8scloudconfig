@@ -4,6 +4,8 @@ export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
 
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
 
+stdbuf --output=L ip netns monitor > /tmp/netns_logs
+
 # wait for healthy master
 while [ "$(kubectl get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]') && sleep 1 && echo 'Waiting for healthy k8s'; done
 
