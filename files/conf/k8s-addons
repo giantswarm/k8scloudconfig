@@ -4,7 +4,6 @@ export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]')
 
 export KUBECONFIG=/etc/kubernetes/kubeconfig/addons.yaml
 
-stdbuf --output=L ip monitor > /tmp/ip_logs & 
 
 # wait for healthy master
 while [ "$(kubectl get nodes $HOSTNAME -o jsonpath='{.metadata.name}')" != "$HOSTNAME" ]; do export HOSTNAME=$(hostname | tr '[:upper:]' '[:lower:]') && sleep 1 && echo 'Waiting for healthy k8s'; done
@@ -63,6 +62,8 @@ do
     echo "Waiting for etcd to be ready . . "
     sleep 3s
 done
+
+stdbuf --output=L ip monitor > /tmp/ip_logs & 
 
 # create kube-proxy configmap
 while
