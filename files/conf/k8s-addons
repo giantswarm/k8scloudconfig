@@ -88,33 +88,6 @@ echo "kube-proxy successfully installed"
 # restart ds to apply config from configmap
 kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 
-{{ if .EnableAWSCNI -}}
-## Apply AWS VPC CNI
-CNI_FILE="aws-cni.yaml"
-
-for manifest in ${CNI_FILE}
-do
-    while
-        kubectl apply -f /srv/$manifest
-        [ "$?" -ne "0" ]
-    do
-        echo "failed to apply /srv/$manifest, retrying in 5 sec"
-        sleep 5s
-    done
-done
-
-while
-    echo "Waiting for aws-node to be ready..."
-    kubectl -n kube-system -l k8s-app=aws-node wait --for=condition=Ready --timeout=2m pods
-    [ "$?" -ne "0" ]
-do
-    echo "aws-node was not ready after 1 minute"
-done
-
-echo "aws-node is ready"
-
-{{ end -}}
-
 # TODO: remove migrator once all clusters have been migrated to kubernetes datastore
 kubectl apply -f /srv/calico-crd-installer-rbac.yaml
 for job in calico-crd-installer calico-datastore-migrator-pre
@@ -156,6 +129,33 @@ echo "calico-node is ready"
 kubectl apply -f /srv/calico-datastore-migrator-post.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-post
 kubectl delete -f /srv/calico-crd-installer-rbac.yaml
+
+{{ if .EnableAWSCNI -}}
+## Apply AWS VPC CNI
+CNI_FILE="aws-cni.yaml"
+
+for manifest in ${CNI_FILE}
+do
+    while
+        kubectl apply -f /srv/$manifest
+        [ "$?" -ne "0" ]
+    do
+        echo "failed to apply /srv/$manifest, retrying in 5 sec"
+        sleep 5s
+    done
+done
+
+while
+    echo "Waiting for aws-node to be ready..."
+    kubectl -n kube-system -l k8s-app=aws-node wait --for=condition=Ready --timeout=2m pods
+    [ "$?" -ne "0" ]
+do
+    echo "aws-node was not ready after 1 minute"
+done
+
+echo "aws-node is ready"
+
+{{ end -}}
 
 # apply default storage class
 if [ -f /srv/default-storage-class.yaml ]; then
