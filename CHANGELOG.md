@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.12.0] - 2021-09-09
+
 ### Added
 
 - Add access to networkpolicies to calico-kube-controllers service account.
@@ -970,7 +972,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.0...HEAD
+[10.12.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...v10.12.0
 [10.11.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...v10.11.0
 [10.10.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...v10.10.0
 [10.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.0...v10.9.1
