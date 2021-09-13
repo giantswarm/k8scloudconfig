@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Avoid running Calico datastore migration pods when Calico is in policy only mode.
+
 ## [10.12.0] - 2021-09-09
 
 ### Added
