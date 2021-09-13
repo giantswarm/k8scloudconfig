@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.12.1] - 2021-09-13
+
 ### Fixed
 
 - Avoid running Calico datastore migration pods when Calico is in policy only mode.
@@ -976,7 +978,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.1...HEAD
+[10.12.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.0...v10.12.1
 [10.12.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...v10.12.0
 [10.11.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...v10.11.0
 [10.10.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.9.1...v10.10.0
