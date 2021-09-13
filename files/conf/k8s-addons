@@ -88,14 +88,15 @@ echo "kube-proxy successfully installed"
 # restart ds to apply config from configmap
 kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 
+kubectl apply -f /srv/calico-crd-installer-rbac.yaml
+
+kubectl apply -f /srv/calico-crd-installer.yaml
+kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
+
 {{- if not .CalicoPolicyOnly }}
 # TODO: remove migrator once all clusters have been migrated to kubernetes datastore
-kubectl apply -f /srv/calico-crd-installer-rbac.yaml
-for job in calico-crd-installer calico-datastore-migrator-pre
-do
-  kubectl apply -f /srv/$job.yaml
-  kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=$job
-done
+kubectl apply -f /srv/calico-datastore-migrator-pre.yaml
+kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-pre
 {{ end -}}
 
 {{ if .CalicoPolicyOnly -}}
@@ -135,8 +136,9 @@ echo "calico-node is ready"
 # TODO: remove migrator once all clusters have been migrated to kubernetes datastore
 kubectl apply -f /srv/calico-datastore-migrator-post.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-post
-kubectl delete -f /srv/calico-crd-installer-rbac.yaml
 {{ end -}}
+
+kubectl delete -f /srv/calico-crd-installer-rbac.yaml
 
 # apply default storage class
 if [ -f /srv/default-storage-class.yaml ]; then
