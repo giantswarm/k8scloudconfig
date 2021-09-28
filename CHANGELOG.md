@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.12.2] - 2021-09-28
+
 ## Fixed
 
 - Apply `calico-policy-only` manifest when `aws-cni` is used.
@@ -982,7 +984,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.2...HEAD
+[10.12.2]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.1...v10.12.2
 [10.12.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.0...v10.12.1
 [10.12.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...v10.12.0
 [10.11.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.10.0...v10.11.0
