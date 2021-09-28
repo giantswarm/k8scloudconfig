@@ -104,7 +104,7 @@ kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kube
 CNI_FILE="calico-policy-only.yaml"
 {{ if .EnableAWSCNI -}}
 ## Apply AWS VPC CNI
-CNI_FILE="aws-cni.yaml"
+CNI_FILE="${CNI_FILE} aws-cni.yaml"
 {{ end -}}
 {{ else -}}
 ## Apply Calico with all its components

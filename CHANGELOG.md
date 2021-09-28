@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Fixed
+
+- Apply `calico-policy-only` manifest when `aws-cni` is used.
+
 ## [10.12.1] - 2021-09-13
 
 ### Fixed
