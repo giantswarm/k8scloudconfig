@@ -89,6 +89,7 @@ type Images struct {
 	Calicoctl                    string
 	CalicoKubeControllers        string
 	CalicoNode                   string
+	CalicoTypha                  string
 	Etcd                         string
 	Hyperkube                    string
 	KubeApiserver                string
