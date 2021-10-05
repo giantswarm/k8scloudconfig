@@ -15,7 +15,7 @@ metadata:
 data:
   # TODO: remove once all clusters have been migrated to kubernetes datastore
   etcd_endpoints: "https://{{ .Cluster.Etcd.Domain }}:{{ .Etcd.ClientPort }}"
-  typha_service_name: "none"
+  typha_service_name: "calico-typha"
   calico_backend: "bird"
   datastore_type: "kubernetes"
   veth_mtu: "{{.Cluster.Calico.MTU}}"
@@ -269,6 +269,11 @@ spec:
               value: "true"
             - name: FELIX_PROMETHEUSMETRICSENABLED
               value: "true"
+            - name: FELIX_TYPHAK8SSERVICENAME
+              valueFrom:
+                configMapKeyRef:
+                  name: calico-config
+                  key: typha_service_name
           securityContext:
             privileged: true
           resources:
@@ -714,3 +719,124 @@ spec:
   selector:
     matchLabels:
       k8s-app: calico-kube-controllers
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: calico-typha
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: calico-typha
+    k8s-app: calico-typha
+spec:
+  ports:
+    - port: 5473
+      protocol: TCP
+      targetPort: calico-typha
+      name: calico-typha
+  selector:
+    k8s-app: calico-typha
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: calico-typha
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: calico-typha
+    giantswarm.io/service-type: managed
+    k8s-app: calico-typha
+spec:
+  replicas: 3
+  revisionHistoryLimit: 2
+  selector:
+    matchLabels:
+      k8s-app: calico-typha
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: calico-typha
+        giantswarm.io/service-type: managed
+        k8s-app: calico-typha
+      annotations:
+        cluster-autoscaler.kubernetes.io/safe-to-evict: 'true'
+    spec:
+      nodeSelector:
+        kubernetes.io/os: linux
+      hostNetwork: true
+      tolerations:
+        # Mark the pod as a critical add-on for rescheduling.
+        - key: CriticalAddonsOnly
+          operator: Exists
+      # Since Calico can't network a pod until Typha is up, we need to run Typha itself
+      # as a host-networked pod.
+      serviceAccountName: calico-node
+      priorityClassName: system-cluster-critical
+      # fsGroup allows using projected serviceaccount tokens as described here kubernetes/kubernetes#82573
+      securityContext:
+        fsGroup: 65534
+      containers:
+        - image: {{ .Images.CalicoTypha }}
+          name: calico-typha
+          ports:
+            - containerPort: 5473
+              name: calico-typha
+              protocol: TCP
+          env:
+            # Enable "info" logging by default. Can be set to "debug" to increase verbosity.
+            - name: TYPHA_LOGSEVERITYSCREEN
+              value: "info"
+            # Disable logging to file and syslog since those don't make sense in Kubernetes.
+            - name: TYPHA_LOGFILEPATH
+              value: "none"
+            - name: TYPHA_LOGSEVERITYSYS
+              value: "none"
+            # Monitor the Kubernetes API to find the number of running instances and rebalance
+            # connections.
+            - name: TYPHA_CONNECTIONREBALANCINGMODE
+              value: "kubernetes"
+            - name: TYPHA_DATASTORETYPE
+              value: "kubernetes"
+            - name: TYPHA_HEALTHENABLED
+              value: "true"
+            # Uncomment these lines to enable prometheus metrics. Since Typha is host-networked,
+            # this opens a port on the host, which may need to be secured.
+            #- name: TYPHA_PROMETHEUSMETRICSENABLED
+            #  value: "true"
+            #- name: TYPHA_PROMETHEUSMETRICSPORT
+            #  value: "9093"
+          livenessProbe:
+            httpGet:
+              path: /liveness
+              port: 9098
+              host: localhost
+            periodSeconds: 30
+            initialDelaySeconds: 30
+            timeoutSeconds: 10
+          securityContext:
+            runAsNonRoot: true
+            allowPrivilegeEscalation: false
+          readinessProbe:
+            httpGet:
+              path: /readiness
+              port: 9098
+              host: localhost
+            periodSeconds: 10
+            timeoutSeconds: 10
+---
+apiVersion: policy/v1beta1
+kind: PodDisruptionBudget
+metadata:
+  name: calico-typha
+  namespace: kube-system
+  labels:
+    app.kubernetes.io/name: calico-typha
+    giantswarm.io/service-type: managed
+    k8s-app: calico-typha
+spec:
+  maxUnavailable: 1
+  selector:
+    matchLabels:
+      k8s-app: calico-typha

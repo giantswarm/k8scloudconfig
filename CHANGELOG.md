@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## Added
+
+- Add Calico Typha to `calico-all.yaml` to reduce load on Kubernetes API.
+
 ## [10.12.2] - 2021-09-28
 
 ## Fixed
