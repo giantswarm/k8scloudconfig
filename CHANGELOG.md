@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project's packages adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
 ## [Unreleased]
+
+## [10.13.1] - 2021-10-05
 - Bump calico end etcd constraints.
 
 ## Added
@@ -989,7 +991,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.13.1...HEAD
+[10.13.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.2...v10.13.1
 [10.12.2]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.1...v10.12.2
 [10.12.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.0...v10.12.1
 [10.12.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.11.0...v10.12.0
