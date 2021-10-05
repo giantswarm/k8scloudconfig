@@ -10,7 +10,7 @@ import (
 )
 
 var releaseVersionsValid = Versions{
-	Calico:                       "3.19.0",
+	Calico:                       "3.20.0",
 	CRITools:                     "1.19.0",
 	Etcd:                         "3.4.14",
 	Kubernetes:                   "1.19.4",
