@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+- Add net dir mount to calico-node container
+
 ## [10.13.0] - 2021-10-05
 - Bump calico end etcd constraints.
 
