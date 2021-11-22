@@ -7,7 +7,7 @@ require (
 	github.com/giantswarm/apiextensions/v3 v3.38.0
 	github.com/giantswarm/microerror v0.3.0
 	github.com/stretchr/testify v1.7.0
-	sigs.k8s.io/yaml v1.2.0
+	sigs.k8s.io/yaml v1.3.0
 )
 
 replace (
