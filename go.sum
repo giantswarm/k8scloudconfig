@@ -130,8 +130,9 @@ github.com/ghodss/yaml v1.0.0/go.mod h1:4dBDuWmgqj2HViK6kFavaiC9ZROes6MMH2rRYeME
 github.com/giantswarm/apiextensions/v3 v3.39.0 h1:+5N0QGFfck9ZckxXC0QWziIBhhdXO2hWCDbBQOeJwSY=
 github.com/giantswarm/apiextensions/v3 v3.39.0/go.mod h1:T2OVrXtzLFmtzFHZE80kWvvqnPe+xxGIxP3YKyIbrE0=
 github.com/giantswarm/cluster-api v0.3.10-gs/go.mod h1:878STePVJcBNDYFY2eCsLuHXWs6qiH3INFItEwdfWaE=
-github.com/giantswarm/microerror v0.3.0 h1:V/9cXlIEddNGaRYiA0vYJmgM2+sTQy+k8M7kVjOy4XM=
 github.com/giantswarm/microerror v0.3.0/go.mod h1:g8oCEMFAoEs70riRRmj9+6eiz7SqNxYl+2OfxFh1po0=
+github.com/giantswarm/microerror v0.4.0 h1:QeU+UZL0rRlVXKqYOHMxS0L7g8UD+dn84NT7myWVh4U=
+github.com/giantswarm/microerror v0.4.0/go.mod h1:Ju1YdC6TX/8witv7fIlkgiRr5FQUNyq3f4TX2QYnO7c=
 github.com/giantswarm/to v0.4.0/go.mod h1:RTRtw+Dyk6YqoiNBOGLO981BqhibtVwogdaFIMO1y/A=
 github.com/globalsign/mgo v0.0.0-20180905125535-1ca0a4f7cbcb/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
 github.com/globalsign/mgo v0.0.0-20181015135952-eeefdecb41b8/go.mod h1:xkRDCp4j0OGD1HRkm4kmhM+pmpv3AKq5SU7GMg4oO/Q=
