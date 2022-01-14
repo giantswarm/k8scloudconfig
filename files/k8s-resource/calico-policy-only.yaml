@@ -14,10 +14,8 @@ metadata:
   name: calico-config
   namespace: kube-system
 data:
-  # Typha is disabled.
-  typha_service_name: "none"
-  # Configure the backend to use.
-  calico_backend: "bird"
+  # You must set a non-zero value for Typha replicas below.
+  typha_service_name: "calico-typha"
 
   # Configure the MTU to use for workload interfaces and tunnels.
   # By default, MTU is auto-detected, and explicitly setting this field should not be required.
@@ -37,10 +35,10 @@ data:
           "log_file_path": "/var/log/calico/cni/cni.log",
           "datastore_type": "kubernetes",
           "nodename": "__KUBERNETES_NODE_NAME__",
-          "mtu": __CNI_MTU__,
+          "mtu": 1500,
           "ipam": {
-            "type": "host-local",
-            "subnet": "usePodCidr"
+              "type": "host-local",
+              "subnet": "usePodCidr"
           },
           "policy": {
               "type": "k8s"
