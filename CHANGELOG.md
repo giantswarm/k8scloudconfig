@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Updated calico-policy-only manifests for calico 3.21.
+
 ## [10.14.0] - 2021-10-12
 
 - Add net dir mount to calico-node container
