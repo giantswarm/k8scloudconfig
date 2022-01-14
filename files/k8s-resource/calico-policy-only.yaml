@@ -15,7 +15,7 @@ metadata:
   namespace: kube-system
 data:
   # You must set a non-zero value for Typha replicas below.
-  typha_service_name: "calico-typha"
+  typha_service_name: "none"
 
   # Configure the MTU to use for workload interfaces and tunnels.
   # By default, MTU is auto-detected, and explicitly setting this field should not be required.
