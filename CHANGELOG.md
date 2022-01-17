@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.14.1] - 2022-01-17
+
 ### Added
 
 - New EC2 instance types.
@@ -999,7 +1001,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.1...HEAD
+[10.14.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...v10.14.1
 [10.14.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.13.0...v10.14.0
 [10.13.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.2...v10.13.0
 [10.12.2]: https://github.com/giantswarm/k8scloudconfig/compare/v10.12.1...v10.12.2
