@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- New EC2 instance types.
+
 ## [10.15.0] - 2022-01-14
 
 ### Changed
