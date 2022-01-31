@@ -27,21 +27,6 @@ passwd:
 
 systemd:
   units:
-  {{ if .ForceCGroupsV1 }}
-  - name: ensure-cgroups-v1.service
-    enabled: true
-    contents: |
-      [Unit]
-      Description=Ensure cgroups v1 are used, reboot if not
-      DefaultDependencies=no
-      Before=basic.target
-
-      [Service]
-      Type=oneshot
-      ExecStart=/opt/ensure-cgroups-v1
-      [Install]
-      WantedBy=sysinit.target
-  {{ end }}
   # Start - manual management for cgroup structure
   - name: kubereserved.slice
     path: /etc/systemd/system/kubereserved.slice
@@ -439,7 +424,7 @@ storage:
   files:
     - path: /boot/coreos/first_boot
       filesystem: root
-    
+
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
       mode: 0644
