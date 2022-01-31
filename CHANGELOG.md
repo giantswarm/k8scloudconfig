@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add feature to force cgroup v1 on latest Flatcar.
+
 ## [10.16.0] - 2022-01-17
 
 ### Added
