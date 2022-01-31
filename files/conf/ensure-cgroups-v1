@@ -1,0 +1,10 @@
+#!/bin/bash
+
+args=$(/usr/bin/cat /proc/cmdline)
+
+if [[ $args == *"systemd.unified_cgroup_hierarchy=0 systemd.legacy_systemd_cgroup_controller"* ]]; then
+  /usr/bin/echo "system is using cgroups v1, proceeding with the boot"
+else
+  /usr/bin/echo "system is NOT using cgroups v1, rebooting ..."
+  #/usr/sbin/shutdown -r
+fi

@@ -17,6 +17,9 @@ type Params struct {
 	EnableAWSCNI bool
 	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
 	EnableCSIMigrationAWS bool
+	// force cgroups v1 on flatcar 3033.2.1 and above
+	// this configuration will do reboot to ensure kernel loaded the arguments
+	ForceCGroupsV1 bool
 	// InTreePluginAWSUnregister flag. Disables the AWS EBS in-tree driver
 	InTreePluginAWSUnregister bool
 	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
