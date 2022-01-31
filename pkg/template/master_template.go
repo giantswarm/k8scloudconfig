@@ -436,29 +436,10 @@ systemd:
 {{ end }}
 
 storage:
-  {{ if .ForceCGroupsV1 }}
-  filesystems:
-    - name: "OEM"
-      mount:
-        device: "/dev/disk/by-label/OEM"
-        format: "btrfs"
-  {{ end }}
   files:
     - path: /boot/coreos/first_boot
       filesystem: root
-    {{ if .ForceCGroupsV1 }}
-    - filesystem: "OEM"
-      path: "/grub.cfg"
-      mode: 0644
-      append: true
-      contents:
-        source: "data:text/plain;base64,{{ index .Files "conf/grub.cfg" }}"
-    - path: /opt/ensure-cgroups-v1
-      filesystem: root
-      mode: 0644
-      contents:
-        source: "data:text/plain;base64,{{ index .Files "conf/ensure-cgroups-v1" }}"
-    {{ end }}
+    
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
       mode: 0644

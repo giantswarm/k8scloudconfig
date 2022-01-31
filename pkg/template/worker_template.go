@@ -348,7 +348,7 @@ storage:
         source: "data:text/plain;base64,{{ index .Files "conf/grub.cfg" }}"
     - path: /opt/ensure-cgroups-v1
       filesystem: root
-      mode: 0644
+      mode: 0777
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/ensure-cgroups-v1" }}"
     {{ end }}
