@@ -1,4 +1,4 @@
-module github.com/giantswarm/k8scloudconfig/v10
+module github.com/giantswarm/k8scloudconfig/v11
 
 go 1.14
 
