@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [11.0.0] - 2022-02-01
+
 ### Added
 
 - Add feature to force cgroup v1 on Flatcar 3033.2.0 and above. This will not work with older Flatcar version.
@@ -1011,7 +1013,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.16.0...HEAD
+[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...HEAD
+[11.0.0]: https://github.com/giantswarm/giantswarm/compare/v10.16.0...v11.0.0
 [10.16.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.15.0...v10.16.0
 [10.15.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...v10.15.0
 [10.14.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.13.0...v10.14.0
