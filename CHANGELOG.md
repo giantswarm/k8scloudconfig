@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [11.0.1] - 2022-02-01
+
 ### Changed
 
 - Bump module version to v11.
@@ -1017,7 +1019,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.0.1...HEAD
+[11.0.1]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...v11.0.1
 [11.0.0]: https://github.com/giantswarm/giantswarm/compare/v10.16.0...v11.0.0
 [10.16.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.15.0...v10.16.0
 [10.15.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...v10.15.0
