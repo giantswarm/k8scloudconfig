@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [11.1.0] - 2022-02-15
+
 ### Removed
 
 - Remove `rpc-statd.service` dependency on `kubelet.service` on `AWS` and `Azure`. 
@@ -1023,7 +1025,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.1.0...HEAD
+[11.1.0]: https://github.com/giantswarm/giantswarm/compare/v11.0.1...v11.1.0
 [11.0.1]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...v11.0.1
 [11.0.0]: https://github.com/giantswarm/giantswarm/compare/v10.16.0...v11.0.0
 [10.16.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.15.0...v10.16.0
