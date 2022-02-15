@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove `rpc-statd.service` dependency on `kubelet.service` on `AWS` and `Azure`. 
+
 ## [11.0.1] - 2022-02-01
 
 ### Changed
