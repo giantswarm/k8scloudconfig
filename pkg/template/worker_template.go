@@ -214,8 +214,8 @@ systemd:
     enabled: true
     contents: |
       [Unit]
-      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service rpc-statd.service
-      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service rpc-statd.service
+      Wants=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service{{ if eq .Cluster.Kubernetes.CloudProvider "" }} rpc-statd.service{{ end }}
+      After=k8s-setup-network-env.service k8s-setup-kubelet-config.service k8s-extract.service{{ if eq .Cluster.Kubernetes.CloudProvider "" }} rpc-statd.service{{ end }}
       Description=k8s-kubelet
       StartLimitIntervalSec=0
       [Service]
