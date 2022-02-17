@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `calico-kube-controllers` permissions for `networkpolicies`.
+
 ## [10.16.0] - 2022-01-17
 
 ### Added

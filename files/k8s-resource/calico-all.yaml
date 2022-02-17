@@ -499,6 +499,8 @@ rules:
       - create
       - get
       - list
+      - update
+      - delete
   - apiGroups: ["crd.projectcalico.org"]
     resources:
       - blockaffinities
