@@ -7,11 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix `calico-kube-controllers` permissions for `networkpolicies`.
+
 ## [11.1.0] - 2022-02-15
 
 ### Removed
 
-- Remove `rpc-statd.service` dependency on `kubelet.service` on `AWS` and `Azure`. 
+- Remove `rpc-statd.service` dependency on `kubelet.service` on `AWS` and `Azure`.
 
 ## [11.0.1] - 2022-02-01
 
