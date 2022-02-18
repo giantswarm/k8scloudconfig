@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [11.1.1] - 2022-02-18
+
 ### Fixed
 
 - Fix `calico-kube-controllers` permissions for `networkpolicies`.
@@ -1029,7 +1031,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.1.1...HEAD
+[11.1.1]: https://github.com/giantswarm/giantswarm/compare/v11.1.0...v11.1.1
 [11.1.0]: https://github.com/giantswarm/giantswarm/compare/v11.0.1...v11.1.0
 [11.0.1]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...v11.0.1
 [11.0.0]: https://github.com/giantswarm/giantswarm/compare/v10.16.0...v11.0.0
