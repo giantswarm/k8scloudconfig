@@ -1031,11 +1031,11 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/giantswarm/compare/v11.1.1...HEAD
-[11.1.1]: https://github.com/giantswarm/giantswarm/compare/v11.1.0...v11.1.1
-[11.1.0]: https://github.com/giantswarm/giantswarm/compare/v11.0.1...v11.1.0
-[11.0.1]: https://github.com/giantswarm/giantswarm/compare/v11.0.0...v11.0.1
-[11.0.0]: https://github.com/giantswarm/giantswarm/compare/v10.16.0...v11.0.0
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.1...HEAD
+[11.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.0...v11.1.1
+[11.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v11.0.1...v11.1.0
+[11.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v11.0.0...v11.0.1
+[11.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.16.0...v11.0.0
 [10.16.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.15.0...v10.16.0
 [10.15.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...v10.15.0
 [10.14.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.13.0...v10.14.0
