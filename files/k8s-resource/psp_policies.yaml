@@ -54,6 +54,7 @@ spec:
   volumes:
   - 'secret'
   - 'configMap'
+  - 'projected'
   hostPID: false
   hostIPC: false
   hostNetwork: false

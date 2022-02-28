@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Allow `projected` volumes for the `restricted` psp policy.
+
 ## [11.1.1] - 2022-02-18
 
 ### Fixed
