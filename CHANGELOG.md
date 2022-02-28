@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [11.1.2] - 2022-02-28
+
 ### Changed
 
 - Allow `projected` volumes for the `restricted` psp policy.
@@ -1035,7 +1037,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.2...HEAD
+[11.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.1...v11.1.2
 [11.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.0...v11.1.1
 [11.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v11.0.1...v11.1.0
 [11.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v11.0.0...v11.0.1
