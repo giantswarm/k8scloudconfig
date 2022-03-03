@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [10.16.1] - 2022-03-03
+
 ### Fixed
 
 - Fix `calico-kube-controllers` permissions for `networkpolicies`.
@@ -1011,7 +1013,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.16.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v10.16.1...HEAD
+[10.16.1]: https://github.com/giantswarm/k8scloudconfig/compare/v10.16.0...v10.16.1
 [10.16.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.15.0...v10.16.0
 [10.15.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.14.0...v10.15.0
 [10.14.0]: https://github.com/giantswarm/k8scloudconfig/compare/v10.13.0...v10.14.0
