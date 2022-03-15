@@ -228,7 +228,7 @@ systemd:
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
           --enable-v2 \
-	  --quota-backend-bytes 8589934592 \
+          --quota-backend-bytes 8589934592 \
           --logger=zap
       [Install]
       WantedBy=multi-user.target
