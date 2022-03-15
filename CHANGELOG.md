@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Bump apiextensions to `v5.0.1`, use `Release` CRD from `release-operator` repository, remove `cluster-api` dependency.
+
 ## [11.1.2] - 2022-02-28
 
 ### Changed
