@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Increase max storage size for etcd to 8GB.
+
 ## [12.0.0] - 2022-03-15
 
 ### Changed
