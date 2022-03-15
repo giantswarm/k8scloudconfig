@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [12.0.0] - 2022-03-15
+
 ### Changed
 
 - Bump apiextensions to `v5.0.1`, use `Release` CRD from `release-operator` repository, remove `cluster-api` dependency.
@@ -1041,7 +1043,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v12.0.0...HEAD
+[12.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.2...v12.0.0
 [11.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.1...v11.1.2
 [11.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.0...v11.1.1
 [11.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v11.0.1...v11.1.0
