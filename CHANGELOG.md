@@ -11,6 +11,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Increase max storage size for etcd to 8GB.
 
+### Fixed
+
+- Bump go module version in `go.mod`.
+
 ## [12.0.0] - 2022-03-15
 
 ### Changed
