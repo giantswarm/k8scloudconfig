@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Bump apiextensions to `v6.0.0`.
+
 ## [12.1.0] - 2022-03-18
 
 ### Changed
