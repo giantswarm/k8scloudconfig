@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Bump apiextensions to `v6.0.0`.
+- Bump go module version in `go.mod`.
 
 ## [12.1.0] - 2022-03-18
 
