@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [13.1.0] - 2022-03-24
+
 ### Changed
 
 - Leverage flatcar `3033.2.4` feature to make use of cgroups v1. 
@@ -1064,7 +1066,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.1.0...HEAD
+[13.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.0.0...v13.1.0
 [13.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v12.1.0...v13.0.0
 [12.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v12.0.0...v12.1.0
 [12.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v11.1.2...v12.0.0
