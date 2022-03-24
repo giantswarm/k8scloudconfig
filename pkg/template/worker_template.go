@@ -27,21 +27,6 @@ passwd:
 
 systemd:
   units:
-  {{ if .ForceCGroupsV1 }}
-  - name: ensure-cgroups-v1.service
-    enabled: true
-    contents: |
-      [Unit]
-      Description=Ensure cgroups v1 are used, reboot if not
-      DefaultDependencies=no
-      Before=basic.target
-
-      [Service]
-      Type=oneshot
-      ExecStart=/opt/ensure-cgroups-v1
-      [Install]
-      WantedBy=sysinit.target
-  {{ end }}
   # Start - manual management for cgroup structure
   - name: kubereserved.slice
     path: /etc/systemd/system/kubereserved.slice
@@ -329,28 +314,13 @@ storage:
         name: giantswarm
       group:
         name: giantswarm
-  {{ if .ForceCGroupsV1 }}
-  filesystems:
-    - name: "OEM"
-      mount:
-        device: "/dev/disk/by-label/OEM"
-        format: "btrfs"
-  {{ end }}
   files:
     - path: /boot/coreos/first_boot
       filesystem: root
     {{ if .ForceCGroupsV1 }}
-    - filesystem: "OEM"
-      path: "/grub.cfg"
-      mode: 0644
-      append: true
-      contents:
-        source: "data:text/plain;base64,{{ index .Files "conf/grub.cfg" }}"
-    - path: /opt/ensure-cgroups-v1
+    - path: /etc/flatcar-cgroupv1
       filesystem: root
-      mode: 0777
-      contents:
-        source: "data:text/plain;base64,{{ index .Files "conf/ensure-cgroups-v1" }}"
+      mode: 0444
     {{ end }}
     - path: /etc/ssh/trusted-user-ca-keys.pem
       filesystem: root
