@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Leverage flatcar `3033.2.4` feature to make use of cgroups v1. 
+
 ## [13.0.0] - 2022-03-23
 
 ### Changed
