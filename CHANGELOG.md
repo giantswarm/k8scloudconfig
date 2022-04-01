@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Added systemd unit to create VPA for kube-proxy.
+
 ## [13.3.0] - 2022-04-01
 
 ### Removed

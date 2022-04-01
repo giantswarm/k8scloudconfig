@@ -399,6 +399,19 @@ systemd:
       ExecStartPost=/usr/bin/systemctl restart k8s-kubelet.service
       [Install]
       WantedBy=multi-user.target
+  - name: ensure-kube-proxy-vpa.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=Enable VPA for kube-proxy
+      After=k8s-addons.service
+      [Service]
+      Type=oneshot
+      ExecStartPre=/bin/bash -c "while [ ! -f /etc/kubernetes/kubeconfig/addons.yaml ]; do echo 'Waiting for /etc/kubernetes/kubeconfig/addons.yaml to be written' && sleep 10; done"
+      ExecStartPre=/bin/bash -c "while ! /opt/bin/kubectl --kubeconfig=/etc/kubernetes/kubeconfig/addons.yaml get crd verticalpodautoscalers.autoscaling.k8s.io; do echo 'Waiting for VPA CRD to exists' && sleep 10; done"
+      ExecStart=/opt/bin/kubectl --kubeconfig=/etc/kubernetes/kubeconfig/addons.yaml apply -f /srv/kube-proxy-vpa.yaml
+      [Install]
+      WantedBy=multi-user.target
 
 {{ if .Debug.Enabled }}
   - name: logentries.service
@@ -720,6 +733,12 @@ storage:
       mode: 0444
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/etcd-alias" }}"
+
+    - path: /srv/kube-proxy-vpa.yaml
+      filesystem: root
+      mode: 0444
+      contents:
+      source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kube-proxy-vpa" }}"
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
