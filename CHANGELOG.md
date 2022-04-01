@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove VPA CR for kube-proxy.
+
 ## [13.2.0] - 2022-04-01
 
 ### Added
