@@ -738,7 +738,7 @@ storage:
       filesystem: root
       mode: 0444
       contents:
-      source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kube-proxy-vpa" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kube-proxy-vpa" }}"
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
