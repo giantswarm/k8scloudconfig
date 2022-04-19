@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [13.5.0] - 2022-04-19
+
 ### Added
 
 - Add extra IRSA key args.
@@ -1088,7 +1090,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.5.0...HEAD
+[13.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.4.0...v13.5.0
 [13.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.3.0...v13.4.0
 [13.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.2.0...v13.3.0
 [13.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.1.0...v13.2.0
