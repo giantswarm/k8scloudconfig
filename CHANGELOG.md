@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add extra IRSA key args.
+
 ## [13.4.0] - 2022-04-04
 
 ### Added
