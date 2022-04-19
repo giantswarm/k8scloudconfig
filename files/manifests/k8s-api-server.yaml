@@ -71,6 +71,9 @@ spec:
     - --service-account-signing-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --proxy-client-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
     - --proxy-client-key-file=/etc/kubernetes/ssl/apiserver-key.pem
+    {{ range .IrsaSAKeyArgs -}}
+    - {{ . }}
+    {{ end -}}
     resources:
       requests:
         cpu: 300m

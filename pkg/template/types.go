@@ -49,6 +49,8 @@ type Params struct {
 	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images Images
+	// IAM Roles for Service Account key files.
+	IrsaSAKeyArgs []string
 	// Kubernetes components allow the passing of extra `docker run` and
 	// `command` arguments to image commands. This allows, for example,
 	// the addition of cloud provider extensions.
