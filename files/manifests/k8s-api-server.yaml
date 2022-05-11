@@ -45,7 +45,7 @@ spec:
     {{- if .Etcd.HighAvailability -}}
     - --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:2379
     {{- else -}}
-    - --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:2379
+    - --etcd-servers=https://127.0.0.1:2379
     {{- end -}}
     - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
     - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
