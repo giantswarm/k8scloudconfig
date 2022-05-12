@@ -6,6 +6,7 @@ port: 10250
 readOnlyPort: 0
 healthzBindAddress: "0.0.0.0"
 healthzPort: 10248
+cgroupDriver: {{ if .ForceCGroupsV1 }}cgroupfs{{else}}systemd{{end}}
 clusterDNS:
   - {{.Cluster.Kubernetes.DNS.IP}}
 clusterDomain: {{.Cluster.Kubernetes.Domain}}
