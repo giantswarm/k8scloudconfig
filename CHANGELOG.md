@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Switch kubelet's `cgroupDriver` to `systemd` unless `ForceCgroupsV1` is set.
+
 ## [13.5.0] - 2022-04-19
 
 ### Added
