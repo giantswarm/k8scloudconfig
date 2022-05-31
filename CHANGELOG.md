@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [13.7.0] - 2022-05-31
+
 ### Changed
 
 - For HA clusters, use the Load Balancer endpoint for etcd rather than localhost.
@@ -1100,7 +1102,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.7.0...HEAD
+[13.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.6.0...v13.7.0
 [13.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.5.0...v13.6.0
 [13.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.4.0...v13.5.0
 [13.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.3.0...v13.4.0
