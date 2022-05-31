@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- For HA clusters, use the Load Balancer endpoint for etcd rather than localhost.
+
 ## [13.6.0] - 2022-05-23
 
 ### Changed
