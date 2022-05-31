@@ -39,5 +39,6 @@ replace (
 	github.com/gogo/protobuf v1.3.1 => github.com/gogo/protobuf v1.3.2
 	github.com/gorilla/websocket v1.4.0 => github.com/gorilla/websocket v1.4.2
 	github.com/prometheus/client_golang => github.com/prometheus/client_golang v1.11.1
+	golang.org/x/text => golang.org/x/text v0.3.7
 	sigs.k8s.io/cluster-api => sigs.k8s.io/cluster-api v1.0.4
 )
