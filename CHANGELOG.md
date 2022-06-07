@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [13.8.0] - 2022-06-07
+
 ### Fixed
 
 - Fixed syntax error in kube-apiserver manifest introduced in 13.7.0.
@@ -1110,7 +1112,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.7.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.8.0...HEAD
+[13.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.7.0...v13.8.0
 [13.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.6.0...v13.7.0
 [13.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.5.0...v13.6.0
 [13.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.4.0...v13.5.0
