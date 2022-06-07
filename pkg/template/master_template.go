@@ -316,6 +316,7 @@ systemd:
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/etcd-key"
       EnvironmentFile=/etc/network-environment
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
+      ExecStartPre=/bin/bash -c 'while [ "$(hostname)" == "localhost" ] ;  do sleep 2s ; echo "hostname is still localhost, waiting" ;done;'
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \

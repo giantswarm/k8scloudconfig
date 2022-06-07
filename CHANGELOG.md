@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fixed syntax error in kube-apiserver manifest introduced in 13.7.0.
+
+### Added
+
+- Improve k8s-kubelet unit definition to prevent nodes from joining as 'localhost'.
+
 ## [13.7.0] - 2022-05-31
 
 ### Changed
