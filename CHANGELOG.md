@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Override default auditd configuration to capture `execve` syscalls.
+
 ## [13.8.0] - 2022-06-07
 
 ### Fixed

@@ -412,6 +412,17 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
+    - path : /etc/audit/rules.d/99-default.rules
+      overwrite: true
+      filesystem: root
+      mode: 420
+      user:
+        id: 0
+      group:
+        id: 0
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/99-default.rules" }}"
+
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
       filesystem: root
