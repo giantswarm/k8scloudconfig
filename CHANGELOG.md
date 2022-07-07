@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [13.9.1] - 2022-07-07
+
 ### Fixed
 
 - Fix syntax error in k8s-addons.
@@ -1122,7 +1124,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...HEAD
+[13.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.0...v13.9.1
 [13.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.8.0...v13.9.0
 [13.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.7.0...v13.8.0
 [13.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.6.0...v13.7.0
