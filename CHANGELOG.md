@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Fix syntax error in k8s-addons.
+
 ## [13.9.0] - 2022-07-04
 
 ### Added

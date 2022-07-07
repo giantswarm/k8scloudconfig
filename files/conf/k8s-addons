@@ -93,23 +93,23 @@ kubectl apply -f /srv/calico-crd-installer-rbac.yaml
 kubectl apply -f /srv/calico-crd-installer.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
 
-{{- if not .CalicoPolicyOnly }}
+{{ if not .CalicoPolicyOnly }}
 # TODO: remove migrator once all clusters have been migrated to kubernetes datastore
 kubectl apply -f /srv/calico-datastore-migrator-pre.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-pre
-{{ end -}}
+{{ end }}
 
-{{ if .CalicoPolicyOnly -}}
+{{ if .CalicoPolicyOnly }}
 ## Apply Calico with network policy features only
 CNI_FILE="calico-policy-only.yaml"
-{{ if .EnableAWSCNI -}}
+{{ if .EnableAWSCNI }}
 ## Apply AWS VPC CNI
 CNI_FILE="${CNI_FILE} aws-cni.yaml"
-{{ end -}}
-{{ else -}}
+{{ end }}
+{{ else }}
 ## Apply Calico with all its components
 CNI_FILE="calico-all.yaml"
-{{ end -}}
+{{ end }}
 
 for manifest in ${CNI_FILE}
 do
