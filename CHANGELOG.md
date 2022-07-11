@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Use containerd socket instead of dockershim in the kubelet config.
+
 ## [13.9.1] - 2022-07-07
 
 ### Fixed
