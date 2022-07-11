@@ -713,6 +713,26 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
+    - path : /etc/containerd/config.toml
+      filesystem: root
+      mode: 420
+      user:
+        id: 0
+      group:
+        id: 0
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/containerd-config.toml" }}"
+
+    - path : /etc/systemd/system/containerd.service.d/10-use-custom-config.conf
+      filesystem: root
+      mode: 420
+      user:
+        id: 0
+      group:
+        id: 0
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/10-use-custom-config.conf" }}"
+
     - path: /opt/install-debug-tools
       filesystem: root
       mode: 0544
