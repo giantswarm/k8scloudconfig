@@ -227,9 +227,9 @@ systemd:
         --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
         --logtostderr=true \
         {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
-        - --cloud-provider=external
+        - --cloud-provider=external \
         {{ else -}}
-        - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
+        --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         {{ end -}}
         --pod-infra-container-image={{ .Images.Pause }} \
         --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
