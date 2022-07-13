@@ -87,7 +87,7 @@ echo "kube-proxy successfully installed"
 
 {{ if eq .Cluster.Kubernetes.CloudProvider "aws" }}
 # install aws-cloud-controller-manager.yaml
-kubectl apply -f /src/aws-cloud-controller-manager.yaml
+kubectl apply -f /srv/aws-cloud-controller-manager.yaml
 {{ end }}
 
 # restart ds to apply config from configmap
