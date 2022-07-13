@@ -40,7 +40,11 @@ spec:
     - --authorization-mode=RBAC
     - --feature-gates=TTLAfterFinished=true
     - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
+    {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
+    - --cloud-provider=external
+    {{ else -}}
     - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
+    {{ end -}}
     - --service-cluster-ip-range={{.Cluster.Kubernetes.API.ClusterIPRange}}
     {{ if .Etcd.HighAvailability -}}
     - --etcd-servers=https://{{ .Cluster.Etcd.Domain }}:2379
