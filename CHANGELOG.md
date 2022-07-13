@@ -10,6 +10,9 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Use containerd socket instead of dockershim in the kubelet config.
+- Change liveness probe ports and metric ports of controller-manager and scheduler.
+- Change apiVersion of kubescheduler to `v1beta2`.
+- Update `pause` container to the latest image version.
 
 ## [13.9.1] - 2022-07-07
 
