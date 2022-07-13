@@ -227,7 +227,7 @@ systemd:
         --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
         --logtostderr=true \
         {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
-        - --cloud-provider=external \
+        --cloud-provider=external \
         {{ else -}}
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         {{ end -}}
