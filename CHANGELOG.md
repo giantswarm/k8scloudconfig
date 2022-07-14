@@ -11,7 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - **Breaking** Kubernetes >=v1.23 - Change liveness probe ports and metric ports of controller-manager and scheduler.
 - **Breaking** Kubernetes >=v1.23 - Change apiVersion of kubescheduler to `v1beta2`.
-- **Breaking** AWS: Use containerd socket instead of dockershim in the kubelet config.
+- **Breaking** Use `containerd` socket instead of `dockershim` in the kubelet config.
 - **Breaking** AWS: Use external cloud provider.
 - Update `pause` container to the latest image version.
 
