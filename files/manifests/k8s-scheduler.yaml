@@ -12,9 +12,9 @@ metadata:
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
     prometheus.io/scrape: "true"
-    prometheus.io/port: "10251"
+    prometheus.io/port: "10259"
     giantswarm.io/monitoring-path: "/metrics"
-    giantswarm.io/monitoring-port: "10251"
+    giantswarm.io/monitoring-port: "10259"
 spec:
   hostNetwork: true
   priorityClassName: system-node-critical
@@ -36,7 +36,8 @@ spec:
       httpGet:
         host: 127.0.0.1
         path: /healthz
-        port: 10251
+        port: 10259
+        scheme: HTTPS
       initialDelaySeconds: 15
       timeoutSeconds: 15
     volumeMounts:

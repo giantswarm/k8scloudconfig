@@ -12,9 +12,9 @@ metadata:
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
     prometheus.io/scrape: "true"
-    prometheus.io/port: "10251"
+    prometheus.io/port: "10257"
     giantswarm.io/monitoring-path: "/metrics"
-    giantswarm.io/monitoring-port: "10251"
+    giantswarm.io/monitoring-port: "10257"
 spec:
   hostNetwork: true
   priorityClassName: system-node-critical
@@ -28,7 +28,11 @@ spec:
     {{ end -}}
     - --logtostderr=true
     - --v=2
+    {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
+    - --cloud-provider=external
+    {{ else -}}
     - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
+    {{ end -}}
     - --terminated-pod-gc-threshold=10
     - --use-service-account-credentials=true
     - --kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
@@ -48,7 +52,8 @@ spec:
       httpGet:
         host: 127.0.0.1
         path: /healthz
-        port: 10251
+        port: 10257
+        scheme: HTTPS
       initialDelaySeconds: 15
       timeoutSeconds: 15
     volumeMounts:
