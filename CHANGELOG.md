@@ -9,7 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Fixed
 
-- Copy `crictl.yaml` on master and worker nodes.
+- Copy `crictl.yaml` on worker nodes.
 
 ## [14.0.0] - 2022-07-14
 

@@ -753,7 +753,7 @@ storage:
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/crictl.yaml" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/crictl" }}"
 
     - path: /etc/profile.d/setup-etcdctl.sh
       filesystem: root
