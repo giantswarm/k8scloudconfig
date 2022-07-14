@@ -421,6 +421,12 @@ storage:
         id: 0
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/containerd-config.toml" }}"
+
+    - path: /etc/crictl.yaml
+      filesystem: root
+      mode: 0644
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/crictl.yaml" }}"
  
     - path : /etc/systemd/system/containerd.service.d/10-use-custom-config.conf
       filesystem: root
