@@ -323,8 +323,10 @@ systemd:
         {{ end -}}
         --node-ip=${DEFAULT_IPV4} \
         --config=/etc/kubernetes/config/kubelet.yaml \
+        {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
         --container-runtime=remote \
         --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
+        {{ end -}}
         --logtostderr=true \
         {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
         --cloud-provider=external \
