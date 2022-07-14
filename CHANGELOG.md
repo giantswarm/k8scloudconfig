@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.0.0] - 2022-07-14
+
 ### Changed
 
 - **Breaking** Kubernetes >=v1.23 - Change liveness probe ports and metric ports of controller-manager and scheduler.
@@ -1132,7 +1134,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...HEAD
+[14.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...v14.0.0
 [13.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.0...v13.9.1
 [13.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.8.0...v13.9.0
 [13.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.7.0...v13.8.0
