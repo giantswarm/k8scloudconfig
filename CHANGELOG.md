@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.0.1] - 2022-07-15
+
 ### Fixed
 
 - Copy `crictl.yaml` on worker nodes.
@@ -1138,7 +1140,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...HEAD
+[14.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...v14.0.1
 [14.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...v14.0.0
 [13.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.0...v13.9.1
 [13.9.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.8.0...v13.9.0
