@@ -24,6 +24,8 @@ type Params struct {
 	InTreePluginAWSUnregister bool
 	// CalicoPolicyOnly flag. When set to true will deploy calico for network policies only.
 	CalicoPolicyOnly bool
+	// DisableCalico allow preventing calico installation.
+	DisableCalico bool
 	// DisableEncryptionAtREST flag. When set removes all manifests from the cloud
 	// config related to Kubernetes encryption at REST.
 	DisableEncryptionAtREST bool
@@ -33,9 +35,11 @@ type Params struct {
 	DisableIngressControllerService bool
 	// DockerhubToken is an auth token used by kubelet to
 	// authenticate/authorize against https://index.docker.io/v1/.
-	DockerhubToken string
-	Etcd           Etcd
-	Extension      Extension
+	// DisableKubeProxy allows to avoid installing kube-proxy in a cluster.
+	DisableKubeProxy bool
+	DockerhubToken   string
+	Etcd             Etcd
+	Extension        Extension
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.

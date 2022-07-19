@@ -62,6 +62,7 @@ do
     sleep 3s
 done
 
+{{ if not .DisableKubeProxy }}
 # create kube-proxy configmap
 while
     kubectl create configmap kube-proxy --from-file=kube-proxy.yaml=/srv/kube-proxy-config.yaml -o yaml --dry-run=client | kubectl apply -n kube-system -f -
@@ -99,6 +100,7 @@ kubectl apply -f /srv/calico-datastore-migrator-pre.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-pre
 {{ end }}
 
+{{ if not .DisableCalico }}
 {{ if .CalicoPolicyOnly }}
 ## Apply Calico with network policy features only
 CNI_FILE="calico-policy-only.yaml"
@@ -139,6 +141,7 @@ kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kube
 {{ end -}}
 
 kubectl delete -f /srv/calico-crd-installer-rbac.yaml
+{{ end }}
 
 # apply default storage class
 if [ -f /srv/default-storage-class.yaml ]; then
