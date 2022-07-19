@@ -38,13 +38,15 @@ func (p *Params) Validate() error {
 		return microerror.Mask(err)
 	}
 
-	calicoVersionConstraint := key.CalicoVersionConstraint
-	if p.CalicoPolicyOnly {
-		calicoVersionConstraint = key.CalicoPolicyOnlyVersionConstraint
-	}
+	if !p.DisableCalico {
+		calicoVersionConstraint := key.CalicoVersionConstraint
+		if p.CalicoPolicyOnly {
+			calicoVersionConstraint = key.CalicoPolicyOnlyVersionConstraint
+		}
 
-	if err := validateComponentVersion("Calico", p.Versions.Calico, calicoVersionConstraint); err != nil {
-		return microerror.Mask(err)
+		if err := validateComponentVersion("Calico", p.Versions.Calico, calicoVersionConstraint); err != nil {
+			return microerror.Mask(err)
+		}
 	}
 
 	if err := validateComponentVersion("Etcd", p.Versions.Etcd, key.EtcdVersionConstraint); err != nil {
