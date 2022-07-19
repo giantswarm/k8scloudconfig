@@ -134,11 +134,11 @@ done
 
 echo "calico-node is ready"
 
-{{- if not .CalicoPolicyOnly }}
+{{ if not .CalicoPolicyOnly }}
 # TODO: remove migrator once all clusters have been migrated to kubernetes datastore
 kubectl apply -f /srv/calico-datastore-migrator-post.yaml
 kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-post
-{{ end -}}
+{{ end }}
 
 kubectl delete -f /srv/calico-crd-installer-rbac.yaml
 {{ end }}
