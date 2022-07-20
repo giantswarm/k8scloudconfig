@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Revert applying `aws-cloud-controller-manager`.
+
 ## [14.0.1] - 2022-07-15
 
 ### Fixed
