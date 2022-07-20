@@ -88,6 +88,7 @@ echo "kube-proxy successfully installed"
 
 # restart ds to apply config from configmap
 kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
+{{ end }}
 
 {{ if not .DisableCalico }}
 kubectl apply -f /srv/calico-crd-installer-rbac.yaml
