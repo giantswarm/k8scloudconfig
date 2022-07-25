@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.1.0] - 2022-07-25
+
 ### Changed
 
 - Revert applying `aws-cloud-controller-manager`.
@@ -1144,7 +1146,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.0...HEAD
+[14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...v14.1.0
 [14.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...v14.0.1
 [14.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...v14.0.0
 [13.9.1]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.0...v13.9.1
