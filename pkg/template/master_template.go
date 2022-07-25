@@ -5,13 +5,6 @@ ignition:
   version: "2.2.0"
 passwd:
   users:
-    - name: giantswarm
-      shell: "/bin/bash"
-      uid: 1000
-      groups:
-        - "sudo"
-        - "docker"
-      sshAuthorizedKeys:
 {{ range $index, $user := .Cluster.Kubernetes.SSH.UserList }}
     - name: {{ $user.Name }}
       shell: "/bin/bash"
