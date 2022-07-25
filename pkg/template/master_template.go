@@ -103,9 +103,12 @@ systemd:
       Type=oneshot
       RemainAfterExit=yes
       TimeoutStartSec=0
-      EnvironmentFile=/etc/network-environment
-      EnvironmentFile=/etc/kubelet-environment
-      ExecStart=/bin/bash -c '/usr/bin/envsubst </etc/kubernetes/config/kubelet.yaml.tmpl >/etc/kubernetes/config/kubelet.yaml'
+      Environment=IMAGE={{ .Images.Envsubst }}
+      ExecStart=docker run --rm \
+        --env-file /etc/network-environment --env-file /etc/kubelet-environment \
+        -v /etc/kubernetes/config/:/etc/kubernetes/config/ \
+        $IMAGE \
+        ash -c "cat /etc/kubernetes/config/kubelet.yaml.tmpl |envsubst >/etc/kubernetes/config/kubelet.yaml"
       [Install]
       WantedBy=multi-user.target
   - name: containerd.service

@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Removed
 
 - Remove `giantswarm` user definition from ignition template. Same user is injected by operators when generating the ignition file.
+- Use docker image instead of binary for `envsubst`.
 
 ## [14.1.2] - 2022-08-02
 
