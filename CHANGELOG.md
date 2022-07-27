@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Set `api-server`'s `--kubelet-preferred-address-types` to `Hostname` for AWS to fix prometheus scraping of host network pods.
+
 ## [14.1.0] - 2022-07-25
 
 ### Changed
