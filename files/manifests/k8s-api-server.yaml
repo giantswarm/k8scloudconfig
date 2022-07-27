@@ -31,7 +31,7 @@ spec:
     {{ end -}}
     - --allow-privileged=true
     - --anonymous-auth=true
-    - --kubelet-preferred-address-types=Hostname,InternalIP
+    - --kubelet-preferred-address-types={{ if eq .Cluster.Kubernetes.CloudProvider "aws" }}Hostname{{ else }}InternalIP{{ end }}
     - --secure-port={{.Cluster.Kubernetes.API.SecurePort}}
     - --bind-address=0.0.0.0
     - --etcd-prefix={{.Cluster.Etcd.Prefix}}
