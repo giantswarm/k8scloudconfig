@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Avoid setting `clusterCIDR` in kube proxy's config if calico is disabled.
+
 ## [14.1.1] - 2022-07-27
 
 ### Changed
