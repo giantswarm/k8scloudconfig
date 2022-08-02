@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.1.2] - 2022-08-02
+
 ### Fixed
 
 - Avoid setting `clusterCIDR` in kube proxy's config if calico is disabled.
@@ -1156,7 +1158,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...HEAD
+[14.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...v14.1.2
 [14.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.0...v14.1.1
 [14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...v14.1.0
 [14.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...v14.0.1
