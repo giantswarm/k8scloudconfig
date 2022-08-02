@@ -3,7 +3,7 @@ clientConnection:
   kubeconfig: /etc/kubernetes/config/proxy-kubeconfig.yaml
 kind: KubeProxyConfiguration
 mode: iptables
-{{- if not .CalicoPolicyOnly }}
+{{- if and (not .DisableCalico) (not .CalicoPolicyOnly) }}
 clusterCIDR: {{ .Cluster.Calico.Subnet }}/{{ .Cluster.Calico.CIDR }}
 {{- end }}
 {{- if .Cluster.Kubernetes.NetworkSetup.KubeProxy.ConntrackMaxPerCore }}
