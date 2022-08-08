@@ -1167,8 +1167,8 @@ chart-operator).
 
 
 [Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...HEAD
-[14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...v14.1.2
-[14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.0...v14.1.1
+[14.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...v14.1.2
+[14.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.0...v14.1.1
 [14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...v14.1.0
 [14.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.0...v14.0.1
 [14.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v13.9.1...v14.0.0
