@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.2.0] - 2022-08-09
+
 ### Removed
 
 - Remove `giantswarm` user definition from ignition template. Same user is injected by operators when generating the ignition file.
@@ -1170,7 +1172,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.0...HEAD
+[14.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...v14.2.0
 [14.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...v14.1.2
 [14.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.0...v14.1.1
 [14.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.0.1...v14.1.0
