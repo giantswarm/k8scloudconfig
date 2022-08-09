@@ -59,9 +59,10 @@ func ExtractComponentVersions(releaseComponents []v1alpha1.ReleaseSpecComponent)
 	{
 		component, err := findComponent(releaseComponents, "calico")
 		if err != nil {
-			return Versions{}, err
+			// This is ok, as Calico is not mandatory any more.
+		} else {
+			versions.Calico = fmt.Sprintf("v%s", component.Version)
 		}
-		versions.Calico = fmt.Sprintf("v%s", component.Version)
 	}
 
 	return versions, nil
