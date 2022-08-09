@@ -15,6 +15,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Use docker image instead of binary for `envsubst`.
 
+### Fixed
+
+- Don't fail while parsing release component versions if calico is not present in the Release.
+
 ## [14.1.2] - 2022-08-02
 
 ### Fixed
