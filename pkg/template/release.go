@@ -18,6 +18,7 @@ func BuildImages(registryDomain string, versions Versions) Images {
 		CalicoKubeControllers:        buildImage(registryDomain, "giantswarm/kube-controllers", versions.Calico, ""),
 		CalicoNode:                   buildImage(registryDomain, "giantswarm/node", versions.Calico, ""),
 		CalicoTypha:                  buildImage(registryDomain, "giantswarm/typha", versions.Calico, ""),
+		Envsubst:                     buildImage(registryDomain, "giantswarm/alpine", "3.16.1-envsubst", ""),
 		Etcd:                         buildImage(registryDomain, "giantswarm/etcd", versions.Etcd, ""),
 		Hyperkube:                    buildImage(registryDomain, "giantswarm/hyperkube", strings.TrimPrefix(versions.Kubernetes, "v"), ""),
 		KubeApiserver:                buildImage(registryDomain, "giantswarm/kube-apiserver", versions.Kubernetes, ""),
