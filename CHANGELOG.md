@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove `aws-cni.yaml` file creation from ignition config. File is long gone from this repo and is provided by aws-operator.
+
 ## [14.2.0] - 2022-08-09
 
 ### Removed
