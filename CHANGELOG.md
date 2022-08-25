@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.3.0] - 2022-08-25
+
 ### Changed
 
 - Allow disabling in-tree cloud controller manager.
@@ -1182,7 +1184,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...HEAD
+[14.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.1...v14.3.0
 [14.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.0...v14.2.1
 [14.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...v14.2.0
 [14.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.1...v14.1.2
