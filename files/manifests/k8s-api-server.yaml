@@ -40,7 +40,7 @@ spec:
     - --authorization-mode=RBAC
     - --feature-gates=TTLAfterFinished=true
     - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
-    {{- if eq .Cluster.Kubernetes.CloudProvider "aws" }}
+    {{- if eq .ExternalCloudControllerManager }}
     - --cloud-provider=external
     {{ else -}}
     - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}

@@ -40,6 +40,10 @@ type Params struct {
 	DockerhubToken   string
 	Etcd             Etcd
 	Extension        Extension
+	// ExternalCloudControllerManager when set to true, it disables in-tree cloud controller manager
+	// by setting `--cloud-provider` flag to `external` for api-server, kubelet and controller-manager.
+	// When set to `true` it needs an external controller manager to be run as a pod in the cluster.
+	ExternalCloudControllerManager bool
 	// ExtraManifests allows to specify extra Kubernetes manifests in
 	// /opt/k8s-addons script. The manifests are applied after calico is
 	// ready.

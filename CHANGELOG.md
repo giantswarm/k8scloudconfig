@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Allow disabling in-tree cloud controller manager.
+
 ## [14.2.1] - 2022-08-24
 
 ### Removed
