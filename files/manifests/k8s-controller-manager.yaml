@@ -28,7 +28,7 @@ spec:
     {{ end -}}
     - --logtostderr=true
     - --v=2
-    {{- if .ExternalCloudControllerManager }}
+    {{ if .ExternalCloudControllerManager -}}
     - --cloud-provider=external
     {{ else -}}
     - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}

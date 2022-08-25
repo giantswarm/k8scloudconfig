@@ -321,7 +321,7 @@ systemd:
         --container-runtime=remote \
         --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
         --logtostderr=true \
-        {{- if .ExternalCloudControllerManager }}
+        {{ if .ExternalCloudControllerManager -}}
         --cloud-provider=external \
         {{ else -}}
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
