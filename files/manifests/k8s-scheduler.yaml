@@ -26,6 +26,8 @@ spec:
     - --address=127.0.0.1
     - --feature-gates=TTLAfterFinished=true
     - --config=/etc/kubernetes/config/scheduler.yaml
+    - --authentication-kubeconfig=/etc/kubernetes/kubeconfig/scheduler.yaml
+    - --authorization-kubeconfig=/etc/kubernetes/kubeconfig/scheduler.yaml
     - --profiling=false
     - --v=2
     resources:

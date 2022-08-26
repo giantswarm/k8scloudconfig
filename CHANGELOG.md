@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Enable authn/authz for scheduler/ccm to allow prometheus scraping metrics.
+
 ## [14.3.0] - 2022-08-25
 
 ### Changed
