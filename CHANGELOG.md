@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.4.0] - 2022-08-29
+
 ### Changed
 
 - Enable authn/authz for scheduler/ccm to allow prometheus scraping metrics.
@@ -1188,7 +1190,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.4.0...HEAD
+[14.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...v14.4.0
 [14.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.1...v14.3.0
 [14.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.0...v14.2.1
 [14.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.1.2...v14.2.0
