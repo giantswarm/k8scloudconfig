@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.5.0] - 2022-08-30
+
 ### Fixed
 
 - Check hostname is up to date on azure before starting the kubelet.
@@ -1194,7 +1196,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.0...HEAD
+[14.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.4.0...v14.5.0
 [14.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...v14.4.0
 [14.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.1...v14.3.0
 [14.2.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.2.0...v14.2.1
