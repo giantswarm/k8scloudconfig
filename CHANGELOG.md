@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Check hostname is up to date on azure before starting the kubelet.
+
 ## [14.4.0] - 2022-08-29
 
 ### Changed

@@ -211,7 +211,10 @@ systemd:
       Environment="ETCD_CERT_FILE=/etc/kubernetes/ssl/calico/etcd-cert"
       Environment="ETCD_KEY_FILE=/etc/kubernetes/ssl/calico/etcd-key"
       EnvironmentFile=/etc/network-environment
-      ExecStartPre=/bin/bash -c 'while [ "$(hostname)" == "localhost" ] ;  do sleep 2s ; echo "hostname is still localhost, waiting" ;done;'
+      {{- if eq .Cluster.Kubernetes.CloudProvider "azure" }}
+      ExecStartPre=/bin/bash -c 'curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" | jq -r .compute.osProfile.computerName >/etc/desired-host-name'
+      ExecStartPre=/bin/bash -c 'while [ "$(hostname)" != "$(cat /etc/desired-host-name)" ] ;  do sleep 2s ; echo "hostname is still localhost, waiting" ;done;'
+      {{- end }}
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
         {{ . }} \
