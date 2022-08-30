@@ -313,7 +313,7 @@ systemd:
       Environment="PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/opt/bin"
       {{- if eq .Cluster.Kubernetes.CloudProvider "azure" }}
       ExecStartPre=/bin/bash -c 'curl -s -H Metadata:true --noproxy "*" "http://169.254.169.254/metadata/instance?api-version=2021-02-01" | jq -r .compute.osProfile.computerName >/etc/desired-host-name'
-      ExecStartPre=/bin/bash -c 'while [ "$(hostname)" != "$(cat /etc/desired-host-name)" ] ;  do sleep 2s ; echo "hostname is still localhost, waiting" ;done;'
+      ExecStartPre=/bin/bash -c 'while HN="$(hostname)" && [ "$HN" != "$(cat /etc/desired-host-name)" ] ;  do sleep 2s ; echo "hostname is unexpected (want $(cat /etc/desired-host-name), got $HN)" ;done;'
       {{- end }}
       ExecStart=/opt/bin/kubelet \
         {{ range .Kubernetes.Kubelet.CommandExtraArgs -}}
