@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Set `SystemdCgroup` to false in `containerd` config for node pools using cgroups v1.
+
 ## [14.5.0] - 2022-08-30
 
 ### Fixed
