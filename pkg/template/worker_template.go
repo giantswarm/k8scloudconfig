@@ -229,8 +229,6 @@ systemd:
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         {{ end -}}
         --pod-infra-container-image={{ .Images.Pause }} \
-        --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
-        --network-plugin=cni \
         --register-node=true \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/worker,role=worker,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \

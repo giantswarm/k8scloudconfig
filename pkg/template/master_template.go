@@ -329,8 +329,6 @@ systemd:
         --cloud-provider={{.Cluster.Kubernetes.CloudProvider}} \
         {{ end -}}
         --pod-infra-container-image={{ .Images.Pause }} \
-        --image-pull-progress-deadline={{.ImagePullProgressDeadline}} \
-        --network-plugin=cni \
         --register-node=true \
         --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
