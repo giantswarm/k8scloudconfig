@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Remove dockershim parameters from kubelet systemd unit.
+- Remove --address flag from scheduler's manifest.
 
 ## [14.5.1] - 2022-08-31
 
