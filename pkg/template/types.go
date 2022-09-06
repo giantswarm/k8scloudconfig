@@ -52,9 +52,6 @@ type Params struct {
 	// then apply the manifest by adding it to ExtraManifests.
 	ExtraManifests []string
 	Files          Files
-	// ImagePullProgressDeadline is the duration after which image pulling is
-	// cancelled if no progress has been made.
-	ImagePullProgressDeadline string
 	// Container images used in the cloud-config templates
 	Images Images
 	// IAM Roles for Service Account key files.
