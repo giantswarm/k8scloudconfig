@@ -111,6 +111,26 @@ systemd:
         ash -c "cat /etc/kubernetes/config/kubelet.yaml.tmpl |envsubst >/etc/kubernetes/config/kubelet.yaml"
       [Install]
       WantedBy=multi-user.target
+  - name: k8s-setup-apiserver-manifest.service
+    enabled: true
+    contents: |
+      [Unit]
+      Description=k8s-setup-apiserver-manifest Service
+      After=docker.service
+      Requires=docker.service
+      [Service]
+      Type=oneshot
+      RemainAfterExit=yes
+      TimeoutStartSec=0
+      Environment=IMAGE={{ .Images.Envsubst }}
+      ExecStartPre=/opt/bin/setup-apiserver-environment
+      ExecStart=docker run --rm \
+        --env-file /etc/apiserver-environment \
+        -v /etc/kubernetes/:/etc/kubernetes/ \
+        $IMAGE \
+        ash -c "cat /etc/kubernetes/manifest-templates/k8s-api-server.yaml.tmpl |envsubst >/etc/kubernetes/manifests/k8s-api-server.yaml"
+      [Install]
+      WantedBy=multi-user.target
   - name: containerd.service
     enabled: true
     contents: |
@@ -583,6 +603,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-kubelet-environment" }}"
 
+    - path: /opt/bin/setup-apiserver-environment
+      filesystem: root
+      mode: 0544
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-apiserver-environment" }}"
+
     - path: /etc/kubernetes/kubeconfig/addons.yaml
       filesystem: root
       mode: 0644
@@ -650,11 +676,11 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-api-healthz.yaml" }}"
 
-    - path: /etc/kubernetes/manifests/k8s-api-server.yaml
+    - path: /etc/kubernetes/manifest-templates/k8s-api-server.yaml.tmpl
       filesystem: root
       mode: 0644
       contents:
-        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-api-server.yaml" }}"
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-api-server.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/manifests/k8s-controller-manager.yaml
       filesystem: root

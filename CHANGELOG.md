@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Automatically set `--max-requests-inflight`, `--max-mutating-requests-inflight` and resource limits to API Server's manifest based on node size.
+
 ### Changed
 
 - Remove dockershim parameters from kubelet systemd unit.

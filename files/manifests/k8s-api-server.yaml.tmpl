@@ -79,6 +79,8 @@ spec:
     - --service-account-signing-key-file=/etc/kubernetes/ssl/service-account-key.pem
     - --proxy-client-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
     - --proxy-client-key-file=/etc/kubernetes/ssl/apiserver-key.pem
+    - --max-requests-inflight=${MAX_REQUESTS_INFLIGHT}
+    - --max-mutating-requests-inflight=${MAX_MUTATING_REQUESTS_INFLIGHT}
     {{ range .IrsaSAKeyArgs -}}
     - {{ . }}
     {{ end -}}
@@ -86,6 +88,9 @@ spec:
       requests:
         cpu: 300m
         memory: 300Mi
+      limits:
+        cpu: ${CPU_LIMIT}
+        memory: ${MEMORY_LIMIT}
     livenessProbe:
       tcpSocket:
         port: {{.Cluster.Kubernetes.API.SecurePort}}
