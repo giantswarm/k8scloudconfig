@@ -7,6 +7,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Remove dockershim parameters from kubelet systemd unit.
+- Remove --address flag from scheduler's manifest.
+- Remove unused ImagePullProgressDeadline setting.
+
 ## [14.5.1] - 2022-08-31
 
 ### Fixed
