@@ -128,7 +128,7 @@ systemd:
         --env-file /etc/apiserver-environment \
         -v /etc/kubernetes/:/etc/kubernetes/ \
         $IMAGE \
-        ash -c "cat /etc/kubernetes/manifest-templates/k8s-api-server.yaml.tmpl |envsubst >/etc/kubernetes/manifests/k8s-api-server.yaml.tmpl"
+        ash -c "cat /etc/kubernetes/manifest-templates/k8s-api-server.yaml.tmpl |envsubst >/etc/kubernetes/manifests/k8s-api-server.yaml"
       [Install]
       WantedBy=multi-user.target
   - name: containerd.service
