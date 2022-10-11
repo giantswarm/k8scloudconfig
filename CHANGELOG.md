@@ -7,10 +7,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-### Changed
-
-- calico-crd-installer: Tolerate `node.cloudprovider.kubernetes.io/uninitialized`.
-
 ## [15.0.0] - 2022-09-07
 
 ### Added
@@ -22,6 +18,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Remove dockershim parameters from kubelet systemd unit.
 - Remove --address flag from scheduler's manifest.
 - Remove unused ImagePullProgressDeadline setting.
+
+## [14.5.2] - 2022-10-11
+
+### Changed
+
+- calico-crd-installer: Tolerate `node.cloudprovider.kubernetes.io/uninitialized`.
 
 ## [14.5.1] - 2022-08-31
 
@@ -1216,10 +1218,9 @@ chart-operator).
 
 ## [0.1.0]
 
-
-
 [Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.0...HEAD
-[15.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.1...v15.0.0
+[15.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.2...v15.0.0
+[14.5.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.1...v14.5.2
 [14.5.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.0...v14.5.1
 [14.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.4.0...v14.5.0
 [14.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...v14.4.0
