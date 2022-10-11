@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.5.2] - 2022-10-11
+
 ### Changed
 
 - calico-crd-installer: Tolerate `node.cloudprovider.kubernetes.io/uninitialized`.
@@ -1206,7 +1208,8 @@ chart-operator).
 
 
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.2...HEAD
+[14.5.2]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.1...v14.5.2
 [14.5.1]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.0...v14.5.1
 [14.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.4.0...v14.5.0
 [14.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.3.0...v14.4.0
