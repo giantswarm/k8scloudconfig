@@ -9,6 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [15.0.1] - 2022-10-11
 
+### Changed
+
+- calico-crd-installer: Tolerate `node.cloudprovider.kubernetes.io/uninitialized`.
+
 ## [15.0.0] - 2022-09-07
 
 ### Added
