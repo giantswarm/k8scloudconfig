@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Set CPU and Memory requests for Api server.
+
+### Fixed
+
+- Use 'MemTotal' rather than 'MemFree' to get memory limit for api server.
+
 ## [15.0.1] - 2022-10-11
 
 ### Changed
