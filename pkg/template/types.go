@@ -127,6 +127,9 @@ type KubernetesDockerOptions struct {
 type KubernetesPodOptions struct {
 	HostExtraMounts  []KubernetesPodOptionsHostMount
 	CommandExtraArgs []string
+	// ServiceAccountKeyFilePath is the path to the file to be used as `--service-account-key-file` in api server flags.
+	// If left empty the default value '/etc/kubernetes/ssl/service-account-key.pem' is used
+	ServiceAccountKeyFilePath string
 	// ServiceAccountSigningKeyFilePath is the path to the file that contains the current private key of the service account token issuer. The issuer will sign issued ID tokens with this private key.
 	// If left empty the default value '/etc/kubernetes/ssl/service-account-key.pem' is used
 	ServiceAccountSigningKeyFilePath string
