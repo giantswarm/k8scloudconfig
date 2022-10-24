@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [14.7.0] - 2022-10-24
+
 ### Changed
 
 - Set CPU and Memory requests for Api server.
@@ -1242,7 +1244,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v14.7.0...HEAD
+[14.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.1...v14.7.0
 [15.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.0...v15.0.1
 [15.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.6.0...v15.0.0
 [14.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.5.2...v14.6.0
