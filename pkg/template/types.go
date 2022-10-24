@@ -69,11 +69,8 @@ type Params struct {
 	// domain names only without the protocol prefix, e.g.:
 	// ["giantswarm.azurecr.io"].
 	RegistryMirrors []string
-	// ServiceAccountSigningKeyFilePath is the path to the file that contains the current private key of the service account token issuer. The issuer will sign issued ID tokens with this private key.
-	// If left empty the default value '/etc/kubernetes/ssl/service-account-key.pem' is used
-	ServiceAccountSigningKeyFilePath string
-	SSOPublicKey                     string
-	Versions                         Versions
+	SSOPublicKey    string
+	Versions        Versions
 }
 
 type Proxy struct {
@@ -130,6 +127,9 @@ type KubernetesDockerOptions struct {
 type KubernetesPodOptions struct {
 	HostExtraMounts  []KubernetesPodOptionsHostMount
 	CommandExtraArgs []string
+	// ServiceAccountSigningKeyFilePath is the path to the file that contains the current private key of the service account token issuer. The issuer will sign issued ID tokens with this private key.
+	// If left empty the default value '/etc/kubernetes/ssl/service-account-key.pem' is used
+	ServiceAccountSigningKeyFilePath string
 }
 
 type KubernetesPodOptionsHostMount struct {
