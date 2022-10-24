@@ -76,7 +76,14 @@ spec:
     - --service-account-issuer=https://{{.Cluster.Kubernetes.API.Domain}}
     - --service-account-jwks-uri=https://{{.Cluster.Kubernetes.API.Domain}}/openid/v1/jwks
     - --service-account-key-file=/etc/kubernetes/ssl/service-account-key.pem
+    {{ if ne "" .Kubernetes.Apiserver.ServiceAccountKeyFilePath -}}
+    - --service-account-key-file={{ .Kubernetes.Apiserver.ServiceAccountKeyFilePath }}
+    {{ end -}}
+    {{ if eq "" .Kubernetes.Apiserver.ServiceAccountSigningKeyFilePath -}}
     - --service-account-signing-key-file=/etc/kubernetes/ssl/service-account-key.pem
+    {{ else -}}
+    - --service-account-signing-key-file={{ .Kubernetes.Apiserver.ServiceAccountSigningKeyFilePath }}
+    {{ end -}}
     - --proxy-client-cert-file=/etc/kubernetes/ssl/apiserver-crt.pem
     - --proxy-client-key-file=/etc/kubernetes/ssl/apiserver-key.pem
     - --max-requests-inflight=${MAX_REQUESTS_INFLIGHT}
