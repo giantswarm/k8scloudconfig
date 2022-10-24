@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Avoid duplication of `--service-account-signing-key-file` API Server flag when IRSA is enabled.
+
 ## [14.5.2] - 2022-10-11
 
 ### Changed
