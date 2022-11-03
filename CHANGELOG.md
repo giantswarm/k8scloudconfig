@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.1.1] - 2022-11-03
+
 ### Fixed
 
 - Remove leftover from api-server manifest.
@@ -1248,7 +1250,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.1...HEAD
+[15.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.0...v15.1.1
 [15.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.1...v15.1.0
 [15.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.0...v15.0.1
 [15.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v14.6.0...v15.0.0
