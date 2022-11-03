@@ -88,9 +88,6 @@ spec:
     - --proxy-client-key-file=/etc/kubernetes/ssl/apiserver-key.pem
     - --max-requests-inflight=${MAX_REQUESTS_INFLIGHT}
     - --max-mutating-requests-inflight=${MAX_MUTATING_REQUESTS_INFLIGHT}
-    {{ range .IrsaSAKeyArgs -}}
-    - {{ . }}
-    {{ end -}}
     resources:
       requests:
         cpu: ${CPU_REQUEST}

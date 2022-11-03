@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Remove leftover from api-server manifest.
+
 ## [15.1.0] - 2022-10-24
 
 ### Changed
