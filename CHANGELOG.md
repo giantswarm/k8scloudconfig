@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Add missing registry mirror to containerd config.
+
 ## [15.1.1] - 2022-11-03
 
 ### Fixed

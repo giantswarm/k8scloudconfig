@@ -35,3 +35,8 @@ SystemdCgroup = {{ if .ForceCGroupsV1 }}false{{else}}true{{end}}
 
 [plugins."io.containerd.grpc.v1.cri"]
 sandbox_image = "{{ .Images.Pause }}"
+
+{{- if gt (len .RegistryMirrors) 0 }}
+[plugins."io.containerd.grpc.v1.cri".registry.mirrors."docker.io"]
+endpoint = ["{{index .RegistryMirrors 0}}"]
+{{- end }}
