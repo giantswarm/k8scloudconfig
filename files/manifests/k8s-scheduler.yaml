@@ -9,6 +9,7 @@ metadata:
     k8s-app: scheduler
     tier: control-plane
     giantswarm.io/monitoring: "true"
+    component: kube-scheduler
   annotations:
     scheduler.alpha.kubernetes.io/critical-pod: ''
     prometheus.io/scrape: "true"

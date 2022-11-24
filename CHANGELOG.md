@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add `component` label to scheduler and controller-manager's manifests.
+
 ### Fixed
 
 - Add missing registry mirror to containerd config.
