@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Label master nodes with node-role.kubernetes.io/control-plane to comply with kubeadm/CAPI.
+
 ## [15.2.0] - 2022-11-24
 
 ### Added
