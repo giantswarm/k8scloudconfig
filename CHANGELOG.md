@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Lower apiserver's cpu request to be 1/2 of the available CPUs in the VM.
+
 ## [15.3.0] - 2022-11-29
 
 ### Changed
