@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.4.0] - 2023-01-11
+
 ### Changed
 
 - Lower apiserver's cpu request to be 1/2 of the available CPUs in the VM.
@@ -1270,7 +1272,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.3.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.0...HEAD
+[15.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.3.0...v15.4.0
 [15.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.2.0...v15.3.0
 [15.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.1...v15.2.0
 [15.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.0...v15.1.1
