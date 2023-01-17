@@ -31,6 +31,9 @@ apiVersion: policy/v1beta1
 kind: PodSecurityPolicy
 metadata:
   name: restricted
+  annotations:
+    seccomp.security.alpha.kubernetes.io/allowedProfileNames: '*'
+    seccomp.security.alpha.kubernetes.io/defaultProfileName: 'runtime/default'
 spec:
   privileged: false
   allowPrivilegeEscalation: false
