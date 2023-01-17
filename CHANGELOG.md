@@ -10,6 +10,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 - Allowed the use of all seccomp profiles for components under the restricted podsecurity policy.
 - Set the default seccomp profile to runtime/default under the restricted podsecurity policy.
 
+## [15.4.1] - 2023-01-17
+
+### Added
+
+- Allow customers to configure all `net.*` kernel parameters in pods.
+
+
 ## [15.4.0] - 2023-01-11
 
 ### Changed
@@ -1275,7 +1282,9 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...HEAD
+[15.4.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.1
+[15.4.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.0...v15.4.1
 [15.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.3.0...v15.4.0
 [15.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.2.0...v15.3.0
 [15.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.1...v15.2.0
