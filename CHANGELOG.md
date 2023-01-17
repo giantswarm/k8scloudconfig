@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Allow customers to configure all `net.*` kernel parameters in pods.
+
 ## [15.4.0] - 2023-01-11
 
 ### Changed
