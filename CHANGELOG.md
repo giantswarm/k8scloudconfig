@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.4.2] - 2023-01-17
+
 - Allowed the use of all seccomp profiles for components under the restricted podsecurity policy.
 - Set the default seccomp profile to runtime/default under the restricted podsecurity policy.
 
@@ -1282,7 +1284,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.2...HEAD
+[15.4.2]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.2
 [15.4.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.1
 [15.4.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.0...v15.4.1
 [15.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.3.0...v15.4.0
