@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Remove pod limit for AWS CNI if subnet prefix is enabled. 
+
 ## [15.4.2] - 2023-01-17
 
 - Allowed the use of all seccomp profiles for components under the restricted podsecurity policy.
