@@ -43,3 +43,6 @@ endpoint = ["{{index .RegistryMirrors 0}}"]
 
 [plugins."io.containerd.grpc.v1.cri".registry.configs."docker.io".auth]
 auth = "{{ .DockerhubToken }}"
+
+[plugins."io.containerd.grpc.v1.cri".registry.configs."registry-1.docker.io".auth]
+auth = "{{ .DockerhubToken }}"
