@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.4.4] - 2023-01-24
+
 ### Fixed
 
 - Add Docker token to avoid rate limits for pulling images.
@@ -1294,7 +1296,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.3...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.4...HEAD
+[15.4.4]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.3...v15.4.4
 [15.4.3]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.2...v15.4.3
 [15.4.2]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.2
 [15.4.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.1
