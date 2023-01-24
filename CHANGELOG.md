@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Add Docker token to avoid rate limits for pulling images.
+
 ## [15.4.3] - 2023-01-19
 
 ### Added
