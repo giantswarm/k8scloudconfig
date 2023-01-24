@@ -14,6 +14,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Fixed
 
 - Add missing registry mirror to containerd config.
+- Add Docker token to avoid rate limits for pulling images.
 
 ## [15.1.1] - 2022-11-03
 
