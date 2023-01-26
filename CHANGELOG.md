@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Improve reliability of calico CRD installer job.
+
 ## [15.4.4] - 2023-01-24
 
 ### Fixed
