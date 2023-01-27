@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.5.0] - 2023-01-27
+
 ### Changed
 
 - Improve reliability of calico CRD installer job.
@@ -1300,7 +1302,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.4...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.5.0...HEAD
+[15.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.4...v15.5.0
 [15.4.4]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.3...v15.4.4
 [15.4.3]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.2...v15.4.3
 [15.4.2]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.1...v15.4.2
