@@ -23,6 +23,8 @@ spec:
           effect: NoSchedule
         - key: node.cloudprovider.kubernetes.io/uninitialized
           operator: Exists
+        - key: node.kubernetes.io/not-ready
+          operator: Exists
       restartPolicy: Never
       serviceAccountName: calico-init
   backoffLimit: 4

@@ -91,16 +91,27 @@ kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 {{ end }}
 
 {{ if not .DisableCalico }}
-kubectl apply -f /srv/calico-crd-installer-rbac.yaml
+# install calico CRDS
+PROXY_MANIFESTS="calico-crd-installer-rbac.yaml calico-crd-installer.yaml"
+for manifest in $PROXY_MANIFESTS
+do
+    while
+        kubectl apply -f /srv/$manifest
+        [ "$?" -ne "0" ]
+    do
+        echo "failed to apply /srv/$manifest, retrying in 5 sec"
+        sleep 5s
+    done
+done
+echo "calico CRD installer successfully applied"
 
-kubectl apply -f /srv/calico-crd-installer.yaml
-kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
-
-{{ if not .CalicoPolicyOnly }}
-# TODO: remove migrator once all clusters have been migrated to kubernetes datastore
-kubectl apply -f /srv/calico-datastore-migrator-pre.yaml
-kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-datastore-migrator-pre
-{{ end }}
+while
+    kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
+    [ "$?" -ne "0" ]
+do
+    echo "Failed waiting for crd installer job to be completed, retrying in 5 sec"
+    sleep 5s
+done
 
 {{ if .CalicoPolicyOnly }}
 ## Apply Calico with network policy features only
