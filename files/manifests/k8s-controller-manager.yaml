@@ -40,9 +40,9 @@ spec:
     - --authentication-kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     - --authorization-kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     {{- if .InTreePluginAWSUnregister }}
-    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},InTreePluginAWSUnregister=true
+    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},InTreePluginAWSUnregister=true,CronJobTimeZone=true
     {{- else }}
-    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }}
+    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},CronJobTimeZone=true
     {{- end }}
     - --profiling=false
     - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem

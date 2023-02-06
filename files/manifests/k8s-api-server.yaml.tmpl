@@ -38,7 +38,7 @@ spec:
     - --profiling=false
     - --service-account-lookup=true
     - --authorization-mode=RBAC
-    - --feature-gates=TTLAfterFinished=true
+    - --feature-gates=TTLAfterFinished=true,CronJobTimeZone=true
     - --enable-admission-plugins=NamespaceLifecycle,LimitRanger,ServiceAccount,ResourceQuota,DefaultStorageClass,PersistentVolumeClaimResize,PodSecurityPolicy,Priority,DefaultTolerationSeconds,MutatingAdmissionWebhook,ValidatingAdmissionWebhook
     {{ if .ExternalCloudControllerManager -}}
     - --cloud-provider=external
