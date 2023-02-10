@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.1.2] - 2023-02-10
+
 ### Added
 
 - Add `component` label to scheduler and controller-manager's manifests.
@@ -1259,7 +1261,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.1...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.2...HEAD
+[15.1.2]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.1...v15.1.2
 [15.1.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.1.0...v15.1.1
 [15.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.1...v15.1.0
 [15.0.1]: https://github.com/giantswarm/k8scloudconfig/compare/v15.0.0...v15.0.1
