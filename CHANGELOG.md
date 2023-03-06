@@ -9,6 +9,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
+- Remove `--api-endpoint` flag from `k8s-api-healthz` static pod manifest as the default value 127.0.0.1 is safe to be used now.
 - Enable `CronJobTimeZone` feature gate through feature flag.
 
 ## [15.6.0] - 2023-02-07

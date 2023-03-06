@@ -10,14 +10,8 @@ spec:
   priorityClassName: system-node-critical
   containers:
     - name: k8s-api-healthz
-      env:
-      - name: HOST_IP
-        valueFrom:
-          fieldRef:
-            fieldPath: status.podIP
       command:
         - /k8s-api-healthz
-        - --api-endpoint="https://$(HOST_IP):443/healthz"
         - --etcd-cert=/etc/kubernetes/ssl/etcd/server-crt.pem
         - --etcd-key=/etc/kubernetes/ssl/etcd/server-key.pem
         - --etcd-ca-cert=/etc/kubernetes/ssl/etcd/server-ca.pem
