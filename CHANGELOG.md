@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Enable `CronJobTimeZone` feature gate through feature flag.
+
 ## [15.6.0] - 2023-02-07
 
 ### Changed
