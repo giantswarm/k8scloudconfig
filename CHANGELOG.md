@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [15.7.0] - 2023-03-06
+
 ### Changed
 
 - Remove `--api-endpoint` flag from `k8s-api-healthz` static pod manifest as the default value 127.0.0.1 is safe to be used now.
@@ -1313,7 +1315,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.7.0...HEAD
+[15.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.6.0...v15.7.0
 [15.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.5.0...v15.6.0
 [15.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.4...v15.5.0
 [15.4.4]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.3...v15.4.4
