@@ -19,6 +19,8 @@ type Params struct {
 	AWSCNISubnetPrefixMode bool
 	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
 	EnableCSIMigrationAWS bool
+	// EnableCronJobTimeZone flag. When set to true the `CronJobTimeZone` feature flag will be enabled.
+	EnableCronJobTimeZone bool
 	// force cgroups v1 on flatcar 3033.2.1 and above
 	// this configuration will do reboot to ensure kernel loaded the arguments
 	ForceCGroupsV1 bool
