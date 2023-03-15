@@ -159,6 +159,8 @@ type Etcd struct {
 	InitialClusterState string
 	// NodeName is the name of the current etcd cluster node.
 	NodeName string
+	// QuotaBackendBytes allows to set a custom value for the --quota-backend-bytes etcd flag. Defaults to 8Gb.
+	QuotaBackendBytes int64
 }
 
 type FileMetadata struct {
