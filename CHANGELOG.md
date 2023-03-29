@@ -10,7 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ## Changed
 
 - **BREAKING** bump release-operator dependency to `v4`.
-- Change go version to v1.18.
+- Change go version to `v1.18`.
 
 ## [15.7.0] - 2023-03-06
 
