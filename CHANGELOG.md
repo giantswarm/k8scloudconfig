@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [16.0.0] - 2023-03-31
+
 ## Changed
 
 - **BREAKING** bump release-operator dependency to `v4`.
@@ -1320,7 +1322,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v15.7.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.0.0...HEAD
+[16.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.7.0...v16.0.0
 [15.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.6.0...v15.7.0
 [15.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.5.0...v15.6.0
 [15.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.4.4...v15.5.0
