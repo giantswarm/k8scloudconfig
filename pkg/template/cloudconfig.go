@@ -11,7 +11,7 @@ import (
 
 	"github.com/giantswarm/microerror"
 
-	"github.com/giantswarm/k8scloudconfig/v15/pkg/ignition"
+	"github.com/giantswarm/k8scloudconfig/v16/pkg/ignition"
 )
 
 const (
