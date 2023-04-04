@@ -242,8 +242,9 @@ systemd:
           --initial-cluster-state ${ETCD_INITIAL_CLUSTER_STATE} \
           --experimental-peer-skip-client-san-verification=true \
           --data-dir=/var/lib/etcd \
-          --enable-v2 \
-          --quota-backend-bytes 8589934592 \
+          --quota-backend-bytes {{ if eq .Etcd.QuotaBackendBytes 0}}8589934592{{ else }}{{ .Etcd.QuotaBackendBytes }}{{ end }} \
+          --auto-compaction-mode revision \
+          --auto-compaction-retention 1 \
           --logger=zap
       [Install]
       WantedBy=multi-user.target
@@ -285,7 +286,7 @@ systemd:
       [Unit]
       Description=Execute etcd3-defragmentation every day at 3.30AM UTC
       [Timer]
-      OnCalendar=*-*-* 03:30:00 UTC
+      OnCalendar=hourly
       [Install]
       WantedBy=multi-user.target
   - name: k8s-extract.service

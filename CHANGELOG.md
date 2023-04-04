@@ -7,6 +7,13 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Allow customizing etcd's `--quota-backend-bytes` flag.
+- Remove `--enable-v2` flag from etcd systemd unit.
+- Add `--auto-compaction-mode=revision` and `--auto-compaction-retention=1` to etcd unit.
+- Run etcd defragmentation every hour.
+
 ## [16.0.0] - 2023-03-31
 
 ## Changed
