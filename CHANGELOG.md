@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [16.1.0] - 2023-04-04
+
 ### Changed
 
 - Allow customizing etcd's `--quota-backend-bytes` flag.
@@ -1329,7 +1331,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.1.0...HEAD
+[16.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.0.0...v16.1.0
 [16.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.7.0...v16.0.0
 [15.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.6.0...v15.7.0
 [15.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.5.0...v15.6.0
