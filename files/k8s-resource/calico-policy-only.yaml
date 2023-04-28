@@ -480,6 +480,11 @@ rules:
       - daemonsets
     verbs:
       - get
+  - apiGroups: [""]
+    resources:
+      - serviceaccounts/token
+    verbs:
+      - create
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1

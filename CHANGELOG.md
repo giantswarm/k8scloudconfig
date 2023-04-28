@@ -7,6 +7,15 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove feature gate `TTLAfterFinished` (removed in k8s 1.25).
+- Remove `PodSecurityPolicy` admission plugin (removed in k8s 1.25).
+
+### Changed
+
+- Require k8s 1.25 and calico 1.25.
+
 ## [16.1.0] - 2023-04-04
 
 ### Changed

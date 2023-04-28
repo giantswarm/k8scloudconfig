@@ -26,7 +26,6 @@ done
 SECURITY_FILES=""
 SECURITY_FILES="${SECURITY_FILES} rbac_bindings.yaml"
 SECURITY_FILES="${SECURITY_FILES} rbac_roles.yaml"
-SECURITY_FILES="${SECURITY_FILES} psp_policies.yaml"
 SECURITY_FILES="${SECURITY_FILES} psp_roles.yaml"
 SECURITY_FILES="${SECURITY_FILES} psp_binding.yaml"
 
