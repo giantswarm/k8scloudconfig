@@ -15,6 +15,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Require k8s 1.25 and calico 1.25.
+- Update calico manifests for version 1.25.
 
 ## [16.1.0] - 2023-04-04
 
