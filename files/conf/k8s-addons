@@ -113,7 +113,7 @@ do
 done
 
 # Ensure calico CRDs are created
-kubectl get crd ippools.crd.projectcalico.org || (echo "Calico CRD was not found. This is unexpected, exiting." ; exit 1)
+kubectl get crd ippools.crd.projectcalico.org || echo "Calico CRD was not found. This is unexpected, exiting." && exit 1
 
 {{ if .CalicoPolicyOnly }}
 ## Apply Calico with network policy features only
