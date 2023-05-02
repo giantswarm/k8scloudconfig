@@ -1,4 +1,4 @@
-# Manifests got from https://docs.projectcalico.org/archive/v3.21/manifests/calico.yaml
+# Manifests got from https://docs.projectcalico.org/archive/v3.25/manifests/calico.yaml
 #
 # Extra changes:
 #  - Added resource limits to calico-node.
@@ -333,6 +333,14 @@ apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: calico-node
 rules:
+  # Used for creating service account tokens to be used by the CNI plugin
+  - apiGroups: [""]
+    resources:
+      - serviceaccounts/token
+    resourceNames:
+    - calico-node
+    verbs:
+      - create
   # The CNI plugin needs to get pods, nodes, and namespaces.
   - apiGroups: [""]
     resources:
@@ -467,6 +475,7 @@ rules:
       - ipamconfigs
     verbs:
       - get
+      - create
   # Block affinities must also be watchable by confd for route aggregation.
   - apiGroups: ["crd.projectcalico.org"]
     resources:
@@ -480,11 +489,6 @@ rules:
       - daemonsets
     verbs:
       - get
-  - apiGroups: [""]
-    resources:
-      - serviceaccounts/token
-    verbs:
-      - create
 
 ---
 apiVersion: rbac.authorization.k8s.io/v1
