@@ -54,6 +54,7 @@ spec:
     - --etcd-cafile=/etc/kubernetes/ssl/etcd/server-ca.pem
     - --etcd-certfile=/etc/kubernetes/ssl/etcd/server-crt.pem
     - --etcd-keyfile=/etc/kubernetes/ssl/etcd/server-key.pem
+    - --etcd-compaction-interval=0
     - --advertise-address=$(HOST_IP)
     - --runtime-config=api/all=true,scheduling.k8s.io/v1alpha1=true
     - --logtostderr=true
