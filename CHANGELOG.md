@@ -1272,10 +1272,14 @@ chart-operator).
 ### Removed
 - Removed hard limits from core kubernetes components.
 
+
+
 ## [3.2.2]
 
 ### Removed
 - Removed set-ownership-etcd-data-dir.service.
+
+
 
 ## [3.2.1]
 
