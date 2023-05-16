@@ -24,7 +24,7 @@ spec:
     image: {{ .Images.KubeScheduler }}
     command:
     - kube-scheduler
-    - --feature-gates=TTLAfterFinished=true{{ if .EnableCronJobTimeZone }},CronJobTimeZone=true{{ end }}
+    {{ if .EnableCronJobTimeZone }}- --feature-gates=CronJobTimeZone=true{{ end }}
     - --config=/etc/kubernetes/config/scheduler.yaml
     - --authentication-kubeconfig=/etc/kubernetes/kubeconfig/scheduler.yaml
     - --authorization-kubeconfig=/etc/kubernetes/kubeconfig/scheduler.yaml

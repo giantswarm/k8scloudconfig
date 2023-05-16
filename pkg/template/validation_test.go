@@ -11,9 +11,9 @@ import (
 
 var releaseVersionsValid = Versions{
 	Calico:                       "3.20.0",
-	CRITools:                     "1.19.0",
+	CRITools:                     "1.25.0",
 	Etcd:                         "3.4.14",
-	Kubernetes:                   "1.19.4",
+	Kubernetes:                   "1.25.0",
 	KubernetesAPIHealthz:         "0.1.1",
 	KubernetesNetworkSetupDocker: "0.2.0",
 }
