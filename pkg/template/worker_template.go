@@ -224,7 +224,6 @@ systemd:
         --config=/etc/kubernetes/config/kubelet.yaml \
         --container-runtime=remote \
         --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
-        --logtostderr=true \
         {{ if .ExternalCloudControllerManager -}}
         --cloud-provider=external \
         {{ else -}}
