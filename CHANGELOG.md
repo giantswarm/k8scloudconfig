@@ -7,6 +7,22 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove usage of `--logtostderr` flag that was removed upstream since 1.26. 
+
+## [17.0.0] - 2023-05-16
+
+### Removed
+
+- Remove feature gate `TTLAfterFinished` (removed in k8s 1.25).
+- Remove `PodSecurityPolicy` admission plugin (removed in k8s 1.25).
+
+### Changed
+
+- Require k8s 1.25 and calico 1.25.
+- Update calico manifests for version 1.25.
+
 ## [16.2.0] - 2023-05-05
 
 ### Changed
@@ -1338,7 +1354,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.0.0...HEAD
+[17.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...v17.0.0
 [16.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.1.0...v16.2.0
 [16.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.0.0...v16.1.0
 [16.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v15.7.0...v16.0.0
