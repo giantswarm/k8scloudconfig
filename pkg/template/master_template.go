@@ -351,7 +351,7 @@ systemd:
         {{ end -}}
         --pod-infra-container-image={{ .Images.Pause }} \
         --register-node=true \
-        --register-with-taints=node-role.kubernetes.io/master=:NoSchedule \
+        --register-with-taints=node-role.kubernetes.io/master=:NoSchedule,node-role.kubernetes.io/control-plane=:NoSchedule\
         --kubeconfig=/etc/kubernetes/kubeconfig/kubelet.yaml \
         --node-labels="node.kubernetes.io/master,role=master,ip=${DEFAULT_IPV4},{{.Cluster.Kubernetes.Kubelet.Labels}}" \
         --v=2
