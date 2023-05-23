@@ -11,6 +11,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ### Changed
 
+- Add new control plane taint to occurrences of the old one.
 - Disable ETCD compaction request from apiserver.
 
 ## [16.1.0] - 2023-04-04
