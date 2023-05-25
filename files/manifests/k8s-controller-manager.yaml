@@ -27,7 +27,6 @@ spec:
     {{ range .Kubernetes.ControllerManager.CommandExtraArgs -}}
     - {{ . }}
     {{ end -}}
-    - --logtostderr=true
     - --v=2
     {{ if .ExternalCloudControllerManager -}}
     - --cloud-provider=external
@@ -40,9 +39,9 @@ spec:
     - --authentication-kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     - --authorization-kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     {{- if .InTreePluginAWSUnregister }}
-    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }},InTreePluginAWSUnregister=true{{ if .EnableCronJobTimeZone }},CronJobTimeZone=true{{ end }}
+    - --feature-gates=InTreePluginAWSUnregister=true{{ if .EnableCronJobTimeZone }},CronJobTimeZone=true{{ end }}
     {{- else }}
-    - --feature-gates=TTLAfterFinished=true,CSIMigrationAWS={{ .EnableCSIMigrationAWS }}{{ if .EnableCronJobTimeZone }},CronJobTimeZone=true{{ end }}
+    {{ if .EnableCronJobTimeZone }}- --feature-gates=CronJobTimeZone=true{{ end }}
     {{- end }}
     - --profiling=false
     - --root-ca-file=/etc/kubernetes/ssl/apiserver-ca.pem
