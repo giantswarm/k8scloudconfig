@@ -17,8 +17,6 @@ type Params struct {
 	EnableAWSCNI bool
 	// AWSCNISubnetPrefixMode set to true when cluster is using Subnet Prefix mode, will remove pod limit per node.
 	AWSCNISubnetPrefixMode bool
-	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
-	EnableCSIMigrationAWS bool
 	// EnableCronJobTimeZone flag. When set to true the `CronJobTimeZone` feature flag will be enabled.
 	EnableCronJobTimeZone bool
 	// force cgroups v1 on flatcar 3033.2.1 and above

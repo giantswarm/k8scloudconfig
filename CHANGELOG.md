@@ -10,6 +10,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Removed
 
 - Remove usage of `--logtostderr` flag that was removed upstream since 1.26. 
+- Remove CSIMigration feature flag (enabled by default since 1.23).
 
 ## [17.0.0] - 2023-05-16
 
