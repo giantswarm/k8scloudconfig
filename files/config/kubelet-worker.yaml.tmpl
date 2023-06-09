@@ -38,9 +38,6 @@ authentication:
 authorization:
   mode: AlwaysAllow # Defaults to webhook as of 1.10
 featureGates:
-  {{- if .EnableCSIMigrationAWS }}
-  CSIMigrationAWS: true
-  {{- end }}
   {{- if .InTreePluginAWSUnregister }}
   InTreePluginAWSUnregister: true
   {{- end }}
