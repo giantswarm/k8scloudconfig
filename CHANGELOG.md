@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [17.1.0] - 2023-06-09
+
 ### Removed
 
 - Remove usage of `--logtostderr` flag that was removed upstream since 1.26. 
@@ -1354,7 +1356,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.0.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.1.0...HEAD
+[17.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v17.0.0...v17.1.0
 [17.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...v17.0.0
 [16.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.1.0...v16.2.0
 [16.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.0.0...v16.1.0
