@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove etcd check in k8s-addons.
+
 ## [17.1.0] - 2023-06-09
 
 ### Removed
