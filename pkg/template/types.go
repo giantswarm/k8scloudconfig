@@ -17,6 +17,8 @@ type Params struct {
 	EnableAWSCNI bool
 	// AWSCNISubnetPrefixMode set to true when cluster is using Subnet Prefix mode, will remove pod limit per node.
 	AWSCNISubnetPrefixMode bool
+	// ControllerManagerTerminatedPodGcThreshold flag. Set the value to use for ControllerManager terminated-pod-gc-threshold flag
+	ControllerManagerTerminatedPodGcThreshold int
 	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
 	EnableCSIMigrationAWS bool
 	// EnableCronJobTimeZone flag. When set to true the `CronJobTimeZone` feature flag will be enabled.

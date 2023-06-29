@@ -9,6 +9,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [16.3.0] - 2023-06-26
 
+### Added
+
+- Added support for changing `controller-manager` `terminated-pod-gc-threshold` flag
+  - Remove hardcoded value of `10` and change default value to `125` ( 1% of the upstream default of `12500` )
+
+
 ### Removed
 
 - Remove etcd check in k8s-addons.

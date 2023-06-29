@@ -34,7 +34,7 @@ spec:
     {{ else -}}
     - --cloud-provider={{.Cluster.Kubernetes.CloudProvider}}
     {{ end -}}
-    - --terminated-pod-gc-threshold=10
+    - --terminated-pod-gc-threshold={{if eq .ControllerManagerTerminatedPodGcThreshold 0}}125{{else}}{{.ControllerManagerTerminatedPodGcThreshold}}{{end}}
     - --use-service-account-credentials=true
     - --kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
     - --authentication-kubeconfig=/etc/kubernetes/kubeconfig/controller-manager.yaml
