@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [17.2.0] - 2023-07-04
+
 ### Added
 
 - Added support for changing `controller-manager` `terminated-pod-gc-threshold` flag
@@ -1366,7 +1368,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.2.0...HEAD
+[17.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v17.1.0...v17.2.0
 [17.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v17.0.0...v17.1.0
 [17.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...v17.0.0
 [16.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.1.0...v16.2.0
