@@ -440,7 +440,7 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
-    - path : /etc/audit/rules.d/99-default.rules
+    - path: /etc/audit/rules.d/99-default.rules
       overwrite: true
       filesystem: root
       mode: 420
