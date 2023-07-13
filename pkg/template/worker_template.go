@@ -31,6 +31,8 @@ systemd:
       Requires=-.slice
       After=-.slice
   # End - manual management for cgroup structure
+  - name: auditd.service
+    enabled: true
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
     enabled: {{.Metadata.Enabled}}
