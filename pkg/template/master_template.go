@@ -38,6 +38,8 @@ systemd:
       contents: |
         [Service]
         ExecStartPre=/bin/bash -c "while [ ! -f /etc/audit/rules.d/10-docker.rules ]; do echo 'Waiting for /etc/audit/rules.d/10-docker.rules to be written' && sleep 1; done"
+  - name: auditd.service
+    enabled: true
   {{range .Extension.Units}}
   - name: {{.Metadata.Name}}
     enabled: {{.Metadata.Enabled}}
