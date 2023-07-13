@@ -9,8 +9,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [16.5.0] - 2023-07-13
 
-## [16.5.0] - 2023-07-13
-
 ### Added
 
 - Enable auditd systemd unit on master and worker nodes.
@@ -1258,14 +1256,10 @@ chart-operator).
 ### Removed
 - Removed hard limits from core kubernetes components.
 
-
-
 ## [3.2.2]
 
 ### Removed
 - Removed set-ownership-etcd-data-dir.service.
-
-
 
 ## [3.2.1]
 
@@ -1359,7 +1353,6 @@ chart-operator).
 ## [0.1.0]
 
 [Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...HEAD
-[16.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...v16.5.0
 [16.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.4.0...v16.5.0
 [16.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.3.0...v16.4.0
 [16.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...v16.3.0
