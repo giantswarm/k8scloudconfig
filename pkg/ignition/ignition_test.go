@@ -13,7 +13,7 @@ func TestConvertTemplatetoJSON(t *testing.T) {
 		{
 			yamlContent: []byte(`---
 ignition:
-  version: "2.2.0"
+  version: "3.0.0"
   config: {}
   security: {}
   tls: {}
