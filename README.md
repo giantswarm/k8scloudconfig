@@ -1,9 +1,10 @@
-[![CircleCI](https://circleci.com/gh/giantswarm/k8scloudconfig.svg?&style=shield&circle-token=d82e253ec55ee80292084262e2c022c442797fd0)](https://circleci.com/gh/giantswarm/k8scloudconfig)
+[![CircleCI](https://dl.circleci.com/status-badge/img/gh/giantswarm/k8scloudconfig/tree/master.svg?style=svg)](https://dl.circleci.com/status-badge/redirect/gh/giantswarm/k8scloudconfig/tree/master)
 
 # k8scloudconfig
+
 Cloud-init configuration for setting up Kubernetes clusters
 
-# Versioning
+## Versioning
 
 k8scloudconfig library uses semver versioning scheme. Please follow simple rules, when creating new version:
 
@@ -13,6 +14,7 @@ k8scloudconfig library uses semver versioning scheme. Please follow simple rules
 4. WIP releases are only possible for major and minor version updates. Patch releases should be immediately frozen.
 
 Examples:
+
 - "Hyperkube upgrade from 1.9.5 to 1.10.1" is a minor version upgrade.
 - "New field `DisableCalico` added to `Params` struct" is a major version upgrade.
 - "Kubelet configuration changed to prevent stuck in terminating state pods" is a patch version upgrade.
