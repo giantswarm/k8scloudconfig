@@ -312,7 +312,6 @@ systemd:
 storage:
   directories:
     - path: /var/log/fluentbit_db
-      filesystem: root
       mode: 2644
       user:
         name: giantswarm
@@ -320,97 +319,80 @@ storage:
         name: giantswarm
   files:
     - path: /boot/coreos/first_boot
-      filesystem: root
     {{ if .ForceCGroupsV1 }}
     - path: /etc/flatcar-cgroupv1
-      filesystem: root
       mode: 0444
     {{ end }}
     - path: /etc/ssh/trusted-user-ca-keys.pem
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     - path: /etc/kubernetes/config/kubelet.yaml.tmpl
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-worker.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/kubeconfig/kubelet.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kubelet-worker.yaml" }}"
 
     - path: /etc/kubernetes/config/proxy-config.yml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kube-proxy.yaml" }}"
 
     - path: /etc/kubernetes/config/proxy-kubeconfig.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kube-proxy-worker.yaml" }}"
 
     - path: /etc/kubernetes/kubeconfig/kube-proxy.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kube-proxy-worker.yaml" }}"
 
     - path: /opt/wait-for-domains
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/wait-for-domains" }}"
 
     - path: /etc/ssh/sshd_config
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/sshd_config" }}"
     - path: /opt/bin/setup-kubelet-environment
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-kubelet-environment" }}"
 
     - path: /etc/sysctl.d/hardening.conf
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/hardening.conf" }}"
 
     - path: /etc/audit/rules.d/10-docker.rules
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/10-docker.rules" }}"
 
     - path: /etc/docker/daemon.json
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/docker-daemon.json" }}"
 
     - path: /root/.docker/config.json
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kubelet-docker-config.json" }}"
 
     - path: /etc/modules-load.d/ip_vs.conf
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
     - path : /etc/containerd/config.toml
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -420,13 +402,11 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/containerd-config.toml" }}"
 
     - path: /etc/crictl.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/crictl" }}"
  
     - path : /etc/systemd/system/containerd.service.d/10-use-custom-config.conf
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -436,14 +416,12 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/10-use-custom-config.conf" }}"
  
     - path: /opt/k8s-extract
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
     - path : /etc/audit/rules.d/99-default.rules
       overwrite: true
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -454,7 +432,6 @@ storage:
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
-      filesystem: root
       user:
       {{- if .Metadata.Owner.User.ID }}
         id: {{ .Metadata.Owner.User.ID }}

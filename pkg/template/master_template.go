@@ -463,47 +463,39 @@ systemd:
 storage:
   files:
     - path: /boot/coreos/first_boot
-      filesystem: root
 
     - path: /etc/ssh/trusted-user-ca-keys.pem
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;base64,{{ index .Files "conf/trusted-user-ca-keys.pem" }}"
 
     - path: /srv/calico-crd-installer.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crd-installer.yaml" }}"
 
     - path: /srv/calico-crd-installer-rbac.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-crd-installer-rbac.yaml" }}"
 
     {{- if .CalicoPolicyOnly }}
     - path: /srv/calico-policy-only.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-policy-only.yaml" }}"
     {{- else }}
     - path: /srv/calico-datastore-migrator-pre.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-datastore-migrator-pre.yaml" }}"
 
     - path: /srv/calico-datastore-migrator-post.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-datastore-migrator-post.yaml" }}"
 
     - path: /srv/calico-all.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/calico-all.yaml" }}"
@@ -511,231 +503,193 @@ storage:
 
     {{- if not .DisableIngressControllerService }}
     - path: /srv/ingress-controller-svc.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/ingress-controller-svc.yaml" }}"
     {{- end }}
 
     - path: /etc/kubernetes/config/proxy-config.yml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kube-proxy.yaml" }}"
 
     - path: /srv/kube-proxy-config.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kube-proxy.yaml" }}"
 
     - path: /srv/kube-proxy-sa.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/kube-proxy-sa.yaml" }}"
 
     - path: /srv/kube-proxy-ds.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/kube-proxy-ds.yaml" }}"
 
     - path: /srv/rbac_bindings.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/rbac_bindings.yaml" }}"
 
     - path: /srv/rbac_roles.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/rbac_roles.yaml" }}"
 
     - path: /srv/priority_classes.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/priority_classes.yaml" }}"
 
     - path: /srv/psp_policies.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/psp_policies.yaml" }}"
 
     - path: /srv/psp_roles.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/psp_roles.yaml" }}"
 
     - path: /srv/psp_binding.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/psp_bindings.yaml" }}"
 
     - path: /srv/network_policies.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/network_policies.yaml" }}"
 
     - path: /opt/wait-for-domains
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/wait-for-domains" }}"
 
     - path: /opt/k8s-addons
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-addons" }}"
 
     - path: /opt/k8s-extract
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
     - path: /opt/bin/setup-kubelet-environment
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-kubelet-environment" }}"
 
     - path: /opt/bin/setup-apiserver-environment
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-apiserver-environment" }}"
 
     - path: /etc/kubernetes/kubeconfig/addons.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/addons.yaml" }}"
 
     - path: /etc/kubernetes/config/proxy-kubeconfig.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kube-proxy-master.yaml" }}"
 
     - path: /etc/kubernetes/kubeconfig/kube-proxy.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kube-proxy-master.yaml" }}"
 
     - path: /etc/kubernetes/config/kubelet.yaml.tmpl
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/kubelet-master.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/kubeconfig/kubelet.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/kubelet-master.yaml" }}"
 
     - path: /etc/kubernetes/kubeconfig/controller-manager.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/controller-manager.yaml" }}"
 
     - path: /etc/kubernetes/config/scheduler.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "config/scheduler.yaml" }}"
 
     - path: /etc/kubernetes/kubeconfig/scheduler.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "kubeconfig/scheduler.yaml" }}"
 
     {{ if not .DisableEncryptionAtREST -}}
     - path: /etc/kubernetes/encryption/k8s-encryption-config.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/k8s-encryption-config.yaml" }}"
 
     {{ end -}}
     - path: /etc/kubernetes/policies/audit-policy.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "policies/audit-policy.yaml" }}"
     - path: /etc/kubernetes/manifests/k8s-api-healthz.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-api-healthz.yaml" }}"
 
     - path: /etc/kubernetes/manifest-templates/k8s-api-server.yaml.tmpl
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-api-server.yaml.tmpl" }}"
 
     - path: /etc/kubernetes/manifests/k8s-controller-manager.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-controller-manager.yaml" }}"
 
     - path: /etc/kubernetes/manifests/k8s-scheduler.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "manifests/k8s-scheduler.yaml" }}"
 
     - path: /etc/ssh/sshd_config
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/sshd_config" }}"
 
     - path: /etc/sysctl.d/hardening.conf
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/hardening.conf" }}"
 
     - path: /etc/audit/rules.d/10-docker.rules
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/10-docker.rules" }}"
 
     - path: /etc/docker/daemon.json
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/docker-daemon.json" }}"
 
     - path: /root/.docker/config.json
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kubelet-docker-config.json" }}"
 
     - path: /etc/modules-load.d/ip_vs.conf
-      filesystem: root
       mode: 0600
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/ip_vs.conf" }}"
 
     - path : /etc/containerd/config.toml
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -745,7 +699,6 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/containerd-config.toml" }}"
 
     - path : /etc/systemd/system/containerd.service.d/10-use-custom-config.conf
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -755,38 +708,32 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{ index .Files "conf/10-use-custom-config.conf" }}"
 
     - path: /opt/install-debug-tools
-      filesystem: root
       mode: 0544
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/install-debug-tools" }}"
 
     - path: /etc/calico/calicoctl.cfg
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/calicoctl.cfg" }}"
 
     - path: /etc/crictl.yaml
-      filesystem: root
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/crictl" }}"
 
     - path: /etc/profile.d/setup-etcdctl.sh
-      filesystem: root
       mode: 0444
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/etcd-alias" }}"
 
     - path: /srv/kube-proxy-vpa.yaml
-      filesystem: root
       mode: 0444
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kube-proxy-vpa" }}"
 
     - path : /etc/audit/rules.d/99-default.rules
       overwrite: true
-      filesystem: root
       mode: 420
       user:
         id: 0
@@ -797,7 +744,6 @@ storage:
 
     {{ range .Extension.Files -}}
     - path: {{ .Metadata.Path }}
-      filesystem: root
       user:
       {{- if .Metadata.Owner.User.ID }}
         id: {{ .Metadata.Owner.User.ID }}

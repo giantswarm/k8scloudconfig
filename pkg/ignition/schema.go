@@ -1,6 +1,6 @@
 package ignition
 
-// This schema structure is based on github.com/coreos/ignition/config/v2_2/types/schema.go
+// This schema structure is based on github.com/coreos/ignition/config/v3_0_0/types/schema.go
 // Due to issue with unmarshalling embedded anonymous nested structures,
 // this file removes such structures.
 // Changed types: Directory, File, Link.
@@ -38,14 +38,12 @@ type Disk struct {
 	WipeTable  bool        `json:"wipeTable,omitempty" yaml:"wipeTable,omitempty"`
 }
 type File struct {
-	Append     bool         `json:"append,omitempty" yaml:"append,omitempty"`
-	Contents   FileContents `json:"contents,omitempty" yaml:"contents,omitempty"`
-	Filesystem string       `json:"filesystem,omitempty" yaml:"filesystem,omitempty"`
-	Mode       int          `json:"mode,omitempty" yaml:"mode,omitempty"`
-	Group      *NodeGroup   `json:"group,omitempty" yaml:"group,omitempty"`
-	Overwrite  *bool        `json:"overwrite,omitempty" yaml:"overwrite,omitempty"`
-	Path       string       `json:"path,omitempty" yaml:"path,omitempty"`
-	User       *NodeUser    `json:"user,omitempty" yaml:"user,omitempty"`
+	Contents  FileContents `json:"contents,omitempty" yaml:"contents,omitempty"`
+	Mode      int          `json:"mode,omitempty" yaml:"mode,omitempty"`
+	Group     *NodeGroup   `json:"group,omitempty" yaml:"group,omitempty"`
+	Overwrite *bool        `json:"overwrite,omitempty" yaml:"overwrite,omitempty"`
+	Path      string       `json:"path,omitempty" yaml:"path,omitempty"`
+	User      *NodeUser    `json:"user,omitempty" yaml:"user,omitempty"`
 }
 type FileContents struct {
 	Compression  string       `json:"compression,omitempty" yaml:"compression,omitempty"`
