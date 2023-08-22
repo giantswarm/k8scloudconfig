@@ -2,7 +2,7 @@ package template
 
 const WorkerTemplate = `---
 ignition:
-  version: "2.2.0"
+  version: "3.0.0"
 passwd:
   users:
 {{ range $index, $user := .Cluster.Kubernetes.SSH.UserList }}
