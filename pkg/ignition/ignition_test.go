@@ -25,8 +25,6 @@ storage:
 systemd:
   units: []
 users: []
-networkd:
-  units: []
 `),
 			expectedJSONContent: []byte(`{
   "ignition": {
@@ -37,7 +35,6 @@ networkd:
     "timeouts": {},
     "version": "3.0.0"
   },
-  "networkd": {},
   "passwd": {},
   "storage": {},
   "systemd": {}

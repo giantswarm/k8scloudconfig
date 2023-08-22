@@ -10,7 +10,6 @@ type CaReference struct {
 }
 type Config struct {
 	Ignition Ignition `json:"ignition" yaml:"ignition,omitempty"`
-	Networkd Networkd `json:"networkd,omitempty" yaml:"networkd,omitempty"`
 	Passwd   Passwd   `json:"passwd,omitempty" yaml:"passwd,omitempty"`
 	Storage  Storage  `json:"storage,omitempty" yaml:"storage,omitempty"`
 	Systemd  Systemd  `json:"systemd,omitempty" yaml:"systemd,omitempty"`
@@ -54,9 +53,13 @@ type FileContents struct {
 	Verification Verification `json:"verification,omitempty" yaml:"verification,omitempty"`
 }
 type Filesystem struct {
-	Mount *Mount  `json:"mount,omitempty" yaml:"mount,omitempty"`
-	Name  string  `json:"name,omitempty" yaml:"name,omitempty"`
-	Path  *string `json:"path,omitempty" yaml:"path,omitempty"`
+	Device         string        `json:"device,omitempty" yaml:"device,omitempty"`
+	Format         string        `json:"format,omitempty" yaml:"format,omitempty"`
+	Label          *string       `json:"label,omitempty" yaml:"label,omitempty"`
+	Options        []MountOption `json:"options,omitempty" yaml:"options,omitempty"`
+	Path           *string       `json:"path,omitempty" yaml:"path,omitempty"`
+	UUID           *string       `json:"uuid,omitempty" yaml:"uuid,omitempty"`
+	WipeFilesystem bool          `json:"wipeFilesystem,omitempty" yaml:"wipeFilesystem,omitempty"`
 }
 type Group string
 type Ignition struct {
@@ -78,19 +81,9 @@ type Link struct {
 	Target     string     `json:"target,omitempty" yaml:"target,omitempty"`
 	User       *NodeUser  `json:"user,omitempty" yaml:"user,omitempty"`
 }
-type Mount struct {
-	Create         *Create       `json:"create,omitempty" yaml:"create,omitempty"`
-	Device         string        `json:"device,omitempty" yaml:"device,omitempty"`
-	Format         string        `json:"format,omitempty" yaml:"format,omitempty"`
-	Label          *string       `json:"label,omitempty" yaml:"label,omitempty"`
-	Options        []MountOption `json:"options,omitempty" yaml:"options,omitempty"`
-	UUID           *string       `json:"uuid,omitempty" yaml:"uuid,omitempty"`
-	WipeFilesystem bool          `json:"wipeFilesystem,omitempty" yaml:"wipeFilesystem,omitempty"`
-}
+
 type MountOption string
-type Networkd struct {
-	Units []Networkdunit `json:"units,omitempty" yaml:"units,omitempty"`
-}
+
 type NetworkdDropin struct {
 	Contents string `json:"contents,omitempty" yaml:"contents,omitempty"`
 	Name     string `json:"name,omitempty" yaml:"name,omitempty"`
