@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [16.5.1] - 2023-08-24
+
 ### Changed
 
 - Changed plugin key `containerd.runtime.v1.linux` in containerd configuration for release 1.7.x.
@@ -1356,7 +1358,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.1...HEAD
+[16.5.1]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...v16.5.1
 [16.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.4.0...v16.5.0
 [16.4.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.3.0...v16.4.0
 [16.3.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.2.0...v16.3.0
