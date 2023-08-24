@@ -15,7 +15,6 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Changed plugin key containerd.runtime.v1.linux in containerd configuration for release 1.7.x.
 
-
 ## [17.2.0] - 2023-07-04
 
 ### Added
