@@ -9,6 +9,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [16.5.1] - 2023-08-24
 
+### Changed
+
+- Changed plugin key `containerd.runtime.v1.linux` in containerd configuration for release 1.7.x.
+
 ## [16.5.0] - 2023-07-13
 
 ### Added
