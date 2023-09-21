@@ -424,6 +424,8 @@ systemd:
       ExecStartPost=/usr/bin/systemctl restart k8s-kubelet.service
       [Install]
       WantedBy=multi-user.target
+
+{{- if not .DisableKubeProxy }}
   - name: ensure-kube-proxy-vpa.service
     enabled: true
     contents: |
@@ -437,7 +439,7 @@ systemd:
       ExecStart=/opt/bin/kubectl --kubeconfig=/etc/kubernetes/kubeconfig/addons.yaml apply -f /srv/kube-proxy-vpa.yaml
       [Install]
       WantedBy=multi-user.target
-
+{{- end }}
 {{ if .Debug.Enabled }}
   - name: logentries.service
     enabled: true
@@ -516,6 +518,7 @@ storage:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/ingress-controller-svc.yaml" }}"
     {{- end }}
 
+    {{- if not .DisableKubeProxy }}
     - path: /etc/kubernetes/config/proxy-config.yml
       filesystem: root
       mode: 0644
@@ -539,6 +542,7 @@ storage:
       mode: 0644
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "k8s-resource/kube-proxy-ds.yaml" }}"
+    {{- end }}
 
     - path: /srv/rbac_bindings.yaml
       filesystem: root
@@ -771,11 +775,13 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/etcd-alias" }}"
 
+    {{- if not .DisableKubeProxy }}
     - path: /srv/kube-proxy-vpa.yaml
       filesystem: root
       mode: 0444
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/kube-proxy-vpa" }}"
+    {{- end }}
 
     - path : /etc/audit/rules.d/99-default.rules
       overwrite: true

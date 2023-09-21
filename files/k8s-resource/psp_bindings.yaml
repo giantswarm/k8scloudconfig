@@ -9,9 +9,11 @@ subjects:
 - kind: ServiceAccount
   name: calico-kube-controllers
   namespace: kube-system
+{{- if not .DisableKubeProxy }}
 - kind: ServiceAccount
   name: kube-proxy
   namespace: kube-system
+{{- end }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole

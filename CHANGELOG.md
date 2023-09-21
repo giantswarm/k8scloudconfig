@@ -14,6 +14,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 ### Changed
 
 - Changed plugin key containerd.runtime.v1.linux in containerd configuration for release 1.7.x.
+- Do not create kube-proxy resources if kube-proxy is disabled.
 
 ## [17.2.0] - 2023-07-04
 
