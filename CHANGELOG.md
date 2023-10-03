@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Calculate max number of pods per node based on instance size when Cilium's ENI IPAM mode is enabled.
+
 ## [16.5.1] - 2023-08-24
 
 ### Changed
