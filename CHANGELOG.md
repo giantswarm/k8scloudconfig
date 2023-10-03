@@ -11,6 +11,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Calculate max number of pods per node based on instance size when Cilium's ENI IPAM mode is enabled.
 
+### Added
+
+- Add PSP binding for CAPI roles to prepare for migration.
+
 ## [16.5.1] - 2023-08-24
 
 ### Changed
