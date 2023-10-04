@@ -17,6 +17,8 @@ type Params struct {
 	EnableAWSCNI bool
 	// AWSCNISubnetPrefixMode set to true when cluster is using Subnet Prefix mode, will remove pod limit per node.
 	AWSCNISubnetPrefixMode bool
+	// AWSCiliumENIMode set to true when cilium is in ENI IPAM mode.
+	AWSCiliumENIMode bool
 	// ControllerManagerTerminatedPodGcThreshold flag. Set the value to use for ControllerManager terminated-pod-gc-threshold flag
 	ControllerManagerTerminatedPodGcThreshold int
 	// EnableCronJobTimeZone flag. When set to true the `CronJobTimeZone` feature flag will be enabled.
