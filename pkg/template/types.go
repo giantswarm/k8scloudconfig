@@ -21,8 +21,6 @@ type Params struct {
 	AWSCiliumENIMode bool
 	// ControllerManagerTerminatedPodGcThreshold flag. Set the value to use for ControllerManager terminated-pod-gc-threshold flag
 	ControllerManagerTerminatedPodGcThreshold int
-	// EnableCSIMigrationAWS flag. When set to true will use in-tree EBS volumes will be migrated to CSI.
-	EnableCSIMigrationAWS bool
 	// EnableCronJobTimeZone flag. When set to true the `CronJobTimeZone` feature flag will be enabled.
 	EnableCronJobTimeZone bool
 	// force cgroups v1 on flatcar 3033.2.1 and above
