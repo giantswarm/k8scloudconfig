@@ -26,7 +26,6 @@ done
 SECURITY_FILES=""
 SECURITY_FILES="${SECURITY_FILES} rbac_bindings.yaml"
 SECURITY_FILES="${SECURITY_FILES} rbac_roles.yaml"
-SECURITY_FILES="${SECURITY_FILES} psp_policies.yaml"
 SECURITY_FILES="${SECURITY_FILES} psp_roles.yaml"
 SECURITY_FILES="${SECURITY_FILES} psp_binding.yaml"
 
@@ -81,26 +80,33 @@ kubectl delete pods -l app.kubernetes.io/name=kube-proxy -n kube-system
 {{ end }}
 
 {{ if not .DisableCalico }}
-# install calico CRDS
-PROXY_MANIFESTS="calico-crd-installer-rbac.yaml calico-crd-installer.yaml"
-for manifest in $PROXY_MANIFESTS
+while ! kubectl get crd ippools.crd.projectcalico.org
 do
-    while
-        kubectl apply -f /srv/$manifest
-        [ "$?" -ne "0" ]
-    do
-        echo "failed to apply /srv/$manifest, retrying in 5 sec"
-        sleep 5s
-    done
-done
-echo "calico CRD installer successfully applied"
+  echo "Ensuring calico CRDs."
 
-while
-    kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
-    [ "$?" -ne "0" ]
-do
-    echo "Failed waiting for crd installer job to be completed, retrying in 5 sec"
-    sleep 5s
+  # install calico CRDS
+  PROXY_MANIFESTS="calico-crd-installer-rbac.yaml calico-crd-installer.yaml"
+  for manifest in $PROXY_MANIFESTS
+  do
+      while
+          kubectl apply -f /srv/$manifest
+          [ "$?" -ne "0" ]
+      do
+          echo "failed to apply /srv/$manifest, retrying in 5 sec"
+          sleep 5s
+      done
+  done
+  echo "calico CRD installer successfully applied"
+
+  while
+      kubectl wait --for=condition=complete --timeout=1m -n kube-system job -lapp.kubernetes.io/name=calico-crd-installer
+      [ "$?" -ne "0" ]
+  do
+      echo "Failed waiting for crd installer job to be completed, retrying in 5 sec"
+      sleep 5s
+  done
+
+  echo "Calico CRD job completed successfully"
 done
 
 {{ if .CalicoPolicyOnly }}
