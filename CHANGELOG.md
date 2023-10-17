@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Remove references to the `restricted` PSP user as we're using PSS now.
+
 ## [16.6.0] - 2023-10-04
 
 ### Fixed
