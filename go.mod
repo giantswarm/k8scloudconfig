@@ -23,8 +23,8 @@ require (
 	github.com/modern-go/concurrent v0.0.0-20180306012644-bacd9c7ef1dd // indirect
 	github.com/modern-go/reflect2 v1.0.2 // indirect
 	github.com/pmezard/go-difflib v1.0.0 // indirect
-	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b // indirect
-	golang.org/x/text v0.4.0 // indirect
+	golang.org/x/net v0.6.0 // indirect
+	golang.org/x/text v0.7.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
@@ -41,6 +41,6 @@ replace (
 	github.com/gogo/protobuf v1.3.1 => github.com/gogo/protobuf v1.3.2
 	github.com/gorilla/websocket v1.4.0 => github.com/gorilla/websocket v1.4.2
 	github.com/prometheus/client_golang => github.com/prometheus/client_golang v1.17.0
-	golang.org/x/text => golang.org/x/text v0.3.8
+	golang.org/x/text => golang.org/x/text v0.14.0
 	sigs.k8s.io/cluster-api => sigs.k8s.io/cluster-api v1.0.4
 )
