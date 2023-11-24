@@ -3,7 +3,7 @@ module github.com/giantswarm/k8scloudconfig/v16
 go 1.18
 
 require (
-	github.com/Masterminds/semver/v3 v3.1.1
+	github.com/Masterminds/semver/v3 v3.2.1
 	github.com/giantswarm/apiextensions/v6 v6.6.0
 	github.com/giantswarm/microerror v0.4.1
 	github.com/stretchr/testify v1.8.1
