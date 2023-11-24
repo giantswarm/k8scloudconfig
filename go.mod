@@ -4,13 +4,13 @@ go 1.18
 
 require (
 	github.com/Masterminds/semver/v3 v3.1.1
-	github.com/giantswarm/apiextensions/v6 v6.0.0
-	github.com/giantswarm/microerror v0.4.0
+	github.com/giantswarm/apiextensions/v6 v6.6.0
+	github.com/giantswarm/microerror v0.4.1
 	github.com/stretchr/testify v1.8.1
 	sigs.k8s.io/yaml v1.3.0
 )
 
-require github.com/giantswarm/release-operator/v4 v4.0.0
+require github.com/giantswarm/release-operator/v4 v4.1.0
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
@@ -25,7 +25,6 @@ require (
 	github.com/pmezard/go-difflib v1.0.0 // indirect
 	golang.org/x/net v0.0.0-20221014081412-f15817d10f9b // indirect
 	golang.org/x/text v0.4.0 // indirect
-	gopkg.in/check.v1 v1.0.0-20201130134442-10cb98267c6c // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
