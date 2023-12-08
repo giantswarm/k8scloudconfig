@@ -3,7 +3,6 @@ package template
 import (
 	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"testing"
@@ -27,7 +26,7 @@ type RenderParams struct {
 func Test_RenderFiles(t *testing.T) {
 
 	// Prepare temporary files structure
-	filesDir, err := ioutil.TempDir("", testFilesDir)
+	filesDir, err := os.MkdirTemp("", testFilesDir)
 	if err != nil {
 		t.Fatalf("failed to create temporary directory, %v:", err)
 	}
