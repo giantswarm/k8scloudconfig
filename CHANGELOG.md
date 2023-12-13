@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [16.8.0] - 2023-12-13
+
 ### Fixed
 
 - Ignore host-network pods when calculating max pods per node.
@@ -1378,7 +1380,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.7.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.8.0...HEAD
+[16.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.7.0...v16.8.0
 [16.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.6.0...v16.7.0
 [16.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.1...v16.6.0
 [16.5.1]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...v16.5.1
