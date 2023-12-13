@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Fixed
+
+- Ignore host-network pods when calculating max pods per node.
+
 ## [16.7.0] - 2023-10-17
 
 ### Changed
