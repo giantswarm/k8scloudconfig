@@ -11,6 +11,12 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 - Ignore host-network pods when calculating max pods per node.
 
+## [16.7.0] - 2023-10-17
+
+### Changed
+
+- Remove references to the `restricted` PSP user as we're using PSS now.
+
 ## [16.6.0] - 2023-10-04
 
 ### Fixed
@@ -1372,7 +1378,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.6.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v16.7.0...HEAD
+[16.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.6.0...v16.7.0
 [16.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.1...v16.6.0
 [16.5.1]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.0...v16.5.1
 [16.5.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.4.0...v16.5.0
