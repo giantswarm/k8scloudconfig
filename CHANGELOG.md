@@ -7,6 +7,19 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Removed
+
+- Remove feature gate `TTLAfterFinished` (removed in k8s 1.25).
+- Remove `PodSecurityPolicy` admission plugin (removed in k8s 1.25).
+- Remove usage of `--logtostderr` flag that was removed upstream since 1.26.
+- Remove CSIMigration feature flag (enabled by default since 1.23).
+- Remove etcd check in k8s-addons.
+
+### Changed
+
+- Require k8s 1.25 and calico 1.25.
+- Update calico manifests for version 1.25.
+
 ## [16.8.0] - 2023-12-13
 
 ### Fixed
