@@ -4,7 +4,7 @@ import (
 	"github.com/Masterminds/semver/v3"
 	"github.com/giantswarm/microerror"
 
-	"github.com/giantswarm/k8scloudconfig/v17/pkg/key"
+	"github.com/giantswarm/k8scloudconfig/v18/pkg/key"
 )
 
 func validateComponentVersion(name, versionString, constraintString string) error {
