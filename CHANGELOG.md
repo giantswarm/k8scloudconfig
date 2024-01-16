@@ -7,7 +7,7 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
-## [17.0.0] - 2024-01-16
+## [18.0.0] - 2024-01-16
 
 ### Removed
 
@@ -1395,8 +1395,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v17.0.0...HEAD
-[17.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.8.0...v17.0.0
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v18.0.0...HEAD
+[18.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.8.0...v18.0.0
 [16.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.7.0...v16.8.0
 [16.7.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.6.0...v16.7.0
 [16.6.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.5.1...v16.6.0
