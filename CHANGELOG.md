@@ -7,6 +7,10 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Changed
+
+- Added random fixed delay to etcd defragmentation timer.
+
 ## [18.0.0] - 2024-01-16
 
 ### Removed
