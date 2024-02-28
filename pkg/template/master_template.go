@@ -289,6 +289,8 @@ systemd:
       Description=Execute etcd3-defragmentation every day at 3.30AM UTC
       [Timer]
       OnCalendar=hourly
+      RandomizedDelaySec=55m
+      FixedRandomDelay=true
       [Install]
       WantedBy=multi-user.target
   - name: k8s-extract.service
