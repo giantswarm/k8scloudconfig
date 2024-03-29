@@ -1,7 +1,6 @@
 #!/bin/bash
 
 HOST="http://169.254.169.254"
-TTL="300"
 CURL="/usr/bin/curl"
 PATH="$1"
 
