@@ -7,6 +7,14 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+### Added
+
+- Add helper script in `/opt/imds-client` to run IMDS v2 queries.
+
+### Fixed
+
+- Use IMDSv2 for max pods calculation script in ENI mode.
+
 ## [18.1.0] - 2024-03-04
 
 ### Changed
