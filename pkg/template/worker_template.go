@@ -440,6 +440,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/k8s-extract" }}"
 
+    - path: /opt/imds-client
+      filesystem: root
+      mode: 0755
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/imds-client" }}"
+
     - path: /etc/audit/rules.d/99-default.rules
       overwrite: true
       filesystem: root

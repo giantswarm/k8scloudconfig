@@ -608,6 +608,12 @@ storage:
       contents:
         source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/setup-apiserver-environment" }}"
 
+    - path: /opt/imds-client
+      filesystem: root
+      mode: 0755
+      contents:
+        source: "data:text/plain;charset=utf-8;base64,{{  index .Files "conf/imds-client" }}"
+
     - path: /etc/kubernetes/kubeconfig/addons.yaml
       filesystem: root
       mode: 0644
