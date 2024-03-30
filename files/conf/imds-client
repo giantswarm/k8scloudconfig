@@ -1,0 +1,26 @@
+#!/bin/bash
+
+HOST="http://169.254.169.254"
+CURL="/usr/bin/curl"
+PATH="$1"
+
+if [ -z "$PATH" ]; then
+    echo "Usage: $0 <path>"
+    exit 1
+fi
+
+# check $PATH starts with a slash
+if [[ ! "$PATH" =~ ^/.*$ ]]; then
+    echo "Path must start with a slash"
+    exit 1
+fi
+
+# check $PATH contains no spaces
+if [[ "$PATH" =~ \ |\' ]]; then
+    echo "Path must not contain spaces"
+    exit 1
+fi
+
+TOKEN="$(${CURL} -X PUT "${HOST}/latest/api/token" -H "X-aws-ec2-metadata-token-ttl-seconds: 300" -s)"
+
+${CURL} -H "X-aws-ec2-metadata-token: $TOKEN" "${HOST}${PATH}" -s
