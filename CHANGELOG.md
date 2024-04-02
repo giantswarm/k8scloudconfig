@@ -7,6 +7,8 @@ and this project's packages adheres to [Semantic Versioning](http://semver.org/s
 
 ## [Unreleased]
 
+## [18.2.0] - 2024-04-02
+
 ### Added
 
 - Add helper script in `/opt/imds-client` to run IMDS v2 queries.
@@ -1409,7 +1411,8 @@ chart-operator).
 
 ## [0.1.0]
 
-[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v18.1.0...HEAD
+[Unreleased]: https://github.com/giantswarm/k8scloudconfig/compare/v18.2.0...HEAD
+[18.2.0]: https://github.com/giantswarm/k8scloudconfig/compare/v18.1.0...v18.2.0
 [18.1.0]: https://github.com/giantswarm/k8scloudconfig/compare/v18.0.0...v18.1.0
 [18.0.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.8.0...v18.0.0
 [16.8.0]: https://github.com/giantswarm/k8scloudconfig/compare/v16.7.0...v16.8.0
