@@ -2,7 +2,7 @@ module github.com/giantswarm/k8scloudconfig/v18
 
 go 1.21
 
-toolchain go1.22.4
+toolchain go1.22.5
 
 require (
 	github.com/Masterminds/semver/v3 v3.2.1
