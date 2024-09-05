@@ -1,5 +1,2 @@
-
-CVE-2023-32731
-CVE-2023-39325
-CVE-2022-41723
-CVE-2023-3978
+# pkg:golang/golang.org/x/net@v0.25.0
+CVE-2024-8421
