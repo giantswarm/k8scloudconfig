@@ -5,7 +5,7 @@ go 1.21
 toolchain go1.23.3
 
 require (
-	github.com/Masterminds/semver/v3 v3.3.0
+	github.com/Masterminds/semver/v3 v3.3.1
 	github.com/giantswarm/apiextensions/v6 v6.6.0
 	github.com/giantswarm/microerror v0.4.1
 	github.com/stretchr/testify v1.9.0
