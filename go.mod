@@ -1,6 +1,6 @@
 module github.com/giantswarm/k8scloudconfig/v18
 
-go 1.21
+go 1.23.0
 
 toolchain go1.24.1
 
@@ -37,4 +37,4 @@ require (
 	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
 )
 
-replace golang.org/x/text => golang.org/x/text v0.22.0
+replace golang.org/x/text => golang.org/x/text v0.23.0
