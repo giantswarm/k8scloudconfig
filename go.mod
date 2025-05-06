@@ -1,8 +1,6 @@
 module github.com/giantswarm/k8scloudconfig/v18
 
-go 1.23.0
-
-toolchain go1.24.2
+go 1.24.3
 
 require (
 	github.com/Masterminds/semver/v3 v3.3.1
@@ -28,13 +26,12 @@ require (
 	golang.org/x/net v0.38.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	gopkg.in/inf.v0 v0.9.1 // indirect
-	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
-	k8s.io/apimachinery v0.28.4 // indirect
+	k8s.io/apimachinery v0.28.15 // indirect
 	k8s.io/klog/v2 v2.110.1 // indirect
-	k8s.io/utils v0.0.0-20231127182322-b307cd553661 // indirect
-	sigs.k8s.io/json v0.0.0-20221116044647-bc3834ca7abd // indirect
-	sigs.k8s.io/structured-merge-diff/v4 v4.4.1 // indirect
+	k8s.io/utils v0.0.0-20250502105355-0f33e8f1c979 // indirect
+	sigs.k8s.io/json v0.0.0-20241014173422-cfa47c3a1cc8 // indirect
+	sigs.k8s.io/structured-merge-diff/v4 v4.4.3 // indirect
 )
 
 replace golang.org/x/text => golang.org/x/text v0.25.0
