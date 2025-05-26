@@ -2,7 +2,7 @@
 #
 #    devctl
 #
-#    https://github.com/giantswarm/devctl/blob/f2b5cf71dfa175afa70f721eca503072d0e7d4c4/pkg/gen/input/workflows/internal/file/gitleaks.yaml.template
+#    https://github.com/giantswarm/devctl/blob/514b1ba81e42eccaed3cea986fe7ec70e5033bb7/pkg/gen/input/workflows/internal/file/gitleaks.yaml.template
 #
 name: gitleaks
 
@@ -16,4 +16,4 @@ jobs:
       with:
         fetch-depth: '0'
     - name: gitleaks-action
-      uses: giantswarm/gitleaks-action@main
+      uses: giantswarm/gitleaks-action@867a11ebfc8f614779675c29d5e98bbb228dea95 # main
