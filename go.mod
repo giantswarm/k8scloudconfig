@@ -7,7 +7,7 @@ require (
 	github.com/giantswarm/apiextensions/v6 v6.6.0
 	github.com/giantswarm/microerror v0.4.1
 	github.com/stretchr/testify v1.10.0
-	sigs.k8s.io/yaml v1.5.0
+	sigs.k8s.io/yaml v1.6.0
 )
 
 require github.com/giantswarm/release-operator/v4 v4.2.1
